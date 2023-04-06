@@ -99,6 +99,20 @@ class _DetailDestinationState extends State<DetailDestination> {
                           height: 400,
                           color: Colors.blue,
                         ),
+                        Positioned(
+                            top: 40,
+                            left: 16,
+                            child: InkWell(
+                              onTap: () => Navigator.of(context).pop(),
+                              child: InkWell(
+                                onTap: () => Navigator.of(context).pop(),
+                                child: CircleAvatar(
+                                    backgroundColor:
+                                        Colors.grey.shade50.withOpacity(0.7),
+                                    child: const Icon(Icons.chevron_left,
+                                        color: primaryColor)),
+                              ),
+                            )),
                         Column(children: [
                           SizedBox(
                             height: 330,

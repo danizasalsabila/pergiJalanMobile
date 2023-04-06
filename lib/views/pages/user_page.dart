@@ -4,6 +4,8 @@ import 'package:flutter/src/widgets/framework.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:pergijalan_mobile/config/theme_color.dart';
 
+import 'business_owner/home.dart';
+
 class UserPage extends StatefulWidget {
   const UserPage({super.key});
 
@@ -12,6 +14,14 @@ class UserPage extends StatefulWidget {
 }
 
 class _UserPageState extends State<UserPage> {
+  bool isLoading = false;
+
+  @override
+  void initState() {
+    print(" ");
+    print("-------------DIRECT TO PROFILE-----------");
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -30,8 +40,9 @@ class _UserPageState extends State<UserPage> {
                       begin: Alignment.bottomCenter,
                       end: Alignment.topRight,
                       colors: [
+                        secondaryColor,
+                        // Color.fromARGB(255, 28, 114, 125),
                         Color.fromARGB(255, 12, 69, 104),
-                        Color.fromARGB(255, 28, 114, 125),
                       ],
                     ),
                   ),
@@ -256,9 +267,9 @@ class _UserPageState extends State<UserPage> {
           ),
         ),
         Padding(
-          padding: const EdgeInsets.fromLTRB(25, 20.0, 25, 8),
+          padding: const EdgeInsets.fromLTRB(25, 11.0, 25, 8),
           child: Container(
-            height: 160,
+            height: 163,
             width: MediaQuery.of(context).size.width,
             decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(10),
@@ -287,39 +298,43 @@ class _UserPageState extends State<UserPage> {
                       )
                     ],
                   ),
-                  Padding(
-                    padding: const EdgeInsets.fromLTRB(5, 8.0, 5, 10),
-                    child: Row(
-                      children: [
-                        Icon(
-                          Icons.people_alt,
-                          size: 20,
-                          color: labelColor,
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.only(left: 16.0),
-                          child: Container(
-                            width: MediaQuery.of(context).size.width * 0.59,
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                Text(
-                                  "Riwayat Tiket",
-                                  style: GoogleFonts.openSans(
-                                      fontSize: 15,
-                                      color: titleColor,
-                                      fontWeight: FontWeight.w600),
-                                ),
-                                Icon(
-                                  Icons.arrow_forward_ios,
-                                  size: 15,
-                                  color: Colors.grey.shade300,
-                                ),
-                              ],
+                  InkWell(
+                    onTap: () {},
+                    child: Padding(
+                      padding: const EdgeInsets.fromLTRB(5, 8.0, 5, 10),
+                      child: Row(
+                        children: [
+                          Icon(
+                            Icons.people_alt,
+                            size: 20,
+                            color: labelColor,
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.only(left: 16.0),
+                            child: Container(
+                              width: MediaQuery.of(context).size.width * 0.59,
+                              child: Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Text(
+                                    "Riwayat Tiket",
+                                    style: GoogleFonts.openSans(
+                                        fontSize: 15,
+                                        color: titleColor,
+                                        fontWeight: FontWeight.w600),
+                                  ),
+                                  Icon(
+                                    Icons.arrow_forward_ios,
+                                    size: 15,
+                                    color: Colors.grey.shade300,
+                                  ),
+                                ],
+                              ),
                             ),
                           ),
-                        ),
-                      ],
+                        ],
+                      ),
                     ),
                   ),
                   Row(
@@ -341,39 +356,48 @@ class _UserPageState extends State<UserPage> {
                       )
                     ],
                   ),
-                  Padding(
-                    padding: const EdgeInsets.fromLTRB(5, 8.0, 5, 10),
-                    child: Row(
-                      children: [
-                        const Icon(
-                          Icons.logout_rounded,
-                          size: 20,
-                          color: labelColorBack,
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.only(left: 16.0),
-                          child: Container(
-                            width: MediaQuery.of(context).size.width * 0.59,
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                Text(
-                                  "Keluar",
-                                  style: GoogleFonts.openSans(
-                                      fontSize: 15,
-                                      color: titleColor,
-                                      fontWeight: FontWeight.w600),
-                                ),
-                                Icon(
-                                  Icons.arrow_forward_ios,
-                                  size: 15,
-                                  color: Colors.grey.shade300,
-                                ),
-                              ],
+                  InkWell(
+                    onTap: () {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => const HomePageOwner()));
+                    },
+                    child: Padding(
+                      padding: const EdgeInsets.fromLTRB(5, 8.0, 5, 10),
+                      child: Row(
+                        children: [
+                          const Icon(
+                            Icons.logout_rounded,
+                            size: 20,
+                            color: labelColorBack,
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.only(left: 16.0),
+                            child: Container(
+                              width: MediaQuery.of(context).size.width * 0.59,
+                              child: Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Text(
+                                    "Keluar",
+                                    style: GoogleFonts.openSans(
+                                        fontSize: 15,
+                                        color: titleColor,
+                                        fontWeight: FontWeight.w600),
+                                  ),
+                                  Icon(
+                                    Icons.arrow_forward_ios,
+                                    size: 15,
+                                    color: Colors.grey.shade300,
+                                  ),
+                                ],
+                              ),
                             ),
                           ),
-                        ),
-                      ],
+                        ],
+                      ),
                     ),
                   ),
                   Expanded(

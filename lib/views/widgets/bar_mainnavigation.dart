@@ -35,7 +35,6 @@ class _MainNavigationState extends State<MainNavigation> {
           onTap: (index) {
             setState(() {
               _indexBNav = index;
-              print(index);
             });
           },
           currentIndex: _indexBNav,

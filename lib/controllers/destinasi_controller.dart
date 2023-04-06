@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
@@ -13,6 +14,7 @@ class DestinasiController extends ChangeNotifier {
   List<Destinasi>? destinasiCategoryData;
   List<Destinasi>? destinasiQueryData;
   List<Destinasi>? destinasiDataSortIntoTen;
+  List<Destinasi>? destinasiRandom;
   String messageDestinasi = "";
   
   // String dataDestinasi = "";
@@ -53,6 +55,17 @@ class DestinasiController extends ChangeNotifier {
     } else {
       print("destinasi sorting into 10 data");
       destinasiDataSortIntoTen = destinasiData?.sublist(0, 10);
+    }
+  }
+
+  final randomList =  Random();
+     setRandomDestinasi() {
+    if (destinasiData!.length <= 6) {
+      destinasiRandom = destinasiData;
+      notifyListeners();
+    } else {
+      print("data sort into 6 random list of destinasi");
+      destinasiRandom = List.generate(6, (index) => destinasiData![randomList.nextInt(destinasiData!.length)]);
     }
   }
 

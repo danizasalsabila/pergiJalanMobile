@@ -17,6 +17,15 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   final ScrollController _scrollController = ScrollController();
   bool isLoading = false;
+  int _index = 0;
+
+  List<T> createDotMap<T>(List list, Function handler) {
+    List<T> result = [];
+    for (var i = 0; i < list.length; i++) {
+      result.add(handler(i, list[i]));
+    }
+    return result;
+  }
 
   @override
   void initState() {
@@ -26,8 +35,13 @@ class _HomePageState extends State<HomePage> {
     isLoading = true;
 
     Future.delayed(Duration(seconds: 1)).then((value) async {
-      await homeCon.allDestinasi();
-      await homeCon.setTenData();
+      try {
+        await homeCon.allDestinasi();
+        await homeCon.setRandomDestinasi();
+        await homeCon.setTenData();
+      } catch (e) {
+        print(e);
+      }
 
       setState(() {
         isLoading = false;
@@ -41,15 +55,14 @@ class _HomePageState extends State<HomePage> {
     return Scaffold(
         backgroundColor: backgroundColor,
         body: isLoading
-              ? const Center(
-                  child: CircularProgressIndicator(
-                    color: Colors.blue,
-                  ),
-                )
-              : 
-        SingleChildScrollView(
-          child: Consumer<DestinasiController>(
-                  builder: (context, homeCon, child) {
+            ? const Center(
+                child: CircularProgressIndicator(
+                  color: Colors.blue,
+                ),
+              )
+            : SingleChildScrollView(
+                child: Consumer<DestinasiController>(
+                    builder: (context, homeCon, child) {
                   return SafeArea(
                       child: Container(
                     child: Column(children: [
@@ -119,16 +132,228 @@ class _HomePageState extends State<HomePage> {
                                 ),
                               ),
                               Container(
-                                height: 210,
-                                child: Padding(
-                                  padding:
-                                      const EdgeInsets.fromLTRB(16, 0, 16, 0),
-                                  child: Container(
-                                    height: 210,
-                                    color: Colors.white,
+                                height: 220,
+                                child: Container(
+                                  height: 220,
+                                  width: MediaQuery.of(context).size.width,
+                                  // color: Colors.white,
+                                  child: PageView.builder(
+                                    itemCount: homeCon.destinasiRandom?.length,
+                                    controller:
+                                        PageController(viewportFraction: 0.85),
+                                    onPageChanged: (int index) => setState(() {
+                                      _index = index;
+                                    }),
+                                    itemBuilder: (context, index) {
+                                      return Transform.scale(
+                                        scale: index == _index ? 1 : 0.92,
+                                        child: Card(
+                                          shape: RoundedRectangleBorder(
+                                              borderRadius:
+                                                  BorderRadius.circular(15)),
+                                          child: Stack(
+                                            children: [
+                                              Container(
+                                                height: 220,
+                                                width: MediaQuery.of(context)
+                                                    .size
+                                                    .width,
+                                                child: ClipRRect(
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                            15),
+                                                    child: Image.asset(
+                                                      "assets/images/slicing.jpg",
+                                                      fit: BoxFit.cover,
+                                                    )),
+                                              ),
+                                              //buat transparant
+                                              Container(
+                                                  height: 220,
+                                                  decoration: BoxDecoration(
+                                                      borderRadius:
+                                                          BorderRadius.circular(
+                                                              15),
+                                                      color:
+                                                          const Color.fromARGB(
+                                                              57,
+                                                              33,
+                                                              149,
+                                                              243))),
+                                              SizedBox(
+                                                  height: 220,
+                                                  child: Column(
+                                                    children: [
+                                                      const SizedBox(
+                                                        height: 158,
+                                                      ),
+                                                      Stack(
+                                                        children: [
+                                                          Container(
+                                                            height: 54,
+                                                            decoration:
+                                                                const BoxDecoration(
+                                                                    color: Color
+                                                                        .fromARGB(
+                                                                            151,
+                                                                            255,
+                                                                            255,
+                                                                            255)),
+                                                          ),
+                                                          Column(
+                                                            mainAxisAlignment:
+                                                                MainAxisAlignment
+                                                                    .center,
+                                                            crossAxisAlignment:
+                                                                CrossAxisAlignment
+                                                                    .start,
+                                                            children: [
+                                                              SizedBox(
+                                                                width: MediaQuery.of(
+                                                                            context)
+                                                                        .size
+                                                                        .width *
+                                                                    0.5,
+                                                                child: Padding(
+                                                                  padding:
+                                                                      const EdgeInsets
+                                                                              .fromLTRB(
+                                                                          10,
+                                                                          5.0,
+                                                                          10,
+                                                                          0),
+                                                                  child: Text(
+                                                                    homeCon
+                                                                        .destinasiRandom![
+                                                                            index]
+                                                                        .nameDestinasi
+                                                                        .toString(),
+                                                                    style: GoogleFonts.notoSansDisplay(
+                                                                        fontSize:
+                                                                            15,
+                                                                        color:
+                                                                            primaryColor,
+                                                                        fontWeight:
+                                                                            FontWeight.w600),
+                                                                    overflow:
+                                                                        TextOverflow
+                                                                            .ellipsis,
+                                                                    maxLines: 1,
+                                                                  ),
+                                                                ),
+                                                              ),
+                                                              Padding(
+                                                                padding:
+                                                                    const EdgeInsets
+                                                                            .fromLTRB(
+                                                                        10,
+                                                                        0,
+                                                                        10,
+                                                                        5),
+                                                                child: Row(
+                                                                  mainAxisAlignment:
+                                                                      MainAxisAlignment
+                                                                          .spaceBetween,
+                                                                  children: [
+                                                                    Row(
+                                                                      mainAxisAlignment:
+                                                                          MainAxisAlignment
+                                                                              .start,
+                                                                      children: [
+                                                                        Icon(
+                                                                          Icons
+                                                                              .location_on_outlined,
+                                                                          size:
+                                                                              15,
+                                                                          color:
+                                                                              Colors.red,
+                                                                        ),
+                                                                        Padding(
+                                                                          padding:
+                                                                              const EdgeInsets.only(left: 3.0),
+                                                                          child:
+                                                                              Text(
+                                                                            homeCon.destinasiRandom![index].city.toString(),
+                                                                            style: GoogleFonts.notoSansDisplay(
+                                                                                fontSize: 10,
+                                                                                color: Colors.grey.shade600,
+                                                                                fontWeight: FontWeight.w400),
+                                                                          ),
+                                                                        ),
+                                                                      ],
+                                                                    ),
+                                                                    Row(
+                                                                      mainAxisAlignment:
+                                                                          MainAxisAlignment
+                                                                              .end,
+                                                                      children: [
+                                                                        Text(
+                                                                          homeCon
+                                                                              .destinasiRandom![index]
+                                                                              .hobby
+                                                                              .toString(),
+                                                                          style: GoogleFonts.notoSansDisplay(
+                                                                              fontSize: 10,
+                                                                              color: Colors.grey.shade600,
+                                                                              fontWeight: FontWeight.w400),
+                                                                        ),
+                                                                        Padding(
+                                                                          padding:
+                                                                              const EdgeInsets.only(left: 3.0),
+                                                                          child:
+                                                                              Icon(
+                                                                            Icons.location_pin,
+                                                                            size:
+                                                                                15,
+                                                                            color:
+                                                                                Colors.red,
+                                                                          ),
+                                                                        ),
+                                                                      ],
+                                                                    ),
+                                                                  ],
+                                                                ),
+                                                              ),
+                                                            ],
+                                                          )
+                                                        ],
+                                                      ),
+                                                    ],
+                                                  ))
+                                            ],
+                                          ),
+                                        ),
+                                      );
+                                    },
                                   ),
                                 ),
-                              )
+                              ),
+                              SizedBox(height: 12),
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: <Widget>[
+                                  Row(
+                                    children: createDotMap<Widget>(
+                                      homeCon.destinasiRandom!,
+                                      // listHeaderBanner2,
+                                      (index, image) {
+                                        return Container(
+                                          alignment: Alignment.centerLeft,
+                                          height: 6,
+                                          width: 6,
+                                          margin:
+                                              const EdgeInsets.only(right: 8),
+                                          decoration: BoxDecoration(
+                                              shape: BoxShape.circle,
+                                              color: _index == index
+                                                  ? primaryColor
+                                                  : secondaryColor),
+                                        );
+                                      },
+                                    ),
+                                  ),
+                                ],
+                              ),
                             ],
                           ),
                         ],
@@ -176,17 +401,18 @@ class _HomePageState extends State<HomePage> {
                           child: Row(
                             children: [
                               GestureDetector(
-                                 onTap: () {
-                                            Navigator.push(
-                                                context,
-                                                MaterialPageRoute(
-                                                    builder: (context) =>
-                                                        const ListByCategory(
-                                                            q: "cagar alam")));
-                                          },
+                                onTap: () {
+                                  Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                          builder: (context) =>
+                                              const ListByCategory(
+                                                  q: "cagar alam")));
+                                },
                                 child: SizedBox(
                                   height: 80,
-                                  width: MediaQuery.of(context).size.width * 0.18,
+                                  width:
+                                      MediaQuery.of(context).size.width * 0.18,
                                   child: Center(
                                     child: Column(
                                         mainAxisAlignment:
@@ -215,17 +441,18 @@ class _HomePageState extends State<HomePage> {
                                 ),
                               ),
                               GestureDetector(
-                                 onTap: () {
-                                            Navigator.push(
-                                                context,
-                                                MaterialPageRoute(
-                                                    builder: (context) =>
-                                                        const ListByCategory(
-                                                            q: "budaya")));
-                                          },
+                                onTap: () {
+                                  Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                          builder: (context) =>
+                                              const ListByCategory(
+                                                  q: "budaya")));
+                                },
                                 child: SizedBox(
                                   height: 80,
-                                  width: MediaQuery.of(context).size.width * 0.18,
+                                  width:
+                                      MediaQuery.of(context).size.width * 0.18,
                                   child: Center(
                                     child: Column(
                                         mainAxisAlignment:
@@ -254,17 +481,18 @@ class _HomePageState extends State<HomePage> {
                                 ),
                               ),
                               GestureDetector(
-                                 onTap: () {
-                                            Navigator.push(
-                                                context,
-                                                MaterialPageRoute(
-                                                    builder: (context) =>
-                                                        const ListByCategory(
-                                                            q: "taman hiburan")));
-                                          },
+                                onTap: () {
+                                  Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                          builder: (context) =>
+                                              const ListByCategory(
+                                                  q: "taman hiburan")));
+                                },
                                 child: SizedBox(
                                   height: 80,
-                                  width: MediaQuery.of(context).size.width * 0.18,
+                                  width:
+                                      MediaQuery.of(context).size.width * 0.18,
                                   child: Center(
                                     child: Column(
                                         mainAxisAlignment:
@@ -293,17 +521,18 @@ class _HomePageState extends State<HomePage> {
                                 ),
                               ),
                               GestureDetector(
-                                 onTap: () {
-                                            Navigator.push(
-                                                context,
-                                                MaterialPageRoute(
-                                                    builder: (context) =>
-                                                        const ListByCategory(
-                                                            q: "bahari")));
-                                          },
+                                onTap: () {
+                                  Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                          builder: (context) =>
+                                              const ListByCategory(
+                                                  q: "bahari")));
+                                },
                                 child: SizedBox(
                                   height: 80,
-                                  width: MediaQuery.of(context).size.width * 0.18,
+                                  width:
+                                      MediaQuery.of(context).size.width * 0.18,
                                   child: Center(
                                     child: Column(
                                         mainAxisAlignment:
@@ -332,17 +561,18 @@ class _HomePageState extends State<HomePage> {
                                 ),
                               ),
                               GestureDetector(
-                                 onTap: () {
-                                            Navigator.push(
-                                                context,
-                                                MaterialPageRoute(
-                                                    builder: (context) =>
-                                                        const ListByCategory(
-                                                            q: "tempat ibadah")));
-                                          },
+                                onTap: () {
+                                  Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                          builder: (context) =>
+                                              const ListByCategory(
+                                                  q: "tempat ibadah")));
+                                },
                                 child: SizedBox(
                                   height: 80,
-                                  width: MediaQuery.of(context).size.width * 0.18,
+                                  width:
+                                      MediaQuery.of(context).size.width * 0.18,
                                   child: Center(
                                     child: Column(
                                         mainAxisAlignment:
@@ -421,7 +651,8 @@ class _HomePageState extends State<HomePage> {
                               itemBuilder: (context, index) {
                                 // var destinasi = homeCon.destinasiDataSortIntoTen![index];
                                 return Padding(
-                                  padding: const EdgeInsets.only(left:16.0, right: 16),
+                                  padding: const EdgeInsets.only(
+                                      left: 16.0, right: 16),
                                   child: Card(
                                     shape: RoundedRectangleBorder(
                                         borderRadius: BorderRadius.circular(9)),
@@ -434,12 +665,17 @@ class _HomePageState extends State<HomePage> {
                                           context,
                                           MaterialPageRoute(
                                               builder: (context) =>
-                                                  DetailDestination(id:homeCon.destinasiDataSortIntoTen![index] ,)))),
+                                                  DetailDestination(
+                                                    id: homeCon
+                                                            .destinasiDataSortIntoTen![
+                                                        index],
+                                                  )))),
                                       child: Container(
                                         height: 100,
-                                        padding:
-                                            EdgeInsets.only(left: 10, right: 10),
-                                        width: MediaQuery.of(context).size.width,
+                                        padding: EdgeInsets.only(
+                                            left: 10, right: 10),
+                                        width:
+                                            MediaQuery.of(context).size.width,
                                         child: Row(
                                             mainAxisAlignment:
                                                 MainAxisAlignment.spaceBetween,
@@ -450,11 +686,14 @@ class _HomePageState extends State<HomePage> {
                                                         .size
                                                         .width *
                                                     0.25,
-                                                decoration: BoxDecoration(
-                                                  borderRadius:
-                                                      BorderRadius.circular(8),
-                                                  color: Colors.blue,
-                                                ),
+                                                child: ClipRRect(
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                            8),
+                                                    child: Image.asset(
+                                                      "assets/images/slicing.jpg",
+                                                      fit: BoxFit.cover,
+                                                    )),
                                               ),
                                               Container(
                                                 width: MediaQuery.of(context)
@@ -463,13 +702,16 @@ class _HomePageState extends State<HomePage> {
                                                     0.4,
                                                 child: Column(
                                                     crossAxisAlignment:
-                                                        CrossAxisAlignment.start,
+                                                        CrossAxisAlignment
+                                                            .start,
                                                     mainAxisAlignment:
-                                                        MainAxisAlignment.center,
+                                                        MainAxisAlignment
+                                                            .center,
                                                     children: [
                                                       Text(
                                                         homeCon
-                                                            .destinasiData![index]
+                                                            .destinasiData![
+                                                                index]
                                                             .nameDestinasi!,
                                                         style: GoogleFonts
                                                             .notoSansDisplay(
@@ -479,12 +721,13 @@ class _HomePageState extends State<HomePage> {
                                                                 fontWeight:
                                                                     FontWeight
                                                                         .w600),
-                                                        overflow:
-                                                            TextOverflow.ellipsis,
+                                                        overflow: TextOverflow
+                                                            .ellipsis,
                                                       ),
                                                       Padding(
                                                         padding:
-                                                            const EdgeInsets.only(
+                                                            const EdgeInsets
+                                                                    .only(
                                                                 top: 2.0,
                                                                 bottom: 2.0),
                                                         child: Row(
@@ -541,13 +784,11 @@ class _HomePageState extends State<HomePage> {
                                                                       thirdColor),
                                                               child: Center(
                                                                 child: Padding(
-                                                                  padding:
-                                                                      const EdgeInsets
-                                                                              .only(
-                                                                          left:
-                                                                              5.0,
-                                                                          right:
-                                                                              5.0),
+                                                                  padding: const EdgeInsets
+                                                                          .only(
+                                                                      left: 5.0,
+                                                                      right:
+                                                                          5.0),
                                                                   child: Text(
                                                                     homeCon
                                                                         .destinasiDataSortIntoTen![
@@ -559,8 +800,7 @@ class _HomePageState extends State<HomePage> {
                                                                         color: Colors
                                                                             .white,
                                                                         fontWeight:
-                                                                            FontWeight
-                                                                                .w500),
+                                                                            FontWeight.w500),
                                                                     overflow:
                                                                         TextOverflow
                                                                             .ellipsis,
@@ -582,10 +822,12 @@ class _HomePageState extends State<HomePage> {
                                                                     color:
                                                                         labelColor),
                                                                 child: Center(
-                                                                  child: Padding(
+                                                                  child:
+                                                                      Padding(
                                                                     padding: const EdgeInsets
                                                                             .only(
-                                                                        left: 5.0,
+                                                                        left:
+                                                                            5.0,
                                                                         right:
                                                                             5.0),
                                                                     child: Text(
@@ -618,16 +860,17 @@ class _HomePageState extends State<HomePage> {
                                                     0.15,
                                                 child: Column(
                                                     mainAxisAlignment:
-                                                        MainAxisAlignment.center,
+                                                        MainAxisAlignment
+                                                            .center,
                                                     crossAxisAlignment:
                                                         CrossAxisAlignment.end,
                                                     children: [
                                                       Container(
-                                                        width:
-                                                            MediaQuery.of(context)
-                                                                    .size
-                                                                    .width *
-                                                                0.065,
+                                                        width: MediaQuery.of(
+                                                                    context)
+                                                                .size
+                                                                .width *
+                                                            0.065,
                                                         child: Icon(
                                                             Icons
                                                                 .compare_arrows_rounded,
@@ -639,12 +882,13 @@ class _HomePageState extends State<HomePage> {
                                                         style: GoogleFonts
                                                             .notoSansDisplay(
                                                                 fontSize: 11,
-                                                                color: descColor,
+                                                                color:
+                                                                    descColor,
                                                                 fontWeight:
                                                                     FontWeight
                                                                         .w400),
-                                                        overflow:
-                                                            TextOverflow.ellipsis,
+                                                        overflow: TextOverflow
+                                                            .ellipsis,
                                                       ),
                                                     ]),
                                               )
@@ -654,13 +898,13 @@ class _HomePageState extends State<HomePage> {
                                   ),
                                 );
                               }),
-                              
-                    SizedBox(height: 20,)
-                    ]
-                    
-                    ),
+
+                      SizedBox(
+                        height: 20,
+                      )
+                    ]),
                   ));
                 }),
-        ));
+              ));
   }
 }
