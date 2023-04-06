@@ -25,11 +25,20 @@ class _MainNavigationState extends State<MainNavigation> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: _widgetOptions.elementAt(_indexBNav),
-      backgroundColor: Colors.white,
-      bottomNavigationBar: ClipRRect(
-        borderRadius: const BorderRadius.only(
-          topLeft: Radius.circular(30.0),
-          topRight: Radius.circular(30.0),
+      // backgroundColor: Colors.white,
+      bottomNavigationBar: Container(
+        decoration: BoxDecoration(
+          borderRadius: const BorderRadius.only(
+              topLeft: Radius.circular(30), topRight: Radius.circular(30)),
+          color: secondaryColor,
+          boxShadow: [
+            BoxShadow(
+              color: Color.fromARGB(255, 190, 190, 190).withOpacity(0.7),
+              spreadRadius: 4,
+              blurRadius: 6,
+              offset: const Offset(4, 1), // changes position of shadow
+            ),
+          ],
         ),
         child: SalomonBottomBar(
           onTap: (index) {
@@ -46,15 +55,15 @@ class _MainNavigationState extends State<MainNavigation> {
             SalomonBottomBarItem(
               icon: const Icon(Icons.search),
               title: const Text("Search"),
-            ),SalomonBottomBarItem(
+            ),
+            SalomonBottomBarItem(
               icon: const Icon(Icons.people),
               title: const Text("User"),
             ),
-            
           ],
           unselectedItemColor: Colors.grey.shade300,
-          selectedItemColor: primaryColor,
-          margin:const EdgeInsets.fromLTRB(36, 10, 36, 10) ,
+          selectedItemColor: Colors.white,
+          margin: const EdgeInsets.fromLTRB(50, 8, 50, 8),
         ),
       ),
     );

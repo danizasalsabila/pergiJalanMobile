@@ -63,603 +63,617 @@ class _HomePageState extends State<HomePage> {
             : SingleChildScrollView(
                 child: Consumer<DestinasiController>(
                     builder: (context, homeCon, child) {
-                  return SafeArea(
-                      child: Container(
-                    child: Column(children: [
-                      Stack(
-                        children: [
-                          Container(
-                              height: 310,
-                              color: Colors.white,
-                              child: Container(
-                                decoration: const BoxDecoration(
-                                  // color: primaFryColor,
-                                  gradient: LinearGradient(
-                                    begin: Alignment.topCenter,
-                                    end: Alignment.bottomCenter,
-                                    colors: [
-                                      secondaryColor,
-                                      backgroundColor,
-                                    ],
-                                  ),
-                                ),
-                              )),
-                          Column(
-                            children: [
-                              Container(
-                                height: 100,
-                                child: Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
-                                  children: [
-                                    Container(
-                                        width:
-                                            MediaQuery.of(context).size.width *
-                                                0.7,
-                                        child: Padding(
-                                          padding: const EdgeInsets.only(
-                                              left: 16.0, top: 20, bottom: 8),
-                                          child: Text(
-                                            "Jelajahi keindahan Indonesia dengan minatmu!",
-                                            style: GoogleFonts.mitr(
-                                                fontSize: 16,
-                                                color: Colors.white,
-                                                fontWeight: FontWeight.w600),
-                                          ),
-                                        )),
-                                    Container(
-                                      // width: MediaQuery.of(context).size.width * 0.3,
-                                      child: Padding(
-                                        padding: const EdgeInsets.only(
-                                            top: 8, bottom: 8, right: 16),
-                                        child: ElevatedButton(
-                                          onPressed: () {},
-                                          child: Icon(
-                                            Icons.arrow_forward_ios_rounded,
-                                            color: Colors.grey.shade600,
-                                            size: 20,
-                                          ),
-                                          style: ElevatedButton.styleFrom(
-                                            shape: const CircleBorder(),
-                                            backgroundColor:
-                                                const Color.fromARGB(
-                                                    172, 255, 255, 255),
-                                          ),
-                                        ),
-                                      ),
-                                    )
+                  return SizedBox(
+                      child: Column(children: [
+                    Stack(
+                      children: [
+                        Container(
+                            height: 310,
+                            color: Colors.white,
+                            child: Container(
+                              decoration: const BoxDecoration(
+                                // color: primaFryColor,
+                                gradient: LinearGradient(
+                                  begin: Alignment.topCenter,
+                                  end: Alignment.bottomCenter,
+                                  colors: [
+                                    secondaryColor,
+                                    backgroundColor,
                                   ],
                                 ),
                               ),
-                              Container(
-                                height: 220,
+                            )),
+                        Column(
+                          children: [
+                            SizedBox(
+                              height: 50,
+                            ),
+                            Align(
+                              alignment: Alignment.center,
+                              child: Padding(
+                                padding: const EdgeInsets.only(
+                                    left: 16.0, right: 16.0),
                                 child: Container(
-                                  height: 220,
+                                  height: 30,
                                   width: MediaQuery.of(context).size.width,
-                                  // color: Colors.white,
-                                  child: PageView.builder(
-                                    itemCount: homeCon.destinasiRandom?.length,
-                                    controller:
-                                        PageController(viewportFraction: 0.85),
-                                    onPageChanged: (int index) => setState(() {
-                                      _index = index;
-                                    }),
-                                    itemBuilder: (context, index) {
-                                      return Transform.scale(
-                                        scale: index == _index ? 1 : 0.92,
-                                        child: Card(
-                                          shape: RoundedRectangleBorder(
-                                              borderRadius:
-                                                  BorderRadius.circular(15)),
-                                          child: Stack(
-                                            children: [
-                                              Container(
+                                  child: Center(
+                                    child: Text(
+                                      "PergiJalan",
+                                      style: GoogleFonts.oleoScript(
+                                          fontSize: 23,
+                                          color: primaryColor,
+                                          fontWeight: FontWeight.w700),
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            ),
+                            Container(
+                              height: 75,
+                              child: Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Container(
+                                      width: MediaQuery.of(context).size.width *
+                                          0.7,
+                                      child: Padding(
+                                        padding: const EdgeInsets.only(
+                                            left: 16.0, top: 20, bottom: 8),
+                                        child: Text(
+                                          "Jelajahi keindahan Indonesia dengan minatmu!",
+                                          style: GoogleFonts.notoSansDisplay(
+                                              fontSize: 16,
+                                              color: Colors.white,
+                                              fontWeight: FontWeight.w600),
+                                        ),
+                                      )),
+                                  Container(
+                                    child: Padding(
+                                      padding: const EdgeInsets.only(
+                                          top: 8, bottom: 8, right: 16),
+                                      child: ElevatedButton(
+                                        onPressed: () {},
+                                        child: Icon(
+                                          Icons.arrow_forward_ios_rounded,
+                                          color: Colors.grey.shade600,
+                                          size: 20,
+                                        ),
+                                        style: ElevatedButton.styleFrom(
+                                          shape: const CircleBorder(),
+                                          backgroundColor: const Color.fromARGB(
+                                              172, 255, 255, 255),
+                                        ),
+                                      ),
+                                    ),
+                                  )
+                                ],
+                              ),
+                            ),
+                            Container(
+                              height: 220,
+                              child: Container(
+                                height: 220,
+                                width: MediaQuery.of(context).size.width,
+                                // color: Colors.white,
+                                child: PageView.builder(
+                                  itemCount: homeCon.destinasiRandom?.length,
+                                  controller:
+                                      PageController(viewportFraction: 0.85),
+                                  onPageChanged: (int index) => setState(() {
+                                    _index = index;
+                                  }),
+                                  itemBuilder: (context, index) {
+                                    return Transform.scale(
+                                      scale: index == _index ? 1 : 0.92,
+                                      child: Card(
+                                        shape: RoundedRectangleBorder(
+                                            borderRadius:
+                                                BorderRadius.circular(15)),
+                                        child: Stack(
+                                          children: [
+                                            Container(
+                                              height: 220,
+                                              width: MediaQuery.of(context)
+                                                  .size
+                                                  .width,
+                                              child: ClipRRect(
+                                                  borderRadius:
+                                                      BorderRadius.circular(15),
+                                                  child: Image.asset(
+                                                    "assets/images/slicing.jpg",
+                                                    fit: BoxFit.cover,
+                                                  )),
+                                            ),
+                                            //buat transparant
+                                            Container(
                                                 height: 220,
-                                                width: MediaQuery.of(context)
-                                                    .size
-                                                    .width,
-                                                child: ClipRRect(
+                                                decoration: BoxDecoration(
                                                     borderRadius:
                                                         BorderRadius.circular(
                                                             15),
-                                                    child: Image.asset(
-                                                      "assets/images/slicing.jpg",
-                                                      fit: BoxFit.cover,
-                                                    )),
-                                              ),
-                                              //buat transparant
-                                              Container(
-                                                  height: 220,
-                                                  decoration: BoxDecoration(
-                                                      borderRadius:
-                                                          BorderRadius.circular(
-                                                              15),
-                                                      color:
-                                                          const Color.fromARGB(
-                                                              57,
-                                                              33,
-                                                              149,
-                                                              243))),
-                                              SizedBox(
-                                                  height: 220,
-                                                  child: Column(
-                                                    children: [
-                                                      const SizedBox(
-                                                        height: 158,
-                                                      ),
-                                                      Stack(
-                                                        children: [
-                                                          Container(
-                                                            height: 54,
-                                                            decoration:
-                                                                const BoxDecoration(
-                                                                    color: Color
-                                                                        .fromARGB(
-                                                                            151,
-                                                                            255,
-                                                                            255,
-                                                                            255)),
-                                                          ),
-                                                          Column(
-                                                            mainAxisAlignment:
-                                                                MainAxisAlignment
-                                                                    .center,
-                                                            crossAxisAlignment:
-                                                                CrossAxisAlignment
-                                                                    .start,
-                                                            children: [
-                                                              SizedBox(
-                                                                width: MediaQuery.of(
-                                                                            context)
-                                                                        .size
-                                                                        .width *
-                                                                    0.5,
-                                                                child: Padding(
-                                                                  padding:
-                                                                      const EdgeInsets
-                                                                              .fromLTRB(
-                                                                          10,
-                                                                          5.0,
-                                                                          10,
-                                                                          0),
-                                                                  child: Text(
-                                                                    homeCon
-                                                                        .destinasiRandom![
-                                                                            index]
-                                                                        .nameDestinasi
-                                                                        .toString(),
-                                                                    style: GoogleFonts.notoSansDisplay(
-                                                                        fontSize:
-                                                                            15,
-                                                                        color:
-                                                                            primaryColor,
-                                                                        fontWeight:
-                                                                            FontWeight.w600),
-                                                                    overflow:
-                                                                        TextOverflow
-                                                                            .ellipsis,
-                                                                    maxLines: 1,
-                                                                  ),
-                                                                ),
-                                                              ),
-                                                              Padding(
+                                                    color: const Color.fromARGB(
+                                                        57, 33, 149, 243))),
+                                            SizedBox(
+                                                height: 220,
+                                                child: Column(
+                                                  children: [
+                                                    const SizedBox(
+                                                      height: 158,
+                                                    ),
+                                                    Stack(
+                                                      children: [
+                                                        Container(
+                                                          height: 54,
+                                                          decoration:
+                                                              const BoxDecoration(
+                                                                  color: Color
+                                                                      .fromARGB(
+                                                                          151,
+                                                                          255,
+                                                                          255,
+                                                                          255)),
+                                                        ),
+                                                        Column(
+                                                          mainAxisAlignment:
+                                                              MainAxisAlignment
+                                                                  .center,
+                                                          crossAxisAlignment:
+                                                              CrossAxisAlignment
+                                                                  .start,
+                                                          children: [
+                                                            SizedBox(
+                                                              width: MediaQuery.of(
+                                                                          context)
+                                                                      .size
+                                                                      .width *
+                                                                  0.5,
+                                                              child: Padding(
                                                                 padding:
                                                                     const EdgeInsets
                                                                             .fromLTRB(
                                                                         10,
-                                                                        0,
+                                                                        5.0,
                                                                         10,
-                                                                        5),
-                                                                child: Row(
-                                                                  mainAxisAlignment:
-                                                                      MainAxisAlignment
-                                                                          .spaceBetween,
-                                                                  children: [
-                                                                    Row(
-                                                                      mainAxisAlignment:
-                                                                          MainAxisAlignment
-                                                                              .start,
-                                                                      children: [
-                                                                        Icon(
-                                                                          Icons
-                                                                              .location_on_outlined,
-                                                                          size:
-                                                                              15,
-                                                                          color:
-                                                                              Colors.red,
-                                                                        ),
-                                                                        Padding(
-                                                                          padding:
-                                                                              const EdgeInsets.only(left: 3.0),
-                                                                          child:
-                                                                              Text(
-                                                                            homeCon.destinasiRandom![index].city.toString(),
-                                                                            style: GoogleFonts.notoSansDisplay(
-                                                                                fontSize: 10,
-                                                                                color: Colors.grey.shade600,
-                                                                                fontWeight: FontWeight.w400),
-                                                                          ),
-                                                                        ),
-                                                                      ],
-                                                                    ),
-                                                                    Row(
-                                                                      mainAxisAlignment:
-                                                                          MainAxisAlignment
-                                                                              .end,
-                                                                      children: [
-                                                                        Text(
+                                                                        0),
+                                                                child: Text(
+                                                                  homeCon
+                                                                      .destinasiRandom![
+                                                                          index]
+                                                                      .nameDestinasi
+                                                                      .toString(),
+                                                                  style: GoogleFonts.notoSansDisplay(
+                                                                      fontSize:
+                                                                          15,
+                                                                      color:
+                                                                          primaryColor,
+                                                                      fontWeight:
+                                                                          FontWeight
+                                                                              .w600),
+                                                                  overflow:
+                                                                      TextOverflow
+                                                                          .ellipsis,
+                                                                  maxLines: 1,
+                                                                ),
+                                                              ),
+                                                            ),
+                                                            Padding(
+                                                              padding:
+                                                                  const EdgeInsets
+                                                                          .fromLTRB(
+                                                                      10,
+                                                                      0,
+                                                                      10,
+                                                                      5),
+                                                              child: Row(
+                                                                mainAxisAlignment:
+                                                                    MainAxisAlignment
+                                                                        .spaceBetween,
+                                                                children: [
+                                                                  Row(
+                                                                    mainAxisAlignment:
+                                                                        MainAxisAlignment
+                                                                            .start,
+                                                                    children: [
+                                                                      Icon(
+                                                                        Icons
+                                                                            .location_on_outlined,
+                                                                        size:
+                                                                            15,
+                                                                        color: Colors
+                                                                            .red,
+                                                                      ),
+                                                                      Padding(
+                                                                        padding:
+                                                                            const EdgeInsets.only(left: 3.0),
+                                                                        child:
+                                                                            Text(
                                                                           homeCon
                                                                               .destinasiRandom![index]
-                                                                              .hobby
+                                                                              .city
                                                                               .toString(),
                                                                           style: GoogleFonts.notoSansDisplay(
                                                                               fontSize: 10,
                                                                               color: Colors.grey.shade600,
                                                                               fontWeight: FontWeight.w400),
                                                                         ),
-                                                                        Padding(
-                                                                          padding:
-                                                                              const EdgeInsets.only(left: 3.0),
-                                                                          child:
-                                                                              Icon(
-                                                                            Icons.location_pin,
-                                                                            size:
-                                                                                15,
+                                                                      ),
+                                                                    ],
+                                                                  ),
+                                                                  Row(
+                                                                    mainAxisAlignment:
+                                                                        MainAxisAlignment
+                                                                            .end,
+                                                                    children: [
+                                                                      Text(
+                                                                        homeCon
+                                                                            .destinasiRandom![index]
+                                                                            .hobby
+                                                                            .toString(),
+                                                                        style: GoogleFonts.notoSansDisplay(
+                                                                            fontSize:
+                                                                                10,
                                                                             color:
-                                                                                Colors.red,
-                                                                          ),
+                                                                                Colors.grey.shade600,
+                                                                            fontWeight: FontWeight.w400),
+                                                                      ),
+                                                                      Padding(
+                                                                        padding:
+                                                                            const EdgeInsets.only(left: 3.0),
+                                                                        child:
+                                                                            Icon(
+                                                                          Icons
+                                                                              .location_pin,
+                                                                          size:
+                                                                              15,
+                                                                          color:
+                                                                              Colors.red,
                                                                         ),
-                                                                      ],
-                                                                    ),
-                                                                  ],
-                                                                ),
+                                                                      ),
+                                                                    ],
+                                                                  ),
+                                                                ],
                                                               ),
-                                                            ],
-                                                          )
-                                                        ],
-                                                      ),
-                                                    ],
-                                                  ))
-                                            ],
-                                          ),
+                                                            ),
+                                                          ],
+                                                        )
+                                                      ],
+                                                    ),
+                                                  ],
+                                                ))
+                                          ],
                                         ),
+                                      ),
+                                    );
+                                  },
+                                ),
+                              ),
+                            ),
+                            SizedBox(height: 12),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: <Widget>[
+                                Row(
+                                  children: createDotMap<Widget>(
+                                    homeCon.destinasiRandom!,
+                                    // listHeaderBanner2,
+                                    (index, image) {
+                                      return Container(
+                                        alignment: Alignment.centerLeft,
+                                        height: 6,
+                                        width: 6,
+                                        margin: const EdgeInsets.only(right: 8),
+                                        decoration: BoxDecoration(
+                                            shape: BoxShape.circle,
+                                            color: _index == index
+                                                ? primaryColor
+                                                : secondaryColor),
                                       );
                                     },
                                   ),
                                 ),
-                              ),
-                              SizedBox(height: 12),
-                              Row(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: <Widget>[
-                                  Row(
-                                    children: createDotMap<Widget>(
-                                      homeCon.destinasiRandom!,
-                                      // listHeaderBanner2,
-                                      (index, image) {
-                                        return Container(
-                                          alignment: Alignment.centerLeft,
-                                          height: 6,
-                                          width: 6,
-                                          margin:
-                                              const EdgeInsets.only(right: 8),
-                                          decoration: BoxDecoration(
-                                              shape: BoxShape.circle,
-                                              color: _index == index
-                                                  ? primaryColor
-                                                  : secondaryColor),
-                                        );
-                                      },
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            ],
-                          ),
-                        ],
-                      ),
-                      SizedBox(
-                        height: 18,
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.only(
-                            left: 16, top: 8.0, bottom: 3),
-                        child: Align(
-                          alignment: Alignment.topLeft,
-                          child: Text(
-                            "Kategori Wisata",
-                            style: GoogleFonts.inter(
-                                fontSize: 16,
-                                color: primaryColor,
-                                fontWeight: FontWeight.w700),
-                          ),
-                        ),
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.only(left: 16, bottom: 3),
-                        child: Align(
-                          alignment: Alignment.topLeft,
-                          child: Text(
-                            "Temukan tempat wisata berdasarkan kategori pilihanmu",
-                            style: GoogleFonts.notoSansDisplay(
-                                fontSize: 11,
-                                color: descColor,
-                                fontWeight: FontWeight.w500),
-                          ),
-                        ),
-                      ),
-
-                      //SERVICE BAR
-                      Padding(
-                        padding: EdgeInsets.fromLTRB(16, 5, 16, 5),
-                        child: Container(
-                          width: MediaQuery.of(context).size.width * 1,
-                          height: 90,
-                          decoration: BoxDecoration(
-                              border: Border.all(color: Colors.grey.shade300),
-                              borderRadius: BorderRadius.circular(10)),
-                          child: Row(
-                            children: [
-                              GestureDetector(
-                                onTap: () {
-                                  Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                          builder: (context) =>
-                                              const ListByCategory(
-                                                  q: "cagar alam")));
-                                },
-                                child: SizedBox(
-                                  height: 80,
-                                  width:
-                                      MediaQuery.of(context).size.width * 0.18,
-                                  child: Center(
-                                    child: Column(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.center,
-                                        children: [
-                                          Container(
-                                            height: 33,
-                                            child: Image.asset(
-                                              "assets/servicebar/cagaralam.png",
-                                            ),
-                                          ),
-                                          const SizedBox(
-                                            height: 4,
-                                          ),
-                                          Container(
-                                            child: Text(
-                                              "Cagar\nAlam",
-                                              style: GoogleFonts.inter(
-                                                  fontSize: 9,
-                                                  color: descColor,
-                                                  fontWeight: FontWeight.w500),
-                                            ),
-                                          )
-                                        ]),
-                                  ),
-                                ),
-                              ),
-                              GestureDetector(
-                                onTap: () {
-                                  Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                          builder: (context) =>
-                                              const ListByCategory(
-                                                  q: "budaya")));
-                                },
-                                child: SizedBox(
-                                  height: 80,
-                                  width:
-                                      MediaQuery.of(context).size.width * 0.18,
-                                  child: Center(
-                                    child: Column(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.center,
-                                        children: [
-                                          Container(
-                                            height: 33,
-                                            child: Image.asset(
-                                              "assets/servicebar/budaya.png",
-                                            ),
-                                          ),
-                                          const SizedBox(
-                                            height: 4,
-                                          ),
-                                          Container(
-                                            child: Text(
-                                              "Budaya",
-                                              style: GoogleFonts.inter(
-                                                  fontSize: 9,
-                                                  color: descColor,
-                                                  fontWeight: FontWeight.w500),
-                                            ),
-                                          )
-                                        ]),
-                                  ),
-                                ),
-                              ),
-                              GestureDetector(
-                                onTap: () {
-                                  Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                          builder: (context) =>
-                                              const ListByCategory(
-                                                  q: "taman hiburan")));
-                                },
-                                child: SizedBox(
-                                  height: 80,
-                                  width:
-                                      MediaQuery.of(context).size.width * 0.18,
-                                  child: Center(
-                                    child: Column(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.center,
-                                        children: [
-                                          Container(
-                                            height: 33,
-                                            child: Image.asset(
-                                              "assets/servicebar/tamanhiburan.png",
-                                            ),
-                                          ),
-                                          const SizedBox(
-                                            height: 4,
-                                          ),
-                                          Container(
-                                            child: Text(
-                                              "Taman\nHiburan",
-                                              style: GoogleFonts.inter(
-                                                  fontSize: 9,
-                                                  color: descColor,
-                                                  fontWeight: FontWeight.w500),
-                                            ),
-                                          )
-                                        ]),
-                                  ),
-                                ),
-                              ),
-                              GestureDetector(
-                                onTap: () {
-                                  Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                          builder: (context) =>
-                                              const ListByCategory(
-                                                  q: "bahari")));
-                                },
-                                child: SizedBox(
-                                  height: 80,
-                                  width:
-                                      MediaQuery.of(context).size.width * 0.18,
-                                  child: Center(
-                                    child: Column(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.center,
-                                        children: [
-                                          Container(
-                                            height: 33,
-                                            child: Image.asset(
-                                              "assets/servicebar/bahari.png",
-                                            ),
-                                          ),
-                                          const SizedBox(
-                                            height: 4,
-                                          ),
-                                          Container(
-                                            child: Text(
-                                              "Bahari",
-                                              style: GoogleFonts.inter(
-                                                  fontSize: 9,
-                                                  color: descColor,
-                                                  fontWeight: FontWeight.w500),
-                                            ),
-                                          )
-                                        ]),
-                                  ),
-                                ),
-                              ),
-                              GestureDetector(
-                                onTap: () {
-                                  Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                          builder: (context) =>
-                                              const ListByCategory(
-                                                  q: "tempat ibadah")));
-                                },
-                                child: SizedBox(
-                                  height: 80,
-                                  width:
-                                      MediaQuery.of(context).size.width * 0.18,
-                                  child: Center(
-                                    child: Column(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.center,
-                                        children: [
-                                          Container(
-                                            height: 33,
-                                            child: Image.asset(
-                                              "assets/servicebar/tempatibadah.png",
-                                            ),
-                                          ),
-                                          const SizedBox(
-                                            height: 4,
-                                          ),
-                                          Container(
-                                            child: Text(
-                                              "Tempat\nIbadah",
-                                              style: GoogleFonts.inter(
-                                                  fontSize: 9,
-                                                  color: descColor,
-                                                  fontWeight: FontWeight.w500),
-                                            ),
-                                          )
-                                        ]),
-                                  ),
-                                ),
-                              )
-                            ],
-                          ),
-                        ),
-                      ),
-                      const SizedBox(
-                        height: 12,
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.only(
-                            left: 16, top: 8.0, bottom: 3, right: 16),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Align(
-                              alignment: Alignment.topLeft,
-                              child: Text(
-                                "Wisata Terbaru",
-                                style: GoogleFonts.inter(
-                                    fontSize: 16,
-                                    color: primaryColor,
-                                    fontWeight: FontWeight.w700),
-                              ),
-                            ),
-                            CircleAvatar(
-                              radius: 13,
-                              backgroundColor:
-                                  const Color.fromARGB(172, 255, 255, 255),
-                              child: Icon(
-                                Icons.arrow_forward_ios_rounded,
-                                color: Colors.grey,
-                                size: 15,
-                              ),
+                              ],
                             ),
                           ],
                         ),
+                      ],
+                    ),
+                    SizedBox(
+                      height: 14,
+                    ),
+                    Padding(
+                      padding:
+                          const EdgeInsets.only(left: 16, top: 8.0, bottom: 3),
+                      child: Align(
+                        alignment: Alignment.topLeft,
+                        child: Text(
+                          "Kategori Wisata",
+                          style: GoogleFonts.inter(
+                              fontSize: 16,
+                              color: primaryColor,
+                              fontWeight: FontWeight.w700),
+                        ),
                       ),
-                      isLoading
-                          ? const Center(
-                              child: CircularProgressIndicator(
-                                color: Colors.blue,
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.only(left: 16, bottom: 3),
+                      child: Align(
+                        alignment: Alignment.topLeft,
+                        child: Text(
+                          "Temukan tempat wisata berdasarkan kategori pilihanmu",
+                          style: GoogleFonts.notoSansDisplay(
+                              fontSize: 11,
+                              color: descColor,
+                              fontWeight: FontWeight.w500),
+                        ),
+                      ),
+                    ),
+
+                    //SERVICE BAR
+                    Padding(
+                      padding: EdgeInsets.fromLTRB(16, 5, 16, 0),
+                      child: Container(
+                        width: MediaQuery.of(context).size.width * 1,
+                        height: 90,
+                        decoration: BoxDecoration(
+                            border: Border.all(color: Colors.grey.shade300),
+                            borderRadius: BorderRadius.circular(10)),
+                        child: Row(
+                          children: [
+                            GestureDetector(
+                              onTap: () {
+                                Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) =>
+                                            const ListByCategory(
+                                                q: "cagar alam")));
+                              },
+                              child: SizedBox(
+                                height: 80,
+                                width: MediaQuery.of(context).size.width * 0.18,
+                                child: Center(
+                                  child: Column(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
+                                      children: [
+                                        Container(
+                                          height: 33,
+                                          child: Image.asset(
+                                            "assets/servicebar/cagaralam.png",
+                                          ),
+                                        ),
+                                        const SizedBox(
+                                          height: 4,
+                                        ),
+                                        Container(
+                                          child: Text(
+                                            "Cagar\nAlam",
+                                            style: GoogleFonts.inter(
+                                                fontSize: 9,
+                                                color: descColor,
+                                                fontWeight: FontWeight.w500),
+                                          ),
+                                        )
+                                      ]),
+                                ),
+                              ),
+                            ),
+                            GestureDetector(
+                              onTap: () {
+                                Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) =>
+                                            const ListByCategory(q: "budaya")));
+                              },
+                              child: SizedBox(
+                                height: 80,
+                                width: MediaQuery.of(context).size.width * 0.18,
+                                child: Center(
+                                  child: Column(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
+                                      children: [
+                                        Container(
+                                          height: 33,
+                                          child: Image.asset(
+                                            "assets/servicebar/budaya.png",
+                                          ),
+                                        ),
+                                        const SizedBox(
+                                          height: 4,
+                                        ),
+                                        Container(
+                                          child: Text(
+                                            "Budaya",
+                                            style: GoogleFonts.inter(
+                                                fontSize: 9,
+                                                color: descColor,
+                                                fontWeight: FontWeight.w500),
+                                          ),
+                                        )
+                                      ]),
+                                ),
+                              ),
+                            ),
+                            GestureDetector(
+                              onTap: () {
+                                Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) =>
+                                            const ListByCategory(
+                                                q: "taman hiburan")));
+                              },
+                              child: SizedBox(
+                                height: 80,
+                                width: MediaQuery.of(context).size.width * 0.18,
+                                child: Center(
+                                  child: Column(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
+                                      children: [
+                                        Container(
+                                          height: 33,
+                                          child: Image.asset(
+                                            "assets/servicebar/tamanhiburan.png",
+                                          ),
+                                        ),
+                                        const SizedBox(
+                                          height: 4,
+                                        ),
+                                        Container(
+                                          child: Text(
+                                            "Taman\nHiburan",
+                                            style: GoogleFonts.inter(
+                                                fontSize: 9,
+                                                color: descColor,
+                                                fontWeight: FontWeight.w500),
+                                          ),
+                                        )
+                                      ]),
+                                ),
+                              ),
+                            ),
+                            GestureDetector(
+                              onTap: () {
+                                Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) =>
+                                            const ListByCategory(q: "bahari")));
+                              },
+                              child: SizedBox(
+                                height: 80,
+                                width: MediaQuery.of(context).size.width * 0.18,
+                                child: Center(
+                                  child: Column(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
+                                      children: [
+                                        Container(
+                                          height: 33,
+                                          child: Image.asset(
+                                            "assets/servicebar/bahari.png",
+                                          ),
+                                        ),
+                                        const SizedBox(
+                                          height: 4,
+                                        ),
+                                        Container(
+                                          child: Text(
+                                            "Bahari",
+                                            style: GoogleFonts.inter(
+                                                fontSize: 9,
+                                                color: descColor,
+                                                fontWeight: FontWeight.w500),
+                                          ),
+                                        )
+                                      ]),
+                                ),
+                              ),
+                            ),
+                            GestureDetector(
+                              onTap: () {
+                                Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) =>
+                                            const ListByCategory(
+                                                q: "tempat ibadah")));
+                              },
+                              child: SizedBox(
+                                height: 80,
+                                width: MediaQuery.of(context).size.width * 0.18,
+                                child: Center(
+                                  child: Column(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
+                                      children: [
+                                        Container(
+                                          height: 33,
+                                          child: Image.asset(
+                                            "assets/servicebar/tempatibadah.png",
+                                          ),
+                                        ),
+                                        const SizedBox(
+                                          height: 4,
+                                        ),
+                                        Container(
+                                          child: Text(
+                                            "Tempat\nIbadah",
+                                            style: GoogleFonts.inter(
+                                                fontSize: 9,
+                                                color: descColor,
+                                                fontWeight: FontWeight.w500),
+                                          ),
+                                        )
+                                      ]),
+                                ),
                               ),
                             )
-                          : ListView.builder(
+                          ],
+                        ),
+                      ),
+                    ),
+                    const SizedBox(
+                      height: 12,
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.only(
+                          left: 16, top: 8.0, bottom: 0, right: 16),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Align(
+                            alignment: Alignment.topLeft,
+                            child: Text(
+                              "Wisata Terbaru",
+                              style: GoogleFonts.inter(
+                                  fontSize: 16,
+                                  color: primaryColor,
+                                  fontWeight: FontWeight.w700),
+                            ),
+                          ),
+                          const CircleAvatar(
+                            radius: 13,
+                            backgroundColor:
+                                const Color.fromARGB(172, 255, 255, 255),
+                            child: Icon(
+                              Icons.arrow_forward_ios_rounded,
+                              color: Colors.grey,
+                              size: 15,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                    SizedBox(height: 2,),
+                    isLoading
+                        ? const Center(
+                            child: CircularProgressIndicator(
+                              color: Colors.blue,
+                            ),
+                          )
+                        : MediaQuery.removePadding(
+                          removeTop: true,
+                          context: context,
+                          child: ListView.builder(
                               shrinkWrap: true,
-                              // scrollDirection: Axis.vertical,
                               controller: _scrollController,
-                              itemCount:
-                                  homeCon.destinasiDataSortIntoTen?.length,
+                              itemCount: homeCon.destinasiDataSortIntoTen?.length,
                               itemBuilder: (context, index) {
-                                // var destinasi = homeCon.destinasiDataSortIntoTen![index];
                                 return Padding(
                                   padding: const EdgeInsets.only(
                                       left: 16.0, right: 16),
                                   child: Card(
                                     shape: RoundedRectangleBorder(
                                         borderRadius: BorderRadius.circular(9)),
-                                    elevation: 3.0,
-                                    shadowColor:
+                                    elevation: 2.0,
+                                    shadowColor: const
                                         Color.fromARGB(255, 196, 196, 196),
-                                    color: Colors.white,
+                                    color: Color.fromARGB(255, 250, 250, 250),
                                     child: InkWell(
                                       onTap: (() => Navigator.push(
                                           context,
@@ -672,10 +686,9 @@ class _HomePageState extends State<HomePage> {
                                                   )))),
                                       child: Container(
                                         height: 100,
-                                        padding: EdgeInsets.only(
-                                            left: 10, right: 10),
-                                        width:
-                                            MediaQuery.of(context).size.width,
+                                        padding:
+                                            EdgeInsets.only(left: 10, right: 10),
+                                        width: MediaQuery.of(context).size.width,
                                         child: Row(
                                             mainAxisAlignment:
                                                 MainAxisAlignment.spaceBetween,
@@ -688,8 +701,7 @@ class _HomePageState extends State<HomePage> {
                                                     0.25,
                                                 child: ClipRRect(
                                                     borderRadius:
-                                                        BorderRadius.circular(
-                                                            8),
+                                                        BorderRadius.circular(8),
                                                     child: Image.asset(
                                                       "assets/images/slicing.jpg",
                                                       fit: BoxFit.cover,
@@ -702,16 +714,13 @@ class _HomePageState extends State<HomePage> {
                                                     0.4,
                                                 child: Column(
                                                     crossAxisAlignment:
-                                                        CrossAxisAlignment
-                                                            .start,
+                                                        CrossAxisAlignment.start,
                                                     mainAxisAlignment:
-                                                        MainAxisAlignment
-                                                            .center,
+                                                        MainAxisAlignment.center,
                                                     children: [
                                                       Text(
                                                         homeCon
-                                                            .destinasiData![
-                                                                index]
+                                                            .destinasiData![index]
                                                             .nameDestinasi!,
                                                         style: GoogleFonts
                                                             .notoSansDisplay(
@@ -721,13 +730,12 @@ class _HomePageState extends State<HomePage> {
                                                                 fontWeight:
                                                                     FontWeight
                                                                         .w600),
-                                                        overflow: TextOverflow
-                                                            .ellipsis,
+                                                        overflow:
+                                                            TextOverflow.ellipsis,
                                                       ),
                                                       Padding(
                                                         padding:
-                                                            const EdgeInsets
-                                                                    .only(
+                                                            const EdgeInsets.only(
                                                                 top: 2.0,
                                                                 bottom: 2.0),
                                                         child: Row(
@@ -784,11 +792,13 @@ class _HomePageState extends State<HomePage> {
                                                                       thirdColor),
                                                               child: Center(
                                                                 child: Padding(
-                                                                  padding: const EdgeInsets
-                                                                          .only(
-                                                                      left: 5.0,
-                                                                      right:
-                                                                          5.0),
+                                                                  padding:
+                                                                      const EdgeInsets
+                                                                              .only(
+                                                                          left:
+                                                                              5.0,
+                                                                          right:
+                                                                              5.0),
                                                                   child: Text(
                                                                     homeCon
                                                                         .destinasiDataSortIntoTen![
@@ -800,7 +810,8 @@ class _HomePageState extends State<HomePage> {
                                                                         color: Colors
                                                                             .white,
                                                                         fontWeight:
-                                                                            FontWeight.w500),
+                                                                            FontWeight
+                                                                                .w500),
                                                                     overflow:
                                                                         TextOverflow
                                                                             .ellipsis,
@@ -822,12 +833,10 @@ class _HomePageState extends State<HomePage> {
                                                                     color:
                                                                         labelColor),
                                                                 child: Center(
-                                                                  child:
-                                                                      Padding(
+                                                                  child: Padding(
                                                                     padding: const EdgeInsets
                                                                             .only(
-                                                                        left:
-                                                                            5.0,
+                                                                        left: 5.0,
                                                                         right:
                                                                             5.0),
                                                                     child: Text(
@@ -860,17 +869,16 @@ class _HomePageState extends State<HomePage> {
                                                     0.15,
                                                 child: Column(
                                                     mainAxisAlignment:
-                                                        MainAxisAlignment
-                                                            .center,
+                                                        MainAxisAlignment.center,
                                                     crossAxisAlignment:
                                                         CrossAxisAlignment.end,
                                                     children: [
                                                       Container(
-                                                        width: MediaQuery.of(
-                                                                    context)
-                                                                .size
-                                                                .width *
-                                                            0.065,
+                                                        width:
+                                                            MediaQuery.of(context)
+                                                                    .size
+                                                                    .width *
+                                                                0.065,
                                                         child: Icon(
                                                             Icons
                                                                 .compare_arrows_rounded,
@@ -882,13 +890,12 @@ class _HomePageState extends State<HomePage> {
                                                         style: GoogleFonts
                                                             .notoSansDisplay(
                                                                 fontSize: 11,
-                                                                color:
-                                                                    descColor,
+                                                                color: descColor,
                                                                 fontWeight:
                                                                     FontWeight
                                                                         .w400),
-                                                        overflow: TextOverflow
-                                                            .ellipsis,
+                                                        overflow:
+                                                            TextOverflow.ellipsis,
                                                       ),
                                                     ]),
                                               )
@@ -898,12 +905,12 @@ class _HomePageState extends State<HomePage> {
                                   ),
                                 );
                               }),
+                        ),
 
-                      SizedBox(
-                        height: 20,
-                      )
-                    ]),
-                  ));
+                    SizedBox(
+                      height: 20,
+                    )
+                  ]));
                 }),
               ));
   }

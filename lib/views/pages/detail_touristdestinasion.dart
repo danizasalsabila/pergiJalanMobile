@@ -97,7 +97,13 @@ class _DetailDestinationState extends State<DetailDestination> {
                         // ),
                         Container(
                           height: 400,
-                          color: Colors.blue,
+                          width: MediaQuery.of(context).size.width,
+                          child: ClipRRect(
+                              borderRadius: BorderRadius.circular(8),
+                              child: Image.asset(
+                                "assets/images/slicing.jpg",
+                                fit: BoxFit.cover,
+                              )),
                         ),
                         Positioned(
                             top: 40,
@@ -278,7 +284,7 @@ class _DetailDestinationState extends State<DetailDestination> {
                                 child: Column(
                                   children: [
                                     Container(
-                                      color: Colors.white,
+                                      color: Color.fromARGB(255, 250, 250, 250),
                                       child: Padding(
                                         padding: const EdgeInsets.only(
                                             left: 16.0, right: 16.0),
@@ -359,7 +365,7 @@ class _DetailDestinationState extends State<DetailDestination> {
                                       height: 10,
                                     ),
                                     Container(
-                                      color: Colors.white,
+                                      color: Color.fromARGB(255, 250, 250, 250),
                                       child: Padding(
                                         padding: const EdgeInsets.only(
                                             left: 16.0, right: 16.0),
@@ -689,7 +695,7 @@ class _DetailDestinationState extends State<DetailDestination> {
                                       height: 10,
                                     ),
                                     Container(
-                                      color: Colors.white,
+                                      color: Color.fromARGB(255, 250, 250, 250),
                                       child: Padding(
                                         padding: const EdgeInsets.only(
                                             left: 16.0, right: 16.0),
@@ -849,7 +855,8 @@ class _DetailDestinationState extends State<DetailDestination> {
                                           child: Container(
                                         width:
                                             MediaQuery.of(context).size.width,
-                                        color: Colors.white,
+                                        color:
+                                            Color.fromARGB(255, 250, 250, 250),
                                         child: Padding(
                                           padding: const EdgeInsets.only(
                                               left: 16.0, right: 16),
