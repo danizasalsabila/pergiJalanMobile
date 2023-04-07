@@ -83,6 +83,8 @@ class _DetailDestinationState extends State<DetailDestination> {
               : SingleChildScrollView(
                   child: Consumer<DestinasiController>(
                       builder: (context, homeCon, child) {
+                        // print("------ ${widget.id.latitude}");
+                        // print("------ ${widget.id.longitude}");
                     //   String? latitude =  widget.id.latitude;
                     // double lat = double.parse(latitude!);
                     // print("LAT: $lat");
@@ -459,9 +461,9 @@ class _DetailDestinationState extends State<DetailDestination> {
                                                                                 FontWeight.w500),
                                                                       ),
                                                                       Text(
-                                                                        widget.id.recTime !=
+                                                                        widget.id.minutesSpend !=
                                                                                 null
-                                                                            ? widget.id.recTime!
+                                                                            ? widget.id.minutesSpend!
                                                                             : "-",
                                                                         style: GoogleFonts.openSans(
                                                                             fontSize:
