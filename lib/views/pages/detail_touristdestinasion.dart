@@ -1,5 +1,4 @@
 import 'dart:async';
-import 'dart:ffi';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
@@ -83,8 +82,8 @@ class _DetailDestinationState extends State<DetailDestination> {
               : SingleChildScrollView(
                   child: Consumer<DestinasiController>(
                       builder: (context, homeCon, child) {
-                        // print("------ ${widget.id.latitude}");
-                        // print("------ ${widget.id.longitude}");
+                    print("------ ${widget.id.latitude}");
+                    print("------ ${widget.id.longitude}");
                     //   String? latitude =  widget.id.latitude;
                     // double lat = double.parse(latitude!);
                     // print("LAT: $lat");
@@ -815,22 +814,45 @@ class _DetailDestinationState extends State<DetailDestination> {
                                                 child: ClipRRect(
                                                   borderRadius:
                                                       BorderRadius.circular(8),
-                                                  // child: GoogleMap(
-                                                  //   mapType: MapType.normal,
-                                                  //   zoomControlsEnabled: false,
-                                                  //   initialCameraPosition: CameraPosition(
-                                                  //     target: LatLng(
-                                                  //       -6.175392,106.827153
-                                                  //         // lat,
-                                                  //         // long
-                                                  //         ),
-                                                  //     zoom: 12,
-                                                  //   ),
-                                                  //   onMapCreated:
-                                                  //       (GoogleMapController controller) {
-                                                  //     _controller.complete(controller);
-                                                  //   },
-                                                  // ),
+                                                  child: isLoading
+                                                      ? const Center(
+                                                          child:
+                                                              CircularProgressIndicator(
+                                                            color: Colors.blue,
+                                                          ),
+                                                        )
+                                                      : SizedBox(
+                                                          width: MediaQuery.of(
+                                                                  context)
+                                                              .size
+                                                              .width,
+                                                          height: 600,
+                                                          child: GoogleMap(
+                                                            mapType:
+                                                                MapType.normal,
+                                                            zoomControlsEnabled:
+                                                                false,
+                                                            initialCameraPosition:
+                                                                CameraPosition(
+                                                              target: LatLng(
+                                                                  // widget.id.latitude!.toDouble() ,
+                                                                  // widget.id.longitude!.toDouble()
+                                                                  -6.175392,
+                                                                  106.827153
+                                                                  // lat,
+                                                                  // long
+                                                                  ),
+                                                              zoom: 12,
+                                                            ),
+                                                            onMapCreated:
+                                                                (GoogleMapController
+                                                                    controller) {
+                                                              _controller
+                                                                  .complete(
+                                                                      controller);
+                                                            },
+                                                          ),
+                                                        ),
                                                 ),
                                               ),
                                             ),
@@ -1011,31 +1033,57 @@ class _DetailDestinationState extends State<DetailDestination> {
                                                                         listen:
                                                                             false);
                                                                     try {
+                                                                      int intRating =
+                                                                          ratingController
+                                                                              .toInt();
                                                                       await reviewData.addReviewId(
                                                                           id: widget
                                                                               .id
                                                                               .id,
                                                                           rating:
-                                                                              ratingController,
+                                                                              intRating,
                                                                           review:
                                                                               _review);
 
                                                                       if (reviewData
                                                                               .statusCode ==
                                                                           200) {
-                                                                        print(
-                                                                            "b");
+                                                                        setState(
+                                                                            () {
+                                                                          isLoading2 =
+                                                                              false;
+                                                                        });
+                                                                        Fluttertoast.showToast(
+                                                                            // msg: reviewData.messageAddReview
+                                                                            //     .toString(),
+                                                                            msg:"Terima kasih atas review Anda!",
+                                                                            toastLength: Toast
+                                                                                .LENGTH_SHORT,
+                                                                            gravity: ToastGravity
+                                                                                .BOTTOM,
+                                                                            timeInSecForIosWeb:
+                                                                                1,
+                                                                            backgroundColor:
+                                                                                primaryColor.withOpacity(0.6),
+                                                                            textColor: Colors.white,
+                                                                            fontSize: 13);
+                                                                        // ignore: use_build_context_synchronously
+                                                                        Navigator.pop(
+                                                                            context,
+                                                                            false);
+                                                                        await reviewData.reviewDestinasiId(widget
+                                                                            .id
+                                                                            .id);
                                                                       }
-                                                                    } catch (e) {}
+                                                                    } catch (e) {
+                                                                      print(
+                                                                          "$e");
+                                                                    }
                                                                     setState(
                                                                         () {
                                                                       isLoading2 =
                                                                           false;
                                                                     });
-
-                                                                    Navigator.pop(
-                                                                        context,
-                                                                        false);
                                                                   },
                                                                   child:
                                                                       Padding(

@@ -38,41 +38,48 @@ class ReviewController extends ChangeNotifier {
   }
 
   int? statusCode;
+  String? messageAddReview;
   Future<dynamic> addReviewId(
-      {int? id, required double? rating, required String review}) async {
+      {int? id, required int? rating, required String review}) async {
     print("add review destination");
-    print("ID WISATA : $id");
+    print("ID DESTINASI : $id");
     print("RATING : $rating");
     print("REVIEW : $review");
 
     var url = Uri.parse(BASE_URL + POST_REVIEW);
     print("URL = $url");
+    final body = {'id_destinasi': id, 'rating': rating, 'review': review};
     try {
-      var client = http.Client();
-      // var response = await http.get(url);
-      var response = await client.post(
+      var response = await http.post(
         url,
-        body: jsonEncode({"id": id, "rating": rating, "review": review}),
-        headers: {
-          'content-type': 'application/x-www-form-urlencoded',
-        },
-        
-
+        body: json.encode(body),
+        headers: {"content-type": "application/json"},
       );
-      print("code: ${response.statusCode}");
+
+      var data = json.decode(response.body);
 
       if (response.statusCode == 200) {
-      print("masuk--");
-
-        print("code: ${response.statusCode}");
-        statusCode = response.statusCode;
         print("new review added");
+
+        statusCode = response.statusCode;
+        print("CODE : $statusCode");
+        data = data["data"];
+        messageAddReview = data["message"];
+        print("DATA : $data");
         notifyListeners();
-      } else if (response.statusCode == 302){
-        print("b");
-      }else if
-      
-       (response.statusCode == 404) {
+      } else if (response.statusCode == 404) {
+        statusCode = response.statusCode;
+        print("CODE : $statusCode");
+        messageAddReview = data["message"];
+        notifyListeners();
+      } else {
+        statusCode = response.statusCode;
+        // print("status code: ${response.statusCode}");
+        // print("status code: ${response.body}");
+        // print("status code: ${response.request}");
+        // print("status code: ${response.bodyBytes}");
+        // print("status code: ${response.headers}");
+        notifyListeners();
       }
     } catch (e) {
       print("ERROR MESSAGE: $e");

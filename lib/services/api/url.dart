@@ -1,9 +1,13 @@
 // ignore_for_file: constant_identifier_names, non_constant_identifier_names
 
 //TESTING API
-const BASE_URL = "http://10.0.2.2:8000/api/";
+// const BASE_URL = "http://10.0.2.2:8000/api/";
 // const BASE_URL = "http://127.0.0.1:8000/api/";
 // const BASE_URL = "http://192.168.43.171:8000/api/";
+//PRODUCTION
+const BASE_URL = "https://pergijalan.patricksantino.com/api/";
+
+
 //ENDPOINT
 //destinasi
 const GET_DESTINASI = "destinasi";

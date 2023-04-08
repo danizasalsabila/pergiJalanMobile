@@ -7,7 +7,6 @@ import 'package:provider/provider.dart';
 
 import '../../config/theme_color.dart';
 
-
 class SearchAppBar extends StatefulWidget {
   const SearchAppBar({super.key});
 
@@ -16,95 +15,94 @@ class SearchAppBar extends StatefulWidget {
 }
 
 class _SearchAppBarState extends State<SearchAppBar> {
-  
   String queries = '';
   bool isLoading = false;
   final TextEditingController queryController = TextEditingController();
-  final ScrollController _scrollController = ScrollController();
+  // final ScrollController _scrollController = ScrollController();
   @override
   Widget build(BuildContext context) {
     return Consumer<DestinasiController>(builder: (context, searchCon, child) {
-        return SafeArea(
-          child: Column(
-                              mainAxisAlignment: MainAxisAlignment.start,
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                SizedBox(
-                                  height: 20,
-                                ),
-                                Padding(
-                                  padding:
-                                      const EdgeInsets.only(left: 16.0, right: 16.0),
-                                  child: Text(
-                                    "Inspirasi Wisata Terbaik",
-                                    style: GoogleFonts.kanit(
-                                        fontSize: 24,
-                                        color: primaryColor,
-                                        fontWeight: FontWeight.w700),
-                                  ),
-                                ),
-                                Padding(
-                                  padding:
-                                      const EdgeInsets.only(left: 16.0, right: 16.0),
-                                  child: Text(
-                                    "Temukan destinasi impianmu berdasarkan\nnama, kota dan kategori wisata",
-                                    style: GoogleFonts.openSans(
-                                        fontSize: 13,
-                                        color: descColor,
-                                        fontWeight: FontWeight.w600),
-                                  ),
-                                ),
-                                const SizedBox(
-                                  height: 20,
-                                ),
-                                Padding(
-                                  padding:
-                                      const EdgeInsets.only(left: 16.0, right: 16.0),
-                                  child: TextField(
-                                    onChanged: (String query) {
-                                      debugPrint('data: $query');
-                                      if (query.isNotEmpty) {
-                                        queryController.clear();
-                                        setState(() {
-                                          queries = query;
-                                          print(queries);
-                                        });
-                                        searchCon.searchDestinasi(query);
-                                      } else {
-                                        queryController.clear();
-                                      }
-                                    },
-                                    textInputAction: TextInputAction.search,
-                                    decoration: InputDecoration(
-                                        enabledBorder: OutlineInputBorder(
-                                            borderRadius: BorderRadius.circular(15),
-                                            borderSide: BorderSide(
-                                              color: Colors.grey.shade300,
-                                            )),
-                                        focusedBorder: OutlineInputBorder(
-                                            borderRadius: BorderRadius.circular(15),
-                                            borderSide: const BorderSide(
-                                                color: secondaryColor, width: 2)),
-                                        filled: true,
-                                        fillColor: Colors.grey.shade300,
-                                        contentPadding: const EdgeInsets.all(10),
-                                        prefixIcon: const Padding(
-                                          padding:
-                                              EdgeInsets.only(left: 22.0, right: 18),
-                                          child: Icon(
-                                            Icons.search,
-                                            color: Colors.grey,
-                                          ),
-                                        ),
-                                        hintStyle: const TextStyle(
-                                          fontSize: 13,
-                                          color: Colors.grey,
-                                        ),
-                                        hintText: "Cari Tempat Wisata"),
-                                  ),
-                                )]),
-        );
-      }
-    );
+      return SafeArea(
+        child: Column(
+            mainAxisAlignment: MainAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              const SizedBox(
+                height: 20,
+              ),
+              Padding(
+                padding: const EdgeInsets.only(left: 16.0, right: 16.0),
+                child: Text(
+                  "Inspirasi Wisata Terbaik",
+                  style: GoogleFonts.kanit(
+                      fontSize: 24,
+                      color: primaryColor,
+                      fontWeight: FontWeight.w700),
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsets.only(left: 16.0, right: 16.0),
+                child: Text(
+                  "Temukan destinasi impianmu berdasarkan\nnama, kota dan kategori wisata",
+                  style: GoogleFonts.openSans(
+                      fontSize: 13,
+                      color: descColor,
+                      fontWeight: FontWeight.w600),
+                ),
+              ),
+              const SizedBox(
+                height: 20,
+              ),
+              Padding(
+                padding: const EdgeInsets.only(left: 16.0, right: 16.0),
+                child: TextField(
+                  onChanged: (String query) {
+                    isLoading = true;
+                    debugPrint('data: $query');
+                    if (query.isNotEmpty) {
+                      queryController.clear();
+                      setState(() {
+                        queries = query;
+                        print(queries);
+                      });
+                      searchCon.searchDestinasi(query);
+                    setState(() {
+                      isLoading=false;
+                    });
+                    } else {
+                      queryController.clear();
+                    }
+                  },
+                  textInputAction: TextInputAction.search,
+                  decoration: InputDecoration(
+                      enabledBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(15),
+                          borderSide: BorderSide(
+                            color: Colors.grey.shade300,
+                          )),
+                      focusedBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(15),
+                          borderSide: const BorderSide(
+                              color: secondaryColor, width: 2)),
+                      filled: true,
+                      fillColor: Colors.grey.shade300,
+                      contentPadding: const EdgeInsets.all(10),
+                      prefixIcon: const Padding(
+                        padding: EdgeInsets.only(left: 22.0, right: 18),
+                        child: Icon(
+                          Icons.search,
+                          color: Colors.grey,
+                        ),
+                      ),
+                      hintStyle: const TextStyle(
+                        fontSize: 13,
+                        color: Colors.grey,
+                      ),
+                      hintText: "Cari Tempat Wisata"),
+                ),
+              )
+            ]),
+      );
+    });
   }
 }

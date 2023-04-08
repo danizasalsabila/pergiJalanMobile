@@ -17,7 +17,7 @@ class _MainNavigationState extends State<MainNavigation> {
   int _indexBNav = 0;
   final List<Widget> _widgetOptions = [
     HomePage(),
-    SearchPageT(),
+    SearchPage(),
     UserPage(),
   ];
 
