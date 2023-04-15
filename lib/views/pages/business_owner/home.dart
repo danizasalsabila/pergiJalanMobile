@@ -5,6 +5,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
 
 import 'package:pergijalan_mobile/config/theme_color.dart';
+import 'package:pergijalan_mobile/views/pages/login_user.dart';
 
 class HomePageOwner extends StatefulWidget {
   const HomePageOwner({super.key});
@@ -43,7 +44,10 @@ class _HomePageOwnerState extends State<HomePageOwner> {
       backgroundColor: backgroundColor,
       appBar: AppBar(
         leading: InkWell(
-            onTap: () {},
+            onTap: () {
+              Navigator.push(context,
+                  MaterialPageRoute(builder: (context) => const LoginUser()));
+            },
             child: Icon(
               Icons.settings,
               color: Colors.grey.shade400,

@@ -464,6 +464,8 @@ class _DetailDestinationState extends State<DetailDestination> {
                                                                                 null
                                                                             ? widget.id.minutesSpend!
                                                                             : "-",
+                                                                            overflow: TextOverflow.fade,
+                                                                            maxLines: 2,
                                                                         style: GoogleFonts.openSans(
                                                                             fontSize:
                                                                                 13,
