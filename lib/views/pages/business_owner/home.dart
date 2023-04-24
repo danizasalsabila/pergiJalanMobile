@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/container.dart';
-import 'package:flutter/src/widgets/framework.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
 
 import 'package:pergijalan_mobile/config/theme_color.dart';
 import 'package:pergijalan_mobile/views/pages/login_user.dart';
+
+import 'create_destinationtour.dart';
 
 class HomePageOwner extends StatefulWidget {
   const HomePageOwner({super.key});
@@ -39,7 +40,6 @@ class _HomePageOwnerState extends State<HomePageOwner> {
   @override
   Widget build(BuildContext context) {
     String formattedDate = DateFormat('EEEEE, d MMM yyyy').format(now);
-    print(formattedDate);
     return Scaffold(
       backgroundColor: backgroundColor,
       appBar: AppBar(
@@ -72,6 +72,28 @@ class _HomePageOwnerState extends State<HomePageOwner> {
         backgroundColor: backgroundColor,
         elevation: 0,
         automaticallyImplyLeading: false,
+      ),
+      floatingActionButton: Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: FloatingActionButton(
+          elevation: 5,
+          onPressed: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => const CreateDestinationTourist(),
+              ),
+            );
+          },
+          backgroundColor: primaryColor,
+          child: const
+          FaIcon(FontAwesomeIcons.plus)
+          //  Icon(
+          //   Icons.add,
+          //   size: 36,
+          //   color: Colors.white,
+          // ),
+        ),
       ),
       body: isLoading
           ? const Center(
@@ -237,7 +259,8 @@ class _HomePageOwnerState extends State<HomePageOwner> {
                           begin: Alignment.topCenter,
                           end: Alignment.bottomCenter,
                           colors: [
-                            Color.fromARGB(255, 0, 119, 134),
+                            // Color.fromARGB(255, 0, 119, 134),
+                            Color.fromARGB(255, 17, 93, 139),
                             Color.fromARGB(255, 13, 183, 206),
                           ],
                         ),

@@ -16,7 +16,7 @@ class DestinasiController extends ChangeNotifier {
   List<Destinasi>? destinasiDataSortIntoTen;
   List<Destinasi>? destinasiRandom;
   String messageDestinasi = "";
-  
+
   // String dataDestinasi = "";
 
   Future<dynamic> allDestinasi() async {
@@ -58,18 +58,19 @@ class DestinasiController extends ChangeNotifier {
     }
   }
 
-  final randomList =  Random();
-     setRandomDestinasi() {
+  final randomList = Random();
+  setRandomDestinasi() {
     if (destinasiData!.length <= 6) {
       destinasiRandom = destinasiData;
       notifyListeners();
     } else {
       print("data sort into 6 random list of destinasi");
-      destinasiRandom = List.generate(6, (index) => destinasiData![randomList.nextInt(destinasiData!.length)]);
+      destinasiRandom = List.generate(6,
+          (index) => destinasiData![randomList.nextInt(destinasiData!.length)]);
     }
   }
 
-    Future<dynamic> destinasiCategory(String q) async {
+  Future<dynamic> destinasiCategory(String q) async {
     print("get data by category");
     var url = Uri.parse(BASE_URL + GET_DESTINASI_CATEGORY(q));
     print("URL = $url");
@@ -83,9 +84,8 @@ class DestinasiController extends ChangeNotifier {
         print("code: ${response.statusCode}");
         print(data["message"]);
         destinasiResponse = destinasiFromJson(response.body);
-        destinasiCategoryData= destinasiResponse?.destinasi;
+        destinasiCategoryData = destinasiResponse?.destinasi;
         notifyListeners();
-
       } else if (response.statusCode == 404) {
         print(messageDestinasi);
       }
@@ -94,7 +94,7 @@ class DestinasiController extends ChangeNotifier {
     }
   }
 
-      Future<dynamic> searchDestinasi(String q) async {
+  Future<dynamic> searchDestinasi(String q) async {
     print("get data by $q category");
     var url = Uri.parse(BASE_URL + GET_DESTINASI_QUERY(q));
     print("URL = $url");
@@ -108,9 +108,8 @@ class DestinasiController extends ChangeNotifier {
         print("code: ${response.statusCode}");
         print(data["message"]);
         destinasiResponse = destinasiFromJson(response.body);
-        destinasiQueryData= destinasiResponse?.destinasi;
+        destinasiQueryData = destinasiResponse?.destinasi;
         notifyListeners();
-
       } else if (response.statusCode == 404) {
         print(messageDestinasi);
       }
@@ -118,4 +117,48 @@ class DestinasiController extends ChangeNotifier {
       print("ERROR MESSAGE: $e");
     }
   }
+
+  // String? messageAddDestinasi;
+  // int? statusCodeAddDestinasi;
+  // Future<dynamic> postDestinasi(String q) async {
+  //   var url = Uri.parse(BASE_URL + POST_DESTINASI);
+  //   print("URL = $url");
+  //   final body = {
+  //     'name_destinasi': id,
+  //     'description': rating,
+  //     'address': review,
+  //     'city': id,
+  //     'contact': rating,
+  //     'hobby': review,
+  //     'minutes_spend': id,
+  //     'latitude': rating,
+  //     'longitude': review,
+  //     'url_map': id,
+  //     'rec_weather': rating,
+  //     'open-hour': review,
+  //     'closed-hour': id,
+  //     'destination_picture': rating,
+  //     'destination_picture': review,
+  //     'security': review,
+  //   };
+  //   try {
+  //     var response = await http.post(url);
+
+  //     var data = json.decode(response.body);
+  //     if (response.statusCode == 200) {
+  //       print("code: ${response.statusCode}");
+  //       print(data["message"]);
+  //       statusCodeAddDestinasi = response.statusCode;
+  //       // destinasiResponse = destinasiFromJson(response.body);
+  //       // destinasiQueryData = destinasiResponse?.destinasi;
+  //       notifyListeners();
+  //     } else if (response.statusCode == 404) {
+  //       print(messageAddDestinasi);
+  //       messageAddDestinasi = data["message"];
+  //       statusCodeAddDestinasi = response.statusCode;
+  //     }
+  //   } catch (e) {
+  //     print("ERROR MESSAGE: $e");
+  //   }
+  // }
 }

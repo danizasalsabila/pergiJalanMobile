@@ -7,6 +7,19 @@
 //PRODUCTION
 const BASE_URL = "https://pergijalan.patricksantino.com/api/";
 
+//USER
+const REGISTER_USER = "register";
+
+const LOGIN_USER = "login";
+
+const LOGOUT_USER = "logout";
+
+const GET_USER = "user";
+
+GET_USER_BY_EMAIL(email) => "email/user?q=$email";
+
+const GET_USER_BY_ID = "user/";
+
 
 //ENDPOINT
 //destinasi
@@ -26,12 +39,14 @@ GET_DESTINASI_CITY(String q) => "city/destinasi?q=$q";
 
 GET_DESTINASI_CATEGORY(String q) => "category/destinasi?q=$q";
 
+
 //review
 const GET_REVIEW = "review";
 
 GET_REVIEW_ID(id) => "review/$id";
 
 const POST_REVIEW = "review";
+
 
 //ticket
 const GET_TICKET = "ticket";
@@ -43,10 +58,3 @@ const POST_TICKET = "ticket";
 DELETE_TICKET(id) => "ticket/destroy/$id";
 
 
-
-
-
-
-
-
-//PRODUCTION

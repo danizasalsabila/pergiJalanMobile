@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:pergijalan_mobile/controllers/destinasi_controller.dart';
 import 'package:pergijalan_mobile/controllers/review_controller.dart';
+import 'package:pergijalan_mobile/controllers/user_controller.dart';
 import 'package:pergijalan_mobile/views/pages/home.dart';
+import 'package:pergijalan_mobile/views/pages/login_user.dart';
 import 'package:pergijalan_mobile/views/widgets/bar_mainnavigation.dart';
 import 'package:provider/provider.dart';
 
@@ -17,7 +19,8 @@ class MyApp extends StatelessWidget {
     return MultiProvider(
       providers: [
         ChangeNotifierProvider<DestinasiController>(create: (_)=>DestinasiController()),
-        ChangeNotifierProvider<ReviewController>(create: (_)=>ReviewController())
+        ChangeNotifierProvider<ReviewController>(create: (_)=>ReviewController()),
+        ChangeNotifierProvider<UserController>(create: (_)=>UserController()),
       ],
       child: MaterialApp(
           debugShowCheckedModeBanner: false,
@@ -25,7 +28,8 @@ class MyApp extends StatelessWidget {
           theme: ThemeData(
             primarySwatch: Colors.blue,
           ),
-          home: const MainNavigation(),
+          // home: const MainNavigation(),
+          home: const LoginUser(),
         ),
     );
   }

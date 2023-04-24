@@ -51,6 +51,8 @@ dependencies:
   intl: ^0.18.0
   font_awesome_flutter: ^10.4.0
   email_validator: ^2.1.17
+  shared_preferences: ^2.0.12
+  dotted_border: ^2.0.0+3
 
 dev_dependencies:
   flutter_test:
