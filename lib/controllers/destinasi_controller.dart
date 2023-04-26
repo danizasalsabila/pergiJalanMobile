@@ -118,47 +118,102 @@ class DestinasiController extends ChangeNotifier {
     }
   }
 
-  // String? messageAddDestinasi;
-  // int? statusCodeAddDestinasi;
-  // Future<dynamic> postDestinasi(String q) async {
-  //   var url = Uri.parse(BASE_URL + POST_DESTINASI);
-  //   print("URL = $url");
-  //   final body = {
-  //     'name_destinasi': id,
-  //     'description': rating,
-  //     'address': review,
-  //     'city': id,
-  //     'contact': rating,
-  //     'hobby': review,
-  //     'minutes_spend': id,
-  //     'latitude': rating,
-  //     'longitude': review,
-  //     'url_map': id,
-  //     'rec_weather': rating,
-  //     'open-hour': review,
-  //     'closed-hour': id,
-  //     'destination_picture': rating,
-  //     'destination_picture': review,
-  //     'security': review,
-  //   };
-  //   try {
-  //     var response = await http.post(url);
+  String? messageAddDestinasi;
+  int? statusCodeAddDestinasi;
+  Future<dynamic> postDestinasi({
+    required String? nameDestinasi,
+    required String? description,
+    required String? address,
+    required String? city,
+    required String? category,
+    String? contact,
+    String? hobby,
+    String? minutesSpend,
+    double? latitude,
+    double? longitude,
+    String? urlMap,
+    String? recWeather,
+    int? openHour,
+    int? closedHour,
+    // Null? image,
+    required int? security,
+    String? fasility,
+  }) async {
+    var url = Uri.parse(BASE_URL + POST_DESTINASI);
+    print("URL = $url");
+    print("nama: $nameDestinasi");
+    print("desc: $description");
+    print("address: $address");
+    print("city: $city");
+    print("category: $category");
+    print("lat: $latitude");
+    print("long: $longitude");
+    print("openHour: $openHour");
+    print("closedHour: $closedHour");
+    print("security: $security");
+    final body = {
+      'name_destinasi': nameDestinasi,
+      'description': description,
+      'address': address,
+      'city': city,
+      'category': category,
+      'contact': contact,
+      'hobby': hobby,
+      'minutes_spend': minutesSpend,
+      'latitude': latitude,
+      'longitude': longitude,
+      'url_map': urlMap,
+      'rec_weather': recWeather,
+      'open-hour': openHour,
+      'closed-hour': closedHour,
+      // 'destination_picture': image,
+      'fasility': fasility,
+      'security': security,
+    };
+    try {
+      var response = await http.post(
+        url,
+        body: json.encode({
+          'name_destinasi': nameDestinasi,
+          'description': description,
+          'address': address,
+          'city': city,
+          'category': category,
+          'contact': contact,
+          'hobby': hobby,
+          'minutes_spend': minutesSpend,
+          'latitude': latitude,
+          'longitude': longitude,
+          'url_map': urlMap,
+          'rec_weather': recWeather,
+          'open-hour': openHour,
+          'closed-hour': closedHour,
+          'fasility': fasility,
+          'security': security,
+        }),
+        headers: {
+          "content-type": "application/json",
+        },
+      );
 
-  //     var data = json.decode(response.body);
-  //     if (response.statusCode == 200) {
-  //       print("code: ${response.statusCode}");
-  //       print(data["message"]);
-  //       statusCodeAddDestinasi = response.statusCode;
-  //       // destinasiResponse = destinasiFromJson(response.body);
-  //       // destinasiQueryData = destinasiResponse?.destinasi;
-  //       notifyListeners();
-  //     } else if (response.statusCode == 404) {
-  //       print(messageAddDestinasi);
-  //       messageAddDestinasi = data["message"];
-  //       statusCodeAddDestinasi = response.statusCode;
-  //     }
-  //   } catch (e) {
-  //     print("ERROR MESSAGE: $e");
-  //   }
-  // }
+      // print('CODE: ${response.statusCode}');
+      // print(response.headers);
+      // print(response.request);
+      // print("``````````````````````````````````````");
+      var data = json.decode(response.body);
+      if (response.statusCode == 200) {
+        print(data["message"]);
+        statusCodeAddDestinasi = response.statusCode;
+        // destinasiResponse = destinasiFromJson(response.body);
+        // destinasiQueryData = destinasiResponse?.destinasi;
+        notifyListeners();
+      } else if (response.statusCode == 404) {
+        print(messageAddDestinasi);
+        messageAddDestinasi = data["message"];
+        statusCodeAddDestinasi = response.statusCode;
+      }
+    } catch (e) {
+      print("ERROR MESSAGE: $e");
+    }
+  }
 }

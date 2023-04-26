@@ -2,9 +2,16 @@ import 'package:dotted_border/dotted_border.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/container.dart';
 import 'package:flutter/src/widgets/framework.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:pergijalan_mobile/config/theme_color.dart';
+import 'package:pergijalan_mobile/controllers/destinasi_controller.dart';
+import 'package:pergijalan_mobile/views/pages/business_owner/home.dart';
+import 'package:provider/provider.dart';
+
+import '../../../controllers/user_controller.dart';
 
 class CreateDestinationTourist extends StatefulWidget {
   const CreateDestinationTourist({super.key});
@@ -16,47 +23,27 @@ class CreateDestinationTourist extends StatefulWidget {
 
 class _CreateDestinationTouristState extends State<CreateDestinationTourist> {
   bool isSelected = false;
+  bool isLoading = false;
   TextEditingController nameController = TextEditingController();
   TextEditingController phoneNumberController = TextEditingController();
   TextEditingController descriptionController = TextEditingController();
   TextEditingController addressController = TextEditingController();
-  TextEditingController cityController = TextEditingController();
   TextEditingController openHourController = TextEditingController();
   TextEditingController closedHourController = TextEditingController();
   TextEditingController minutesSpendController = TextEditingController();
   TextEditingController urlMapController = TextEditingController();
   TextEditingController latitudeController = TextEditingController();
-  TextEditingController logitudeController = TextEditingController();
+  TextEditingController longitudeController = TextEditingController();
+
   TextEditingController fasilitiesController = TextEditingController();
   TextEditingController ticketStockController = TextEditingController();
   TextEditingController ticketPriceController = TextEditingController();
   List<bool> _isSecurityAvail = [true, false];
-  @override
-  void dispose() {
-    nameController.dispose();
-    phoneNumberController.dispose();
-    descriptionController.dispose();
-    addressController.dispose();
-    cityController.dispose();
-    openHourController.dispose();
-    closedHourController.dispose();
-    minutesSpendController.dispose();
-    urlMapController.dispose();
-    latitudeController.dispose();
-    logitudeController.dispose();
-    fasilitiesController.dispose();
-    ticketStockController.dispose();
-    ticketPriceController.dispose();
-    super.dispose();
-  }
-
-  @override
-  void initState() {
-    print(" ");
-    print("-------------DIRECT TO CREATE NEW DESTINATION PAGE-----------");
-    _isSecurityAvail = [true, false];
-    super.initState();
-  }
+  int securityAvail = 0;
+  // double latitudeValue= 0;
+  // double longitudeValue=0;
+  // int openHourValue=0;
+  // int closedHourValue=0;
 
   final List<String> _listCategory = [
     "Cagar Alam",
@@ -65,10 +52,8 @@ class _CreateDestinationTouristState extends State<CreateDestinationTourist> {
     "Bahari",
     "Taman Ibadah",
   ];
-  String finalSelectedCategory = '';
-
+  String? finalSelectedCategory;
   int? _selectedListCategory;
-
   _onSelectedListCategory(int i) {
     setState(() {
       _selectedListCategory = i;
@@ -81,7 +66,6 @@ class _CreateDestinationTouristState extends State<CreateDestinationTourist> {
     "Hujan",
     "Kabut",
   ];
-
   int? _selectedListWeather;
   String finalSelectedWeather = '';
   _onSelectedListWeather(int i) {
@@ -109,6 +93,82 @@ class _CreateDestinationTouristState extends State<CreateDestinationTourist> {
 
   String finalSelectedHobby = '';
 
+  List<String> listProvince = [
+    "Aceh",
+    "Sumatera Utara",
+    "Sumatera Selatan",
+    "Sumatera Barat",
+    "Bengkulu",
+    "Riau",
+    "Kepulauan Riau",
+    "Jambi",
+    "Lampung",
+    "Bangka Belitung",
+    "Kalimantan Barat",
+    "Kalimantan Timur",
+    "Kalimantan Tengah",
+    "Kalimantan Selatan",
+    "Kalimantan Utara",
+    "Banten",
+    "DKI Jakarta",
+    "Jawa Barat",
+    "Jawa Timur",
+    "Jawa Tengah",
+    "DI Yogyakarta",
+    "Bali",
+    "Nusa Tenggara Timur",
+    "Nusa Tenggara Barat",
+    "Gorontalo",
+    "Sulawesi Barat",
+    "Sulawesi Tengah",
+    "Sulawesi Utara",
+    "Sulawesi Selatan",
+    "Sulawesi Tenggara",
+    "Maluku Utara",
+    "Maluku",
+    "Papua Barat",
+    "Papua Tengah",
+    "Papua Selatan",
+    "Papua",
+    "Papua Pegunungan",
+    "Papua Barat Daya",
+  ];
+  var seen = Set<String>();
+  // List<String> uniquelist = listProvince.where((province) => seen.add(province)).toList();
+  String? finalSelectedProvince;
+  // int? _selectedListProvince;
+  // _onSelectedListProvince(int i) {
+  //   setState(() {
+  //     _selectedListProvince = i;
+  //   });
+  // }
+
+  @override
+  void initState() {
+    print(" ");
+    print("-------------DIRECT TO CREATE NEW DESTINATION PAGE-----------");
+    _isSecurityAvail = [true, false];
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    nameController.dispose();
+    phoneNumberController.dispose();
+    descriptionController.dispose();
+    addressController.dispose();
+    openHourController.dispose();
+    closedHourController.dispose();
+    minutesSpendController.dispose();
+    urlMapController.dispose();
+    latitudeController.dispose();
+    longitudeController.dispose();
+    fasilitiesController.dispose();
+    ticketStockController.dispose();
+    ticketPriceController.dispose();
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -118,14 +178,15 @@ class _CreateDestinationTouristState extends State<CreateDestinationTourist> {
         elevation: 0,
         title: Text(
           "Tambahkan Wisata Baru",
-          style: TextStyle(color: Colors.black),
+          style: GoogleFonts.openSans(
+              fontSize: 20, color: Colors.black, fontWeight: FontWeight.w700),
         ),
         automaticallyImplyLeading: false,
       ),
       body: SingleChildScrollView(
         child: Column(children: [
           Padding(
-            padding: EdgeInsets.fromLTRB(16, 16, 16, 0),
+            padding: const EdgeInsets.fromLTRB(16, 16, 16, 0),
             child: Container(
               width: MediaQuery.of(context).size.width,
               decoration: BoxDecoration(
@@ -143,7 +204,7 @@ class _CreateDestinationTouristState extends State<CreateDestinationTourist> {
                           fontWeight: FontWeight.w600),
                     ),
                     Padding(
-                      padding: const EdgeInsets.only(top: 8.0, bottom: 4),
+                      padding: const EdgeInsets.only(top: 14.0, bottom: 6),
                       child: Text(
                         "Nama",
                         style: GoogleFonts.inter(
@@ -163,6 +224,7 @@ class _CreateDestinationTouristState extends State<CreateDestinationTourist> {
                       width: MediaQuery.of(context).size.width,
                       child: Center(
                         child: TextField(
+                          controller: nameController,
                           style: GoogleFonts.openSans(
                               fontSize: 14,
                               color: titleColor,
@@ -182,7 +244,7 @@ class _CreateDestinationTouristState extends State<CreateDestinationTourist> {
                       ),
                     ),
                     Padding(
-                      padding: const EdgeInsets.only(top: 8.0, bottom: 4),
+                      padding: const EdgeInsets.only(top: 14.0, bottom: 6),
                       child: Text(
                         "Nomor Telepon",
                         style: GoogleFonts.inter(
@@ -202,6 +264,7 @@ class _CreateDestinationTouristState extends State<CreateDestinationTourist> {
                       width: MediaQuery.of(context).size.width,
                       child: Center(
                         child: TextField(
+                          controller: phoneNumberController,
                           style: GoogleFonts.openSans(
                               fontSize: 14,
                               color: titleColor,
@@ -221,7 +284,7 @@ class _CreateDestinationTouristState extends State<CreateDestinationTourist> {
                       ),
                     ),
                     Padding(
-                      padding: const EdgeInsets.only(top: 11.0, bottom: 3),
+                      padding: const EdgeInsets.only(top: 14.0, bottom: 6),
                       child: Text(
                         "Foto",
                         style: GoogleFonts.inter(
@@ -273,7 +336,7 @@ class _CreateDestinationTouristState extends State<CreateDestinationTourist> {
             ),
           ),
           Padding(
-            padding: EdgeInsets.fromLTRB(16, 12, 16, 0),
+            padding: const EdgeInsets.fromLTRB(16, 12, 16, 0),
             child: Container(
               width: MediaQuery.of(context).size.width,
               decoration: BoxDecoration(
@@ -285,7 +348,7 @@ class _CreateDestinationTouristState extends State<CreateDestinationTourist> {
                   children: [
                     // Text("Detail Tempat Wisata"),
                     Padding(
-                      padding: const EdgeInsets.only(top: 4.0, bottom: 4),
+                      padding: const EdgeInsets.only(top: 4.0, bottom: 5),
                       child: Text(
                         "Deskripsi",
                         style: GoogleFonts.inter(
@@ -305,6 +368,7 @@ class _CreateDestinationTouristState extends State<CreateDestinationTourist> {
                       height: 110,
                       child: TextField(
                         maxLines: 5,
+                        controller: descriptionController,
                         style: GoogleFonts.openSans(
                             fontSize: 14,
                             color: titleColor,
@@ -322,7 +386,7 @@ class _CreateDestinationTouristState extends State<CreateDestinationTourist> {
                       ),
                     ),
                     Padding(
-                      padding: const EdgeInsets.only(top: 11.0),
+                      padding: const EdgeInsets.only(top: 15.0),
                       child: Text(
                         "Kategori",
                         style: GoogleFonts.inter(
@@ -332,7 +396,7 @@ class _CreateDestinationTouristState extends State<CreateDestinationTourist> {
                       ),
                     ),
                     SizedBox(
-                      height: 40,
+                      height: 42,
                       child: ListView.builder(
                         shrinkWrap: true,
                         // physics: Bounc,
@@ -341,13 +405,13 @@ class _CreateDestinationTouristState extends State<CreateDestinationTourist> {
                         itemBuilder: (context, index) => SizedBox(
                           // height: 40,
                           child: Padding(
-                            padding: const EdgeInsets.all(8.0),
+                            padding: const EdgeInsets.all(8),
                             child: Container(
                               decoration: BoxDecoration(
                                 borderRadius: BorderRadius.circular(13),
                                 color: _selectedListCategory != null &&
                                         _selectedListCategory == index
-                                    ? Color.fromARGB(255, 223, 245, 214)
+                                    ? const Color.fromARGB(255, 223, 245, 214)
                                     : Colors.grey.shade300,
                               ),
                               child: Padding(
@@ -380,7 +444,7 @@ class _CreateDestinationTouristState extends State<CreateDestinationTourist> {
                       ),
                     ),
                     Padding(
-                      padding: const EdgeInsets.only(top: 11.0, bottom: 4),
+                      padding: const EdgeInsets.only(top: 10.0, bottom: 6),
                       child: Text(
                         "Alamat Lengkap",
                         style: GoogleFonts.inter(
@@ -399,6 +463,7 @@ class _CreateDestinationTouristState extends State<CreateDestinationTourist> {
                           )),
                       width: MediaQuery.of(context).size.width,
                       child: TextField(
+                        controller: addressController,
                         style: GoogleFonts.openSans(
                             fontSize: 14,
                             color: titleColor,
@@ -414,7 +479,7 @@ class _CreateDestinationTouristState extends State<CreateDestinationTourist> {
                       ),
                     ),
                     Padding(
-                      padding: const EdgeInsets.only(top: 4.0),
+                      padding: const EdgeInsets.only(top: 8.0),
                       child: Container(
                         width: MediaQuery.of(context).size.width,
                         height: 40,
@@ -422,7 +487,7 @@ class _CreateDestinationTouristState extends State<CreateDestinationTourist> {
                             border: Border.all(
                                 color: Colors.grey.shade200, width: 2),
                             borderRadius: BorderRadius.circular(5),
-                            color: Color.fromARGB(148, 1, 141, 159)),
+                            color: const Color.fromARGB(148, 1, 141, 159)),
                         child: Center(
                           child: Row(
                               mainAxisAlignment: MainAxisAlignment.start,
@@ -451,7 +516,7 @@ class _CreateDestinationTouristState extends State<CreateDestinationTourist> {
                       ),
                     ),
                     Padding(
-                      padding: const EdgeInsets.only(top: 8.0, bottom: 4),
+                      padding: const EdgeInsets.only(top: 14.0, bottom: 6),
                       child: Text(
                         "Provinsi",
                         style: GoogleFonts.inter(
@@ -462,29 +527,135 @@ class _CreateDestinationTouristState extends State<CreateDestinationTourist> {
                     ),
                     Container(
                       height: 50,
+                      // width: MediaQuery.of(context).size.width,
                       decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(5),
                           border: Border.all(
-                            width: 2,
-                            color: Colors.grey.shade200,
-                          )),
-                      width: MediaQuery.of(context).size.width,
-                      child: TextField(
-                        style: GoogleFonts.openSans(
-                            fontSize: 14,
-                            color: titleColor,
-                            fontWeight: FontWeight.w600),
-                        keyboardType: TextInputType.text,
-                        textInputAction: TextInputAction.next,
-                        decoration: InputDecoration(
-                          //   hintText: 'Nomor Handphone',
-                          //   hintStyle: TextStyle(color: Colors.grey.shade500),
-
-                          border: InputBorder.none,
-                          contentPadding: EdgeInsets.only(left: 6),
+                              color: Colors.grey.shade200, width: 2)),
+                      child: Container(
+                        child: DropdownButton(
+                          isExpanded: true,
+                          menuMaxHeight: 300,
+                          underline: const SizedBox(),
+                          elevation: 0,
+                          value: finalSelectedProvince,
+                          icon: Row(
+                            children: [
+                              Container(
+                                height: 50,
+                                width: 2,
+                                color: Colors.grey.shade200,
+                              ),
+                              Padding(
+                                padding:
+                                    const EdgeInsets.only(right: 10, left: 10),
+                                child: Icon(
+                                  Icons.arrow_drop_down,
+                                  size: 28,
+                                  color: Colors.grey.shade600,
+                                ),
+                              ),
+                            ],
+                          ),
+                          hint: Padding(
+                            padding: const EdgeInsets.only(left: 8.0),
+                            child: Text(
+                              'Pilih provinsi tempat wisata Anda',
+                              style: GoogleFonts.openSans(
+                                  fontSize: 11,
+                                  color: descColor,
+                                  fontWeight: FontWeight.w500),
+                            ),
+                          ),
+                          items: [
+                            'Aceh',
+                            'Sumatera Utara',
+                            'Sumatera Selatan',
+                            'Sumatera Barat',
+                            'Bengkulu',
+                            'Riau',
+                            'Kepulauan Riau',
+                            'Jambi',
+                            'Lampung',
+                            'Bangka Belitung',
+                            'Kalimantan Barat',
+                            'Kalimantan Timur',
+                            'Kalimantan Tengah',
+                            'Kalimantan Selatan',
+                            'Kalimantan Utara',
+                            'Banten',
+                            'DKI Jakarta',
+                            'Jawa Barat',
+                            'Jawa Timur',
+                            'Jawa Tengah',
+                            'DI Yogyakarta',
+                            'Bali',
+                            'Nusa Tenggara Timur',
+                            'Nusa Tenggara Barat',
+                            'Gorontalo',
+                            'Sulawesi Barat',
+                            'Sulawesi Tengah',
+                            'Sulawesi Utara',
+                            'Sulawesi Selatan',
+                            'Sulawesi Tenggara',
+                            'Maluku Utara',
+                            'Maluku',
+                            'Papua Barat',
+                            'Papua Tengah',
+                            'Papua Selatan',
+                            'Papua',
+                            'Papua Pegunungan',
+                            'Papua Barat Daya',
+                          ].map<DropdownMenuItem>((String value) {
+                            return DropdownMenuItem(
+                              value: value,
+                              child: Padding(
+                                padding: const EdgeInsets.only(left: 10.0),
+                                child: Text(
+                                  value,
+                                  style: GoogleFonts.openSans(
+                                      fontSize: 13,
+                                      color: titleColor,
+                                      fontWeight: FontWeight.w600),
+                                ),
+                              ),
+                            );
+                          }).toList(),
+                          dropdownColor: Colors.grey.shade100,
+                          onChanged: (newValue) {
+                            setState(() {
+                              finalSelectedProvince = newValue.toString();
+                              print("final: $finalSelectedProvince");
+                            });
+                          },
                         ),
                       ),
                     ),
+                    // Container(
+                    //   height: 50,
+                    //   decoration: BoxDecoration(
+                    //       borderRadius: BorderRadius.circular(5),
+                    //       border: Border.all(
+                    //         width: 2,
+                    //         color: Colors.grey.shade200,
+                    //       )),
+                    //   width: MediaQuery.of(context).size.width,
+                    //   child: TextField(
+                    //     style: GoogleFonts.openSans(
+                    //         fontSize: 14,
+                    //         color: titleColor,
+                    //         fontWeight: FontWeight.w600),
+                    //     keyboardType: TextInputType.text,
+                    //     textInputAction: TextInputAction.next,
+                    //     decoration: InputDecoration(
+                    //       //   hintText: 'Nomor Handphone',
+                    //       //   hintStyle: TextStyle(color: Colors.grey.shade500),
+
+                    //       border: InputBorder.none,
+                    //       contentPadding: EdgeInsets.only(left: 6),
+                    //     ),
+                    //   ),
+                    // ),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
@@ -494,7 +665,7 @@ class _CreateDestinationTouristState extends State<CreateDestinationTourist> {
                           children: [
                             Padding(
                               padding:
-                                  const EdgeInsets.only(top: 8.0, bottom: 4),
+                                  const EdgeInsets.only(top: 14.0, bottom: 6),
                               child: Text(
                                 "Jam Buka",
                                 style: GoogleFonts.inter(
@@ -513,6 +684,15 @@ class _CreateDestinationTouristState extends State<CreateDestinationTourist> {
                                   )),
                               width: MediaQuery.of(context).size.width * 0.4,
                               child: TextField(
+                                controller: openHourController,
+                                onChanged: (openH) {
+                                  if (openH.isEmpty) {
+                                    setState(() {
+                                      openH = '0';
+                                    });
+                                  }
+                                  print("---- $openH");
+                                },
                                 style: GoogleFonts.openSans(
                                     fontSize: 14,
                                     color: titleColor,
@@ -535,7 +715,7 @@ class _CreateDestinationTouristState extends State<CreateDestinationTourist> {
                           children: [
                             Padding(
                               padding:
-                                  const EdgeInsets.only(top: 8.0, bottom: 4),
+                                  const EdgeInsets.only(top: 14.0, bottom: 6),
                               child: Text(
                                 "Jam Tutup",
                                 style: GoogleFonts.inter(
@@ -554,6 +734,13 @@ class _CreateDestinationTouristState extends State<CreateDestinationTourist> {
                                   )),
                               width: MediaQuery.of(context).size.width * 0.4,
                               child: TextField(
+                                onChanged: (closedH) {
+                                  if (closedH.isEmpty) {
+                                    closedH = '0';
+                                  }
+                                  print(closedH);
+                                },
+                                controller: closedHourController,
                                 style: GoogleFonts.openSans(
                                     fontSize: 14,
                                     color: titleColor,
@@ -608,7 +795,7 @@ class _CreateDestinationTouristState extends State<CreateDestinationTourist> {
                       maxLines: 5,
                     ),
                     Padding(
-                      padding: const EdgeInsets.only(top: 8.0, bottom: 4),
+                      padding: const EdgeInsets.only(top: 14.0, bottom: 6),
                       child: Text(
                         "Cuaca",
                         style: GoogleFonts.inter(
@@ -789,7 +976,7 @@ class _CreateDestinationTouristState extends State<CreateDestinationTourist> {
                       ],
                     ),
                     Padding(
-                      padding: const EdgeInsets.only(top: 8.0, bottom: 4),
+                      padding: const EdgeInsets.only(top: 14.0, bottom: 6),
                       child: Text(
                         "Durasi Waktu",
                         style: GoogleFonts.inter(
@@ -808,6 +995,7 @@ class _CreateDestinationTouristState extends State<CreateDestinationTourist> {
                           )),
                       width: MediaQuery.of(context).size.width,
                       child: TextField(
+                        controller: minutesSpendController,
                         style: GoogleFonts.openSans(
                             fontSize: 14,
                             color: titleColor,
@@ -824,7 +1012,7 @@ class _CreateDestinationTouristState extends State<CreateDestinationTourist> {
                       ),
                     ),
                     Padding(
-                      padding: const EdgeInsets.only(top: 8.0, bottom: 4),
+                      padding: const EdgeInsets.only(top: 14.0, bottom: 6),
                       child: Text(
                         "Hobi",
                         style: GoogleFonts.inter(
@@ -1210,6 +1398,7 @@ class _CreateDestinationTouristState extends State<CreateDestinationTourist> {
                           )),
                       width: MediaQuery.of(context).size.width,
                       child: TextField(
+                        controller: urlMapController,
                         style: GoogleFonts.openSans(
                             fontSize: 14,
                             color: titleColor,
@@ -1233,7 +1422,7 @@ class _CreateDestinationTouristState extends State<CreateDestinationTourist> {
                           children: [
                             Padding(
                               padding:
-                                  const EdgeInsets.only(top: 8.0, bottom: 4),
+                                  const EdgeInsets.only(top: 14.0, bottom: 6),
                               child: Text(
                                 "Latitude",
                                 style: GoogleFonts.inter(
@@ -1252,6 +1441,13 @@ class _CreateDestinationTouristState extends State<CreateDestinationTourist> {
                                   )),
                               width: MediaQuery.of(context).size.width * 0.4,
                               child: TextField(
+                                controller: latitudeController,
+                                onChanged: (lat) {
+                                  if (lat.isEmpty) {
+                                    lat = '0';
+                                  }
+                                  print(lat);
+                                },
                                 style: GoogleFonts.openSans(
                                     fontSize: 14,
                                     color: titleColor,
@@ -1259,9 +1455,11 @@ class _CreateDestinationTouristState extends State<CreateDestinationTourist> {
                                 keyboardType: TextInputType.number,
                                 textInputAction: TextInputAction.next,
                                 decoration: InputDecoration(
-                                  //   hintText: 'Nomor Handphone',
-                                  //   hintStyle: TextStyle(color: Colors.grey.shade500),
-
+                                  hintText: '-6.1750',
+                                  hintStyle: GoogleFonts.openSans(
+                                      fontSize: 12,
+                                      color: descColor,
+                                      fontWeight: FontWeight.w500),
                                   border: InputBorder.none,
                                   contentPadding: EdgeInsets.only(left: 6),
                                 ),
@@ -1274,7 +1472,7 @@ class _CreateDestinationTouristState extends State<CreateDestinationTourist> {
                           children: [
                             Padding(
                               padding:
-                                  const EdgeInsets.only(top: 8.0, bottom: 4),
+                                  const EdgeInsets.only(top: 14.0, bottom: 6),
                               child: Text(
                                 "Longitude",
                                 style: GoogleFonts.inter(
@@ -1293,6 +1491,13 @@ class _CreateDestinationTouristState extends State<CreateDestinationTourist> {
                                   )),
                               width: MediaQuery.of(context).size.width * 0.4,
                               child: TextField(
+                                controller: longitudeController,
+                                onChanged: (long) {
+                                  if (long.isEmpty) {
+                                    long = '0';
+                                  }
+                                  print(long);
+                                },
                                 style: GoogleFonts.openSans(
                                     fontSize: 14,
                                     color: titleColor,
@@ -1300,11 +1505,14 @@ class _CreateDestinationTouristState extends State<CreateDestinationTourist> {
                                 keyboardType: TextInputType.number,
                                 textInputAction: TextInputAction.next,
                                 decoration: InputDecoration(
-                                  //   hintText: 'Nomor Handphone',
-                                  //   hintStyle: TextStyle(color: Colors.grey.shade500),
-
+                                  hintText: '106.8283',
+                                  hintStyle: GoogleFonts.openSans(
+                                      fontSize: 12,
+                                      color: descColor,
+                                      fontWeight: FontWeight.w500),
                                   border: InputBorder.none,
-                                  contentPadding: EdgeInsets.only(left: 6),
+                                  contentPadding:
+                                      const EdgeInsets.only(left: 6),
                                 ),
                               ),
                             ),
@@ -1348,6 +1556,7 @@ class _CreateDestinationTouristState extends State<CreateDestinationTourist> {
                           )),
                       width: MediaQuery.of(context).size.width,
                       child: TextField(
+                        controller: fasilitiesController,
                         style: GoogleFonts.openSans(
                             fontSize: 14,
                             color: titleColor,
@@ -1456,8 +1665,9 @@ class _CreateDestinationTouristState extends State<CreateDestinationTourist> {
                                       _isSecurityAvail[i] = i == index;
                                     }
                                     if (index == 0) {
+                                      securityAvail = 0;
                                     } else if (index == 1) {
-                                      print("ya");
+                                      securityAvail = 1;
                                     }
                                   });
                                 },
@@ -1506,6 +1716,7 @@ class _CreateDestinationTouristState extends State<CreateDestinationTourist> {
                               )),
                           width: MediaQuery.of(context).size.width * 0.4,
                           child: TextField(
+                            controller: ticketStockController,
                             style: GoogleFonts.openSans(
                                 fontSize: 14,
                                 color: titleColor,
@@ -1531,6 +1742,7 @@ class _CreateDestinationTouristState extends State<CreateDestinationTourist> {
                               )),
                           width: MediaQuery.of(context).size.width * 0.4,
                           child: TextField(
+                            controller: ticketPriceController,
                             style: GoogleFonts.openSans(
                                 fontSize: 14,
                                 color: titleColor,
@@ -1542,7 +1754,7 @@ class _CreateDestinationTouristState extends State<CreateDestinationTourist> {
                               hintStyle: TextStyle(color: Colors.grey.shade500),
                               border: InputBorder.none,
                               contentPadding:
-                                  EdgeInsets.only(left: 6, bottom: 6),
+                                  const EdgeInsets.only(left: 6, bottom: 6),
                             ),
                           ),
                         ),
@@ -1568,21 +1780,202 @@ class _CreateDestinationTouristState extends State<CreateDestinationTourist> {
             padding: const EdgeInsets.only(left: 16.0, right: 16),
             child: Row(
               children: [
-                SizedBox(
-                    width: MediaQuery.of(context).size.width * 0.2,
-                    child: Center(
-                        child: Text(
-                      "Batal",
-                      style: GoogleFonts.openSans(
-                          fontSize: 13,
-                          color: titleColor,
-                          fontWeight: FontWeight.w700),
-                    ))),
                 InkWell(
                   onTap: () {
-                    print("HOBBY --------------- $finalSelectedHobby");
-                    print("WEATHER --------------- $finalSelectedWeather");
-                    print("CATEGORY --------------- $finalSelectedCategory");
+                    Navigator.pushAndRemoveUntil(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => const HomePageOwner()),
+                        (route) => false);
+                  },
+                  child: SizedBox(
+                      width: MediaQuery.of(context).size.width * 0.2,
+                      child: Center(
+                          child: Text(
+                        "Batal",
+                        style: GoogleFonts.openSans(
+                            fontSize: 13,
+                            color: titleColor,
+                            fontWeight: FontWeight.w700),
+                      ))),
+                ),
+                InkWell(
+                  onTap: () async {
+                    final destCon = Provider.of<DestinasiController>(context,
+                        listen: false);
+
+                    if (nameController.text.isEmpty &&
+                        descriptionController.text.isEmpty &&
+                        addressController.text.isEmpty) {
+                      Fluttertoast.showToast(
+                          msg: "Data tidak boleh kosong",
+                          toastLength: Toast.LENGTH_SHORT,
+                          gravity: ToastGravity.BOTTOM,
+                          timeInSecForIosWeb: 1,
+                          backgroundColor: Colors.red[300],
+                          textColor: Colors.white,
+                          fontSize: 16.0);
+                      return;
+                    }
+                    // else if(finalSelectedProvince == '' && finalSelectedHobby == ''){
+                    //      Fluttertoast.showToast(
+                    //       msg: "Provinsi tempat wisata",
+                    //       toastLength: Toast.LENGTH_SHORT,
+                    //       gravity: ToastGravity.BOTTOM,
+                    //       timeInSecForIosWeb: 1,
+                    //       backgroundColor: Colors.red[300],
+                    //       textColor: Colors.white,
+                    //       fontSize: 16.0);
+                    //   return;
+
+                    // }
+
+                    else if (nameController.text.isEmpty) {
+                      Fluttertoast.showToast(
+                          msg: "Nama tempat wisata belum diisi",
+                          toastLength: Toast.LENGTH_SHORT,
+                          gravity: ToastGravity.BOTTOM,
+                          timeInSecForIosWeb: 1,
+                          backgroundColor: Colors.red[300],
+                          textColor: Colors.white,
+                          fontSize: 16.0);
+                      return;
+                    } else if (descriptionController.text.isEmpty) {
+                      Fluttertoast.showToast(
+                          msg: "Deskripsi tempat wisata belum diisi",
+                          toastLength: Toast.LENGTH_SHORT,
+                          gravity: ToastGravity.BOTTOM,
+                          timeInSecForIosWeb: 1,
+                          backgroundColor: Colors.red[300],
+                          textColor: Colors.white,
+                          fontSize: 16.0);
+                      return;
+                    } else if (addressController.text.isEmpty) {
+                      Fluttertoast.showToast(
+                          msg: "Alamat tempat wisata belum diisi",
+                          toastLength: Toast.LENGTH_SHORT,
+                          gravity: ToastGravity.BOTTOM,
+                          timeInSecForIosWeb: 1,
+                          backgroundColor: Colors.red[300],
+                          textColor: Colors.white,
+                          fontSize: 16.0);
+                      return;
+                    } else if (finalSelectedCategory == null) {
+                      Fluttertoast.showToast(
+                          msg: "Kategori tempat wisata belum diisi",
+                          toastLength: Toast.LENGTH_SHORT,
+                          gravity: ToastGravity.BOTTOM,
+                          timeInSecForIosWeb: 1,
+                          backgroundColor: Colors.red[300],
+                          textColor: Colors.white,
+                          fontSize: 16.0);
+                      return;
+                    } else if (finalSelectedProvince == null) {
+                      Fluttertoast.showToast(
+                          msg: "Provinsi tempat wisata belum diisi",
+                          toastLength: Toast.LENGTH_SHORT,
+                          gravity: ToastGravity.BOTTOM,
+                          timeInSecForIosWeb: 1,
+                          backgroundColor: Colors.red[300],
+                          textColor: Colors.white,
+                          fontSize: 16.0);
+                      return;
+                    }
+                    setState(() {
+                      isLoading = true;
+                    });
+                    // if(latitudeController.text.isEmpty){
+                    //   double latitudeValue = 0;
+                    // } else {
+                    //   double latitudeValuedouble.parse(latitudeController.text);
+                    // }
+
+                    double latitudeValue =
+                        double.parse(latitudeController.text);
+                    double longitudeValue =
+                        double.parse(longitudeController.text);
+                    int openHourValue = int.parse(openHourController.text);
+                    int closedHourValue = int.parse(closedHourController.text);
+                    try {
+                      await destCon.postDestinasi(
+                          nameDestinasi: nameController.text,
+                          description: descriptionController.text,
+                          address: addressController.text,
+                          city: finalSelectedProvince.toString(),
+                          category: finalSelectedCategory.toString(),
+                          contact: phoneNumberController.text,
+                          hobby: finalSelectedHobby,
+                          minutesSpend: minutesSpendController.text,
+                          latitude: latitudeValue,
+                          longitude: longitudeValue,
+                          // latitude: -6.0000,
+                          // longitude: 104.2020,
+                          urlMap: urlMapController.text,
+                          recWeather: finalSelectedWeather,
+                          // openHour: 1,
+                          // closedHour: 1,
+                          openHour: openHourValue,
+                          closedHour: closedHourValue,
+                          fasility: fasilitiesController.text,
+                          security: securityAvail
+                          // image:
+                          // openHour: openHourController.text
+                          // closedHour: closedHourController.text
+                          );
+                      if (destCon.statusCodeAddDestinasi == 200) {
+                        setState(() {
+                          isLoading = false;
+                        });
+                        Navigator.pushAndRemoveUntil(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => const HomePageOwner()),
+                            (route) => false);
+                        Fluttertoast.showToast(
+                            msg: "Tempat wisatamu telah ditambahkan!",
+                            toastLength: Toast.LENGTH_SHORT,
+                            gravity: ToastGravity.BOTTOM,
+                            timeInSecForIosWeb: 1,
+                            backgroundColor: primaryColor.withOpacity(0.6),
+                            textColor: Colors.white,
+                            fontSize: 13);
+                      } else if (destCon.statusCodeAddDestinasi == 404) {
+                        setState(() {
+                          isLoading = false;
+                        });
+                        Fluttertoast.showToast(
+                            msg: destCon.messageAddDestinasi.toString(),
+                            toastLength: Toast.LENGTH_SHORT,
+                            gravity: ToastGravity.BOTTOM,
+                            timeInSecForIosWeb: 1,
+                            backgroundColor: Colors.red[300],
+                            textColor: Colors.white,
+                            fontSize: 16.0);
+                        return;
+                      } else {
+                        setState(() {
+                          isLoading = false;
+                        });
+                        Fluttertoast.showToast(
+                            msg: "Terjadi Error",
+                            toastLength: Toast.LENGTH_SHORT,
+                            gravity: ToastGravity.BOTTOM,
+                            timeInSecForIosWeb: 1,
+                            backgroundColor: Colors.red[300],
+                            textColor: Colors.white,
+                            fontSize: 16.0);
+                        return;
+                      }
+                    } catch (e) {
+                      e;
+                    }
+                    setState(() {
+                      isLoading = false;
+                    });
+                    // print("HOBBY --------------- $finalSelectedHobby");
+                    // print("WEATHER --------------- $finalSelectedWeather");
+                    // print("CATEGORY --------------- $finalSelectedCategory");
+                    // print("CATEGORY --------------- $securityAvail");
                   },
                   child: Container(
                       child: Center(
