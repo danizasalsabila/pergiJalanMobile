@@ -82,8 +82,8 @@ class _DetailDestinationState extends State<DetailDestination> {
               : SingleChildScrollView(
                   child: Consumer<DestinasiController>(
                       builder: (context, homeCon, child) {
-                    print("------ ${widget.id.latitude}");
-                    print("------ ${widget.id.longitude}");
+                    // print("------ ${widget.id.latitude}");
+                    // print("------ ${widget.id.longitude}");
                     //   String? latitude =  widget.id.latitude;
                     // double lat = double.parse(latitude!);
                     // print("LAT: $lat");
@@ -152,56 +152,64 @@ class _DetailDestinationState extends State<DetailDestination> {
                                             fontWeight: FontWeight.w600),
                                       ),
                                     ),
-                                    InkWell(
-                                      onTap: () {
-                                        //  Fluttertoast.showToast(
-                                        // msg: "Kawasan dengan pengawasan security",
-                                        // toastLength: Toast.LENGTH_SHORT,
-                                        // gravity: ToastGravity.BOTTOM,
-                                        // timeInSecForIosWeb: 1,
-                                        // backgroundColor:
-                                        //     primaryColor.withOpacity(0.5),
-                                        // textColor: Colors.white,
-                                        // fontSize: 16.0);
-                                      },
-                                      child: Container(
-                                          padding: EdgeInsets.all(2),
-                                          decoration: BoxDecoration(
-                                              borderRadius:
-                                                  BorderRadius.circular(8),
-                                              color: Color.fromARGB(
-                                                  132, 27, 177, 197)),
-                                          child: Center(
-                                            child: Padding(
-                                              padding: const EdgeInsets.only(
-                                                  left: 5.0, right: 5.0),
-                                              child: Row(
-                                                children: [
-                                                  Text(
-                                                    "Keamanan",
-                                                    style: GoogleFonts.openSans(
-                                                        fontSize: 9,
-                                                        color: secondaryColor,
-                                                        fontWeight:
-                                                            FontWeight.w500),
-                                                    overflow:
-                                                        TextOverflow.ellipsis,
-                                                  ),
-                                                  Padding(
+                                    widget.id.security == 1
+                                        ? InkWell(
+                                            onTap: () {
+                                               Fluttertoast.showToast(
+                                              msg: "Kawasan dengan pengawasan security",
+                                              toastLength: Toast.LENGTH_SHORT,
+                                              gravity: ToastGravity.BOTTOM,
+                                              timeInSecForIosWeb: 1,
+                                              backgroundColor:
+                                                  primaryColor.withOpacity(0.5),
+                                              textColor: Colors.white,
+                                              fontSize: 16.0);
+                                            },
+                                            child: Container(
+                                                padding: EdgeInsets.all(2),
+                                                decoration: BoxDecoration(
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                            8),
+                                                    color: Color.fromARGB(
+                                                        132, 27, 177, 197)),
+                                                child: Center(
+                                                  child: Padding(
                                                     padding:
                                                         const EdgeInsets.only(
-                                                            left: 3.0),
-                                                    child: Icon(
-                                                      Icons.check,
-                                                      color: Colors.green,
-                                                      size: 15,
+                                                            left: 5.0,
+                                                            right: 5.0),
+                                                    child: Row(
+                                                      children: [
+                                                        Text(
+                                                          "Keamanan",
+                                                          style: GoogleFonts
+                                                              .openSans(
+                                                                  fontSize: 9,
+                                                                  color:
+                                                                      secondaryColor,
+                                                                  fontWeight:
+                                                                      FontWeight
+                                                                          .w500),
+                                                          overflow: TextOverflow
+                                                              .ellipsis,
+                                                        ),
+                                                        const Padding(
+                                                          padding:
+                                                              EdgeInsets.only(
+                                                                  left: 3.0),
+                                                          child: Icon(
+                                                            Icons.check,
+                                                            color: Colors.green,
+                                                            size: 15,
+                                                          ),
+                                                        )
+                                                      ],
                                                     ),
-                                                  )
-                                                ],
-                                              ),
-                                            ),
-                                          )),
-                                    ),
+                                                  ),
+                                                )),
+                                          )
+                                        : SizedBox(),
                                   ],
                                 ),
                                 Padding(
@@ -464,8 +472,10 @@ class _DetailDestinationState extends State<DetailDestination> {
                                                                                 null
                                                                             ? widget.id.minutesSpend!
                                                                             : "-",
-                                                                            overflow: TextOverflow.fade,
-                                                                            maxLines: 2,
+                                                                        overflow:
+                                                                            TextOverflow.fade,
+                                                                        maxLines:
+                                                                            2,
                                                                         style: GoogleFonts.openSans(
                                                                             fontSize:
                                                                                 13,
@@ -642,7 +652,7 @@ class _DetailDestinationState extends State<DetailDestination> {
                                                                             Text(
                                                                           widget.id.hobby != null
                                                                               ? widget.id.hobby!
-                                                                              : "-",
+                                                                              : "Lainnya",
                                                                           style: GoogleFonts.openSans(
                                                                               fontSize: 12,
                                                                               color: titleColor,
@@ -747,10 +757,12 @@ class _DetailDestinationState extends State<DetailDestination> {
                                                 ),
                                                 GestureDetector(
                                                   onTap: () async {
-                                                    var url = widget.id.urlMap;
+                                                    var url =
+                                                        widget.id.urlMap ?? "-";
+
                                                     try {
                                                       // ignore: deprecated_member_use
-                                                      await launch(url!);
+                                                      await launch(url);
 
                                                       if (url == null) {
                                                         Fluttertoast.showToast(
@@ -1058,15 +1070,11 @@ class _DetailDestinationState extends State<DetailDestination> {
                                                                         Fluttertoast.showToast(
                                                                             // msg: reviewData.messageAddReview
                                                                             //     .toString(),
-                                                                            msg:"Terima kasih atas review Anda!",
-                                                                            toastLength: Toast
-                                                                                .LENGTH_SHORT,
-                                                                            gravity: ToastGravity
-                                                                                .BOTTOM,
-                                                                            timeInSecForIosWeb:
-                                                                                1,
-                                                                            backgroundColor:
-                                                                                primaryColor.withOpacity(0.6),
+                                                                            msg: "Terima kasih atas review Anda!",
+                                                                            toastLength: Toast.LENGTH_SHORT,
+                                                                            gravity: ToastGravity.BOTTOM,
+                                                                            timeInSecForIosWeb: 1,
+                                                                            backgroundColor: primaryColor.withOpacity(0.6),
                                                                             textColor: Colors.white,
                                                                             fontSize: 13);
                                                                         // ignore: use_build_context_synchronously

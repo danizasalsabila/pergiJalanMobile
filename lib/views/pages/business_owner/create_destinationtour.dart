@@ -67,7 +67,7 @@ class _CreateDestinationTouristState extends State<CreateDestinationTourist> {
     "Kabut",
   ];
   int? _selectedListWeather;
-  String finalSelectedWeather = '';
+  String? finalSelectedWeather;
   _onSelectedListWeather(int i) {
     setState(() {
       _selectedListWeather = i;
@@ -91,7 +91,7 @@ class _CreateDestinationTouristState extends State<CreateDestinationTourist> {
     });
   }
 
-  String finalSelectedHobby = '';
+  String? finalSelectedHobby;
 
   List<String> listProvince = [
     "Aceh",
@@ -625,7 +625,7 @@ class _CreateDestinationTouristState extends State<CreateDestinationTourist> {
                           onChanged: (newValue) {
                             setState(() {
                               finalSelectedProvince = newValue.toString();
-                              print("final: $finalSelectedProvince");
+                              // print("final: $finalSelectedProvince");
                             });
                           },
                         ),
@@ -685,14 +685,6 @@ class _CreateDestinationTouristState extends State<CreateDestinationTourist> {
                               width: MediaQuery.of(context).size.width * 0.4,
                               child: TextField(
                                 controller: openHourController,
-                                onChanged: (openH) {
-                                  if (openH.isEmpty) {
-                                    setState(() {
-                                      openH = '0';
-                                    });
-                                  }
-                                  print("---- $openH");
-                                },
                                 style: GoogleFonts.openSans(
                                     fontSize: 14,
                                     color: titleColor,
@@ -734,12 +726,6 @@ class _CreateDestinationTouristState extends State<CreateDestinationTourist> {
                                   )),
                               width: MediaQuery.of(context).size.width * 0.4,
                               child: TextField(
-                                onChanged: (closedH) {
-                                  if (closedH.isEmpty) {
-                                    closedH = '0';
-                                  }
-                                  print(closedH);
-                                },
                                 controller: closedHourController,
                                 style: GoogleFonts.openSans(
                                     fontSize: 14,
@@ -1442,12 +1428,6 @@ class _CreateDestinationTouristState extends State<CreateDestinationTourist> {
                               width: MediaQuery.of(context).size.width * 0.4,
                               child: TextField(
                                 controller: latitudeController,
-                                onChanged: (lat) {
-                                  if (lat.isEmpty) {
-                                    lat = '0';
-                                  }
-                                  print(lat);
-                                },
                                 style: GoogleFonts.openSans(
                                     fontSize: 14,
                                     color: titleColor,
@@ -1492,12 +1472,6 @@ class _CreateDestinationTouristState extends State<CreateDestinationTourist> {
                               width: MediaQuery.of(context).size.width * 0.4,
                               child: TextField(
                                 controller: longitudeController,
-                                onChanged: (long) {
-                                  if (long.isEmpty) {
-                                    long = '0';
-                                  }
-                                  print(long);
-                                },
                                 style: GoogleFonts.openSans(
                                     fontSize: 14,
                                     color: titleColor,
@@ -1782,11 +1756,12 @@ class _CreateDestinationTouristState extends State<CreateDestinationTourist> {
               children: [
                 InkWell(
                   onTap: () {
-                    Navigator.pushAndRemoveUntil(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => const HomePageOwner()),
-                        (route) => false);
+                    Navigator.pop(context);
+                    // Navigator.pushAndRemoveUntil(
+                    //     context,
+                    //     MaterialPageRoute(
+                    //         builder: (context) => const HomePageOwner()),
+                    //     (route) => false);
                   },
                   child: SizedBox(
                       width: MediaQuery.of(context).size.width * 0.2,
@@ -1884,18 +1859,28 @@ class _CreateDestinationTouristState extends State<CreateDestinationTourist> {
                     setState(() {
                       isLoading = true;
                     });
-                    // if(latitudeController.text.isEmpty){
-                    //   double latitudeValue = 0;
-                    // } else {
-                    //   double latitudeValuedouble.parse(latitudeController.text);
-                    // }
 
-                    double latitudeValue =
-                        double.parse(latitudeController.text);
-                    double longitudeValue =
-                        double.parse(longitudeController.text);
-                    int openHourValue = int.parse(openHourController.text);
-                    int closedHourValue = int.parse(closedHourController.text);
+                    double? latitudeValue = latitudeController.text.isNotEmpty
+                        ? double.parse(latitudeController.text)
+                        : null;
+
+                    double? longitudeValue = longitudeController.text.isNotEmpty
+                        ? double.parse(longitudeController.text)
+                        : null;
+
+                    int openHourValue;
+                    if (openHourController.text.isNotEmpty) {
+                      openHourValue = int.parse(openHourController.text);
+                    } else {
+                      openHourValue = 0;
+                    }
+
+                    int closedHourValue;
+                    if (closedHourController.text.isNotEmpty) {
+                      closedHourValue = int.parse(closedHourController.text);
+                    } else {
+                      closedHourValue = 0;
+                    }
                     try {
                       await destCon.postDestinasi(
                           nameDestinasi: nameController.text,
@@ -1926,6 +1911,7 @@ class _CreateDestinationTouristState extends State<CreateDestinationTourist> {
                         setState(() {
                           isLoading = false;
                         });
+                        // ignore: use_build_context_synchronously
                         Navigator.pushAndRemoveUntil(
                             context,
                             MaterialPageRoute(
@@ -1957,7 +1943,7 @@ class _CreateDestinationTouristState extends State<CreateDestinationTourist> {
                           isLoading = false;
                         });
                         Fluttertoast.showToast(
-                            msg: "Terjadi Error",
+                            msg: "Terjadi Error\nSilahkan Coba Lagi Nanti",
                             toastLength: Toast.LENGTH_SHORT,
                             gravity: ToastGravity.BOTTOM,
                             timeInSecForIosWeb: 1,
@@ -1972,12 +1958,13 @@ class _CreateDestinationTouristState extends State<CreateDestinationTourist> {
                     setState(() {
                       isLoading = false;
                     });
-                    // print("HOBBY --------------- $finalSelectedHobby");
-                    // print("WEATHER --------------- $finalSelectedWeather");
-                    // print("CATEGORY --------------- $finalSelectedCategory");
-                    // print("CATEGORY --------------- $securityAvail");
                   },
                   child: Container(
+                      height: 45,
+                      width: MediaQuery.of(context).size.width * 0.7,
+                      decoration: BoxDecoration(
+                          color: secondaryColor,
+                          borderRadius: BorderRadius.circular(10)),
                       child: Center(
                           child: Text(
                         "Simpan Tempat Wisata",
@@ -1985,12 +1972,7 @@ class _CreateDestinationTouristState extends State<CreateDestinationTourist> {
                             fontSize: 13,
                             color: Colors.white,
                             fontWeight: FontWeight.w700),
-                      )),
-                      height: 45,
-                      width: MediaQuery.of(context).size.width * 0.7,
-                      decoration: BoxDecoration(
-                          color: secondaryColor,
-                          borderRadius: BorderRadius.circular(10))),
+                      ))),
                 )
               ],
             ),

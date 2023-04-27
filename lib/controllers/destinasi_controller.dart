@@ -140,17 +140,17 @@ class DestinasiController extends ChangeNotifier {
     String? fasility,
   }) async {
     var url = Uri.parse(BASE_URL + POST_DESTINASI);
-    print("URL = $url");
-    print("nama: $nameDestinasi");
-    print("desc: $description");
-    print("address: $address");
-    print("city: $city");
-    print("category: $category");
-    print("lat: $latitude");
-    print("long: $longitude");
-    print("openHour: $openHour");
-    print("closedHour: $closedHour");
-    print("security: $security");
+    // print("URL = $url");
+    // print("nama: $nameDestinasi");
+    // print("desc: $description");
+    // print("address: $address");
+    // print("city: $city");
+    // print("category: $category");
+    // print("lat: $latitude");
+    // print("long: $longitude");
+    // print("openHour: $openHour");
+    // print("closedHour: $closedHour");
+    // print("security: $security");
     final body = {
       'name_destinasi': nameDestinasi,
       'description': description,
@@ -195,22 +195,39 @@ class DestinasiController extends ChangeNotifier {
           "content-type": "application/json",
         },
       );
-
-      // print('CODE: ${response.statusCode}');
-      // print(response.headers);
-      // print(response.request);
-      // print("``````````````````````````````````````");
       var data = json.decode(response.body);
       if (response.statusCode == 200) {
-        print(data["message"]);
+        print(data);
         statusCodeAddDestinasi = response.statusCode;
-        // destinasiResponse = destinasiFromJson(response.body);
-        // destinasiQueryData = destinasiResponse?.destinasi;
         notifyListeners();
       } else if (response.statusCode == 404) {
-        print(messageAddDestinasi);
         messageAddDestinasi = data["message"];
         statusCodeAddDestinasi = response.statusCode;
+      }
+    } catch (e) {
+      print("ERROR MESSAGE: $e");
+    }
+  }
+
+  String? messageDeleteDestinasi;
+  int? statusCodeDeleteDestinasi;
+  Future<dynamic> deleteDestinasi(id) async {
+    print("delete destination tourist at ID: $id");
+    var url = Uri.parse(BASE_URL + DELETE_DESTINASI(id));
+    print("URL = $url");
+    try {
+      var response = await http.delete(url);
+
+      var data = json.decode(response.body);
+      if (response.statusCode == 200) {
+        statusCodeDeleteDestinasi = response.statusCode;
+        messageDeleteDestinasi = data["message"];
+        print("CODE: ${response.statusCode}");
+        notifyListeners();
+      } else if (response.statusCode == 404) {
+        print("CODE: ${response.statusCode}");
+        statusCodeDeleteDestinasi = response.statusCode;
+        messageDeleteDestinasi = data["message"];
       }
     } catch (e) {
       print("ERROR MESSAGE: $e");
