@@ -5,7 +5,8 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
 
 import 'package:pergijalan_mobile/config/theme_color.dart';
-import 'package:pergijalan_mobile/views/pages/detail_touristdestinasion.dart';
+import 'package:pergijalan_mobile/views/pages/business_owner/detail_touristdestinasion.dart';
+import 'package:pergijalan_mobile/views/pages/business_owner/edit_destinationtour.dart';
 import 'package:pergijalan_mobile/views/pages/login_user.dart';
 import 'package:provider/provider.dart';
 
@@ -528,14 +529,13 @@ class _HomePageOwnerState extends State<HomePageOwner> {
                                         const EdgeInsets.only(bottom: 12.0),
                                     child: InkWell(
                                       onTap: (() => Navigator.push(
-                                            context,
-                                            MaterialPageRoute(
-                                                builder: (context) =>
-                                                    DetailDestination(
-                                                      id: homeCon
-                                                              .destinasiData![
-                                                          index],
-                                                    )))),
+                                          context,
+                                          MaterialPageRoute(
+                                              builder: (context) =>
+                                                  DetailDestinationOwner(
+                                                    id: homeCon
+                                                        .destinasiData![index],
+                                                  )))),
                                       child: SizedBox(
                                           child: Column(
                                         children: [
@@ -546,14 +546,15 @@ class _HomePageOwnerState extends State<HomePageOwner> {
                                                 children: [
                                                   Container(
                                                     height: 70,
-                                                    width: MediaQuery.of(context)
-                                                            .size
-                                                            .width *
-                                                        0.23,
+                                                    width:
+                                                        MediaQuery.of(context)
+                                                                .size
+                                                                .width *
+                                                            0.23,
                                                     child: ClipRRect(
                                                         borderRadius:
-                                                            BorderRadius.circular(
-                                                                8),
+                                                            BorderRadius
+                                                                .circular(8),
                                                         child: Image.asset(
                                                           "assets/images/slicing.jpg",
                                                           fit: BoxFit.cover,
@@ -561,14 +562,15 @@ class _HomePageOwnerState extends State<HomePageOwner> {
                                                   ),
                                                   Container(
                                                     height: 70,
-                                                    width: MediaQuery.of(context)
-                                                            .size
-                                                            .width *
-                                                        0.23,
+                                                    width:
+                                                        MediaQuery.of(context)
+                                                                .size
+                                                                .width *
+                                                            0.23,
                                                     decoration: BoxDecoration(
                                                         borderRadius:
-                                                            BorderRadius.circular(
-                                                                8),
+                                                            BorderRadius
+                                                                .circular(8),
                                                         color: Color.fromARGB(
                                                             106, 75, 150, 111)),
                                                   ),
@@ -601,12 +603,14 @@ class _HomePageOwnerState extends State<HomePageOwner> {
                                                                     index]
                                                                 .nameDestinasi
                                                                 .toString(),
-                                                            overflow: TextOverflow
-                                                                .ellipsis,
+                                                            overflow:
+                                                                TextOverflow
+                                                                    .ellipsis,
                                                             maxLines: 1,
                                                             style: GoogleFonts
                                                                 .notoSansDisplay(
-                                                                    fontSize: 15,
+                                                                    fontSize:
+                                                                        15,
                                                                     color:
                                                                         thirdColor,
                                                                     fontWeight:
@@ -619,7 +623,8 @@ class _HomePageOwnerState extends State<HomePageOwner> {
                                                                 FontAwesomeIcons
                                                                     .locationDot,
                                                                 size: 13,
-                                                                color: descColor,
+                                                                color:
+                                                                    descColor,
                                                               ),
                                                               Padding(
                                                                 padding:
@@ -650,38 +655,49 @@ class _HomePageOwnerState extends State<HomePageOwner> {
                                                               )
                                                             ],
                                                           ),
-                                                          Padding(
-                                                            padding:
-                                                                const EdgeInsets
-                                                                        .only(
-                                                                    left: 2.0,
-                                                                    top: 4),
-                                                            child: Container(
-                                                              decoration: BoxDecoration(
-                                                                  color:
-                                                                      labelColorBack,
-                                                                  borderRadius:
-                                                                      BorderRadius
-                                                                          .circular(
-                                                                              3)),
-                                                              height: 19,
-                                                              width: MediaQuery.of(
-                                                                          context)
-                                                                      .size
-                                                                      .width *
-                                                                  0.21,
-                                                              child: Center(
-                                                                  child: Text(
-                                                                "Ubah",
-                                                                style: GoogleFonts.openSans(
-                                                                    fontSize: 9,
-                                                                    color: Colors
-                                                                        .grey
-                                                                        .shade600,
-                                                                    fontWeight:
-                                                                        FontWeight
-                                                                            .w500),
-                                                              )),
+                                                          InkWell(
+                                                            onTap: () {
+                                                              Navigator.push(
+                                                                  context,
+                                                                  MaterialPageRoute(
+                                                                      builder:
+                                                                          (context) =>
+                                                                               EditDestinationOwnerPage(id: homeCon
+                                                        .destinasiData![index],)));
+                                                            },
+                                                            child: Padding(
+                                                              padding:
+                                                                  const EdgeInsets
+                                                                          .only(
+                                                                      left: 2.0,
+                                                                      top: 4),
+                                                              child: Container(
+                                                                decoration: BoxDecoration(
+                                                                    color:
+                                                                        labelColorBack,
+                                                                    borderRadius:
+                                                                        BorderRadius.circular(
+                                                                            3)),
+                                                                height: 19,
+                                                                width: MediaQuery.of(
+                                                                            context)
+                                                                        .size
+                                                                        .width *
+                                                                    0.21,
+                                                                child: Center(
+                                                                    child: Text(
+                                                                  "Ubah",
+                                                                  style: GoogleFonts.openSans(
+                                                                      fontSize:
+                                                                          9,
+                                                                      color: Colors
+                                                                          .grey
+                                                                          .shade600,
+                                                                      fontWeight:
+                                                                          FontWeight
+                                                                              .w500),
+                                                                )),
+                                                              ),
                                                             ),
                                                           )
                                                         ]),
@@ -733,7 +749,8 @@ class _HomePageOwnerState extends State<HomePageOwner> {
                                                             ),
                                                             actions: [
                                                               TextButton(
-                                                                  onPressed: () {
+                                                                  onPressed:
+                                                                      () {
                                                                     Navigator.pop(
                                                                         context);
                                                                   },
@@ -745,127 +762,70 @@ class _HomePageOwnerState extends State<HomePageOwner> {
                                                                         color:
                                                                             descColor,
                                                                         fontWeight:
-                                                                            FontWeight
-                                                                                .w600),
+                                                                            FontWeight.w600),
                                                                   )),
                                                               // child: Text("No")),
                                                               Padding(
-                                                                padding: const EdgeInsets.only(right: 10.0),
-                                                                child: Container(
+                                                                padding:
+                                                                    const EdgeInsets
+                                                                            .only(
+                                                                        right:
+                                                                            10.0),
+                                                                child:
+                                                                    Container(
                                                                   height: 35,
-                                                                  decoration: BoxDecoration(color: thirdColor, borderRadius: BorderRadius.circular(7)),
-                                                                  child: TextButton(
-                                                                      onPressed:
-                                                                          () async {
-                                                                        isLoading =
-                                                                            true;
-                                                                        final ownerBusinessHomeCon = Provider.of<
-                                                                                DestinasiController>(
-                                                                            context,
-                                                                            listen:
-                                                                                false);
-                                                                        try {
-                                                                          await ownerBusinessHomeCon.deleteDestinasi(homeCon
-                                                                              .destinasiData![
-                                                                                  index]
-                                                                              .id);
-
-                                                                          if (ownerBusinessHomeCon
-                                                                                  .statusCodeDeleteDestinasi ==
-                                                                              200) {
-                                                                            setState(
-                                                                                () {
-                                                                              isLoading =
-                                                                                  false;
-                                                                            });
-                                                                            // ignore: use_build_context_synchronously
-                                                                            Navigator.pop(context);
-                                                                            await ownerBusinessHomeCon
-                                                                                .allDestinasi();
-
-                                                                            Fluttertoast.showToast(
-                                                                                msg: ownerBusinessHomeCon
-                                                                                    .messageDeleteDestinasi
-                                                                                    .toString(),
-                                                                                toastLength: Toast
-                                                                                    .LENGTH_SHORT,
-                                                                                gravity: ToastGravity
-                                                                                    .BOTTOM,
-                                                                                timeInSecForIosWeb:
-                                                                                    1,
-                                                                                backgroundColor: primaryColor.withOpacity(
-                                                                                    0.6),
-                                                                                textColor: Colors
-                                                                                    .white,
-                                                                                fontSize:
-                                                                                    16.0);
-                                                                          } else if (ownerBusinessHomeCon
-                                                                                  .statusCodeDeleteDestinasi ==
-                                                                              404) {
-                                                                            setState(
-                                                                                () {
-                                                                              isLoading =
-                                                                                  false;
-                                                                            });
-                                                                            // ignore: use_build_context_synchronously
-                                                                            Navigator.pop(context);
-
-                                                                            Fluttertoast.showToast(
-                                                                                msg: ownerBusinessHomeCon
-                                                                                    .messageDeleteDestinasi
-                                                                                    .toString(),
-                                                                                toastLength: Toast
-                                                                                    .LENGTH_SHORT,
-                                                                                gravity: ToastGravity
-                                                                                    .BOTTOM,
-                                                                                timeInSecForIosWeb:
-                                                                                    1,
-                                                                                backgroundColor: Colors.red[
-                                                                                    300],
-                                                                                textColor: Colors
-                                                                                    .white,
-                                                                                fontSize:
-                                                                                    16.0);
-                                                                          }
-                                                                        } catch (e) {
-                                                                          setState(
-                                                                              () {
+                                                                  decoration: BoxDecoration(
+                                                                      color:
+                                                                          thirdColor,
+                                                                      borderRadius:
+                                                                          BorderRadius.circular(
+                                                                              7)),
+                                                                  child:
+                                                                      TextButton(
+                                                                          onPressed:
+                                                                              () async {
                                                                             isLoading =
-                                                                                false;
-                                                                          });
-                                                                          // ignore: use_build_context_synchronously
-                                                                            Navigator.pop(context);
-                                                                          Fluttertoast.showToast(
-                                                                              msg: e
-                                                                                  .toString(),
-                                                                              toastLength:
-                                                                                  Toast
-                                                                                      .LENGTH_SHORT,
-                                                                              gravity:
-                                                                                  ToastGravity
-                                                                                      .BOTTOM,
-                                                                              timeInSecForIosWeb:
-                                                                                  1,
-                                                                              backgroundColor:
-                                                                                  Colors.red[
-                                                                                      300],
-                                                                              textColor:
-                                                                                  Colors
-                                                                                      .white,
-                                                                              fontSize:
-                                                                                  16.0);
-                                                                        }
-                                                                      },
-                                                                      child:
-                                                                           Text(
-                                                                              "Hapus", style: GoogleFonts.openSans(
-                                                                        fontSize:
-                                                                            12,
-                                                                        color:
-                                                                            Colors.white,
-                                                                        fontWeight:
-                                                                            FontWeight
-                                                                                .w600),)),
+                                                                                true;
+                                                                            final ownerBusinessHomeCon =
+                                                                                Provider.of<DestinasiController>(context, listen: false);
+                                                                            try {
+                                                                              await ownerBusinessHomeCon.deleteDestinasi(homeCon.destinasiData![index].id);
+
+                                                                              if (ownerBusinessHomeCon.statusCodeDeleteDestinasi == 200) {
+                                                                                setState(() {
+                                                                                  isLoading = false;
+                                                                                });
+                                                                                // ignore: use_build_context_synchronously
+                                                                                Navigator.pop(context);
+                                                                                await ownerBusinessHomeCon.allDestinasi();
+
+                                                                                Fluttertoast.showToast(msg: ownerBusinessHomeCon.messageDeleteDestinasi.toString(), toastLength: Toast.LENGTH_SHORT, gravity: ToastGravity.BOTTOM, timeInSecForIosWeb: 1, backgroundColor: primaryColor.withOpacity(0.6), textColor: Colors.white, fontSize: 16.0);
+                                                                              } else if (ownerBusinessHomeCon.statusCodeDeleteDestinasi == 404) {
+                                                                                setState(() {
+                                                                                  isLoading = false;
+                                                                                });
+                                                                                // ignore: use_build_context_synchronously
+                                                                                Navigator.pop(context);
+
+                                                                                Fluttertoast.showToast(msg: ownerBusinessHomeCon.messageDeleteDestinasi.toString(), toastLength: Toast.LENGTH_SHORT, gravity: ToastGravity.BOTTOM, timeInSecForIosWeb: 1, backgroundColor: Colors.red[300], textColor: Colors.white, fontSize: 16.0);
+                                                                              }
+                                                                            } catch (e) {
+                                                                              setState(() {
+                                                                                isLoading = false;
+                                                                              });
+                                                                              // ignore: use_build_context_synchronously
+                                                                              Navigator.pop(context);
+                                                                              Fluttertoast.showToast(msg: e.toString(), toastLength: Toast.LENGTH_SHORT, gravity: ToastGravity.BOTTOM, timeInSecForIosWeb: 1, backgroundColor: Colors.red[300], textColor: Colors.white, fontSize: 16.0);
+                                                                            }
+                                                                          },
+                                                                          child:
+                                                                              Text(
+                                                                            "Hapus",
+                                                                            style: GoogleFonts.openSans(
+                                                                                fontSize: 12,
+                                                                                color: Colors.white,
+                                                                                fontWeight: FontWeight.w600),
+                                                                          )),
                                                                 ),
                                                               )
                                                             ],
@@ -874,10 +834,11 @@ class _HomePageOwnerState extends State<HomePageOwner> {
                                                   },
                                                   child: Container(
                                                     height: 22,
-                                                    width: MediaQuery.of(context)
-                                                            .size
-                                                            .width *
-                                                        0.061,
+                                                    width:
+                                                        MediaQuery.of(context)
+                                                                .size
+                                                                .width *
+                                                            0.061,
                                                     decoration: BoxDecoration(
                                                       color: Color.fromARGB(
                                                           255, 209, 39, 27),
@@ -894,7 +855,8 @@ class _HomePageOwnerState extends State<HomePageOwner> {
                                                               .withOpacity(0.7),
                                                           spreadRadius: 1,
                                                           blurRadius: 4,
-                                                          offset: const Offset(2,
+                                                          offset: const Offset(
+                                                              2,
                                                               2), // changes position of shadow
                                                         ),
                                                       ],
