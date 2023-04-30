@@ -45,10 +45,6 @@ class _EditDestinationOwnerPageState extends State<EditDestinationOwnerPage> {
   TextEditingController? ticketPriceController;
   List<bool> _isSecurityAvail = [true, false];
   int securityAvail = 0;
-  // double latitudeValue= 0;
-  // double longitudeValue=0;
-  // int openHourValue=0;
-  // int closedHourValue=0;
 
   final List<String> _listCategory = [
     "Cagar Alam",
@@ -78,8 +74,6 @@ class _EditDestinationOwnerPageState extends State<EditDestinationOwnerPage> {
   _onSelectedListWeather(int i) {
     setState(() {
       _selectedListWeather = i;
-      _listWeather[i];
-      finalSelectedWeather = _listWeather[i];
     });
   }
 
@@ -100,7 +94,6 @@ class _EditDestinationOwnerPageState extends State<EditDestinationOwnerPage> {
 
   String? finalSelectedHobby;
   String? currentHobby;
-
 
   List<String> listProvince = [
     "Aceh",
@@ -142,16 +135,8 @@ class _EditDestinationOwnerPageState extends State<EditDestinationOwnerPage> {
     "Papua Pegunungan",
     "Papua Barat Daya",
   ];
-  var seen = Set<String>();
-  // List<String> uniquelist = listProvince.where((province) => seen.add(province)).toList();
   String? finalSelectedProvince;
   String? currentProvince;
-  // int? _selectedListProvince;
-  // _onSelectedListProvince(int i) {
-  //   setState(() {
-  //     _selectedListProvince = i;
-  //   });
-  // }
 
   @override
   void initState() {
@@ -171,22 +156,36 @@ class _EditDestinationOwnerPageState extends State<EditDestinationOwnerPage> {
     phoneNumberController = TextEditingController(text: widget.id.contact);
     descriptionController = TextEditingController(text: widget.id.description);
     addressController = TextEditingController(text: widget.id.address);
-    openHourController = TextEditingController(text: widget.id.openHour.toString());
-    closedHourController = TextEditingController(text: widget.id.closedHour.toString());
-    minutesSpendController = TextEditingController(text: widget.id.minutesSpend);
+    openHourController =
+        TextEditingController(text: widget.id.openHour.toString());
+    closedHourController =
+        TextEditingController(text: widget.id.closedHour.toString());
+    minutesSpendController =
+        TextEditingController(text: widget.id.minutesSpend);
     urlMapController = TextEditingController(text: widget.id.urlMap);
-    latitudeController = TextEditingController(text: widget.id.latitude.toString());
-    longitudeController = TextEditingController(text: widget.id.longitude.toString());
+    latitudeController = 
+        TextEditingController(text: widget.id.latitude.toString());
+    if (latitudeController == null) {
+      latitudeController = TextEditingController(text: '0');
+    } else {
+      latitudeController =
+          TextEditingController(text: widget.id.latitude.toString());
+    }
+    longitudeController =
+        TextEditingController(text: widget.id.longitude.toString());
+    if (longitudeController == null) {
+      longitudeController = TextEditingController(text: '0');
+    } else {
+      longitudeController =
+          TextEditingController(text: widget.id.longitude.toString());
+    }
     fasilitiesController = TextEditingController(text: widget.id.fasility);
     currentCategory = widget.id.category;
-    currentHobby = widget.id.hobby;
-    currentWeather = widget.id.recWeather;
+    currentHobby = widget.id.hobby ?? 'Tidak ada';
+    currentWeather = widget.id.recWeather ?? 'Tidak ada';
     currentProvince = widget.id.city;
     // ticketStockController = TextEditingController(text: widget.id.);
     // ticketPriceController = TextEditingController(text: widget.id.);
-
-
-
   }
 
   @override
@@ -209,7 +208,7 @@ class _EditDestinationOwnerPageState extends State<EditDestinationOwnerPage> {
 
   @override
   Widget build(BuildContext context) {
-    final editCon =  Provider.of<DestinasiController>(context, listen: false); 
+    final editCon = Provider.of<DestinasiController>(context, listen: false);
     return Scaffold(
       backgroundColor: backgroundColor,
       appBar: AppBar(
@@ -264,6 +263,17 @@ class _EditDestinationOwnerPageState extends State<EditDestinationOwnerPage> {
                       child: Center(
                         child: TextField(
                           controller: nameController,
+                          onChanged: (text){
+                            if(widget.id.nameDestinasi != null){
+                              setState((){
+                                isEdited = (text != widget.id.nameDestinasi) ? true : false;
+                                print("is name destinasi edited? $isEdited");
+                              });
+                            } else {
+                                print("is name destinasi edited? $isEdited");
+
+                            }
+                          },
                           style: GoogleFonts.openSans(
                               fontSize: 14,
                               color: titleColor,
@@ -301,6 +311,17 @@ class _EditDestinationOwnerPageState extends State<EditDestinationOwnerPage> {
                       width: MediaQuery.of(context).size.width,
                       child: Center(
                         child: TextField(
+                           onChanged: (text){
+                            if(widget.id.contact != null){
+                              setState((){
+                                isEdited = (text != widget.id.contact) ? true : false;
+                                print("is phone number edited? $isEdited");
+                              });
+                            } else {
+                                print("is phone number edited? $isEdited");
+
+                            }
+                          },
                           controller: phoneNumberController,
                           style: GoogleFonts.openSans(
                               fontSize: 14,
@@ -404,6 +425,17 @@ class _EditDestinationOwnerPageState extends State<EditDestinationOwnerPage> {
                       width: MediaQuery.of(context).size.width,
                       height: 110,
                       child: TextField(
+                         onChanged: (text){
+                            if(widget.id.description != null){
+                              setState((){
+                                isEdited = (text != widget.id.description) ? true : false;
+                                print("is description edited? $isEdited");
+                              });
+                            } else {
+                                print("is description edited? $isEdited");
+
+                            }
+                          },
                         maxLines: 5,
                         controller: descriptionController,
                         style: GoogleFonts.openSans(
@@ -444,7 +476,7 @@ class _EditDestinationOwnerPageState extends State<EditDestinationOwnerPage> {
                         ],
                       ),
                     ),
-                    
+
                     SizedBox(
                       height: 42,
                       child: ListView.builder(
@@ -513,6 +545,17 @@ class _EditDestinationOwnerPageState extends State<EditDestinationOwnerPage> {
                           )),
                       width: MediaQuery.of(context).size.width,
                       child: TextField(
+                         onChanged: (text){
+                            if(widget.id.address != null){
+                              setState((){
+                                isEdited = (text != widget.id.address) ? true : false;
+                                print("is address destinasi edited? $isEdited");
+                              });
+                            } else {
+                                print("is address destinasi edited? $isEdited");
+
+                            }
+                          },
                         controller: addressController,
                         style: GoogleFonts.openSans(
                             fontSize: 14,
@@ -733,19 +776,17 @@ class _EditDestinationOwnerPageState extends State<EditDestinationOwnerPage> {
                                     color: Colors.grey.shade200,
                                   )),
                               width: MediaQuery.of(context).size.width * 0.4,
-                              child: 
-                              TextField(
-                                controller: openHourController ,
+                              child: TextField(
+                                controller: openHourController,
                                 style: GoogleFonts.openSans(
                                     fontSize: 14,
                                     color: titleColor,
                                     fontWeight: FontWeight.w600),
                                 keyboardType: TextInputType.number,
                                 textInputAction: TextInputAction.next,
-                                
                                 decoration: InputDecoration(
-                                    // hintText: openHourController == null ? '' : '',
-                                    // hintStyle: TextStyle(color: Colors.grey.shade500),
+                                  // hintText: openHourController == null ? '' : '',
+                                  // hintStyle: TextStyle(color: Colors.grey.shade500),
 
                                   border: InputBorder.none,
                                   contentPadding: EdgeInsets.only(left: 6),
@@ -844,7 +885,7 @@ class _EditDestinationOwnerPageState extends State<EditDestinationOwnerPage> {
                                 color: Colors.black,
                                 fontWeight: FontWeight.w600),
                           ),
-                           Text(
+                          Text(
                             "${currentWeather.toString()} *",
                             style: GoogleFonts.inter(
                                 fontSize: 11,
@@ -1045,6 +1086,17 @@ class _EditDestinationOwnerPageState extends State<EditDestinationOwnerPage> {
                           )),
                       width: MediaQuery.of(context).size.width,
                       child: TextField(
+                         onChanged: (text){
+                            if(widget.id.minutesSpend != null){
+                              setState((){
+                                isEdited = (text != widget.id.minutesSpend) ? true : false;
+                                print("is time duration destinasi edited? $isEdited");
+                              });
+                            } else {
+                                print("is time duration destinasi edited? $isEdited");
+
+                            }
+                          },
                         controller: minutesSpendController,
                         style: GoogleFonts.openSans(
                             fontSize: 14,
@@ -1073,7 +1125,7 @@ class _EditDestinationOwnerPageState extends State<EditDestinationOwnerPage> {
                                 color: Colors.black,
                                 fontWeight: FontWeight.w600),
                           ),
-                           Text(
+                          Text(
                             "${currentHobby.toString()} *",
                             style: GoogleFonts.inter(
                                 fontSize: 11,
@@ -1460,6 +1512,17 @@ class _EditDestinationOwnerPageState extends State<EditDestinationOwnerPage> {
                           )),
                       width: MediaQuery.of(context).size.width,
                       child: TextField(
+                         onChanged: (text){
+                            if(widget.id.urlMap != null){
+                              setState((){
+                                isEdited = (text != widget.id.urlMap) ? true : false;
+                                print("is url map destinasi edited? $isEdited");
+                              });
+                            } else {
+                                print("is url map destinasi edited? $isEdited");
+
+                            }
+                          },
                         controller: urlMapController,
                         style: GoogleFonts.openSans(
                             fontSize: 14,
@@ -1606,6 +1669,17 @@ class _EditDestinationOwnerPageState extends State<EditDestinationOwnerPage> {
                           )),
                       width: MediaQuery.of(context).size.width,
                       child: TextField(
+                         onChanged: (text){
+                            if(widget.id.fasility != null){
+                              setState((){
+                                isEdited = (text != widget.id.fasility) ? true : false;
+                                print("is fasility destinasi edited? $isEdited");
+                              });
+                            } else {
+                                print("is fasility destinasi edited? $isEdited");
+
+                            }
+                          },
                         controller: fasilitiesController,
                         style: GoogleFonts.openSans(
                             fontSize: 14,
@@ -1850,206 +1924,220 @@ class _EditDestinationOwnerPageState extends State<EditDestinationOwnerPage> {
                             fontWeight: FontWeight.w700),
                       ))),
                 ),
-                InkWell(
-                  // onTap: () async {
-                  //   final destCon = Provider.of<DestinasiController>(context,
-                  //       listen: false);
+                isEdited ?InkWell(
+                    // onTap: () async {
+                    //   final destCon = Provider.of<DestinasiController>(context,
+                    //       listen: false);
 
-                  //   if (nameController.text.isEmpty &&
-                  //       descriptionController.text.isEmpty &&
-                  //       addressController.text.isEmpty) {
-                  //     Fluttertoast.showToast(
-                  //         msg: "Data tidak boleh kosong",
-                  //         toastLength: Toast.LENGTH_SHORT,
-                  //         gravity: ToastGravity.BOTTOM,
-                  //         timeInSecForIosWeb: 1,
-                  //         backgroundColor: Colors.red[300],
-                  //         textColor: Colors.white,
-                  //         fontSize: 16.0);
-                  //     return;
-                  //   }
-                  //   // else if(finalSelectedProvince == '' && finalSelectedHobby == ''){
-                  //   //      Fluttertoast.showToast(
-                  //   //       msg: "Provinsi tempat wisata",
-                  //   //       toastLength: Toast.LENGTH_SHORT,
-                  //   //       gravity: ToastGravity.BOTTOM,
-                  //   //       timeInSecForIosWeb: 1,
-                  //   //       backgroundColor: Colors.red[300],
-                  //   //       textColor: Colors.white,
-                  //   //       fontSize: 16.0);
-                  //   //   return;
+                    //   if (nameController.text.isEmpty &&
+                    //       descriptionController.text.isEmpty &&
+                    //       addressController.text.isEmpty) {
+                    //     Fluttertoast.showToast(
+                    //         msg: "Data tidak boleh kosong",
+                    //         toastLength: Toast.LENGTH_SHORT,
+                    //         gravity: ToastGravity.BOTTOM,
+                    //         timeInSecForIosWeb: 1,
+                    //         backgroundColor: Colors.red[300],
+                    //         textColor: Colors.white,
+                    //         fontSize: 16.0);
+                    //     return;
+                    //   }
+                    //   // else if(finalSelectedProvince == '' && finalSelectedHobby == ''){
+                    //   //      Fluttertoast.showToast(
+                    //   //       msg: "Provinsi tempat wisata",
+                    //   //       toastLength: Toast.LENGTH_SHORT,
+                    //   //       gravity: ToastGravity.BOTTOM,
+                    //   //       timeInSecForIosWeb: 1,
+                    //   //       backgroundColor: Colors.red[300],
+                    //   //       textColor: Colors.white,
+                    //   //       fontSize: 16.0);
+                    //   //   return;
 
-                  //   // }
+                    //   // }
 
-                  //   else if (nameController.text.isEmpty) {
-                  //     Fluttertoast.showToast(
-                  //         msg: "Nama tempat wisata belum diisi",
-                  //         toastLength: Toast.LENGTH_SHORT,
-                  //         gravity: ToastGravity.BOTTOM,
-                  //         timeInSecForIosWeb: 1,
-                  //         backgroundColor: Colors.red[300],
-                  //         textColor: Colors.white,
-                  //         fontSize: 16.0);
-                  //     return;
-                  //   } else if (descriptionController.text.isEmpty) {
-                  //     Fluttertoast.showToast(
-                  //         msg: "Deskripsi tempat wisata belum diisi",
-                  //         toastLength: Toast.LENGTH_SHORT,
-                  //         gravity: ToastGravity.BOTTOM,
-                  //         timeInSecForIosWeb: 1,
-                  //         backgroundColor: Colors.red[300],
-                  //         textColor: Colors.white,
-                  //         fontSize: 16.0);
-                  //     return;
-                  //   } else if (addressController.text.isEmpty) {
-                  //     Fluttertoast.showToast(
-                  //         msg: "Alamat tempat wisata belum diisi",
-                  //         toastLength: Toast.LENGTH_SHORT,
-                  //         gravity: ToastGravity.BOTTOM,
-                  //         timeInSecForIosWeb: 1,
-                  //         backgroundColor: Colors.red[300],
-                  //         textColor: Colors.white,
-                  //         fontSize: 16.0);
-                  //     return;
-                  //   } else if (finalSelectedCategory == null) {
-                  //     Fluttertoast.showToast(
-                  //         msg: "Kategori tempat wisata belum diisi",
-                  //         toastLength: Toast.LENGTH_SHORT,
-                  //         gravity: ToastGravity.BOTTOM,
-                  //         timeInSecForIosWeb: 1,
-                  //         backgroundColor: Colors.red[300],
-                  //         textColor: Colors.white,
-                  //         fontSize: 16.0);
-                  //     return;
-                  //   } else if (finalSelectedProvince == null) {
-                  //     Fluttertoast.showToast(
-                  //         msg: "Provinsi tempat wisata belum diisi",
-                  //         toastLength: Toast.LENGTH_SHORT,
-                  //         gravity: ToastGravity.BOTTOM,
-                  //         timeInSecForIosWeb: 1,
-                  //         backgroundColor: Colors.red[300],
-                  //         textColor: Colors.white,
-                  //         fontSize: 16.0);
-                  //     return;
-                  //   }
-                  //   setState(() {
-                  //     isLoading = true;
-                  //   });
+                    //   else if (nameController.text.isEmpty) {
+                    //     Fluttertoast.showToast(
+                    //         msg: "Nama tempat wisata belum diisi",
+                    //         toastLength: Toast.LENGTH_SHORT,
+                    //         gravity: ToastGravity.BOTTOM,
+                    //         timeInSecForIosWeb: 1,
+                    //         backgroundColor: Colors.red[300],
+                    //         textColor: Colors.white,
+                    //         fontSize: 16.0);
+                    //     return;
+                    //   } else if (descriptionController.text.isEmpty) {
+                    //     Fluttertoast.showToast(
+                    //         msg: "Deskripsi tempat wisata belum diisi",
+                    //         toastLength: Toast.LENGTH_SHORT,
+                    //         gravity: ToastGravity.BOTTOM,
+                    //         timeInSecForIosWeb: 1,
+                    //         backgroundColor: Colors.red[300],
+                    //         textColor: Colors.white,
+                    //         fontSize: 16.0);
+                    //     return;
+                    //   } else if (addressController.text.isEmpty) {
+                    //     Fluttertoast.showToast(
+                    //         msg: "Alamat tempat wisata belum diisi",
+                    //         toastLength: Toast.LENGTH_SHORT,
+                    //         gravity: ToastGravity.BOTTOM,
+                    //         timeInSecForIosWeb: 1,
+                    //         backgroundColor: Colors.red[300],
+                    //         textColor: Colors.white,
+                    //         fontSize: 16.0);
+                    //     return;
+                    //   } else if (finalSelectedCategory == null) {
+                    //     Fluttertoast.showToast(
+                    //         msg: "Kategori tempat wisata belum diisi",
+                    //         toastLength: Toast.LENGTH_SHORT,
+                    //         gravity: ToastGravity.BOTTOM,
+                    //         timeInSecForIosWeb: 1,
+                    //         backgroundColor: Colors.red[300],
+                    //         textColor: Colors.white,
+                    //         fontSize: 16.0);
+                    //     return;
+                    //   } else if (finalSelectedProvince == null) {
+                    //     Fluttertoast.showToast(
+                    //         msg: "Provinsi tempat wisata belum diisi",
+                    //         toastLength: Toast.LENGTH_SHORT,
+                    //         gravity: ToastGravity.BOTTOM,
+                    //         timeInSecForIosWeb: 1,
+                    //         backgroundColor: Colors.red[300],
+                    //         textColor: Colors.white,
+                    //         fontSize: 16.0);
+                    //     return;
+                    //   }
+                    //   setState(() {
+                    //     isLoading = true;
+                    //   });
 
-                  //   double? latitudeValue = latitudeController.text.isNotEmpty
-                  //       ? double.parse(latitudeController.text)
-                  //       : null;
+                    //   double? latitudeValue = latitudeController.text.isNotEmpty
+                    //       ? double.parse(latitudeController.text)
+                    //       : null;
 
-                  //   double? longitudeValue = longitudeController.text.isNotEmpty
-                  //       ? double.parse(longitudeController.text)
-                  //       : null;
+                    //   double? longitudeValue = longitudeController.text.isNotEmpty
+                    //       ? double.parse(longitudeController.text)
+                    //       : null;
 
-                  //   int openHourValue;
-                  //   if (openHourController.text.isNotEmpty) {
-                  //     openHourValue = int.parse(openHourController.text);
-                  //   } else {
-                  //     openHourValue = 0;
-                  //   }
+                    //   int openHourValue;
+                    //   if (openHourController.text.isNotEmpty) {
+                    //     openHourValue = int.parse(openHourController.text);
+                    //   } else {
+                    //     openHourValue = 0;
+                    //   }
 
-                  //   int closedHourValue;
-                  //   if (closedHourController.text.isNotEmpty) {
-                  //     closedHourValue = int.parse(closedHourController.text);
-                  //   } else {
-                  //     closedHourValue = 0;
-                  //   }
-                  //   try {
-                  //     await destCon.postDestinasi(
-                  //         nameDestinasi: nameController.text,
-                  //         description: descriptionController.text,
-                  //         address: addressController.text,
-                  //         city: finalSelectedProvince.toString(),
-                  //         category: finalSelectedCategory.toString(),
-                  //         contact: phoneNumberController.text,
-                  //         hobby: finalSelectedHobby,
-                  //         minutesSpend: minutesSpendController.text,
-                  //         latitude: latitudeValue,
-                  //         longitude: longitudeValue,
-                  //         // latitude: -6.0000,
-                  //         // longitude: 104.2020,
-                  //         urlMap: urlMapController.text,
-                  //         recWeather: finalSelectedWeather,
-                  //         // openHour: 1,
-                  //         // closedHour: 1,
-                  //         openHour: openHourValue,
-                  //         closedHour: closedHourValue,
-                  //         fasility: fasilitiesController.text,
-                  //         security: securityAvail
-                  //         // image:
-                  //         // openHour: openHourController.text
-                  //         // closedHour: closedHourController.text
-                  //         );
-                  //     if (destCon.statusCodeAddDestinasi == 200) {
-                  //       setState(() {
-                  //         isLoading = false;
-                  //       });
-                  //       // ignore: use_build_context_synchronously
-                  //       Navigator.pushAndRemoveUntil(
-                  //           context,
-                  //           MaterialPageRoute(
-                  //               builder: (context) => const HomePageOwner()),
-                  //           (route) => false);
-                  //       Fluttertoast.showToast(
-                  //           msg: "Tempat wisatamu telah ditambahkan!",
-                  //           toastLength: Toast.LENGTH_SHORT,
-                  //           gravity: ToastGravity.BOTTOM,
-                  //           timeInSecForIosWeb: 1,
-                  //           backgroundColor: primaryColor.withOpacity(0.6),
-                  //           textColor: Colors.white,
-                  //           fontSize: 13);
-                  //     } else if (destCon.statusCodeAddDestinasi == 404) {
-                  //       setState(() {
-                  //         isLoading = false;
-                  //       });
-                  //       Fluttertoast.showToast(
-                  //           msg: destCon.messageAddDestinasi.toString(),
-                  //           toastLength: Toast.LENGTH_SHORT,
-                  //           gravity: ToastGravity.BOTTOM,
-                  //           timeInSecForIosWeb: 1,
-                  //           backgroundColor: Colors.red[300],
-                  //           textColor: Colors.white,
-                  //           fontSize: 16.0);
-                  //       return;
-                  //     } else {
-                  //       setState(() {
-                  //         isLoading = false;
-                  //       });
-                  //       Fluttertoast.showToast(
-                  //           msg: "Terjadi Error\nSilahkan Coba Lagi Nanti",
-                  //           toastLength: Toast.LENGTH_SHORT,
-                  //           gravity: ToastGravity.BOTTOM,
-                  //           timeInSecForIosWeb: 1,
-                  //           backgroundColor: Colors.red[300],
-                  //           textColor: Colors.white,
-                  //           fontSize: 16.0);
-                  //       return;
-                  //     }
-                  //   } catch (e) {
-                  //     e;
-                  //   }
-                  //   setState(() {
-                  //     isLoading = false;
-                  //   });
-                  // },
-                  child: Container(
-                      height: 45,
-                      width: MediaQuery.of(context).size.width * 0.7,
-                      decoration: BoxDecoration(
-                          color: secondaryColor,
-                          borderRadius: BorderRadius.circular(10)),
-                      child: Center(
-                          child: Text(
-                        "Simpan Tempat Wisata",
-                        style: GoogleFonts.openSans(
-                            fontSize: 13,
-                            color: Colors.white,
-                            fontWeight: FontWeight.w700),
-                      ))),
-                )
+                    //   int closedHourValue;
+                    //   if (closedHourController.text.isNotEmpty) {
+                    //     closedHourValue = int.parse(closedHourController.text);
+                    //   } else {
+                    //     closedHourValue = 0;
+                    //   }
+                    //   try {
+                    //     await destCon.postDestinasi(
+                    //         nameDestinasi: nameController.text,
+                    //         description: descriptionController.text,
+                    //         address: addressController.text,
+                    //         city: finalSelectedProvince.toString(),
+                    //         category: finalSelectedCategory.toString(),
+                    //         contact: phoneNumberController.text,
+                    //         hobby: finalSelectedHobby,
+                    //         minutesSpend: minutesSpendController.text,
+                    //         latitude: latitudeValue,
+                    //         longitude: longitudeValue,
+                    //         // latitude: -6.0000,
+                    //         // longitude: 104.2020,
+                    //         urlMap: urlMapController.text,
+                    //         recWeather: finalSelectedWeather,
+                    //         // openHour: 1,
+                    //         // closedHour: 1,
+                    //         openHour: openHourValue,
+                    //         closedHour: closedHourValue,
+                    //         fasility: fasilitiesController.text,
+                    //         security: securityAvail
+                    //         // image:
+                    //         // openHour: openHourController.text
+                    //         // closedHour: closedHourController.text
+                    //         );
+                    //     if (destCon.statusCodeAddDestinasi == 200) {
+                    //       setState(() {
+                    //         isLoading = false;
+                    //       });
+                    //       // ignore: use_build_context_synchronously
+                    //       Navigator.pushAndRemoveUntil(
+                    //           context,
+                    //           MaterialPageRoute(
+                    //               builder: (context) => const HomePageOwner()),
+                    //           (route) => false);
+                    //       Fluttertoast.showToast(
+                    //           msg: "Tempat wisatamu telah ditambahkan!",
+                    //           toastLength: Toast.LENGTH_SHORT,
+                    //           gravity: ToastGravity.BOTTOM,
+                    //           timeInSecForIosWeb: 1,
+                    //           backgroundColor: primaryColor.withOpacity(0.6),
+                    //           textColor: Colors.white,
+                    //           fontSize: 13);
+                    //     } else if (destCon.statusCodeAddDestinasi == 404) {
+                    //       setState(() {
+                    //         isLoading = false;
+                    //       });
+                    //       Fluttertoast.showToast(
+                    //           msg: destCon.messageAddDestinasi.toString(),
+                    //           toastLength: Toast.LENGTH_SHORT,
+                    //           gravity: ToastGravity.BOTTOM,
+                    //           timeInSecForIosWeb: 1,
+                    //           backgroundColor: Colors.red[300],
+                    //           textColor: Colors.white,
+                    //           fontSize: 16.0);
+                    //       return;
+                    //     } else {
+                    //       setState(() {
+                    //         isLoading = false;
+                    //       });
+                    //       Fluttertoast.showToast(
+                    //           msg: "Terjadi Error\nSilahkan Coba Lagi Nanti",
+                    //           toastLength: Toast.LENGTH_SHORT,
+                    //           gravity: ToastGravity.BOTTOM,
+                    //           timeInSecForIosWeb: 1,
+                    //           backgroundColor: Colors.red[300],
+                    //           textColor: Colors.white,
+                    //           fontSize: 16.0);
+                    //       return;
+                    //     }
+                    //   } catch (e) {
+                    //     e;
+                    //   }
+                    //   setState(() {
+                    //     isLoading = false;
+                    //   });
+                    // },
+                    child: Container(
+                        height: 45,
+                        width: MediaQuery.of(context).size.width * 0.7,
+                        decoration: BoxDecoration(
+                            color: secondaryColor,
+                            borderRadius: BorderRadius.circular(10)),
+                        child: Center(
+                            child: Text(
+                          "Ubah Tempat Wisata",
+                          style: GoogleFonts.openSans(
+                              fontSize: 13,
+                              color: Colors.white,
+                              fontWeight: FontWeight.w700),
+                        ))),
+                  
+                ) : Container(
+                        height: 45,
+                        width: MediaQuery.of(context).size.width * 0.7,
+                        decoration: BoxDecoration(
+                            color: Colors.grey.shade400,
+                            borderRadius: BorderRadius.circular(10)),
+                        child: Center(
+                            child: Text(
+                          "Ubah Tempat Wisata",
+                          style: GoogleFonts.openSans(
+                              fontSize: 13,
+                              color: Colors.white,
+                              fontWeight: FontWeight.w700),
+                        ))),
               ],
             ),
           ),

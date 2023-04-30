@@ -34,6 +34,8 @@ class _DetailDestinationState extends State<DetailDestination> {
 
   bool isLoading = false;
   bool isLoading2 = false;
+  String text = '';
+  List<String> data = [];
   final Completer<GoogleMapController> _controller = Completer();
   final ScrollController _scrollController = ScrollController();
 
@@ -49,6 +51,12 @@ class _DetailDestinationState extends State<DetailDestination> {
       try {
         print("get title destinasi : ${widget.id.nameDestinasi}");
         await reviewData.reviewDestinasiId(widget.id.id);
+        text = widget.id.fasility.toString();
+        if (text.contains(',')) {
+          data = text.split(',');
+        } else {
+          print('Teks fasilitas tidak mengandung koma');
+        }
       } catch (e) {
         e;
       }
@@ -59,13 +67,6 @@ class _DetailDestinationState extends State<DetailDestination> {
     super.initState();
     // reviewController = TextEditingController(text: reviewData.reviewData![index].review ?? "");
   }
-
-  // @override
-  // void dispose() {
-  //   // Clean up the controller when the widget is removed from the widget tree.
-  //   reviewController!.dispose();
-  //   super.dispose();
-  // }
 
   @override
   Widget build(BuildContext context) {
@@ -155,15 +156,17 @@ class _DetailDestinationState extends State<DetailDestination> {
                                     widget.id.security == 1
                                         ? InkWell(
                                             onTap: () {
-                                               Fluttertoast.showToast(
-                                              msg: "Kawasan dengan pengawasan security",
-                                              toastLength: Toast.LENGTH_SHORT,
-                                              gravity: ToastGravity.BOTTOM,
-                                              timeInSecForIosWeb: 1,
-                                              backgroundColor:
-                                                  primaryColor.withOpacity(0.5),
-                                              textColor: Colors.white,
-                                              fontSize: 16.0);
+                                              Fluttertoast.showToast(
+                                                  msg:
+                                                      "Kawasan dengan pengawasan security",
+                                                  toastLength:
+                                                      Toast.LENGTH_SHORT,
+                                                  gravity: ToastGravity.BOTTOM,
+                                                  timeInSecForIosWeb: 1,
+                                                  backgroundColor: primaryColor
+                                                      .withOpacity(0.5),
+                                                  textColor: Colors.white,
+                                                  fontSize: 16.0);
                                             },
                                             child: Container(
                                                 padding: EdgeInsets.all(2),
@@ -392,6 +395,7 @@ class _DetailDestinationState extends State<DetailDestination> {
                                                   color: primaryColor,
                                                   fontWeight: FontWeight.w600),
                                             ),
+
                                             Padding(
                                               padding:
                                                   const EdgeInsets.fromLTRB(
@@ -415,7 +419,7 @@ class _DetailDestinationState extends State<DetailDestination> {
                                                                     context)
                                                                 .size
                                                                 .width *
-                                                            0.23,
+                                                            0.27,
                                                         child: Row(
                                                             mainAxisAlignment:
                                                                 MainAxisAlignment
@@ -439,11 +443,11 @@ class _DetailDestinationState extends State<DetailDestination> {
                                                                 size: 22,
                                                               )),
                                                               SizedBox(
-                                                                // width: MediaQuery.of(
-                                                                //             context)
-                                                                //         .size
-                                                                //         .width *
-                                                                //     0.12,
+                                                                width: MediaQuery.of(
+                                                                            context)
+                                                                        .size
+                                                                        .width *
+                                                                    0.17,
                                                                 child: Padding(
                                                                   padding: const EdgeInsets
                                                                           .only(
@@ -467,22 +471,26 @@ class _DetailDestinationState extends State<DetailDestination> {
                                                                             fontWeight:
                                                                                 FontWeight.w500),
                                                                       ),
-                                                                      Text(
-                                                                        widget.id.minutesSpend !=
-                                                                                null
-                                                                            ? widget.id.minutesSpend!
-                                                                            : "-",
-                                                                        overflow:
-                                                                            TextOverflow.fade,
-                                                                        maxLines:
-                                                                            2,
-                                                                        style: GoogleFonts.openSans(
-                                                                            fontSize:
-                                                                                13,
-                                                                            color:
-                                                                                titleColor,
-                                                                            fontWeight:
-                                                                                FontWeight.w400),
+                                                                      Center(
+                                                                        child:
+                                                                            SizedBox(
+                                                                          width:
+                                                                              MediaQuery.of(context).size.width * 0.17,
+                                                                          child:
+                                                                              Center(
+                                                                            child: widget.id.minutesSpend != null
+                                                                                ? Text(
+                                                                                    widget.id.minutesSpend.toString(),
+                                                                                    overflow: TextOverflow.clip,
+                                                                                    maxLines: 3,
+                                                                                    style: GoogleFonts.openSans(fontSize: 12, color: titleColor, fontWeight: FontWeight.w600),
+                                                                                  )
+                                                                                : Text(
+                                                                                    "-",
+                                                                                    style: GoogleFonts.openSans(fontSize: 12, color: titleColor, fontWeight: FontWeight.w400),
+                                                                                  ),
+                                                                          ),
+                                                                        ),
                                                                       )
                                                                     ],
                                                                   ),
@@ -506,7 +514,7 @@ class _DetailDestinationState extends State<DetailDestination> {
                                                                     context)
                                                                 .size
                                                                 .width *
-                                                            0.23,
+                                                            0.27,
                                                         child: Row(
                                                             mainAxisAlignment:
                                                                 MainAxisAlignment
@@ -536,11 +544,11 @@ class _DetailDestinationState extends State<DetailDestination> {
                                                                             4.0),
                                                                 child:
                                                                     Container(
-                                                                  // width: MediaQuery.of(
-                                                                  //             context)
-                                                                  //         .size
-                                                                  //         .width *
-                                                                  //     0.12,
+                                                                  width: MediaQuery.of(
+                                                                              context)
+                                                                          .size
+                                                                          .width *
+                                                                      0.17,
                                                                   child: Column(
                                                                     mainAxisAlignment:
                                                                         MainAxisAlignment
@@ -559,19 +567,17 @@ class _DetailDestinationState extends State<DetailDestination> {
                                                                             fontWeight:
                                                                                 FontWeight.w500),
                                                                       ),
-                                                                      Text(
-                                                                        widget.id.recWeather !=
-                                                                                null
-                                                                            ? widget.id.recWeather!
-                                                                            : "-",
-                                                                        style: GoogleFonts.openSans(
-                                                                            fontSize:
-                                                                                12,
-                                                                            color:
-                                                                                titleColor,
-                                                                            fontWeight:
-                                                                                FontWeight.w600),
-                                                                      )
+                                                                      widget.id.recWeather !=
+                                                                              null
+                                                                          ? Text(
+                                                                              widget.id.recWeather.toString(),
+                                                                              style: GoogleFonts.openSans(fontSize: 12, color: titleColor, fontWeight: FontWeight.w600),
+                                                                            )
+                                                                          : Text(
+                                                                              "-",
+                                                                              maxLines: 4,
+                                                                              style: GoogleFonts.openSans(fontSize: 12, color: titleColor, fontWeight: FontWeight.w400),
+                                                                            )
                                                                     ],
                                                                   ),
                                                                 ),
@@ -594,7 +600,7 @@ class _DetailDestinationState extends State<DetailDestination> {
                                                                     context)
                                                                 .size
                                                                 .width *
-                                                            0.23,
+                                                            0.27,
                                                         child: Row(
                                                             mainAxisAlignment:
                                                                 MainAxisAlignment
@@ -617,11 +623,11 @@ class _DetailDestinationState extends State<DetailDestination> {
                                                                     primaryColor,
                                                               )),
                                                               Container(
-                                                                // width: MediaQuery.of(
-                                                                //             context)
-                                                                //         .size
-                                                                //         .width *
-                                                                //     0.12,
+                                                                width: MediaQuery.of(
+                                                                            context)
+                                                                        .size
+                                                                        .width *
+                                                                    0.17,
                                                                 child: Padding(
                                                                   padding: const EdgeInsets
                                                                           .only(
@@ -646,19 +652,18 @@ class _DetailDestinationState extends State<DetailDestination> {
                                                                                 FontWeight.w500),
                                                                       ),
                                                                       SizedBox(
-                                                                        width: MediaQuery.of(context).size.width *
-                                                                            0.16,
-                                                                        child:
-                                                                            Text(
-                                                                          widget.id.hobby != null
-                                                                              ? widget.id.hobby!
-                                                                              : "Lainnya",
-                                                                          style: GoogleFonts.openSans(
-                                                                              fontSize: 12,
-                                                                              color: titleColor,
-                                                                              fontWeight: FontWeight.w400),
-                                                                        ),
-                                                                      )
+                                                                          width:
+                                                                              MediaQuery.of(context).size.width * 0.16,
+                                                                          child: widget.id.hobby != null
+                                                                              ? Text(
+                                                                                  widget.id.hobby.toString(),
+                                                                                  style: GoogleFonts.openSans(fontSize: 12, color: titleColor, fontWeight: FontWeight.w400),
+                                                                                )
+                                                                              : Text(
+                                                                                  "-",
+                                                                                  maxLines: 1,
+                                                                                  style: GoogleFonts.openSans(fontSize: 12, color: titleColor, fontWeight: FontWeight.w400),
+                                                                                ))
                                                                     ],
                                                                   ),
                                                                 ),
@@ -678,25 +683,70 @@ class _DetailDestinationState extends State<DetailDestination> {
                                                   color: primaryColor,
                                                   fontWeight: FontWeight.w500),
                                             ),
-                                            Padding(
-                                              padding:
-                                                  const EdgeInsets.all(8.0),
-                                              child: Container(
-                                                decoration: BoxDecoration(
-                                                    borderRadius:
-                                                        BorderRadius.circular(
-                                                            10),
-                                                    color: labelColorBack),
-                                                child: Text(
-                                                  "  fasilitas  ",
-                                                  style: GoogleFonts.openSans(
-                                                      fontSize: 13,
-                                                      color: primaryColor,
-                                                      fontWeight:
-                                                          FontWeight.w400),
-                                                ),
-                                              ),
-                                            ),
+                                            widget.id.fasility == null ||
+                                                    widget.id.fasility == ''
+                                                ? Text(
+                                                    "Tidak terdapat fasilitas",
+                                                    style: GoogleFonts.openSans(
+                                                        fontSize: 12,
+                                                        color: descColor,
+                                                        fontWeight:
+                                                            FontWeight.w400),
+                                                  )
+                                                : Padding(
+                                                    padding:
+                                                        const EdgeInsets.only(
+                                                            left: 10.0),
+                                                    child: SizedBox(
+                                                      height: 35,
+                                                      child: ListView.builder(
+                                                          shrinkWrap: true,
+                                                          // controller: _scrollController,
+                                                          scrollDirection:
+                                                              Axis.horizontal,
+                                                          itemCount:
+                                                              data.length,
+                                                          itemBuilder:
+                                                              (context, i) {
+                                                            return Padding(
+                                                              padding:
+                                                                  const EdgeInsets
+                                                                          .only(
+                                                                      top: 8.0,
+                                                                      right:
+                                                                          8.0),
+                                                              child: Container(
+                                                                decoration: BoxDecoration(
+                                                                    borderRadius:
+                                                                        BorderRadius.circular(
+                                                                            15),
+                                                                    color:
+                                                                        labelColorBack),
+                                                                child: Padding(
+                                                                  padding: const EdgeInsets
+                                                                          .only(
+                                                                      left:
+                                                                          12.0,
+                                                                      right:
+                                                                          12.0),
+                                                                  child: Center(
+                                                                    child: Text(
+                                                                      data[i],
+                                                                      style: GoogleFonts.openSans(
+                                                                          fontSize:
+                                                                              13,
+                                                                          color:
+                                                                              primaryColor,
+                                                                          fontWeight:
+                                                                              FontWeight.w400),
+                                                                    ),
+                                                                  ),
+                                                                ),
+                                                              ),
+                                                            );
+                                                          }),
+                                                    ),
+                                                  ),
                                             const SizedBox(
                                               height: 10,
                                             )

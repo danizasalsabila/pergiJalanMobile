@@ -29,7 +29,7 @@ GET_DESTINASI_ID(id) => "destinasi/$id";
 
 const POST_DESTINASI = "destinasi/store";
 
-PUT_DESTINASI(id) => "destinasi/update/$id";
+PUT_DESTINASI(id) => "destinasi/update/$id?";
 
 DELETE_DESTINASI(id) => "destinasi/destroy/$id";
 

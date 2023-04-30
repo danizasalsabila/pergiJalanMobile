@@ -233,4 +233,85 @@ class DestinasiController extends ChangeNotifier {
       print("ERROR MESSAGE: $e");
     }
   }
+
+  String? messageEditDestinasi;
+  int? statusCodeEditDestinasi;
+  Future<dynamic> editDestinasi({
+    id,
+    String? nameDestinasi,
+    String? description,
+    String? address,
+    String? city,
+    String? category,
+    String? contact,
+    String? hobby,
+    String? minutesSpend,
+    double? latitude,
+    double? longitude,
+    String? urlMap,
+    String? recWeather,
+    int? openHour,
+    int? closedHour,
+    // Null? image,
+    int? security,
+    String? fasility,
+  }) async {
+    var url = Uri.parse(BASE_URL + PUT_DESTINASI(id));
+    final body = {
+      'name_destinasi': nameDestinasi,
+      'description': description,
+      'address': address,
+      'city': city,
+      'category': category,
+      'contact': contact,
+      'hobby': hobby,
+      'minutes_spend': minutesSpend,
+      'latitude': latitude,
+      'longitude': longitude,
+      'url_map': urlMap,
+      'rec_weather': recWeather,
+      'open-hour': openHour,
+      'closed-hour': closedHour,
+      // 'destination_picture': image,
+      'fasility': fasility,
+      'security': security,
+    };
+    try {
+      var response = await http.put(
+        url,
+        body: json.encode({
+          'name_destinasi': nameDestinasi,
+          'description': description,
+          'address': address,
+          'city': city,
+          'category': category,
+          'contact': contact,
+          'hobby': hobby,
+          'minutes_spend': minutesSpend,
+          'latitude': latitude,
+          'longitude': longitude,
+          'url_map': urlMap,
+          'rec_weather': recWeather,
+          'open-hour': openHour,
+          'closed-hour': closedHour,
+          'fasility': fasility,
+          'security': security,
+        }),
+        headers: {
+          "content-type": "application/json",
+        },
+      );
+      var data = json.decode(response.body);
+      if (response.statusCode == 200) {
+        print(data);
+        statusCodeEditDestinasi = response.statusCode;
+        notifyListeners();
+      } else if (response.statusCode == 404) {
+        messageEditDestinasi = data["message"];
+        statusCodeEditDestinasi = response.statusCode;
+      }
+    } catch (e) {
+      print("ERROR MESSAGE: $e");
+    }
+  }
 }
