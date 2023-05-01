@@ -1,17 +1,13 @@
 import 'package:dotted_border/dotted_border.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/container.dart';
-import 'package:flutter/src/widgets/framework.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:pergijalan_mobile/config/theme_color.dart';
 import 'package:pergijalan_mobile/controllers/destinasi_controller.dart';
 import 'package:pergijalan_mobile/views/pages/business_owner/home.dart';
 import 'package:provider/provider.dart';
 
-import '../../../controllers/user_controller.dart';
 import '../../../models/destinasi.dart';
 
 class EditDestinationOwnerPage extends StatefulWidget {
@@ -25,7 +21,7 @@ class EditDestinationOwnerPage extends StatefulWidget {
 }
 
 class _EditDestinationOwnerPageState extends State<EditDestinationOwnerPage> {
-  bool isSelected = false;
+  // bool isSelected = false;
   bool isLoading = false;
   bool isEdited = false;
   bool isUpdating = false;
@@ -39,12 +35,19 @@ class _EditDestinationOwnerPageState extends State<EditDestinationOwnerPage> {
   TextEditingController? urlMapController;
   TextEditingController? latitudeController;
   TextEditingController? longitudeController;
-
   TextEditingController? fasilitiesController;
   TextEditingController? ticketStockController;
   TextEditingController? ticketPriceController;
-  List<bool> _isSecurityAvail = [true, false];
+  // int? _isSecurityAvail;
   int? securityAvail;
+  _onSelectedListSecurity(value) {
+    setState(() {
+      securityAvail = value;
+      if (widget.id.security != null) {
+        isEdited = (value != widget.id.security) ? true : false;
+      }
+    });
+  }
 
   final List<String> _listCategory = [
     "Cagar Alam",
@@ -54,11 +57,11 @@ class _EditDestinationOwnerPageState extends State<EditDestinationOwnerPage> {
     "Taman Ibadah",
   ];
   String? finalSelectedCategory;
-  String? currentCategory;
   int? _selectedListCategory;
   _onSelectedListCategory(int i) {
     setState(() {
       _selectedListCategory = i;
+      isEdited = (_listCategory[i] != widget.id.category) ? true : false;
     });
   }
 
@@ -69,12 +72,21 @@ class _EditDestinationOwnerPageState extends State<EditDestinationOwnerPage> {
     "Kabut",
   ];
   int? _selectedListWeather;
-  String? currentWeather;
   String? finalSelectedWeather;
   _onSelectedListWeather(int i) {
     setState(() {
       _selectedListWeather = i;
       finalSelectedWeather = _listWeather[i];
+      if (widget.id.recWeather != null) {
+        setState(() {
+          isEdited =
+              (finalSelectedWeather != widget.id.recWeather) ? true : false;
+        });
+      } else {
+        isEdited = (finalSelectedWeather?.trim() != widget.id.recWeather)
+            ? true
+            : false;
+      }
     });
   }
 
@@ -90,11 +102,18 @@ class _EditDestinationOwnerPageState extends State<EditDestinationOwnerPage> {
   _onSelectedListHobby(int i) {
     setState(() {
       _selectedListHobby = i;
+      if (widget.id.hobby != null) {
+        setState(() {
+          isEdited = (_listCategory[i] != widget.id.hobby) ? true : false;
+        });
+      } else {
+        isEdited = (_listCategory[i].trim() != widget.id.hobby) ? true : false;
+      }
     });
   }
 
   String? finalSelectedHobby;
-  String? currentHobby;
+  // String? currentHobby;
 
   List<String> listProvince = [
     "Aceh",
@@ -137,7 +156,7 @@ class _EditDestinationOwnerPageState extends State<EditDestinationOwnerPage> {
     "Papua Barat Daya",
   ];
   String? finalSelectedProvince;
-  String? currentProvince;
+  // String? currentProvince;
 
   @override
   void initState() {
@@ -146,12 +165,12 @@ class _EditDestinationOwnerPageState extends State<EditDestinationOwnerPage> {
 
     Future.delayed(const Duration(seconds: 1)).then((value) async {
       try {
-        print("get id destinasi : ${widget.id.id}");
+        // print("get id destinasi : ${widget.id.id}");
       } catch (e) {
         e;
       }
     });
-    _isSecurityAvail = [true, false];
+    // _isSecurityAvail = [true, false];
     super.initState();
     nameController = TextEditingController(text: widget.id.nameDestinasi);
     phoneNumberController = TextEditingController(text: widget.id.contact);
@@ -183,10 +202,10 @@ class _EditDestinationOwnerPageState extends State<EditDestinationOwnerPage> {
     finalSelectedWeather = widget.id.recWeather;
     finalSelectedProvince = widget.id.city;
     finalSelectedHobby = widget.id.hobby;
-    currentCategory = widget.id.category;
-    currentHobby = widget.id.hobby ?? 'Tidak ada';
-    currentWeather = widget.id.recWeather ?? 'Tidak ada';
-    currentProvince = widget.id.city;
+    // currentCategory = widget.id.category;
+    // currentHobby = widget.id.hobby ?? 'Tidak ada';
+    // currentWeather = widget.id.recWeather ?? 'Tidak ada';
+    // currentProvince = widget.id.city;
     securityAvail = widget.id.security;
     // ticketStockController = TextEditingController(text: widget.id.);
     // ticketPriceController = TextEditingController(text: widget.id.);
@@ -483,7 +502,7 @@ class _EditDestinationOwnerPageState extends State<EditDestinationOwnerPage> {
                                 fontWeight: FontWeight.w600),
                           ),
                           Text(
-                            "${currentCategory.toString()} *",
+                            "${finalSelectedCategory.toString()} *",
                             style: GoogleFonts.inter(
                                 fontSize: 11,
                                 color: Colors.red.shade600,
@@ -672,7 +691,7 @@ class _EditDestinationOwnerPageState extends State<EditDestinationOwnerPage> {
                           hint: Padding(
                             padding: const EdgeInsets.only(left: 8.0),
                             child: Text(
-                              currentProvince.toString(),
+                              widget.id.city.toString(),
                               // "Aceh",
                               style: GoogleFonts.openSans(
                                   fontSize: 12,
@@ -738,6 +757,20 @@ class _EditDestinationOwnerPageState extends State<EditDestinationOwnerPage> {
                           onChanged: (newValue) {
                             setState(() {
                               finalSelectedProvince = newValue.toString();
+
+                              if (widget.id.city != null) {
+                                setState(() {
+                                  isEdited =
+                                      (finalSelectedProvince != widget.id.city)
+                                          ? true
+                                          : false;
+                                });
+                              } else {
+                                isEdited = (finalSelectedProvince?.trim() !=
+                                        widget.id.city)
+                                    ? true
+                                    : false;
+                              }
                               // print("final: $finalSelectedProvince");
                             });
                           },
@@ -942,7 +975,7 @@ class _EditDestinationOwnerPageState extends State<EditDestinationOwnerPage> {
                                 fontWeight: FontWeight.w600),
                           ),
                           Text(
-                            "${currentWeather.toString()} *",
+                            "${finalSelectedWeather.toString()} *",
                             style: GoogleFonts.inter(
                                 fontSize: 11,
                                 color: Colors.red.shade600,
@@ -1188,7 +1221,7 @@ class _EditDestinationOwnerPageState extends State<EditDestinationOwnerPage> {
                                 fontWeight: FontWeight.w600),
                           ),
                           Text(
-                            "${currentHobby.toString()} *",
+                            "${finalSelectedHobby.toString()} *",
                             style: GoogleFonts.inter(
                                 fontSize: 11,
                                 color: Colors.red.shade600,
@@ -1839,66 +1872,91 @@ class _EditDestinationOwnerPageState extends State<EditDestinationOwnerPage> {
                           child: Padding(
                             padding: const EdgeInsets.all(2.0),
                             child: Center(
-                              child: ToggleButtons(
-                                borderRadius: BorderRadius.circular(40),
-                                isSelected: _isSecurityAvail,
-                                fillColor: labelColorBack,
-                                selectedColor: Colors.grey.shade800,
-                                borderColor: Colors.white,
+                              child: Row(
+                                // borderRadius: BorderRadius.circular(40),
+                                // isSelected: _isSecurityAvail,
+                                // fillColor: labelColorBack,
+                                // selectedColor: Colors.grey.shade800,
+                                // borderColor: Colors.white,
                                 children: [
-                                  Container(
-                                    decoration: BoxDecoration(
-                                        borderRadius:
-                                            BorderRadius.circular(20)),
-                                    width:
-                                        MediaQuery.of(context).size.width * 0.4,
-                                    child: Padding(
-                                      padding: const EdgeInsets.only(
-                                          top: 8.0, bottom: 8.0),
-                                      child: Center(
-                                          child: Text(
-                                        'Tidak Tersedia\nPetugas Keamanan',
-                                        style: GoogleFonts.inter(
-                                            fontSize: 10,
-                                            // color: titleColor,
-                                            fontWeight: FontWeight.w500),
-                                        textAlign: TextAlign.center,
-                                      )),
+                                  InkWell(
+                                    onTap: () async {
+                                      _onSelectedListSecurity(0);
+                                    },
+                                    child: Container(
+                                      decoration: BoxDecoration(
+                                          color: securityAvail == 0
+                                              ? labelColorBack
+                                              : Colors.white,
+                                          borderRadius:
+                                              BorderRadius.circular(20)),
+                                      width: MediaQuery.of(context).size.width *
+                                          0.4,
+                                      child: Padding(
+                                        padding: const EdgeInsets.only(
+                                            top: 8.0, bottom: 8.0),
+                                        child: Center(
+                                            child: Text(
+                                          'Tidak Tersedia\nPetugas Keamanan',
+                                          style: GoogleFonts.inter(
+                                              fontSize: 10,
+                                              // color: titleColor,
+                                              fontWeight: FontWeight.w500),
+                                          textAlign: TextAlign.center,
+                                        )),
+                                      ),
                                     ),
                                   ),
-                                  Container(
-                                    height: 50,
-                                    width:
-                                        MediaQuery.of(context).size.width * 0.4,
-                                    child: Padding(
-                                      padding: const EdgeInsets.only(
-                                          top: 8.0, bottom: 8.0),
-                                      child: Center(
-                                          child: Text(
-                                        'Tersedia\nPetugas Keamanan',
-                                        textAlign: TextAlign.center,
-                                        style: GoogleFonts.inter(
-                                            fontSize: 10,
-                                            // color: titleColor,
-                                            fontWeight: FontWeight.w500),
-                                      )),
+                                  InkWell(
+                                    onTap: () {
+                                      _onSelectedListSecurity(1);
+                                    },
+                                    child: Container(
+                                      height: 50,
+                                      decoration: BoxDecoration(
+                                        borderRadius: BorderRadius.circular(20),
+                                        color: securityAvail == 1
+                                            ? labelColorBack
+                                            : Colors.white,
+                                      ),
+                                      width: MediaQuery.of(context).size.width *
+                                          0.4,
+                                      child: Padding(
+                                        padding: const EdgeInsets.only(
+                                            top: 8.0, bottom: 8.0),
+                                        child: Center(
+                                            child: Text(
+                                          'Tersedia\nPetugas Keamanan',
+                                          textAlign: TextAlign.center,
+                                          style: GoogleFonts.inter(
+                                              fontSize: 10,
+                                              // color: titleColor,
+                                              fontWeight: FontWeight.w500),
+                                        )),
+                                      ),
                                     ),
                                   ),
                                 ],
-                                onPressed: (int index) {
-                                  setState(() {
-                                    for (int i = 0;
-                                        i < _isSecurityAvail.length;
-                                        i++) {
-                                      _isSecurityAvail[i] = i == index;
-                                    }
-                                    if (index == 0) {
-                                      securityAvail = 0;
-                                    } else if (index == 1) {
-                                      securityAvail = 1;
-                                    }
-                                  });
-                                },
+                                // onPressed: (int index) {
+                                //   setState(() {
+                                //     if (widget.id.security != null) {
+                                //       isEdited = (index != widget.id.security)
+                                //           ? true
+                                //           : false;
+
+                                //       for (int i = 0;
+                                //           i < _isSecurityAvail.length;
+                                //           i++) {
+                                //         _isSecurityAvail[i] = i == index;
+                                //       }
+                                //       if (index == 0) {
+                                //         securityAvail = 0;
+                                //       } else if (index == 1) {
+                                //         securityAvail = 1;
+                                //       }
+                                //     }
+                                //   });
+                                // },
                               ),
                             ),
                           ),
@@ -2028,94 +2086,119 @@ class _EditDestinationOwnerPageState extends State<EditDestinationOwnerPage> {
                             fontWeight: FontWeight.w700),
                       ))),
                 ),
-                isEdited
-                    ? InkWell(
-                        onTap: () async {
-                          setState(() {
-                            isUpdating = true;
-                          });
-                          final destCon = Provider.of<DestinasiController>(
-                              context,
-                              listen: false);
-                          double? latitudeValue =
-                              latitudeController!.text.isNotEmpty
-                                  ? double.parse(latitudeController!.text)
-                                  : null;
+                isUpdating
+                    ? SizedBox(
+                        height: 45,
+                        width: MediaQuery.of(context).size.width * 0.7,
+                        child: Center(child: const CircularProgressIndicator()),
+                      )
+                    : isEdited
+                        ? InkWell(
+                            onTap: () async {
+                              setState(() {
+                                isUpdating = true;
+                              });
+                              final destCon = Provider.of<DestinasiController>(
+                                  context,
+                                  listen: false);
+                              double? latitudeValue =
+                                  latitudeController!.text.isNotEmpty
+                                      ? double.parse(latitudeController!.text)
+                                      : null;
 
-                          double? longitudeValue =
-                              longitudeController!.text.isNotEmpty
-                                  ? double.parse(longitudeController!.text)
-                                  : null;
-                          await destCon.editDestinasi(
-                              id: widget.id.id,
-                              nameDestinasi: nameController?.text,
-                              description: descriptionController?.text,
-                              address: addressController?.text,
-                              city: finalSelectedProvince.toString(),
-                              category: finalSelectedCategory,
-                              contact: phoneNumberController?.text,
-                              hobby: finalSelectedHobby,
-                              minutesSpend: minutesSpendController?.text,
-                              latitude: latitudeValue,
-                              longitude: longitudeValue,
-                              urlMap: urlMapController?.text,
-                              recWeather: finalSelectedWeather,
-                              fasility: fasilitiesController?.text,
-                              security: securityAvail,
-                              // image:
-                              openHour: openHourController?.text,
-                              closedHour: closedHourController?.text);
-                          if (destCon.statusCodeEditDestinasi == 200) {
-                            setState(() {
-                              isUpdating = false;
-                            });
-                            Navigator.pushAndRemoveUntil(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) =>
-                                        const HomePageOwner()),
-                                (route) => false);
-                            Fluttertoast.showToast(
-                                msg: "Tempat wisatamu telah diubah!",
-                                toastLength: Toast.LENGTH_SHORT,
-                                gravity: ToastGravity.BOTTOM,
-                                timeInSecForIosWeb: 1,
-                                backgroundColor: primaryColor.withOpacity(0.6),
-                                textColor: Colors.white,
-                                fontSize: 13);
-                          } else if (destCon.statusCodeEditDestinasi == 404) {
-                            setState(() {
-                              isLoading = false;
-                            });
-                            Fluttertoast.showToast(
-                                msg: destCon.messageEditDestinasi.toString(),
-                                toastLength: Toast.LENGTH_SHORT,
-                                gravity: ToastGravity.BOTTOM,
-                                timeInSecForIosWeb: 1,
-                                backgroundColor: Colors.red[300],
-                                textColor: Colors.white,
-                                fontSize: 16.0);
-                            return;
-                          } else {
-                            setState(() {
-                              isLoading = false;
-                            });
-                            Fluttertoast.showToast(
-                                msg: "Terjadi Error\nSilahkan Coba Lagi Nanti",
-                                toastLength: Toast.LENGTH_SHORT,
-                                gravity: ToastGravity.BOTTOM,
-                                timeInSecForIosWeb: 1,
-                                backgroundColor: Colors.red[300],
-                                textColor: Colors.white,
-                                fontSize: 16.0);
-                            return;
-                          }
-                        },
-                        child: Container(
+                              double? longitudeValue =
+                                  longitudeController!.text.isNotEmpty
+                                      ? double.parse(longitudeController!.text)
+                                      : null;
+                              await destCon.editDestinasi(
+                                  id: widget.id.id,
+                                  nameDestinasi: nameController?.text,
+                                  description: descriptionController?.text,
+                                  address: addressController?.text,
+                                  city: finalSelectedProvince.toString(),
+                                  category: finalSelectedCategory,
+                                  contact: phoneNumberController?.text,
+                                  hobby: finalSelectedHobby,
+                                  minutesSpend: minutesSpendController?.text,
+                                  latitude: latitudeValue,
+                                  longitude: longitudeValue,
+                                  urlMap: urlMapController?.text,
+                                  recWeather: finalSelectedWeather,
+                                  fasility: fasilitiesController?.text,
+                                  security: securityAvail,
+                                  // image:
+                                  openHour: openHourController?.text,
+                                  closedHour: closedHourController?.text);
+                              if (destCon.statusCodeEditDestinasi == 200) {
+                                setState(() {
+                                  isUpdating = false;
+                                });
+                                Navigator.pushAndRemoveUntil(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) =>
+                                            const HomePageOwner()),
+                                    (route) => false);
+                                Fluttertoast.showToast(
+                                    msg: "Tempat wisatamu telah diubah!",
+                                    toastLength: Toast.LENGTH_SHORT,
+                                    gravity: ToastGravity.BOTTOM,
+                                    timeInSecForIosWeb: 1,
+                                    backgroundColor:
+                                        primaryColor.withOpacity(0.6),
+                                    textColor: Colors.white,
+                                    fontSize: 13);
+                              } else if (destCon.statusCodeEditDestinasi ==
+                                  404) {
+                                setState(() {
+                                  isLoading = false;
+                                });
+                                Fluttertoast.showToast(
+                                    msg:
+                                        destCon.messageEditDestinasi.toString(),
+                                    toastLength: Toast.LENGTH_SHORT,
+                                    gravity: ToastGravity.BOTTOM,
+                                    timeInSecForIosWeb: 1,
+                                    backgroundColor: Colors.red[300],
+                                    textColor: Colors.white,
+                                    fontSize: 16.0);
+                                return;
+                              } else {
+                                setState(() {
+                                  isLoading = false;
+                                });
+                                Fluttertoast.showToast(
+                                    msg:
+                                        "Terjadi Error\nSilahkan Coba Lagi Nanti",
+                                    toastLength: Toast.LENGTH_SHORT,
+                                    gravity: ToastGravity.BOTTOM,
+                                    timeInSecForIosWeb: 1,
+                                    backgroundColor: Colors.red[300],
+                                    textColor: Colors.white,
+                                    fontSize: 16.0);
+                                return;
+                              }
+                            },
+                            child: Container(
+                                height: 45,
+                                width: MediaQuery.of(context).size.width * 0.7,
+                                decoration: BoxDecoration(
+                                    color: secondaryColor,
+                                    borderRadius: BorderRadius.circular(10)),
+                                child: Center(
+                                    child: Text(
+                                  "Ubah Tempat Wisata",
+                                  style: GoogleFonts.openSans(
+                                      fontSize: 13,
+                                      color: Colors.white,
+                                      fontWeight: FontWeight.w700),
+                                ))),
+                          )
+                        : Container(
                             height: 45,
                             width: MediaQuery.of(context).size.width * 0.7,
                             decoration: BoxDecoration(
-                                color: secondaryColor,
+                                color: Colors.grey.shade400,
                                 borderRadius: BorderRadius.circular(10)),
                             child: Center(
                                 child: Text(
@@ -2125,21 +2208,6 @@ class _EditDestinationOwnerPageState extends State<EditDestinationOwnerPage> {
                                   color: Colors.white,
                                   fontWeight: FontWeight.w700),
                             ))),
-                      )
-                    : Container(
-                        height: 45,
-                        width: MediaQuery.of(context).size.width * 0.7,
-                        decoration: BoxDecoration(
-                            color: Colors.grey.shade400,
-                            borderRadius: BorderRadius.circular(10)),
-                        child: Center(
-                            child: Text(
-                          "Ubah Tempat Wisata",
-                          style: GoogleFonts.openSans(
-                              fontSize: 13,
-                              color: Colors.white,
-                              fontWeight: FontWeight.w700),
-                        ))),
               ],
             ),
           ),
