@@ -1868,19 +1868,19 @@ class _CreateDestinationTouristState extends State<CreateDestinationTourist> {
                         ? double.parse(longitudeController.text)
                         : null;
 
-                    int openHourValue;
-                    if (openHourController.text.isNotEmpty) {
-                      openHourValue = int.parse(openHourController.text);
-                    } else {
-                      openHourValue = 0;
-                    }
+                    // int openHourValue;
+                    // if (openHourController.text.isNotEmpty) {
+                    //   openHourValue = int.parse(openHourController.text);
+                    // } else {
+                    //   openHourValue = 0;
+                    // }
 
-                    int closedHourValue;
-                    if (closedHourController.text.isNotEmpty) {
-                      closedHourValue = int.parse(closedHourController.text);
-                    } else {
-                      closedHourValue = 0;
-                    }
+                    // int closedHourValue;
+                    // if (closedHourController.text.isNotEmpty) {
+                    //   closedHourValue = int.parse(closedHourController.text);
+                    // } else {
+                    //   closedHourValue = 0;
+                    // }
                     try {
                       await destCon.postDestinasi(
                           nameDestinasi: nameController.text,
@@ -1899,8 +1899,8 @@ class _CreateDestinationTouristState extends State<CreateDestinationTourist> {
                           recWeather: finalSelectedWeather,
                           // openHour: 1,
                           // closedHour: 1,
-                          openHour: openHourValue,
-                          closedHour: closedHourValue,
+                          openHour: openHourController.text,
+                          closedHour: closedHourController.text,
                           fasility: fasilitiesController.text,
                           security: securityAvail
                           // image:

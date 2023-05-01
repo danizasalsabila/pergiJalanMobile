@@ -133,8 +133,8 @@ class DestinasiController extends ChangeNotifier {
     double? longitude,
     String? urlMap,
     String? recWeather,
-    int? openHour,
-    int? closedHour,
+    String? openHour,
+    String? closedHour,
     // Null? image,
     required int? security,
     String? fasility,
@@ -164,8 +164,8 @@ class DestinasiController extends ChangeNotifier {
       'longitude': longitude,
       'url_map': urlMap,
       'rec_weather': recWeather,
-      'open-hour': openHour,
-      'closed-hour': closedHour,
+      'open_hour': openHour,
+      'closed_hour': closedHour,
       // 'destination_picture': image,
       'fasility': fasility,
       'security': security,
@@ -186,8 +186,8 @@ class DestinasiController extends ChangeNotifier {
           'longitude': longitude,
           'url_map': urlMap,
           'rec_weather': recWeather,
-          'open-hour': openHour,
-          'closed-hour': closedHour,
+          'open_hour': openHour,
+          'closed_hour': closedHour,
           'fasility': fasility,
           'security': security,
         }),
@@ -250,13 +250,15 @@ class DestinasiController extends ChangeNotifier {
     double? longitude,
     String? urlMap,
     String? recWeather,
-    int? openHour,
-    int? closedHour,
+    String? openHour,
+    String? closedHour,
     // Null? image,
     int? security,
     String? fasility,
   }) async {
     var url = Uri.parse(BASE_URL + PUT_DESTINASI(id));
+    print(url);
+    print("${hobby} and ${recWeather}");
     final body = {
       'name_destinasi': nameDestinasi,
       'description': description,
@@ -270,8 +272,8 @@ class DestinasiController extends ChangeNotifier {
       'longitude': longitude,
       'url_map': urlMap,
       'rec_weather': recWeather,
-      'open-hour': openHour,
-      'closed-hour': closedHour,
+      'open_hour': openHour,
+      'closed_hour': closedHour,
       // 'destination_picture': image,
       'fasility': fasility,
       'security': security,
@@ -292,8 +294,8 @@ class DestinasiController extends ChangeNotifier {
           'longitude': longitude,
           'url_map': urlMap,
           'rec_weather': recWeather,
-          'open-hour': openHour,
-          'closed-hour': closedHour,
+          'open_hour': openHour,
+          'closed_hour': closedHour,
           'fasility': fasility,
           'security': security,
         }),
@@ -303,7 +305,7 @@ class DestinasiController extends ChangeNotifier {
       );
       var data = json.decode(response.body);
       if (response.statusCode == 200) {
-        print(data);
+        print(data["data"]);
         statusCodeEditDestinasi = response.statusCode;
         notifyListeners();
       } else if (response.statusCode == 404) {

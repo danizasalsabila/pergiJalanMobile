@@ -67,8 +67,8 @@ class Destinasi {
   String? _urlMap;
   String? _recWeather;
   Null? _rating;
-  int? _openHour;
-  int? _closedHour;
+  String? _openHour;
+  String? _closedHour;
   String? _createdAt;
   Null? _updatedAt;
   String? _fasility;
@@ -90,8 +90,8 @@ class Destinasi {
     String? urlMap,
     String? recWeather,
     Null? rating,
-    int? openHour,
-    int? closedHour,
+    String? openHour,
+    String? closedHour,
     String? createdAt,
     Null? updatedAt,
     String? fasility,
@@ -193,10 +193,10 @@ class Destinasi {
   set recWeather(String? recWeather) => _recWeather = recWeather;
   Null? get rating => _rating;
   set rating(Null? rating) => _rating = rating;
-  int? get openHour => _openHour;
-  set openHour(int? openHour) => _openHour = openHour;
-  int? get closedHour => _closedHour;
-  set closedHour(int? closedHour) => _closedHour = closedHour;
+  String? get openHour => _openHour;
+  set openHour(String? openHour) => _openHour = openHour;
+  String? get closedHour => _closedHour;
+  set closedHour(String? closedHour) => _closedHour = closedHour;
   String? get createdAt => _createdAt;
   set createdAt(String? createdAt) => _createdAt = createdAt;
   Null? get updatedAt => _updatedAt;
@@ -222,8 +222,8 @@ class Destinasi {
     _urlMap = json['url_map'];
     _recWeather = json['rec_weather'];
     _rating = json['rating'];
-    _openHour = json['open-hour'];
-    _closedHour = json['closed-hour'];
+    _openHour = json['open_hour'];
+    _closedHour = json['closed_hour'];
     _createdAt = json['created_at'];
     _updatedAt = json['updated_at'];
     _fasility = json['fasility'];
@@ -247,8 +247,8 @@ class Destinasi {
     data['url_map'] = this._urlMap;
     data['rec_weather'] = this._recWeather;
     data['rating'] = this._rating;
-    data['open-hour'] = this._openHour;
-    data['closed-hour'] = this._closedHour;
+    data['open_hour'] = this._openHour;
+    data['closed_hour'] = this._closedHour;
     data['created_at'] = this._createdAt;
     data['updated_at'] = this._updatedAt;
     data['fasility'] = this._fasility;
