@@ -6,6 +6,7 @@ import 'package:http/http.dart' as http;
 import 'package:pergijalan_mobile/models/review.dart';
 
 import '../models/destinasi.dart';
+import '../models/ticket.dart';
 import '../services/api/url.dart';
 
 class DestinasiController extends ChangeNotifier {
@@ -16,6 +17,8 @@ class DestinasiController extends ChangeNotifier {
   List<Destinasi>? destinasiDataSortIntoTen;
   List<Destinasi>? destinasiRandom;
   String messageDestinasi = "";
+  Ticket? ticketDataDetail;
+
 
   // String dataDestinasi = "";
 
@@ -358,6 +361,34 @@ class DestinasiController extends ChangeNotifier {
       } else if (response.statusCode == 404) {
         messageAddTicket = data["message"];
         statusCodeAddTicket = response.statusCode;
+      }
+    } catch (e) {
+      print("ERROR MESSAGE: $e");
+    }
+  }
+
+int? statusCodeGetTicketById;
+    Future<dynamic> getTicketbyIdDestination(id) async {
+    print("get ticket by id destinasi");
+    var url = Uri.parse(BASE_URL + GET_TICKET_ID(id));
+    print("URL = $url");
+    try {
+      var response = await http.get(url);
+
+        var data = json.decode(response.body);
+      if (response.statusCode == 200) {
+        statusCodeGetTicketById = response.statusCode;
+        print("code: ${response.statusCode}");
+        var ticketData = data["data"];
+        ticketDataDetail = Ticket.fromJson(ticketData);
+        print(data);
+        notifyListeners();
+      } else if (response.statusCode == 404) {
+        statusCodeGetTicketById = response.statusCode;
+        print("code: ${response.statusCode}");
+       var message = data["message"];
+       print(message);
+        // print(messageDestinasi);
       }
     } catch (e) {
       print("ERROR MESSAGE: $e");
