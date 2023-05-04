@@ -120,6 +120,8 @@ class DestinasiController extends ChangeNotifier {
 
   String? messageAddDestinasi;
   int? statusCodeAddDestinasi;
+  
+  int? newIdDestinasi;
   Future<dynamic> postDestinasi({
     required String? nameDestinasi,
     required String? description,
@@ -198,6 +200,9 @@ class DestinasiController extends ChangeNotifier {
       var data = json.decode(response.body);
       if (response.statusCode == 200) {
         print(data);
+        
+        newIdDestinasi = data["id"];
+        print("ID----- $newIdDestinasi");
         statusCodeAddDestinasi = response.statusCode;
         notifyListeners();
       } else if (response.statusCode == 404) {
@@ -316,4 +321,49 @@ class DestinasiController extends ChangeNotifier {
       print("ERROR MESSAGE: $e");
     }
   }
+
+
+  String? messageAddTicket;
+  int? statusCodeAddTicket;
+  Future<dynamic> addTicketByIdDestinasi({
+    int? idDestinasi,
+    int? price,
+    int? stock,
+    int? ticketSold,
+    String? visitDate
+
+  }) async {
+    var url = Uri.parse(BASE_URL + POST_TICKET);
+    print(url);
+    final body = {
+      'id_destinasi': idDestinasi,
+      'price': price,
+      'stock': stock,
+      'ticket_sold': ticketSold,
+      'visit_date': visitDate,
+    };
+    try {
+      var response = await http.post(
+        url,
+        body: json.encode(body),
+        headers: {
+          "content-type": "application/json",
+        },
+      );
+      var data = json.decode(response.body);
+      if (response.statusCode == 200) {
+        print(data["data"]);
+        statusCodeAddTicket = response.statusCode;
+        notifyListeners();
+      } else if (response.statusCode == 404) {
+        messageAddTicket = data["message"];
+        statusCodeAddTicket = response.statusCode;
+      }
+    } catch (e) {
+      print("ERROR MESSAGE: $e");
+    }
+  }
+  
+
+  
 }

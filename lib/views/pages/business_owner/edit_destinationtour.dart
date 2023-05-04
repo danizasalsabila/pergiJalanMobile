@@ -25,6 +25,8 @@ class _EditDestinationOwnerPageState extends State<EditDestinationOwnerPage> {
   bool isLoading = false;
   bool isEdited = false;
   bool isUpdating = false;
+  int? stockValue;
+  int? priceValue;
   TextEditingController? nameController;
   TextEditingController? phoneNumberController;
   TextEditingController? descriptionController;
@@ -184,7 +186,7 @@ class _EditDestinationOwnerPageState extends State<EditDestinationOwnerPage> {
     latitudeController =
         TextEditingController(text: widget.id.latitude.toString());
     if (latitudeController == null) {
-      latitudeController = TextEditingController(text: '0');
+      latitudeController = TextEditingController(text: '');
     } else {
       latitudeController =
           TextEditingController(text: widget.id.latitude.toString());
@@ -192,7 +194,7 @@ class _EditDestinationOwnerPageState extends State<EditDestinationOwnerPage> {
     longitudeController =
         TextEditingController(text: widget.id.longitude.toString());
     if (longitudeController == null) {
-      longitudeController = TextEditingController(text: '0');
+      longitudeController = TextEditingController(text: '');
     } else {
       longitudeController =
           TextEditingController(text: widget.id.longitude.toString());
@@ -207,8 +209,8 @@ class _EditDestinationOwnerPageState extends State<EditDestinationOwnerPage> {
     // currentWeather = widget.id.recWeather ?? 'Tidak ada';
     // currentProvince = widget.id.city;
     securityAvail = widget.id.security;
-    // ticketStockController = TextEditingController(text: widget.id.);
-    // ticketPriceController = TextEditingController(text: widget.id.);
+    ticketStockController = TextEditingController(text: "");
+    ticketPriceController = TextEditingController(text: "");
   }
 
   @override
@@ -292,14 +294,12 @@ class _EditDestinationOwnerPageState extends State<EditDestinationOwnerPage> {
                                 isEdited = (text != widget.id.nameDestinasi)
                                     ? true
                                     : false;
-                                print("is name destinasi edited? $isEdited");
                               });
                             } else {
                               isEdited =
                                   (text.trim() != widget.id.nameDestinasi)
                                       ? true
                                       : false;
-                              print("is name destinasi edited? $isEdited");
                             }
                           },
                           style: GoogleFonts.openSans(
@@ -344,13 +344,11 @@ class _EditDestinationOwnerPageState extends State<EditDestinationOwnerPage> {
                               setState(() {
                                 isEdited =
                                     (text != widget.id.contact) ? true : false;
-                                print("is phone number edited? $isEdited");
                               });
                             } else {
                               isEdited = (text.trim() != widget.id.contact)
                                   ? true
                                   : false;
-                              print("is phone number edited? $isEdited");
                             }
                           },
                           controller: phoneNumberController,
@@ -462,13 +460,11 @@ class _EditDestinationOwnerPageState extends State<EditDestinationOwnerPage> {
                               isEdited = (text != widget.id.description)
                                   ? true
                                   : false;
-                              print("is description edited? $isEdited");
                             });
                           } else {
                             isEdited = (text.trim() != widget.id.description)
                                 ? true
                                 : false;
-                            print("is description edited? $isEdited");
                           }
                         },
                         maxLines: 5,
@@ -585,13 +581,11 @@ class _EditDestinationOwnerPageState extends State<EditDestinationOwnerPage> {
                             setState(() {
                               isEdited =
                                   (text != widget.id.address) ? true : false;
-                              print("is address destinasi edited? $isEdited");
                             });
                           } else {
                             isEdited = (text.trim() != widget.id.address)
                                 ? true
                                 : false;
-                            print("is address destinasi edited? $isEdited");
                           }
                         },
                         controller: addressController,
@@ -836,16 +830,12 @@ class _EditDestinationOwnerPageState extends State<EditDestinationOwnerPage> {
                                       isEdited = (text != widget.id.openHour)
                                           ? true
                                           : false;
-                                      print(
-                                          "is time duration destinasi edited? $isEdited");
                                     });
                                   } else {
                                     isEdited =
                                         (text.trim() != widget.id.openHour)
                                             ? true
                                             : false;
-                                    print(
-                                        "is time duration destinasi edited? $isEdited");
                                   }
                                 },
                                 controller: openHourController,
@@ -896,16 +886,12 @@ class _EditDestinationOwnerPageState extends State<EditDestinationOwnerPage> {
                                       isEdited = (text != widget.id.closedHour)
                                           ? true
                                           : false;
-                                      print(
-                                          "is time duration destinasi edited? $isEdited");
                                     });
                                   } else {
                                     isEdited =
                                         (text.trim() != widget.id.closedHour)
                                             ? true
                                             : false;
-                                    print(
-                                        "is time duration destinasi edited? $isEdited");
                                   }
                                 },
                                 controller: closedHourController,
@@ -1181,15 +1167,11 @@ class _EditDestinationOwnerPageState extends State<EditDestinationOwnerPage> {
                               isEdited = (text != widget.id.minutesSpend)
                                   ? true
                                   : false;
-                              print(
-                                  "is time duration destinasi edited? $isEdited");
                             });
                           } else {
                             isEdited = (text.trim() != widget.id.minutesSpend)
                                 ? true
                                 : false;
-                            print(
-                                "is time duration destinasi edited? $isEdited");
                           }
                         },
                         controller: minutesSpendController,
@@ -1612,13 +1594,11 @@ class _EditDestinationOwnerPageState extends State<EditDestinationOwnerPage> {
                             setState(() {
                               isEdited =
                                   (text != widget.id.urlMap) ? true : false;
-                              print("is url map destinasi edited? $isEdited");
                             });
                           } else {
                             isEdited = (text.trim() != widget.id.urlMap)
                                 ? true
                                 : false;
-                            print("is url map destinasi edited? $isEdited");
                           }
                         },
                         controller: urlMapController,
@@ -1670,16 +1650,12 @@ class _EditDestinationOwnerPageState extends State<EditDestinationOwnerPage> {
                                       isEdited = (text != widget.id.latitude)
                                           ? true
                                           : false;
-                                      print(
-                                          "is latitude destinasi edited? $isEdited");
                                     });
                                   } else {
                                     isEdited =
                                         (text.trim() != widget.id.latitude)
                                             ? true
                                             : false;
-                                    print(
-                                        "is latitude destinasi edited? $isEdited");
                                   }
                                 },
                                 controller: latitudeController,
@@ -1732,16 +1708,12 @@ class _EditDestinationOwnerPageState extends State<EditDestinationOwnerPage> {
                                       isEdited = (text != widget.id.longitude)
                                           ? true
                                           : false;
-                                      print(
-                                          "is longitude destinasi edited? $isEdited");
                                     });
                                   } else {
                                     isEdited =
                                         (text.trim() != widget.id.longitude)
                                             ? true
                                             : false;
-                                    print(
-                                        "is longitude destinasi edited? $isEdited");
                                   }
                                 },
                                 controller: longitudeController,
@@ -1808,13 +1780,11 @@ class _EditDestinationOwnerPageState extends State<EditDestinationOwnerPage> {
                             setState(() {
                               isEdited =
                                   (text != widget.id.fasility) ? true : false;
-                              print("is fasility destinasi edited? $isEdited");
                             });
                           } else {
                             isEdited = (text.trim() != widget.id.fasility)
                                 ? true
                                 : false;
-                            print("is fasility destinasi edited? $isEdited");
                           }
                         },
                         controller: fasilitiesController,
@@ -1873,6 +1843,8 @@ class _EditDestinationOwnerPageState extends State<EditDestinationOwnerPage> {
                             padding: const EdgeInsets.all(2.0),
                             child: Center(
                               child: Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
                                 // borderRadius: BorderRadius.circular(40),
                                 // isSelected: _isSecurityAvail,
                                 // fillColor: labelColorBack,
@@ -2002,6 +1974,21 @@ class _EditDestinationOwnerPageState extends State<EditDestinationOwnerPage> {
                               )),
                           width: MediaQuery.of(context).size.width * 0.4,
                           child: TextField(
+                            
+                          // onChanged: (text) {
+                          //   if (widget.id.nameDestinasi != null) {
+                          //     setState(() {
+                          //       isEdited = (text != widget.id.nameDestinasi)
+                          //           ? true
+                          //           : false;
+                          //     });
+                          //   } else {
+                          //     isEdited =
+                          //         (text.trim() != widget.id.nameDestinasi)
+                          //             ? true
+                          //             : false;
+                          //   }
+                          // },
                             controller: ticketStockController,
                             style: GoogleFonts.openSans(
                                 fontSize: 14,
@@ -2110,6 +2097,17 @@ class _EditDestinationOwnerPageState extends State<EditDestinationOwnerPage> {
                                   longitudeController!.text.isNotEmpty
                                       ? double.parse(longitudeController!.text)
                                       : null;
+
+                              priceValue =
+                                  ticketPriceController!.text.isNotEmpty
+                                      ? int.tryParse(ticketPriceController!.text)
+                                      : null;
+                                      
+                              stockValue =
+                                  ticketStockController!.text.isNotEmpty
+                                      ? int.tryParse(ticketStockController!.text)
+                                      : null;
+
                               await destCon.editDestinasi(
                                   id: widget.id.id,
                                   nameDestinasi: nameController?.text,
@@ -2130,9 +2128,18 @@ class _EditDestinationOwnerPageState extends State<EditDestinationOwnerPage> {
                                   openHour: openHourController?.text,
                                   closedHour: closedHourController?.text);
                               if (destCon.statusCodeEditDestinasi == 200) {
+                               if(ticketPriceController != null && ticketStockController != null){
+                                 await destCon.addTicketByIdDestinasi(
+                                  idDestinasi: widget.id.id,
+                                  price: priceValue,
+                                  stock: stockValue,
+                                );
+                                print(destCon.statusCodeAddTicket);
+                               }
                                 setState(() {
                                   isUpdating = false;
                                 });
+                                // ignore: use_build_context_synchronously
                                 Navigator.pushAndRemoveUntil(
                                     context,
                                     MaterialPageRoute(

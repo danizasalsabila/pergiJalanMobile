@@ -107,6 +107,31 @@ class _DetailDestinationState extends State<DetailDestination> {
                                 fit: BoxFit.cover,
                               )),
                         ),
+                        Align(
+                          alignment: Alignment.bottomRight,
+                          child: Column(
+                          mainAxisAlignment: MainAxisAlignment.end,
+                          crossAxisAlignment: CrossAxisAlignment.end,
+                          children: [
+                              SizedBox(height: 295, ),
+                              Padding(
+                                padding: const EdgeInsets.only(right: 16.0),
+                                child: Container(
+                                  decoration: BoxDecoration(color: thirdColor, borderRadius: BorderRadius.circular(15)),
+                                  child: Padding(
+                                    padding: const EdgeInsets.only(left: 13.0, right: 13.0, top: 3, bottom: 3),
+                                    child: Text(widget.id.category.toString(), style: GoogleFonts
+                                                              .openSans(
+                                                                  fontSize: 11,
+                                                                  color:
+                                                                      backgroundColor,
+                                                                  fontWeight:
+                                                                      FontWeight
+                                                                          .w500),),
+                                  )),
+                              )
+                            ],),
+                        ),
                         Positioned(
                             top: 40,
                             left: 16,

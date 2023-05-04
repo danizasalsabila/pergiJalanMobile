@@ -24,6 +24,9 @@ class CreateDestinationTourist extends StatefulWidget {
 class _CreateDestinationTouristState extends State<CreateDestinationTourist> {
   bool isSelected = false;
   bool isLoading = false;
+  bool isUploading = false;
+  int? stockValue;
+  int? priceValue;
   TextEditingController nameController = TextEditingController();
   TextEditingController phoneNumberController = TextEditingController();
   TextEditingController descriptionController = TextEditingController();
@@ -1867,6 +1870,13 @@ class _CreateDestinationTouristState extends State<CreateDestinationTourist> {
                     double? longitudeValue = longitudeController.text.isNotEmpty
                         ? double.parse(longitudeController.text)
                         : null;
+                    priceValue = ticketPriceController.text.isNotEmpty
+                        ? int.tryParse(ticketPriceController.text)
+                        : null;
+
+                    stockValue = ticketStockController.text.isNotEmpty
+                        ? int.tryParse(ticketStockController.text)
+                        : null;
 
                     // int openHourValue;
                     // if (openHourController.text.isNotEmpty) {
@@ -1908,6 +1918,16 @@ class _CreateDestinationTouristState extends State<CreateDestinationTourist> {
                           // closedHour: closedHourController.text
                           );
                       if (destCon.statusCodeAddDestinasi == 200) {
+                        if (ticketPriceController != null &&
+                            ticketStockController != null) {
+                          await destCon.addTicketByIdDestinasi(
+                            // idDestinasi: widget.id.id,
+                            idDestinasi: destCon.newIdDestinasi,
+                            price: priceValue,
+                            stock: stockValue,
+                          );
+                          print(destCon.statusCodeAddTicket);
+                        }
                         setState(() {
                           isLoading = false;
                         });
