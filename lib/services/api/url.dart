@@ -55,6 +55,8 @@ GET_TICKET_ID(id) => "ticket/$id";
 
 const POST_TICKET = "ticket";
 
-DELETE_TICKET(id) => "ticket/destroy/$id";
+DELETE_TICKET(idDestinasi) => "ticket/destroy/$idDestinasi";
+
+PUT_TICKET(idDestinasi) => "ticket/update/$idDestinasi?";
 
 

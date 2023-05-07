@@ -1,3 +1,5 @@
+// ignore_for_file: unrelated_type_equality_checks
+
 import 'package:dotted_border/dotted_border.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
@@ -25,6 +27,7 @@ class _EditDestinationOwnerPageState extends State<EditDestinationOwnerPage> {
   bool isLoading = false;
   bool isLoading2 = false;
   bool isEdited = false;
+  bool isTicketEdited = false;
   bool isUpdating = false;
   int? stockValue;
   int? priceValue;
@@ -160,8 +163,8 @@ class _EditDestinationOwnerPageState extends State<EditDestinationOwnerPage> {
   ];
   String? finalSelectedProvince;
   // String? currentProvince;
-  int tic = 0;
-  int ticc = 0;
+  // int tic = 0;
+  // int ticc = 0;
   @override
   void initState() {
     print(" ");
@@ -172,23 +175,23 @@ class _EditDestinationOwnerPageState extends State<EditDestinationOwnerPage> {
     isLoading2 = true;
     Future.delayed(const Duration(seconds: 1)).then((value) async {
       try {
-        destCon.getTicketbyIdDestination(widget.id.id);
+        await destCon.getTicketbyIdDestination(widget.id.id);
         if (destCon.statusCodeGetTicketById == 200) {
-          tic = destCon.ticketDataDetail!.price!;
-          ticc = destCon.ticketDataDetail!.stock!;
+          // print(destCon.statusCodeGetTicketById);
+          // tic = destCon.ticketDataDetail!.price!;
+          // ticc = destCon.ticketDataDetail!.stock!;
           ticketStockController = TextEditingController(
               text: destCon.ticketDataDetail!.stock.toString());
           ticketPriceController = TextEditingController(
               text: destCon.ticketDataDetail!.price.toString());
-          print("$ticketPriceController &&&&&&&& $ticketStockController");
-          print("$tic & $ticc");
+          // print("$ticketPriceController &&&&&&&& $ticketStockController");
+          // print("$tic & $ticc");
         } else {
           ticketStockController = TextEditingController(text: '0');
           ticketPriceController = TextEditingController(text: '0');
-                   tic = destCon.ticketDataDetail!.price!;
-          ticc = destCon.ticketDataDetail!.stock!;
-          print("$tic & $ticc");
-
+          // tic = destCon.ticketDataDetail!.price!;
+          // ticc = destCon.ticketDataDetail!.stock!;
+          // print("$tic & $ticc");
         }
         // setState(() {
         //   isLoading2 = false;
@@ -2113,20 +2116,26 @@ class _EditDestinationOwnerPageState extends State<EditDestinationOwnerPage> {
                                     )),
                                 width: MediaQuery.of(context).size.width * 0.4,
                                 child: TextField(
-                                  // onChanged: (text) {
-                                  //   if (widget.id.nameDestinasi != null) {
-                                  //     setState(() {
-                                  //       isEdited = (text != widget.id.nameDestinasi)
-                                  //           ? true
-                                  //           : false;
-                                  //     });
-                                  //   } else {
-                                  //     isEdited =
-                                  //         (text.trim() != widget.id.nameDestinasi)
-                                  //             ? true
-                                  //             : false;
-                                  //   }
-                                  // },
+                                  onChanged: (text) {
+                                    final destCon =
+                                        Provider.of<DestinasiController>(
+                                            context,
+                                            listen: false);
+                                    if (destCon.ticketDataDetail!.stock !=
+                                        null) {
+                                      setState(() {
+                                        isTicketEdited = (text !=
+                                                destCon.ticketDataDetail!.stock)
+                                            ? true
+                                            : false;
+                                      });
+                                    } else {
+                                      isTicketEdited = (text.trim() !=
+                                              destCon.ticketDataDetail!.stock)
+                                          ? true
+                                          : false;
+                                    }
+                                  },
                                   controller: ticketStockController,
                                   style: GoogleFonts.openSans(
                                       fontSize: 14,
@@ -2154,6 +2163,26 @@ class _EditDestinationOwnerPageState extends State<EditDestinationOwnerPage> {
                                     )),
                                 width: MediaQuery.of(context).size.width * 0.4,
                                 child: TextField(
+                                  onChanged: (text) {
+                                    final destCon =
+                                        Provider.of<DestinasiController>(
+                                            context,
+                                            listen: false);
+                                    if (destCon.ticketDataDetail!.price !=
+                                        null) {
+                                      setState(() {
+                                        isTicketEdited = (text !=
+                                                destCon.ticketDataDetail!.price)
+                                            ? true
+                                            : false;
+                                      });
+                                    } else {
+                                      isTicketEdited = (text.trim() !=
+                                              destCon.ticketDataDetail!.price)
+                                          ? true
+                                          : false;
+                                    }
+                                  },
                                   controller: ticketPriceController,
                                   style: GoogleFonts.openSans(
                                       fontSize: 14,
@@ -2220,7 +2249,7 @@ class _EditDestinationOwnerPageState extends State<EditDestinationOwnerPage> {
                               child: Center(
                                   child: const CircularProgressIndicator()),
                             )
-                          : isEdited
+                          : (isEdited || isTicketEdited)
                               ? InkWell(
                                   onTap: () async {
                                     setState(() {
@@ -2252,89 +2281,275 @@ class _EditDestinationOwnerPageState extends State<EditDestinationOwnerPage> {
                                             ? int.tryParse(
                                                 ticketStockController!.text)
                                             : null;
+                                    //a
+                                    if (isEdited == true &&
+                                        isTicketEdited == true) {
+                                      print("BOTH DATA");
 
-                                    await destCon.editDestinasi(
-                                        id: widget.id.id,
-                                        nameDestinasi: nameController?.text,
-                                        description:
-                                            descriptionController?.text,
-                                        address: addressController?.text,
-                                        city: finalSelectedProvince.toString(),
-                                        category: finalSelectedCategory,
-                                        contact: phoneNumberController?.text,
-                                        hobby: finalSelectedHobby,
-                                        minutesSpend:
-                                            minutesSpendController?.text,
-                                        latitude: latitudeValue,
-                                        longitude: longitudeValue,
-                                        urlMap: urlMapController?.text,
-                                        recWeather: finalSelectedWeather,
-                                        fasility: fasilitiesController?.text,
-                                        security: securityAvail,
-                                        // image:
-                                        openHour: openHourController?.text,
-                                        closedHour: closedHourController?.text);
-                                    if (destCon.statusCodeEditDestinasi ==
-                                        200) {
+                                      await destCon.editDestinasi(
+                                          id: widget.id.id,
+                                          nameDestinasi: nameController?.text,
+                                          description:
+                                              descriptionController?.text,
+                                          address: addressController?.text,
+                                          city:
+                                              finalSelectedProvince.toString(),
+                                          category: finalSelectedCategory,
+                                          contact: phoneNumberController?.text,
+                                          hobby: finalSelectedHobby,
+                                          minutesSpend:
+                                              minutesSpendController?.text,
+                                          latitude: latitudeValue,
+                                          longitude: longitudeValue,
+                                          urlMap: urlMapController?.text,
+                                          recWeather: finalSelectedWeather,
+                                          fasility: fasilitiesController?.text,
+                                          security: securityAvail,
+                                          // image:
+                                          openHour: openHourController?.text,
+                                          closedHour:
+                                              closedHourController?.text);
+                                      if (destCon.statusCodeEditDestinasi ==
+                                          200) {
+                                        if (ticketPriceController != null &&
+                                            ticketStockController != null) {
+                                          await destCon.editTicketByIdDestinasi(
+                                            idDestinasi: widget.id.id,
+                                            price: priceValue,
+                                            stock: stockValue,
+                                          );
+                                          print(destCon.statusCodeAddTicket);
+                                        }
+                                        setState(() {
+                                          isUpdating = false;
+                                        });
+                                        // ignore: use_build_context_synchronously
+                                        Navigator.pushAndRemoveUntil(
+                                            context,
+                                            MaterialPageRoute(
+                                                builder: (context) =>
+                                                    const HomePageOwner()),
+                                            (route) => false);
+                                        Fluttertoast.showToast(
+                                            msg:
+                                                "Tempat wisatamu telah diubah!",
+                                            toastLength: Toast.LENGTH_SHORT,
+                                            gravity: ToastGravity.BOTTOM,
+                                            timeInSecForIosWeb: 1,
+                                            backgroundColor:
+                                                primaryColor.withOpacity(0.6),
+                                            textColor: Colors.white,
+                                            fontSize: 13);
+                                      } else if (destCon
+                                              .statusCodeEditDestinasi ==
+                                          404) {
+                                        setState(() {
+                                          isLoading = false;
+                                        });
+                                        Fluttertoast.showToast(
+                                            msg: destCon.messageEditDestinasi
+                                                .toString(),
+                                            toastLength: Toast.LENGTH_SHORT,
+                                            gravity: ToastGravity.BOTTOM,
+                                            timeInSecForIosWeb: 1,
+                                            backgroundColor: Colors.red[300],
+                                            textColor: Colors.white,
+                                            fontSize: 16.0);
+                                        return;
+                                      } else {
+                                        setState(() {
+                                          isLoading = false;
+                                        });
+                                        Fluttertoast.showToast(
+                                            msg:
+                                                "Terjadi Error\nSilahkan Coba Lagi Nanti",
+                                            toastLength: Toast.LENGTH_SHORT,
+                                            gravity: ToastGravity.BOTTOM,
+                                            timeInSecForIosWeb: 1,
+                                            backgroundColor: Colors.red[300],
+                                            textColor: Colors.white,
+                                            fontSize: 16.0);
+                                        return;
+                                      }
+                                    } else if (isEdited == true) {
+                                      print("ONLY DESTINASI");
+
+                                      await destCon.editDestinasi(
+                                          id: widget.id.id,
+                                          nameDestinasi: nameController?.text,
+                                          description:
+                                              descriptionController?.text,
+                                          address: addressController?.text,
+                                          city:
+                                              finalSelectedProvince.toString(),
+                                          category: finalSelectedCategory,
+                                          contact: phoneNumberController?.text,
+                                          hobby: finalSelectedHobby,
+                                          minutesSpend:
+                                              minutesSpendController?.text,
+                                          latitude: latitudeValue,
+                                          longitude: longitudeValue,
+                                          urlMap: urlMapController?.text,
+                                          recWeather: finalSelectedWeather,
+                                          fasility: fasilitiesController?.text,
+                                          security: securityAvail,
+                                          // image:
+                                          openHour: openHourController?.text,
+                                          closedHour:
+                                              closedHourController?.text);
+                                      if (destCon.statusCodeEditDestinasi ==
+                                          200) {
+                                        // ignore: use_build_context_synchronously
+                                        Navigator.pushAndRemoveUntil(
+                                            context,
+                                            MaterialPageRoute(
+                                                builder: (context) =>
+                                                    const HomePageOwner()),
+                                            (route) => false);
+                                        Fluttertoast.showToast(
+                                            msg:
+                                                "Tempat wisatamu telah diubah!",
+                                            toastLength: Toast.LENGTH_SHORT,
+                                            gravity: ToastGravity.BOTTOM,
+                                            timeInSecForIosWeb: 1,
+                                            backgroundColor:
+                                                primaryColor.withOpacity(0.6),
+                                            textColor: Colors.white,
+                                            fontSize: 13);
+                                      } else if (destCon
+                                              .statusCodeEditDestinasi ==
+                                          404) {
+                                        setState(() {
+                                          isLoading = false;
+                                        });
+                                        Fluttertoast.showToast(
+                                            msg: destCon.messageEditDestinasi
+                                                .toString(),
+                                            toastLength: Toast.LENGTH_SHORT,
+                                            gravity: ToastGravity.BOTTOM,
+                                            timeInSecForIosWeb: 1,
+                                            backgroundColor: Colors.red[300],
+                                            textColor: Colors.white,
+                                            fontSize: 16.0);
+                                        return;
+                                      } else {
+                                        setState(() {
+                                          isLoading = false;
+                                        });
+                                        Fluttertoast.showToast(
+                                            msg:
+                                                "Terjadi Error\nSilahkan Coba Lagi Nanti",
+                                            toastLength: Toast.LENGTH_SHORT,
+                                            gravity: ToastGravity.BOTTOM,
+                                            timeInSecForIosWeb: 1,
+                                            backgroundColor: Colors.red[300],
+                                            textColor: Colors.white,
+                                            fontSize: 16.0);
+                                        return;
+                                      }
+                                    } else if (isTicketEdited == true) {
+                                      print("ONLY TICKET");
                                       if (ticketPriceController != null &&
                                           ticketStockController != null) {
-                                        await destCon.addTicketByIdDestinasi(
+                                        await destCon.editTicketByIdDestinasi(
                                           idDestinasi: widget.id.id,
                                           price: priceValue,
                                           stock: stockValue,
                                         );
-                                        print(destCon.statusCodeAddTicket);
+                                        Navigator.pushAndRemoveUntil(
+                                            context,
+                                            MaterialPageRoute(
+                                                builder: (context) =>
+                                                    const HomePageOwner()),
+                                            (route) => false);
                                       }
                                       setState(() {
                                         isUpdating = false;
                                       });
-                                      // ignore: use_build_context_synchronously
-                                      Navigator.pushAndRemoveUntil(
-                                          context,
-                                          MaterialPageRoute(
-                                              builder: (context) =>
-                                                  const HomePageOwner()),
-                                          (route) => false);
-                                      Fluttertoast.showToast(
-                                          msg: "Tempat wisatamu telah diubah!",
-                                          toastLength: Toast.LENGTH_SHORT,
-                                          gravity: ToastGravity.BOTTOM,
-                                          timeInSecForIosWeb: 1,
-                                          backgroundColor:
-                                              primaryColor.withOpacity(0.6),
-                                          textColor: Colors.white,
-                                          fontSize: 13);
-                                    } else if (destCon
-                                            .statusCodeEditDestinasi ==
-                                        404) {
-                                      setState(() {
-                                        isLoading = false;
-                                      });
-                                      Fluttertoast.showToast(
-                                          msg: destCon.messageEditDestinasi
-                                              .toString(),
-                                          toastLength: Toast.LENGTH_SHORT,
-                                          gravity: ToastGravity.BOTTOM,
-                                          timeInSecForIosWeb: 1,
-                                          backgroundColor: Colors.red[300],
-                                          textColor: Colors.white,
-                                          fontSize: 16.0);
-                                      return;
-                                    } else {
-                                      setState(() {
-                                        isLoading = false;
-                                      });
-                                      Fluttertoast.showToast(
-                                          msg:
-                                              "Terjadi Error\nSilahkan Coba Lagi Nanti",
-                                          toastLength: Toast.LENGTH_SHORT,
-                                          gravity: ToastGravity.BOTTOM,
-                                          timeInSecForIosWeb: 1,
-                                          backgroundColor: Colors.red[300],
-                                          textColor: Colors.white,
-                                          fontSize: 16.0);
-                                      return;
                                     }
+                                    //a
+                                    // await destCon.editDestinasi(
+                                    //     id: widget.id.id,
+                                    //     nameDestinasi: nameController?.text,
+                                    //     description:
+                                    //         descriptionController?.text,
+                                    //     address: addressController?.text,
+                                    //     city: finalSelectedProvince.toString(),
+                                    //     category: finalSelectedCategory,
+                                    //     contact: phoneNumberController?.text,
+                                    //     hobby: finalSelectedHobby,
+                                    //     minutesSpend:
+                                    //         minutesSpendController?.text,
+                                    //     latitude: latitudeValue,
+                                    //     longitude: longitudeValue,
+                                    //     urlMap: urlMapController?.text,
+                                    //     recWeather: finalSelectedWeather,
+                                    //     fasility: fasilitiesController?.text,
+                                    //     security: securityAvail,
+                                    //     // image:
+                                    //     openHour: openHourController?.text,
+                                    //     closedHour: closedHourController?.text);
+                                    // if (destCon.statusCodeEditDestinasi ==
+                                    //     200) {
+                                    //   if (ticketPriceController != null &&
+                                    //       ticketStockController != null) {
+                                    //     await destCon.editTicketByIdDestinasi(
+                                    //       idDestinasi: widget.id.id,
+                                    //       price: priceValue,
+                                    //       stock: stockValue,
+                                    //     );
+                                    //     print(destCon.statusCodeAddTicket);
+                                    //   }
+                                    //   setState(() {
+                                    //     isUpdating = false;
+                                    //   });
+                                    //   // ignore: use_build_context_synchronously
+                                    //   Navigator.pushAndRemoveUntil(
+                                    //       context,
+                                    //       MaterialPageRoute(
+                                    //           builder: (context) =>
+                                    //               const HomePageOwner()),
+                                    //       (route) => false);
+                                    //   Fluttertoast.showToast(
+                                    //       msg: "Tempat wisatamu telah diubah!",
+                                    //       toastLength: Toast.LENGTH_SHORT,
+                                    //       gravity: ToastGravity.BOTTOM,
+                                    //       timeInSecForIosWeb: 1,
+                                    //       backgroundColor:
+                                    //           primaryColor.withOpacity(0.6),
+                                    //       textColor: Colors.white,
+                                    //       fontSize: 13);
+                                    // } else if (destCon
+                                    //         .statusCodeEditDestinasi ==
+                                    //     404) {
+                                    //   setState(() {
+                                    //     isLoading = false;
+                                    //   });
+                                    //   Fluttertoast.showToast(
+                                    //       msg: destCon.messageEditDestinasi
+                                    //           .toString(),
+                                    //       toastLength: Toast.LENGTH_SHORT,
+                                    //       gravity: ToastGravity.BOTTOM,
+                                    //       timeInSecForIosWeb: 1,
+                                    //       backgroundColor: Colors.red[300],
+                                    //       textColor: Colors.white,
+                                    //       fontSize: 16.0);
+                                    //   return;
+                                    // } else {
+                                    //   setState(() {
+                                    //     isLoading = false;
+                                    //   });
+                                    //   Fluttertoast.showToast(
+                                    //       msg:
+                                    //           "Terjadi Error\nSilahkan Coba Lagi Nanti",
+                                    //       toastLength: Toast.LENGTH_SHORT,
+                                    //       gravity: ToastGravity.BOTTOM,
+                                    //       timeInSecForIosWeb: 1,
+                                    //       backgroundColor: Colors.red[300],
+                                    //       textColor: Colors.white,
+                                    //       fontSize: 16.0);
+                                    //   return;
+                                    // }
                                   },
                                   child: Container(
                                       height: 45,

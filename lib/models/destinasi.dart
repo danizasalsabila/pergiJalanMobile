@@ -70,7 +70,7 @@ class Destinasi {
   String? _openHour;
   String? _closedHour;
   String? _createdAt;
-  Null? _updatedAt;
+  String? _updatedAt;
   String? _fasility;
   int? _security;
 
@@ -93,7 +93,7 @@ class Destinasi {
     String? openHour,
     String? closedHour,
     String? createdAt,
-    Null? updatedAt,
+    String? updatedAt,
     String? fasility,
     int? security,
   }) {
@@ -199,8 +199,8 @@ class Destinasi {
   set closedHour(String? closedHour) => _closedHour = closedHour;
   String? get createdAt => _createdAt;
   set createdAt(String? createdAt) => _createdAt = createdAt;
-  Null? get updatedAt => _updatedAt;
-  set updatedAt(Null? updatedAt) => _updatedAt = updatedAt;
+  String? get updatedAt => _updatedAt;
+  set updatedAt(String? updatedAt) => _updatedAt = updatedAt;
   String? get fasility => _fasility;
   set fasility(String? fasility) => _fasility = fasility;
   int? get security => _security;

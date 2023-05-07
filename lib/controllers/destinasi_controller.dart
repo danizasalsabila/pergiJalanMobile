@@ -19,7 +19,6 @@ class DestinasiController extends ChangeNotifier {
   String messageDestinasi = "";
   Ticket? ticketDataDetail;
 
-
   // String dataDestinasi = "";
 
   Future<dynamic> allDestinasi() async {
@@ -123,7 +122,7 @@ class DestinasiController extends ChangeNotifier {
 
   String? messageAddDestinasi;
   int? statusCodeAddDestinasi;
-  
+
   int? newIdDestinasi;
   Future<dynamic> postDestinasi({
     required String? nameDestinasi,
@@ -203,7 +202,7 @@ class DestinasiController extends ChangeNotifier {
       var data = json.decode(response.body);
       if (response.statusCode == 200) {
         print(data);
-        
+
         newIdDestinasi = data["id"];
         print("ID----- $newIdDestinasi");
         statusCodeAddDestinasi = response.statusCode;
@@ -325,17 +324,14 @@ class DestinasiController extends ChangeNotifier {
     }
   }
 
-
   String? messageAddTicket;
   int? statusCodeAddTicket;
-  Future<dynamic> addTicketByIdDestinasi({
-    int? idDestinasi,
-    int? price,
-    int? stock,
-    int? ticketSold,
-    String? visitDate
-
-  }) async {
+  Future<dynamic> addTicketByIdDestinasi(
+      {int? idDestinasi,
+      int? price,
+      int? stock,
+      int? ticketSold,
+      String? visitDate}) async {
     var url = Uri.parse(BASE_URL + POST_TICKET);
     print(url);
     final body = {
@@ -367,34 +363,66 @@ class DestinasiController extends ChangeNotifier {
     }
   }
 
-int? statusCodeGetTicketById;
-    Future<dynamic> getTicketbyIdDestination(id) async {
+  String? messageEditTicket;
+  int? statusCodeEditTicket;
+  Future<dynamic> editTicketByIdDestinasi({
+    idDestinasi,
+    int? price,
+    int? stock,
+  }) async {
+    var url = Uri.parse(BASE_URL + PUT_TICKET(idDestinasi));
+    print(url);
+    final body = {
+      'price': price,
+      'stock': stock,
+    };
+    try {
+      var response = await http.put(
+        url,
+        body: json.encode(body),
+        headers: {
+          "content-type": "application/json",
+        },
+      );
+      var data = json.decode(response.body);
+      if (response.statusCode == 200) {
+        print(data);
+        statusCodeEditTicket = response.statusCode;
+        notifyListeners();
+      } else if (response.statusCode == 404) {
+        messageEditTicket = data["message"];
+        statusCodeEditTicket = response.statusCode;
+      }
+    } catch (e) {
+      print("ERROR MESSAGE: $e");
+    }
+  }
+
+  int? statusCodeGetTicketById;
+  Future<dynamic> getTicketbyIdDestination(id) async {
     print("get ticket by id destinasi");
     var url = Uri.parse(BASE_URL + GET_TICKET_ID(id));
     print("URL = $url");
     try {
       var response = await http.get(url);
 
-        var data = json.decode(response.body);
+      var data = json.decode(response.body);
       if (response.statusCode == 200) {
-        statusCodeGetTicketById = response.statusCode;
         print("code: ${response.statusCode}");
+        statusCodeGetTicketById = response.statusCode;
         var ticketData = data["data"];
         ticketDataDetail = Ticket.fromJson(ticketData);
-        print(data);
+        print(data["data"]);
         notifyListeners();
       } else if (response.statusCode == 404) {
         statusCodeGetTicketById = response.statusCode;
         print("code: ${response.statusCode}");
-       var message = data["message"];
-       print(message);
+        var message = data["message"];
+        print(message);
         // print(messageDestinasi);
       }
     } catch (e) {
       print("ERROR MESSAGE: $e");
     }
   }
-  
-
-  
 }

@@ -1870,6 +1870,7 @@ class _CreateDestinationTouristState extends State<CreateDestinationTourist> {
                     double? longitudeValue = longitudeController.text.isNotEmpty
                         ? double.parse(longitudeController.text)
                         : null;
+
                     priceValue = ticketPriceController.text.isNotEmpty
                         ? int.tryParse(ticketPriceController.text)
                         : null;
@@ -1878,19 +1879,6 @@ class _CreateDestinationTouristState extends State<CreateDestinationTourist> {
                         ? int.tryParse(ticketStockController.text)
                         : null;
 
-                    // int openHourValue;
-                    // if (openHourController.text.isNotEmpty) {
-                    //   openHourValue = int.parse(openHourController.text);
-                    // } else {
-                    //   openHourValue = 0;
-                    // }
-
-                    // int closedHourValue;
-                    // if (closedHourController.text.isNotEmpty) {
-                    //   closedHourValue = int.parse(closedHourController.text);
-                    // } else {
-                    //   closedHourValue = 0;
-                    // }
                     try {
                       await destCon.postDestinasi(
                           nameDestinasi: nameController.text,
@@ -1921,7 +1909,6 @@ class _CreateDestinationTouristState extends State<CreateDestinationTourist> {
                         if (ticketPriceController != null &&
                             ticketStockController != null) {
                           await destCon.addTicketByIdDestinasi(
-                            // idDestinasi: widget.id.id,
                             idDestinasi: destCon.newIdDestinasi,
                             price: priceValue,
                             stock: stockValue,
