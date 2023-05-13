@@ -48,6 +48,10 @@ GET_REVIEW_ID(id) => "review/$id";
 const POST_REVIEW = "review";
 
 
+//average rating
+GET_AVG_RATING_ID(id) => "rating/$id";
+
+
 //ticket
 const GET_TICKET = "ticket";
 

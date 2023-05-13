@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:ffi';
 
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
@@ -80,6 +81,54 @@ class ReviewController extends ChangeNotifier {
         // print("status code: ${response.bodyBytes}");
         // print("status code: ${response.headers}");
         notifyListeners();
+      }
+    } catch (e) {
+      print("ERROR MESSAGE: $e");
+    }
+  }
+
+  double? avgRating;
+  int? avgRatingInt;
+  bool? isRatingInt;
+  var value;
+  int? statusCodeAvgRating;
+  String? messageAvgRating;
+  Future<dynamic> getRatingAverageById(id) async {
+    print("get average rating destinasi by $id");
+
+    var url = Uri.parse(BASE_URL + GET_AVG_RATING_ID(id));
+    print("URL = $url");
+    try {
+      var response = await http.get(url);
+
+      var data = json.decode(response.body);
+
+      if (response.statusCode == 200) {
+        statusCodeAvgRating = response.statusCode;
+
+        //check rating tipe data and convert into double
+        value = data["rating"];
+        if (value.runtimeType == int) {
+          isRatingInt = true;
+          avgRatingInt = value;
+          avgRating = avgRatingInt!.toDouble();
+        } else if (value.runtimeType == double) {
+          isRatingInt = false;
+          avgRating = value;
+        }
+
+        // print(value);
+        print("rata-rata : $avgRating");
+        print("code: ${response.statusCode}");
+        notifyListeners();
+      } else if (response.statusCode == 202) {
+        statusCodeAvgRating = response.statusCode;
+        messageAvgRating = data["message"];
+      } else if (response.statusCode == 400 || response.statusCode == 404) {
+        statusCodeAvgRating = response.statusCode;
+        messageAvgRating = data["message"];
+      } else {
+        statusCodeAvgRating = response.statusCode;
       }
     } catch (e) {
       print("ERROR MESSAGE: $e");

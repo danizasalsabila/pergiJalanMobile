@@ -1,4 +1,5 @@
 import 'dart:async';
+// import 'dart:ffi';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
@@ -35,6 +36,9 @@ class _DetailDestinationState extends State<DetailDestination> {
   bool isLoading = false;
   bool isLoading2 = false;
   String text = '';
+  bool avgRatingBool = false;
+  double? avgRating;
+
   List<String> data = [];
   final Completer<GoogleMapController> _controller = Completer();
   final ScrollController _scrollController = ScrollController();
@@ -51,6 +55,22 @@ class _DetailDestinationState extends State<DetailDestination> {
       try {
         print("get title destinasi : ${widget.id.nameDestinasi}");
         await reviewData.reviewDestinasiId(widget.id.id);
+        await reviewData.getRatingAverageById(widget.id.id);
+        if (reviewData.statusCodeAvgRating == 200) {
+          // if (reviewData.isRatingInt == true) {
+          //   int valueRating = reviewData.avgRatingInt!;
+          //   avgRating = valueRating.roundToDouble();
+          //   print("int: $avgRating");
+          // } else if (reviewData.isRatingInt == false) {
+          //   avgRating = reviewData.avgRating!;
+          // }
+          avgRatingBool = true;
+          avgRating = reviewData.avgRating!;
+        } else {
+          avgRatingBool = false;
+        }
+
+        await Future.delayed(Duration.zero);
         text = widget.id.fasility.toString();
         if (text.contains(',')) {
           data = text.split(',');
@@ -110,27 +130,36 @@ class _DetailDestinationState extends State<DetailDestination> {
                         Align(
                           alignment: Alignment.bottomRight,
                           child: Column(
-                          mainAxisAlignment: MainAxisAlignment.end,
-                          crossAxisAlignment: CrossAxisAlignment.end,
-                          children: [
-                              SizedBox(height: 295, ),
+                            mainAxisAlignment: MainAxisAlignment.end,
+                            crossAxisAlignment: CrossAxisAlignment.end,
+                            children: [
+                              SizedBox(
+                                height: 295,
+                              ),
                               Padding(
                                 padding: const EdgeInsets.only(right: 16.0),
                                 child: Container(
-                                  decoration: BoxDecoration(color: thirdColor, borderRadius: BorderRadius.circular(15)),
-                                  child: Padding(
-                                    padding: const EdgeInsets.only(left: 13.0, right: 13.0, top: 3, bottom: 3),
-                                    child: Text(widget.id.category.toString(), style: GoogleFonts
-                                                              .openSans(
-                                                                  fontSize: 11,
-                                                                  color:
-                                                                      backgroundColor,
-                                                                  fontWeight:
-                                                                      FontWeight
-                                                                          .w500),),
-                                  )),
+                                    decoration: BoxDecoration(
+                                        color: thirdColor,
+                                        borderRadius:
+                                            BorderRadius.circular(15)),
+                                    child: Padding(
+                                      padding: const EdgeInsets.only(
+                                          left: 13.0,
+                                          right: 13.0,
+                                          top: 3,
+                                          bottom: 3),
+                                      child: Text(
+                                        widget.id.category.toString(),
+                                        style: GoogleFonts.openSans(
+                                            fontSize: 11,
+                                            color: backgroundColor,
+                                            fontWeight: FontWeight.w500),
+                                      ),
+                                    )),
                               )
-                            ],),
+                            ],
+                          ),
                         ),
                         Positioned(
                             top: 40,
@@ -283,7 +312,42 @@ class _DetailDestinationState extends State<DetailDestination> {
                                       ),
                                     ],
                                   ),
-                                )
+                                ),
+                                avgRatingBool
+                                    ? Align(
+                                        alignment: Alignment.topLeft,
+                                        child: Row(
+                                          children: [
+                                            Padding(
+                                              padding: const EdgeInsets.only(
+                                                  left: 4, top: 8),
+                                              child: RatingBarIndicator(
+                                                rating: avgRating!,
+                                                itemBuilder: (context, ndex) =>
+                                                    Icon(
+                                                  Icons.star,
+                                                  color: Colors.amber,
+                                                ),
+                                                itemCount: 5,
+                                                itemSize: 17.0,
+                                              ),
+                                            ),
+                                            Padding(
+                                              padding: const EdgeInsets.only(
+                                                  left: 4.0, top: 8.0),
+                                              child: Text(
+                                                avgRating!.toStringAsFixed(1),
+                                                style: GoogleFonts.openSans(
+                                                    fontSize: 13,
+                                                    color: descColor,
+                                                    fontWeight:
+                                                        FontWeight.w600),
+                                              ),
+                                            )
+                                          ],
+                                        ),
+                                      )
+                                    : const SizedBox(),
                               ]),
                             ),
                           )
@@ -420,7 +484,6 @@ class _DetailDestinationState extends State<DetailDestination> {
                                                   color: primaryColor,
                                                   fontWeight: FontWeight.w600),
                                             ),
-
                                             Padding(
                                               padding:
                                                   const EdgeInsets.fromLTRB(
