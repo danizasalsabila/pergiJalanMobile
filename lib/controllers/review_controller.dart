@@ -124,9 +124,11 @@ class ReviewController extends ChangeNotifier {
       } else if (response.statusCode == 202) {
         statusCodeAvgRating = response.statusCode;
         messageAvgRating = data["message"];
+        // print(messageAvgRating);
       } else if (response.statusCode == 400 || response.statusCode == 404) {
         statusCodeAvgRating = response.statusCode;
         messageAvgRating = data["message"];
+        // print(messageAvgRating);
       } else {
         statusCodeAvgRating = response.statusCode;
       }

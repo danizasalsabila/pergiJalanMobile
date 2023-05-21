@@ -1,3 +1,5 @@
+// ignore_for_file: unnecessary_null_comparison
+
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:pergijalan_mobile/config/theme_color.dart';
@@ -7,6 +9,8 @@ import 'package:provider/provider.dart';
 
 import '../../controllers/destinasi_controller.dart';
 
+enum DestinasiL { loading, noData, hasData, error }
+
 class SearchPage extends StatefulWidget {
   const SearchPage({super.key});
 
@@ -15,14 +19,37 @@ class SearchPage extends StatefulWidget {
 }
 
 class _SearchPageState extends State<SearchPage> {
-  String queries= "";
+  // String? queries;
+  bool isLoading2 = false;
   bool isLoading = false;
   final TextEditingController queryController = TextEditingController();
   final ScrollController _scrollController = ScrollController();
 
+  void initState() {
+    print(" ");
+    print("-------------DIRECT TO PROFILE-----------");
+    final searchCon = Provider.of<DestinasiController>(context, listen: false);
+    isLoading = true;
+
+    Future.delayed(Duration(seconds: 1)).then((value) async {
+      try {
+        searchCon.destinasiQueryData!.clear();
+      } catch (e) {
+        print(e);
+      }
+      setState(() {
+        isLoading = false;
+      });
+    });
+    super.initState();
+  }
+
   Widget resultData(BuildContext context) {
     return Consumer<DestinasiController>(builder: (context, searchCon, child) {
-      if (searchCon.destinasiQueryData != null && searchCon.destinasiQueryData!.isNotEmpty) {
+      if (searchCon.destinasiQueryData != null &&
+          searchCon.destinasiQueryData!.isNotEmpty) {
+        print("a");
+
         return ListView.builder(
             shrinkWrap: true,
             scrollDirection: Axis.vertical,
@@ -115,20 +142,28 @@ class _SearchPageState extends State<SearchPage> {
                                               child: Padding(
                                                 padding: const EdgeInsets.only(
                                                     left: 5.0, right: 5.0),
-                                                child: Text(
-                                                  searchCon
-                                                      .destinasiQueryData![
-                                                          index]
-                                                      .hobby!,
-                                                  style: GoogleFonts
-                                                      .notoSansDisplay(
-                                                          fontSize: 9,
-                                                          color: Colors.white,
-                                                          fontWeight:
-                                                              FontWeight.w500),
-                                                  overflow:
-                                                      TextOverflow.ellipsis,
-                                                ),
+                                                child: searchCon
+                                                            .destinasiQueryData![
+                                                                index]
+                                                            .hobby! !=
+                                                        null
+                                                    ? Text(
+                                                        searchCon
+                                                            .destinasiQueryData![
+                                                                index]
+                                                            .hobby!,
+                                                        style: GoogleFonts
+                                                            .notoSansDisplay(
+                                                                fontSize: 9,
+                                                                color: Colors
+                                                                    .white,
+                                                                fontWeight:
+                                                                    FontWeight
+                                                                        .w500),
+                                                        overflow: TextOverflow
+                                                            .ellipsis,
+                                                      )
+                                                    : SizedBox(),
                                               ),
                                             )),
                                         Padding(
@@ -195,11 +230,15 @@ class _SearchPageState extends State<SearchPage> {
                   ),
                 ),
               );
-              
             });
-      } else if (searchCon.destinasiQueryData != null &&
-        searchCon.destinasiQueryData!.isEmpty) {
-        return Center(child: Text("Data tidak ditemukan"));
+      } else if (searchCon.destinasiQueryData!.isEmpty) {
+        searchCon.clearData();
+        print("b");
+        print(searchCon.destinasiQueryData);
+        return const SizedBox();
+      } else if (searchCon.statusCodeSearch == 404) {
+        print("c");
+        return Center(child: Text("404"));
       } else {
         return const SizedBox();
       }
@@ -211,41 +250,50 @@ class _SearchPageState extends State<SearchPage> {
     return SafeArea(
       child: Scaffold(
           backgroundColor: backgroundColor,
-          body: isLoading
-              ? const Center(
-                  child: CircularProgressIndicator(
-                    color: Colors.blue,
-                  ),
-                )
-              : Consumer<DestinasiController>(
+          body:
+              //  isLoading
+              //     ? const Center(
+              //         child: CircularProgressIndicator(
+              //           color: Colors.blue,
+              //         ),
+              //       )
+              //     :
+              Consumer<DestinasiController>(
                   builder: (context, searchCon, child) {
-                  print("query gaada? ${queries.isEmpty}");
-                  print("query ${queries}");
-                  return Column(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        const SizedBox(
-                          // flex: 1,
-                          child: Padding(
-                            padding: EdgeInsets.only(bottom: 15.0),
-                            child: SearchAppBar(),
-                          ),
-                        ),
-                        // queries.isEmpty
-                        //     ? const SizedBox()
-                        //     :
-                             Expanded(
-                                child: SizedBox(
-                                  height:
-                                      MediaQuery.of(context).size.height - 0.5,
-                                  child: SingleChildScrollView(
-                                    child: resultData(context),
-                                  ),
+            // print("query ${queries}");
+            return Column(
+                mainAxisAlignment: MainAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  const SizedBox(
+                    // flex: 1,
+                    child: Padding(
+                      padding: EdgeInsets.only(bottom: 15.0),
+                      child: SearchAppBar(),
+                    ),
+                  ),
+
+                  // queries!.isEmpty
+                  //     ? const SizedBox()
+
+                  //     :
+                  Expanded(
+                    child: SizedBox(
+                      height: MediaQuery.of(context).size.height - 0.5,
+                      child: SingleChildScrollView(
+                        child: isLoading
+                            ? const Padding(
+                                padding: EdgeInsets.only(top: 60.0),
+                                child: Center(
+                                  child: CircularProgressIndicator(),
                                 ),
                               )
-                      ]);
-                })),
+                            : resultData(context),
+                      ),
+                    ),
+                  )
+                ]);
+          })),
     );
   }
 }

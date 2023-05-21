@@ -13,7 +13,7 @@ class UserController extends ChangeNotifier {
   // List<User> userData =[];
 
   Login? login;
-  String? tokenAuthSP;
+  // String? tokenAuthSP;
 
   int? statusCodeRegister;
   String? messageRegister;

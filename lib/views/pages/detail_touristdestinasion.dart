@@ -302,13 +302,46 @@ class _DetailDestinationState extends State<DetailDestination> {
                                       Padding(
                                         padding:
                                             const EdgeInsets.only(left: 2.0),
-                                        child: Text(
-                                          "Waktu wisata WIB",
-                                          style: GoogleFonts.openSans(
-                                              fontSize: 12,
-                                              color: descColor,
-                                              fontWeight: FontWeight.w500),
-                                        ),
+                                        child: widget.id.openHour != null &&
+                                                widget.id.closedHour != null
+                                            ? Row(
+                                                children: [
+                                                  Text(
+                                                    widget.id.openHour
+                                                        .toString(),
+                                                    style: GoogleFonts.openSans(
+                                                        fontSize: 12,
+                                                        color: descColor,
+                                                        fontWeight:
+                                                            FontWeight.w500),
+                                                  ),
+                                                  Text(
+                                                    " -",
+                                                    style: GoogleFonts.openSans(
+                                                        fontSize: 12,
+                                                        color: descColor,
+                                                        fontWeight:
+                                                            FontWeight.w500),
+                                                  ),
+                                                  Text(
+                                                    widget.id.closedHour
+                                                        .toString(),
+                                                    style: GoogleFonts.openSans(
+                                                        fontSize: 12,
+                                                        color: descColor,
+                                                        fontWeight:
+                                                            FontWeight.w500),
+                                                  ),
+                                                ],
+                                              )
+                                            : Text(
+                                                " -",
+                                                style: GoogleFonts.openSans(
+                                                    fontSize: 12,
+                                                    color: descColor,
+                                                    fontWeight:
+                                                        FontWeight.w500),
+                                              ),
                                       ),
                                     ],
                                   ),

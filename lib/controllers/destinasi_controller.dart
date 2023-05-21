@@ -96,28 +96,31 @@ class DestinasiController extends ChangeNotifier {
     }
   }
 
+  int? statusCodeSearch;
   Future<dynamic> searchDestinasi(String q) async {
-    print("get data by $q category");
     var url = Uri.parse(BASE_URL + GET_DESTINASI_QUERY(q));
     print("URL = $url");
     try {
-      var client = http.Client();
-      // var response = await http.get(url);
-      var response = await client.get(url);
+      var response = await http.get(url);
 
+      var data = json.decode(response.body);
       if (response.statusCode == 200) {
-        var data = json.decode(response.body);
-        print("code: ${response.statusCode}");
-        print(data["message"]);
+        print("masuk");
+        print(response.statusCode);
         destinasiResponse = destinasiFromJson(response.body);
         destinasiQueryData = destinasiResponse?.destinasi;
         notifyListeners();
       } else if (response.statusCode == 404) {
-        print(messageDestinasi);
+        statusCodeSearch = response.statusCode;
+        print(statusCodeSearch);
       }
     } catch (e) {
       print("ERROR MESSAGE: $e");
     }
+  }
+
+  void clearData() {
+    destinasiQueryData!.clear();
   }
 
   String? messageAddDestinasi;

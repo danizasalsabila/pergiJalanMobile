@@ -16,9 +16,15 @@ class SearchAppBar extends StatefulWidget {
 
 class _SearchAppBarState extends State<SearchAppBar> {
   String queries = '';
-  bool isLoading = false;
+  // bool isLoading = false;
   final TextEditingController queryController = TextEditingController();
   // final ScrollController _scrollController = ScrollController();
+
+  @override
+  void dispose() {
+    queryController.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Consumer<DestinasiController>(builder: (context, searchCon, child) {
@@ -28,7 +34,7 @@ class _SearchAppBarState extends State<SearchAppBar> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               const SizedBox(
-                height: 20,
+                height: 30,
               ),
               Padding(
                 padding: const EdgeInsets.only(left: 16.0, right: 16.0),
@@ -51,26 +57,37 @@ class _SearchAppBarState extends State<SearchAppBar> {
                 ),
               ),
               const SizedBox(
-                height: 20,
+                height: 13,
               ),
               Padding(
                 padding: const EdgeInsets.only(left: 16.0, right: 16.0),
                 child: TextField(
-                  onChanged: (String query) {
-                    isLoading = true;
-                    debugPrint('data: $query');
+                  onChanged: (String query) async {
+                    // isLoading = true;
+                    // debugPrint('data: $query');
                     if (query.isNotEmpty) {
+                      print("not empty");
+
                       queryController.clear();
                       setState(() {
                         queries = query;
                         print(queries);
                       });
-                      searchCon.searchDestinasi(query);
-                    setState(() {
-                      isLoading=false;
-                    });
-                    } else {
+                      try {
+                        await searchCon.searchDestinasi(query);
+                      } catch (e) {
+                        e;
+                      }
+
                       queryController.clear();
+                      // setState(() {
+                      //   isLoading = false;
+                      // });
+                    } else if (query.isEmpty) {
+                      print("empty");
+                      searchCon.clearData();
+                      queryController.clear();
+                      print("data query: ${searchCon.destinasiQueryData}");
                     }
                   },
                   textInputAction: TextInputAction.search,

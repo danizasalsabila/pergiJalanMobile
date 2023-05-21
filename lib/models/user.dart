@@ -8,8 +8,18 @@ class UserResponse {
   Login? _login;
   List<AllUser>? _allUser;
   User? _user;
-  
-  UserResponse({bool? success, bool? status, String? message, String? error, int? code, Register? register, Login? login, List<AllUser>? allUser, User? user,}) {
+
+  UserResponse({
+    bool? success,
+    bool? status,
+    String? message,
+    String? error,
+    int? code,
+    Register? register,
+    Login? login,
+    List<AllUser>? allUser,
+    User? user,
+  }) {
     if (success != null) {
       this._success = success;
     }
@@ -32,7 +42,7 @@ class UserResponse {
       this._login = login;
     }
     if (allUser != null) {
-    this._allUser = allUser;
+      this._allUser = allUser;
     }
     if (user != null) {
       this._user = user;
@@ -68,7 +78,7 @@ class UserResponse {
     _login = json['data'] != null ? new Login.fromJson(json['data']) : null;
     _user = json['data'] != null ? new User.fromJson(json['data']) : null;
     if (json['data'] != null) {
-    _allUser = <AllUser>[];
+      _allUser = <AllUser>[];
       json['data'].forEach((v) {
         _allUser!.add(new AllUser.fromJson(v));
       });
@@ -91,7 +101,7 @@ class UserResponse {
     if (this._allUser != null) {
       data['data'] = this._allUser!.map((v) => v.toJson()).toList();
     }
-        if (this._user != null) {
+    if (this._user != null) {
       data['data'] = this._user!.toJson();
     }
     return data;
@@ -173,6 +183,7 @@ class AllUser {
   String? _name;
   String? _email;
   String? _password;
+  String? _role;
   String? _phoneNumber;
   String? _idCardNumber;
   String? _createdAt;
@@ -183,6 +194,7 @@ class AllUser {
       String? name,
       String? email,
       String? password,
+      String? role,
       String? phoneNumber,
       String? idCardNumber,
       String? createdAt,
@@ -198,6 +210,9 @@ class AllUser {
     }
     if (password != null) {
       this._password = password;
+    }
+    if (role != null) {
+      this._role = role;
     }
     if (phoneNumber != null) {
       this._phoneNumber = phoneNumber;
@@ -221,6 +236,8 @@ class AllUser {
   set email(String? email) => _email = email;
   String? get password => _password;
   set password(String? password) => _password = password;
+  String? get role => _role;
+  set role(String? role) => _role = role;
   String? get phoneNumber => _phoneNumber;
   set phoneNumber(String? phoneNumber) => _phoneNumber = phoneNumber;
   String? get idCardNumber => _idCardNumber;
@@ -235,6 +252,7 @@ class AllUser {
     _name = json['name'];
     _email = json['email'];
     _password = json['password'];
+    _role = json['role'];
     _phoneNumber = json['phone_number'];
     _idCardNumber = json['id_card_number'];
     _createdAt = json['created_at'];
@@ -247,6 +265,7 @@ class AllUser {
     data['name'] = this._name;
     data['email'] = this._email;
     data['password'] = this._password;
+    data['role'] = this._role;
     data['phone_number'] = this._phoneNumber;
     data['id_card_number'] = this._idCardNumber;
     data['created_at'] = this._createdAt;
@@ -255,11 +274,11 @@ class AllUser {
   }
 }
 
-
 class User {
   int? _id;
   String? _name;
   String? _email;
+  String? _role;
   String? _phoneNumber;
   String? _idCardNumber;
   String? _createdAt;
@@ -269,6 +288,7 @@ class User {
       {int? id,
       String? name,
       String? email,
+      String? role,
       String? phoneNumber,
       String? idCardNumber,
       String? createdAt,
@@ -281,6 +301,9 @@ class User {
     }
     if (email != null) {
       this._email = email;
+    }
+    if (role != null) {
+      this._role = role;
     }
     if (phoneNumber != null) {
       this._phoneNumber = phoneNumber;
@@ -302,6 +325,8 @@ class User {
   set name(String? name) => _name = name;
   String? get email => _email;
   set email(String? email) => _email = email;
+  String? get role => _role;
+  set role(String? role) => _role = role;
   String? get phoneNumber => _phoneNumber;
   set phoneNumber(String? phoneNumber) => _phoneNumber = phoneNumber;
   String? get idCardNumber => _idCardNumber;
@@ -315,6 +340,7 @@ class User {
     _id = json['id'];
     _name = json['name'];
     _email = json['email'];
+    _role = json['role'];
     _phoneNumber = json['phone_number'];
     _idCardNumber = json['id_card_number'];
     _createdAt = json['created_at'];
@@ -326,6 +352,7 @@ class User {
     data['id'] = this._id;
     data['name'] = this._name;
     data['email'] = this._email;
+    data['role'] = this._role;
     data['phone_number'] = this._phoneNumber;
     data['id_card_number'] = this._idCardNumber;
     data['created_at'] = this._createdAt;

@@ -20,6 +20,15 @@ GET_USER_BY_EMAIL(email) => "email/user?q=$email";
 
 const GET_USER_BY_ID = "user/";
 
+//OwnerBusiness
+const REGISTER_OWNERBUSINESS = "owner/register";
+
+const LOGIN_OWNERBUSINESS = "owner/login";
+
+const LOGOUT_OWNERBUSINESS = "owner/logout";
+
+const GET_OWNER_BY_ID = "owner/";
+
 
 //ENDPOINT
 //destinasi

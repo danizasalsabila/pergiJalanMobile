@@ -66,7 +66,6 @@ class Destinasi {
   double? _longitude;
   String? _urlMap;
   String? _recWeather;
-  Null? _rating;
   String? _openHour;
   String? _closedHour;
   String? _createdAt;
@@ -89,7 +88,6 @@ class Destinasi {
     double? longitude,
     String? urlMap,
     String? recWeather,
-    Null? rating,
     String? openHour,
     String? closedHour,
     String? createdAt,
@@ -138,9 +136,6 @@ class Destinasi {
     }
     if (recWeather != null) {
       this._recWeather = recWeather;
-    }
-    if (rating != null) {
-      this._rating = rating;
     }
     if (openHour != null) {
       this._openHour = openHour;
@@ -191,8 +186,6 @@ class Destinasi {
   set urlMap(String? urlMap) => _urlMap = urlMap;
   String? get recWeather => _recWeather;
   set recWeather(String? recWeather) => _recWeather = recWeather;
-  Null? get rating => _rating;
-  set rating(Null? rating) => _rating = rating;
   String? get openHour => _openHour;
   set openHour(String? openHour) => _openHour = openHour;
   String? get closedHour => _closedHour;
@@ -221,7 +214,6 @@ class Destinasi {
     _longitude = json['longitude'];
     _urlMap = json['url_map'];
     _recWeather = json['rec_weather'];
-    _rating = json['rating'];
     _openHour = json['open_hour'];
     _closedHour = json['closed_hour'];
     _createdAt = json['created_at'];
@@ -246,7 +238,6 @@ class Destinasi {
     data['longitude'] = this._longitude;
     data['url_map'] = this._urlMap;
     data['rec_weather'] = this._recWeather;
-    data['rating'] = this._rating;
     data['open_hour'] = this._openHour;
     data['closed_hour'] = this._closedHour;
     data['created_at'] = this._createdAt;
