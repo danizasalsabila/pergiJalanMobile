@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:pergijalan_mobile/controllers/destinasi_controller.dart';
-import 'package:pergijalan_mobile/controllers/owner_business.dart';
+import 'package:pergijalan_mobile/controllers/owner_business_controller.dart';
 import 'package:pergijalan_mobile/controllers/review_controller.dart';
 import 'package:pergijalan_mobile/controllers/user_controller.dart';
+import 'package:pergijalan_mobile/views/pages/splash_screen_page.dart';
 import 'package:pergijalan_mobile/views/pages/home.dart';
 import 'package:pergijalan_mobile/views/pages/login_user.dart';
 import 'package:pergijalan_mobile/views/widgets/bar_mainnavigation.dart';
@@ -31,7 +32,7 @@ class MyApp extends StatelessWidget {
             primarySwatch: Colors.blue,
           ),
           // home: const MainNavigation(),
-          home: const LoginUser(),
+          home: const Splashscreen(),
         ),
     );
   }

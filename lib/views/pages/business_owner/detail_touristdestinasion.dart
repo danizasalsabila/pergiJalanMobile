@@ -115,14 +115,11 @@ class _DetailDestinationOwnerState extends State<DetailDestinationOwner> {
                           left: 16,
                           child: InkWell(
                             onTap: () => Navigator.of(context).pop(),
-                            child: InkWell(
-                              onTap: () => Navigator.of(context).pop(),
-                              child: CircleAvatar(
-                                  backgroundColor:
-                                      Colors.grey.shade50.withOpacity(0.7),
-                                  child: const Icon(Icons.chevron_left,
-                                      color: primaryColor)),
-                            ),
+                            child: CircleAvatar(
+                                backgroundColor:
+                                    Colors.grey.shade50.withOpacity(0.7),
+                                child: const Icon(Icons.chevron_left,
+                                    color: primaryColor)),
                           )),
                           
                       Column(children: [

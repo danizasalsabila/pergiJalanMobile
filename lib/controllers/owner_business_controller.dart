@@ -10,6 +10,7 @@ class OwnerBusinessController extends ChangeNotifier {
   OwnerBusinessResponse? ownerBusinessResponse;
   LoginOwnerUser? loginOwnerUser;
   String? tokenAuthOBSP;
+  OwnerBusinessUser? ownerBusinessUserDetail;
 
   int? statusCodeRegisterOB;
   String? messageRegisterOB;
@@ -206,5 +207,30 @@ class OwnerBusinessController extends ChangeNotifier {
     print("Data from Shared Preferences: token: $tokenLogin");
     print("Data from Shared Preferences: name: $nameLogin");
     notifyListeners();
+  }
+
+    Future<dynamic> ownerDetail() async {
+    print("Detail User Data");
+    print("ID USER: $idOBLogin");
+    var url = Uri.parse(BASE_URL + GET_OWNER_BY_ID + "$idOBLogin");
+    print("URL = $url");
+    try {
+      var response = await http.get(url);
+      
+      var data = json.decode(response.body);
+      if (response.statusCode == 200) {
+        print("CODE: ${response.statusCode}");
+        print(data);
+        var dataDetail = data["data"];
+        ownerBusinessUserDetail = OwnerBusinessUser.fromJson(dataDetail);
+        notifyListeners();
+      } else if (response.statusCode == 404) {
+        print("CODE: ${response.statusCode}");
+        var dataError = data["data"];
+        print("$dataError");
+      }
+    } catch (e) {
+      print("ERROR MESSAGE: $e");
+    }
   }
 }

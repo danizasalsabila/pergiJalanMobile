@@ -7,6 +7,7 @@ import 'package:intl/intl.dart';
 import 'package:pergijalan_mobile/config/theme_color.dart';
 import 'package:pergijalan_mobile/views/pages/business_owner/detail_touristdestinasion.dart';
 import 'package:pergijalan_mobile/views/pages/business_owner/edit_destinationtour.dart';
+import 'package:pergijalan_mobile/views/pages/business_owner/profile_owner.dart';
 import 'package:pergijalan_mobile/views/pages/login_user.dart';
 import 'package:provider/provider.dart';
 
@@ -76,9 +77,19 @@ class _HomePageOwnerState extends State<HomePageOwner> {
         actions: [
           Padding(
             padding: EdgeInsets.only(right: 16.0),
-            child: CircleAvatar(
-              radius: 20,
-              backgroundColor: Colors.grey.shade300,
+            child: InkWell(
+              onTap: (){
+                 Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => const OwnerProfilePage(),
+                ),
+              );
+              },
+              child: CircleAvatar(
+                radius: 20,
+                backgroundColor: Colors.grey.shade300,
+              ),
             ),
           ),
         ],
