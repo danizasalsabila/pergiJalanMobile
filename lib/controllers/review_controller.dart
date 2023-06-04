@@ -26,9 +26,11 @@ class ReviewController extends ChangeNotifier {
       if (response.statusCode == 200) {
         print("code: ${response.statusCode}");
         print(data["status"]);
+        // print(data["data"]);
 
         reviewResponse = reviewResponseFromJson(response.body);
         reviewData = reviewResponse?.review;
+        
         notifyListeners();
       } else if (response.statusCode == 404) {
         print(data["message"]);
@@ -41,15 +43,16 @@ class ReviewController extends ChangeNotifier {
   int? statusCode;
   String? messageAddReview;
   Future<dynamic> addReviewId(
-      {int? id, required int? rating, required String review}) async {
+      {int? id, required int? rating, required String review, required int? idUser}) async {
     print("add review destination");
     print("ID DESTINASI : $id");
+    print("ID User : $idUser");
     print("RATING : $rating");
     print("REVIEW : $review");
 
     var url = Uri.parse(BASE_URL + POST_REVIEW);
     print("URL = $url");
-    final body = {'id_destinasi': id, 'rating': rating, 'review': review};
+    final body = {'id_destinasi': id, 'rating': rating, 'review': review, 'id_user': idUser,};
     try {
       var response = await http.post(
         url,
@@ -131,6 +134,57 @@ class ReviewController extends ChangeNotifier {
         // print(messageAvgRating);
       } else {
         statusCodeAvgRating = response.statusCode;
+      }
+    } catch (e) {
+      print("ERROR MESSAGE: $e");
+    }
+  }
+
+
+  double? avgRatingOwner;
+  int? avgRatingIntOwner;
+  bool? isRatingIntOwner;
+  var valueOwner;
+  int? statusCodeAvgRatingOwner;
+  String? messageAvgRatingOwner;
+  Future<dynamic> getRatingAverageByOwner(id) async {
+    print("get average rating destinasi by $id");
+
+    var url = Uri.parse(BASE_URL + GET_AVG_RATING_BYOWNER(id));
+    print("URL = $url");
+    try {
+      var response = await http.get(url);
+
+      var data = json.decode(response.body);
+
+      if (response.statusCode == 200) {
+        statusCodeAvgRatingOwner = response.statusCode;
+
+        //check rating tipe data and convert into double
+        valueOwner = data["rating"];
+        if (valueOwner.runtimeType == int) {
+          isRatingIntOwner = true;
+          avgRatingIntOwner = valueOwner;
+          avgRatingOwner = avgRatingIntOwner!.toDouble();
+        } else if (valueOwner.runtimeType == double) {
+          isRatingIntOwner = false;
+          avgRatingOwner = valueOwner;
+        }
+
+        // print(value);
+        print("rata-rata : $avgRatingOwner");
+        print("code: ${response.statusCode}");
+        notifyListeners();
+      } else if (response.statusCode == 202) {
+        statusCodeAvgRatingOwner = response.statusCode;
+        messageAvgRatingOwner = data["message"];
+        // print(messageAvgRating);
+      } else if (response.statusCode == 400 || response.statusCode == 404) {
+        statusCodeAvgRatingOwner = response.statusCode;
+        messageAvgRatingOwner = data["message"];
+        // print(messageAvgRating);
+      } else {
+        statusCodeAvgRatingOwner = response.statusCode;
       }
     } catch (e) {
       print("ERROR MESSAGE: $e");

@@ -8,6 +8,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:pergijalan_mobile/config/theme_color.dart';
 import 'package:pergijalan_mobile/controllers/destinasi_controller.dart';
+import 'package:pergijalan_mobile/controllers/owner_business_controller.dart';
 import 'package:pergijalan_mobile/views/pages/business_owner/home.dart';
 import 'package:provider/provider.dart';
 
@@ -1781,6 +1782,8 @@ class _CreateDestinationTouristState extends State<CreateDestinationTourist> {
                   onTap: () async {
                     final destCon = Provider.of<DestinasiController>(context,
                         listen: false);
+                         final ownerCon = Provider.of<OwnerBusinessController>(context,
+                        listen: false);
 
                     if (nameController.text.isEmpty &&
                         descriptionController.text.isEmpty &&
@@ -1881,6 +1884,7 @@ class _CreateDestinationTouristState extends State<CreateDestinationTourist> {
 
                     try {
                       await destCon.postDestinasi(
+                        idOwner: ownerCon.idOBLogin,
                           nameDestinasi: nameController.text,
                           description: descriptionController.text,
                           address: addressController.text,
@@ -1888,6 +1892,7 @@ class _CreateDestinationTouristState extends State<CreateDestinationTourist> {
                           category: finalSelectedCategory.toString(),
                           contact: phoneNumberController.text,
                           hobby: finalSelectedHobby,
+                          
                           minutesSpend: minutesSpendController.text,
                           latitude: latitudeValue,
                           longitude: longitudeValue,

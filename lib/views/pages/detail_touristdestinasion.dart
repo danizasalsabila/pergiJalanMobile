@@ -8,6 +8,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:pergijalan_mobile/config/theme_color.dart';
 import 'package:pergijalan_mobile/controllers/review_controller.dart';
+import 'package:pergijalan_mobile/controllers/user_controller.dart';
 import 'package:pergijalan_mobile/models/destinasi.dart';
 import 'package:provider/provider.dart';
 import 'package:readmore/readmore.dart';
@@ -57,13 +58,6 @@ class _DetailDestinationState extends State<DetailDestination> {
         await reviewData.reviewDestinasiId(widget.id.id);
         await reviewData.getRatingAverageById(widget.id.id);
         if (reviewData.statusCodeAvgRating == 200) {
-          // if (reviewData.isRatingInt == true) {
-          //   int valueRating = reviewData.avgRatingInt!;
-          //   avgRating = valueRating.roundToDouble();
-          //   print("int: $avgRating");
-          // } else if (reviewData.isRatingInt == false) {
-          //   avgRating = reviewData.avgRating!;
-          // }
           avgRatingBool = true;
           avgRating = reviewData.avgRating!;
         } else {
@@ -1217,6 +1211,11 @@ class _DetailDestinationState extends State<DetailDestination> {
                                                                         context,
                                                                         listen:
                                                                             false);
+                                                                             final userCon = Provider.of<
+                                                                            UserController>(
+                                                                        context,
+                                                                        listen:
+                                                                            false);
                                                                     try {
                                                                       int intRating =
                                                                           ratingController
@@ -1225,6 +1224,7 @@ class _DetailDestinationState extends State<DetailDestination> {
                                                                           id: widget
                                                                               .id
                                                                               .id,
+                                                                            idUser: userCon.idUserLogin,
                                                                           rating:
                                                                               intRating,
                                                                           review:
@@ -1401,7 +1401,7 @@ class _DetailDestinationState extends State<DetailDestination> {
                                                                               MainAxisAlignment.center,
                                                                           children: [
                                                                             Text(
-                                                                              "Nama User",
+                                                                              reviewData.reviewData![index].user!.name!.toString() != null ? reviewData.reviewData![index].user!.name! :'-' ,
                                                                               style: GoogleFonts.openSans(fontSize: 11, color: titleColor, fontWeight: FontWeight.w500),
                                                                             ),
                                                                             const Padding(

@@ -7,6 +7,7 @@ import 'package:intl/intl.dart';
 import 'package:pergijalan_mobile/config/theme_color.dart';
 import 'package:pergijalan_mobile/controllers/owner_business_controller.dart';
 import 'package:pergijalan_mobile/models/ownerbusiness.dart';
+import 'package:pergijalan_mobile/views/pages/business_owner/home.dart';
 import 'package:pergijalan_mobile/views/pages/business_owner/login_owner.dart';
 import 'package:pergijalan_mobile/views/pages/login_user.dart';
 import 'package:provider/provider.dart';
@@ -97,7 +98,11 @@ class _OwnerProfilePageState extends State<OwnerProfilePage> {
                               Padding(
                                 padding: const EdgeInsets.only(left: 14),
                                 child: InkWell(
-                                    onTap: () => Navigator.of(context).pop(),
+                                    onTap: () =>Navigator.of(context).pushAndRemoveUntil(
+                                            MaterialPageRoute(
+                                                builder: (context) =>
+                                                    HomePageOwner()),
+                                            (route) => false),
                                     child: Icon(Icons.chevron_left_rounded,
                                         size: 40, color: Colors.grey.shade400)),
                               ),
@@ -113,13 +118,12 @@ class _OwnerProfilePageState extends State<OwnerProfilePage> {
                                         backgroundColor: thirdColor,
                                         child: CircleAvatar(
                                           radius: 19,
-                                          backgroundColor: Colors.grey.shade300,
-                                          child: const Icon(Icons.chevron_left,
-                                              color: primaryColor),
+                                          backgroundImage:  AssetImage("assets/logo/owner.png",)
+                                         ),
                                         )),
                                   ),
                                 ),
-                              ),
+                              
                             ],
                           ),
                           const SizedBox(height: 6),

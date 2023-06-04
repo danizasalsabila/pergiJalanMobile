@@ -5,6 +5,8 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
 
 import 'package:pergijalan_mobile/config/theme_color.dart';
+import 'package:pergijalan_mobile/controllers/owner_business_controller.dart';
+import 'package:pergijalan_mobile/controllers/review_controller.dart';
 import 'package:pergijalan_mobile/views/pages/business_owner/detail_touristdestinasion.dart';
 import 'package:pergijalan_mobile/views/pages/business_owner/edit_destinationtour.dart';
 import 'package:pergijalan_mobile/views/pages/business_owner/profile_owner.dart';
@@ -27,20 +29,36 @@ class _HomePageOwnerState extends State<HomePageOwner> {
   var now = new DateTime.now();
 
   bool isLoading = false;
+  // bool avgRatingBool = false;
+  double? avgRating;
 
   @override
   void initState() {
     print(" ");
     print("-------------DIRECT TO HOME PAGE ADMIN-----------");
-    isLoading = true;
 
     final ownerBusinessHomeCon =
         Provider.of<DestinasiController>(context, listen: false);
+    final ownerCon =
+        Provider.of<OwnerBusinessController>(context, listen: false);
+    final reviewData = Provider.of<ReviewController>(context, listen: false);
+
     isLoading = true;
 
     Future.delayed(Duration(seconds: 2)).then((value) async {
       try {
-        await ownerBusinessHomeCon.allDestinasi();
+        await ownerBusinessHomeCon.destinasiByIdOwner(ownerCon.idOBLogin);
+        await reviewData.getRatingAverageByOwner(ownerCon.idOBLogin);
+
+        if (reviewData.statusCodeAvgRatingOwner == 200) {
+          // avgRatingBool = true;
+          avgRating = reviewData.avgRatingOwner!;
+          // print("-----------");
+          print(avgRating);
+        } else {
+          avgRating = 0;
+          // avgRatingBool = false;
+        }
       } catch (e) {
         print(e);
       }
@@ -55,70 +73,78 @@ class _HomePageOwnerState extends State<HomePageOwner> {
   @override
   Widget build(BuildContext context) {
     String formattedDate = DateFormat('EEEEE, d MMM yyyy').format(now);
+    // final reviewData = Provider.of<ReviewController>(context, listen: false);
+    final ownerCon =
+        Provider.of<OwnerBusinessController>(context, listen: false);
+
     return Scaffold(
       backgroundColor: backgroundColor,
-      appBar: AppBar(
-        leading: InkWell(
-            onTap: () {
-              Navigator.push(context,
-                  MaterialPageRoute(builder: (context) => const LoginUser()));
-            },
-            child: Icon(
-              Icons.settings,
-              color: Colors.grey.shade400,
-            )),
-        title: Text(
-          'Dashboard',
-          style: GoogleFonts.kanit(
-              fontSize: 18,
-              color: Colors.grey.shade400,
-              fontWeight: FontWeight.w400),
-        ),
-        actions: [
-          Padding(
-            padding: EdgeInsets.only(right: 16.0),
-            child: InkWell(
-              onTap: (){
-                 Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => const OwnerProfilePage(),
-                ),
-              );
-              },
-              child: CircleAvatar(
-                radius: 20,
-                backgroundColor: Colors.grey.shade300,
-              ),
-            ),
-          ),
-        ],
-        centerTitle: true,
-        backgroundColor: backgroundColor,
-        elevation: 0,
-        automaticallyImplyLeading: false,
-      ),
-      floatingActionButton: Padding(
-        padding: const EdgeInsets.all(8.0),
-        child: FloatingActionButton(
-            elevation: 5,
-            onPressed: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => const CreateDestinationTourist(),
-                ),
-              );
-            },
-            backgroundColor: primaryColor,
-            child: const FaIcon(FontAwesomeIcons.plus)
-            //  Icon(
-            //   Icons.add,
-            //   size: 36,
-            //   color: Colors.white,
-            // ),
-            ),
-      ),
+      // appBar: AppBar(
+      //   toolbarHeight: 70,
+      //   // leading: InkWell(
+      //   //     onTap: () {
+      //   //       Navigator.push(context,
+      //   //           MaterialPageRoute(builder: (context) => const LoginUser()));
+      //   //     },
+      //   //     child: Icon(
+      //   //       Icons.settings,
+      //   //       color: Colors.grey.shade400,
+      //   //     )),
+      //   title: Padding(
+      //     padding: const EdgeInsets.only(left: 8.0),
+      //     child: Text(
+      //       'Dashboard',
+      //       style: GoogleFonts.kanit(
+      //           fontSize: 18,
+      //           color: Colors.grey.shade400,
+      //           fontWeight: FontWeight.w400),
+      //     ),
+      //   ),
+      //   actions: [
+      //     Padding(
+      //       padding: const EdgeInsets.only(right: 16.0),
+      //       child: InkWell(
+      //         onTap: () {
+      //           Navigator.push(
+      //             context,
+      //             MaterialPageRoute(
+      //               builder: (context) => const OwnerProfilePage(),
+      //             ),
+      //           );
+      //         },
+      //         child: CircleAvatar(
+      //           radius: 20,
+      //           backgroundColor: Colors.grey.shade300,
+      //         ),
+      //       ),
+      //     ),
+      //   ],
+      //   centerTitle: false,
+      //   backgroundColor: backgroundColor,
+      //   elevation: 0,
+      //   automaticallyImplyLeading: false,
+      // ),
+      // floatingActionButton: Padding(
+      //   padding: const EdgeInsets.all(8.0),
+      //   child: FloatingActionButton(
+      //       elevation: 5,
+      //       onPressed: () {
+      //         Navigator.push(
+      //           context,
+      //           MaterialPageRoute(
+      //             builder: (context) => const CreateDestinationTourist(),
+      //           ),
+      //         );
+      //       },
+      //       backgroundColor: primaryColor,
+      //       child: const FaIcon(FontAwesomeIcons.plus)
+      //       //  Icon(
+      //       //   Icons.add,
+      //       //   size: 36,
+      //       //   color: Colors.white,
+      //       // ),
+      //       ),
+      // ),
       body: isLoading
           ? const Center(
               child: CircularProgressIndicator(
@@ -131,35 +157,70 @@ class _HomePageOwnerState extends State<HomePageOwner> {
                 return Column(
                   children: [
                     const SizedBox(
-                      height: 25,
+                      height: 75,
                     ),
-                    Padding(
-                      padding: const EdgeInsets.only(left: 20.0),
-                      child: Align(
-                        alignment: Alignment.topLeft,
-                        child: Text(
-                          "Laporan Peningkatan",
-                          style: GoogleFonts.inter(
-                              fontSize: 15,
-                              color: Colors.black,
-                              fontWeight: FontWeight.w600),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          mainAxisAlignment: MainAxisAlignment.end,
+                          children: [
+                            Padding(
+                              padding:
+                                  const EdgeInsets.only(left: 20.0, top: 15),
+                              child: Align(
+                                alignment: Alignment.topLeft,
+                                child: Text(
+                                  "Dashboard",
+                                  style: GoogleFonts.inter(
+                                      fontSize: 20,
+                                      color: thirdColor,
+                                      fontWeight: FontWeight.w600),
+                                ),
+                              ),
+                            ),
+                            Padding(
+                              padding: const EdgeInsets.only(
+                                  left: 20.0, top: 1, bottom: 7),
+                              child: Align(
+                                alignment: Alignment.topLeft,
+                                child: Text(
+                                  "Laporan Pengelolaan ${ownerCon.nameLogin.toString()}",
+                                  style: GoogleFonts.openSans(
+                                      fontSize: 13,
+                                      color: Color.fromARGB(255, 168, 168, 168),
+                                      fontWeight: FontWeight.w600),
+                                ),
+                              ),
+                            ),
+                          ],
                         ),
-                      ),
-                    ),
-                    Padding(
-                      padding:
-                          const EdgeInsets.only(left: 20.0, top: 1, bottom: 7),
-                      child: Align(
-                        alignment: Alignment.topLeft,
-                        child: Text(
-                          "Usaha Nama Pemilik",
-                          style: GoogleFonts.openSans(
-                              fontSize: 12,
-                              color: Colors.grey.shade400,
-                              fontWeight: FontWeight.w600),
+                        Padding(
+                          padding: const EdgeInsets.only(right: 16.0),
+                          child: InkWell(
+                            onTap: () {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) =>
+                                      const OwnerProfilePage(),
+                                ),
+                              );
+                            },
+                            child: const CircleAvatar(
+                                radius: 21,
+                                backgroundImage: AssetImage(
+                                  "assets/logo/owner.png",
+                                )),
+                          ),
                         ),
-                      ),
+                      ],
                     ),
+                    const SizedBox(
+                      height: 10,
+                    ),
+
                     Padding(
                         padding: const EdgeInsets.only(left: 20.0, right: 20),
                         child: Container(
@@ -167,7 +228,8 @@ class _HomePageOwnerState extends State<HomePageOwner> {
                           width: MediaQuery.of(context).size.width,
                           decoration: BoxDecoration(
                               color: Colors.white,
-                              border: Border.all(color: Colors.grey.shade300),
+                              border: Border.all(
+                                  color: Colors.grey.shade300, width: 1.5),
                               borderRadius: BorderRadius.circular(10)),
                           child: Row(children: [
                             SizedBox(
@@ -210,9 +272,14 @@ class _HomePageOwnerState extends State<HomePageOwner> {
                                           color: Colors.amber,
                                         ),
                                         Padding(
-                                          padding: EdgeInsets.only(left: 5),
+                                          padding:
+                                              const EdgeInsets.only(left: 5),
                                           child: Text(
-                                            "4.5",
+                                            avgRating == 0
+                                                ? "-"
+                                                : avgRating!.toString(),
+                                            textAlign: TextAlign.center,
+                                            // "oke",
                                             style: GoogleFonts.kanit(
                                                 fontSize: 44,
                                                 color: thirdColor,
@@ -277,8 +344,8 @@ class _HomePageOwnerState extends State<HomePageOwner> {
                             ),
                           ]),
                         )),
-                    const SizedBox(
-                      height: 20,
+                    SizedBox(
+                      height: 30,
                     ),
                     Padding(
                       padding: const EdgeInsets.only(left: 20.0, right: 20),
@@ -288,12 +355,12 @@ class _HomePageOwnerState extends State<HomePageOwner> {
                         decoration: BoxDecoration(
                             // color: primaFryColor,
                             gradient: const LinearGradient(
-                              begin: Alignment.topCenter,
-                              end: Alignment.bottomCenter,
+                              end: Alignment.bottomLeft,
+                              begin: Alignment.center,
                               colors: [
-                                // Color.fromARGB(255, 0, 119, 134),
-                                Color.fromARGB(255, 17, 93, 139),
-                                Color.fromARGB(255, 13, 183, 206),
+                                thirdColor,
+                                Color.fromARGB(255, 37, 138, 151),
+                                // thirdColor,
                               ],
                             ),
                             borderRadius: BorderRadius.circular(5)),
@@ -499,43 +566,48 @@ class _HomePageOwnerState extends State<HomePageOwner> {
                       ),
                     ),
                     SizedBox(
-                      height: 20,
+                      height: 30,
                     ),
-                    const SizedBox(height: 20),
+                    // const SizedBox(height: 20),
                     Padding(
                       padding: const EdgeInsets.only(left: 20.0, bottom: 8),
                       child: Align(
                         alignment: Alignment.bottomLeft,
                         child: Text(
-                          "Kelola Wisatamu",
-                          style: GoogleFonts.openSans(
-                              fontSize: 16,
-                              color: Colors.black,
-                              fontWeight: FontWeight.w700),
+                          "Upload Terbaru",
+                          style: GoogleFonts.inter(
+                              fontSize: 18,
+                              color: thirdColor,
+                              fontWeight: FontWeight.w600),
                         ),
                       ),
                     ),
-                    Padding(
-                      padding: const EdgeInsets.only(left: 20.0, right: 20.0),
-                      child: Container(
-                        padding: const EdgeInsets.fromLTRB(16, 20, 16, 8),
-                        width: MediaQuery.of(context).size.width,
-                        decoration: BoxDecoration(
-                            color: Colors.white,
-                            border: Border.all(color: descColor),
-                            borderRadius: BorderRadius.circular(10)),
-                        child: ListView.builder(
-                          shrinkWrap: true,
-                          controller: _scrollController,
-                          itemCount: homeCon.destinasiData?.length,
-                          itemBuilder: (context, index) {
-                            return isLoading
-                                ? const Center(
-                                    child: CircularProgressIndicator(
-                                      color: Colors.blue,
-                                    ),
-                                  )
-                                : Padding(
+                    Container(
+                      padding: const EdgeInsets.only(left: 36, right: 36),
+                      // width: MediaQuery.of(context).size.width,
+                      // decoration: BoxDecoration(
+                      //     color: Colors.white,
+                      //     border: Border.all(
+                      //         color: Colors.grey.shade300, width: 1.5),
+                      //     borderRadius: BorderRadius.circular(10)),
+                      child: ListView.builder(
+                        shrinkWrap: true,
+                        controller: _scrollController,
+                        itemCount: homeCon.destinasiDataByOwner?.length,
+                        itemBuilder: (context, index) {
+                          return isLoading
+                              ? const Center(
+                                  child: CircularProgressIndicator(
+                                    color: Colors.blue,
+                                  ),
+                                )
+                              : Container(
+                                decoration: BoxDecoration(
+                          color: Colors.white,
+                          // border: Border.all(
+                          //     color: Colors.grey.shade300, width: 1.5),
+                          borderRadius: BorderRadius.circular(10)),
+                                child: Padding(
                                     padding:
                                         const EdgeInsets.only(bottom: 12.0),
                                     child: InkWell(
@@ -545,7 +617,8 @@ class _HomePageOwnerState extends State<HomePageOwner> {
                                               builder: (context) =>
                                                   DetailDestinationOwner(
                                                     id: homeCon
-                                                        .destinasiData![index],
+                                                            .destinasiDataByOwner![
+                                                        index],
                                                   )))),
                                       child: SizedBox(
                                           child: Column(
@@ -610,7 +683,7 @@ class _HomePageOwnerState extends State<HomePageOwner> {
                                                         children: [
                                                           Text(
                                                             homeCon
-                                                                .destinasiData![
+                                                                .destinasiDataByOwner![
                                                                     index]
                                                                 .nameDestinasi
                                                                 .toString(),
@@ -645,7 +718,7 @@ class _HomePageOwnerState extends State<HomePageOwner> {
                                                                             3.0),
                                                                 child: Text(
                                                                   homeCon
-                                                                      .destinasiData![
+                                                                      .destinasiDataByOwner![
                                                                           index]
                                                                       .city
                                                                       .toString(),
@@ -671,10 +744,10 @@ class _HomePageOwnerState extends State<HomePageOwner> {
                                                               Navigator.push(
                                                                   context,
                                                                   MaterialPageRoute(
-                                                                      builder:
-                                                                          (context) =>
-                                                                               EditDestinationOwnerPage(id: homeCon
-                                                        .destinasiData![index],)));
+                                                                      builder: (context) =>
+                                                                          EditDestinationOwnerPage(
+                                                                            id: homeCon.destinasiDataByOwner![index],
+                                                                          )));
                                                             },
                                                             child: Padding(
                                                               padding:
@@ -735,7 +808,7 @@ class _HomePageOwnerState extends State<HomePageOwner> {
                                                                 Colors.white,
                                                             elevation: 5,
                                                             title: Text(
-                                                              "Konfirmasi Hapus ${homeCon.destinasiData![index].nameDestinasi.toString()}",
+                                                              "Konfirmasi Hapus ${homeCon.destinasiDataByOwner![index].nameDestinasi.toString()}",
                                                               style: GoogleFonts
                                                                   .notoSansDisplay(
                                                                       fontSize:
@@ -799,8 +872,10 @@ class _HomePageOwnerState extends State<HomePageOwner> {
                                                                                 true;
                                                                             final ownerBusinessHomeCon =
                                                                                 Provider.of<DestinasiController>(context, listen: false);
+                                                                            final ownerCon =
+                                                                                Provider.of<OwnerBusinessController>(context, listen: false);
                                                                             try {
-                                                                              await ownerBusinessHomeCon.deleteDestinasi(homeCon.destinasiData![index].id);
+                                                                              await ownerBusinessHomeCon.deleteDestinasi(homeCon.destinasiDataByOwner![index].id);
 
                                                                               if (ownerBusinessHomeCon.statusCodeDeleteDestinasi == 200) {
                                                                                 setState(() {
@@ -808,7 +883,7 @@ class _HomePageOwnerState extends State<HomePageOwner> {
                                                                                 });
                                                                                 // ignore: use_build_context_synchronously
                                                                                 Navigator.pop(context);
-                                                                                await ownerBusinessHomeCon.allDestinasi();
+                                                                                await ownerBusinessHomeCon.destinasiByIdOwner(ownerCon.idOBLogin);
 
                                                                                 Fluttertoast.showToast(msg: ownerBusinessHomeCon.messageDeleteDestinasi.toString(), toastLength: Toast.LENGTH_SHORT, gravity: ToastGravity.BOTTOM, timeInSecForIosWeb: 1, backgroundColor: primaryColor.withOpacity(0.6), textColor: Colors.white, fontSize: 16.0);
                                                                               } else if (ownerBusinessHomeCon.statusCodeDeleteDestinasi == 404) {
@@ -900,9 +975,9 @@ class _HomePageOwnerState extends State<HomePageOwner> {
                                         ],
                                       )),
                                     ),
-                                  );
-                          },
-                        ),
+                                  ),
+                              );
+                        },
                       ),
                     ),
                     SizedBox(

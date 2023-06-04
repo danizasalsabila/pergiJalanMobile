@@ -7,6 +7,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:pergijalan_mobile/config/theme_color.dart';
 import 'package:pergijalan_mobile/controllers/review_controller.dart';
+import 'package:pergijalan_mobile/controllers/user_controller.dart';
 import 'package:pergijalan_mobile/models/destinasi.dart';
 import 'package:provider/provider.dart';
 import 'package:readmore/readmore.dart';
@@ -1111,6 +1112,11 @@ class _DetailDestinationOwnerState extends State<DetailDestinationOwner> {
                                                                       context,
                                                                       listen:
                                                                           false);
+                                                                  final userCon = Provider.of<
+                                                                          UserController>(
+                                                                      context,
+                                                                      listen:
+                                                                          false);
                                                                   try {
                                                                     int intRating =
                                                                         ratingController
@@ -1119,6 +1125,7 @@ class _DetailDestinationOwnerState extends State<DetailDestinationOwner> {
                                                                         id: widget
                                                                             .id
                                                                             .id,
+                                                                            idUser: userCon.idUserLogin,
                                                                         rating:
                                                                             intRating,
                                                                         review:

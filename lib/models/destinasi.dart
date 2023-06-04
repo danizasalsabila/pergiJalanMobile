@@ -53,6 +53,7 @@ class DestinasiResponse {
 
 class Destinasi {
   int? _id;
+  int? _idOwner;
   String? _nameDestinasi;
   String? _description;
   String? _address;
@@ -75,6 +76,7 @@ class Destinasi {
 
   Destinasi({
     int? id,
+    int? idOwner,
     String? nameDestinasi,
     String? description,
     String? address,
@@ -97,6 +99,8 @@ class Destinasi {
   }) {
     if (id != null) {
       this._id = id;
+    } if (idOwner != null) {
+      this._idOwner = idOwner;
     }
     if (nameDestinasi != null) {
       this._nameDestinasi = nameDestinasi;
@@ -159,6 +163,8 @@ class Destinasi {
 
   int? get id => _id;
   set id(int? id) => _id = id;
+  int? get idOwner => _idOwner;
+  set idOwner(int? idOwner) => _idOwner = idOwner;
   String? get nameDestinasi => _nameDestinasi;
   set nameDestinasi(String? nameDestinasi) => _nameDestinasi = nameDestinasi;
   String? get description => _description;
@@ -201,6 +207,7 @@ class Destinasi {
 
   Destinasi.fromJson(Map<String, dynamic> json) {
     _id = json['id'];
+     _idOwner = json['id_owner'];
     _nameDestinasi = json['name_destinasi'];
     _description = json['description'];
     _address = json['address'];
@@ -225,6 +232,7 @@ class Destinasi {
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
     data['id'] = this._id;
+    data['id_owner'] = this._idOwner;
     data['name_destinasi'] = this._nameDestinasi;
     data['description'] = this._description;
     data['address'] = this._address;

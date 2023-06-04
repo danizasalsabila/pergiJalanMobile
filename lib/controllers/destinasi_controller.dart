@@ -12,6 +12,7 @@ import '../services/api/url.dart';
 class DestinasiController extends ChangeNotifier {
   DestinasiResponse? destinasiResponse;
   List<Destinasi>? destinasiData;
+  List<Destinasi>? destinasiDataByOwner;
   List<Destinasi>? destinasiCategoryData;
   List<Destinasi>? destinasiQueryData;
   List<Destinasi>? destinasiDataSortIntoTen;
@@ -41,6 +42,31 @@ class DestinasiController extends ChangeNotifier {
 
         destinasiResponse = destinasiFromJson(response.body);
         destinasiData = destinasiResponse?.destinasi;
+        notifyListeners();
+      } else if (response.statusCode == 404) {
+        print(messageDestinasi);
+      }
+    } catch (e) {
+      print("ERROR MESSAGE: $e");
+    }
+  }
+
+    Future<dynamic> destinasiByIdOwner(id) async {
+    print("ID: $id");
+    var url = Uri.parse(BASE_URL + GET_DESTINASI_IDOWNER(id));
+    print("URL = $url");
+    try {
+      var client = http.Client();
+      // var response = await http.get(url);
+      var response = await client.get(url);
+
+      if (response.statusCode == 200) {
+        var data = json.decode(response.body);
+        print("code: ${response.statusCode}");
+        print(data["status"]);
+
+        destinasiResponse = destinasiFromJson(response.body);
+        destinasiDataByOwner = destinasiResponse?.destinasi;
         notifyListeners();
       } else if (response.statusCode == 404) {
         print(messageDestinasi);
@@ -129,6 +155,7 @@ class DestinasiController extends ChangeNotifier {
   int? newIdDestinasi;
   Future<dynamic> postDestinasi({
     required String? nameDestinasi,
+    required int? idOwner,
     required String? description,
     required String? address,
     required String? city,
@@ -146,6 +173,7 @@ class DestinasiController extends ChangeNotifier {
     required int? security,
     String? fasility,
   }) async {
+    print("owner: $idOwner");
     var url = Uri.parse(BASE_URL + POST_DESTINASI);
     // print("URL = $url");
     // print("nama: $nameDestinasi");
@@ -160,6 +188,7 @@ class DestinasiController extends ChangeNotifier {
     // print("security: $security");
     final body = {
       'name_destinasi': nameDestinasi,
+      'id_owner': idOwner,
       'description': description,
       'address': address,
       'city': city,
@@ -183,6 +212,7 @@ class DestinasiController extends ChangeNotifier {
         body: json.encode({
           'name_destinasi': nameDestinasi,
           'description': description,
+          'id_owner': idOwner,
           'address': address,
           'city': city,
           'category': category,

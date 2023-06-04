@@ -36,6 +36,8 @@ const GET_DESTINASI = "destinasi";
 
 GET_DESTINASI_ID(id) => "destinasi/$id";
 
+GET_DESTINASI_IDOWNER(id) => "destinasi/byowner/$id";
+
 const POST_DESTINASI = "destinasi/store";
 
 PUT_DESTINASI(id) => "destinasi/update/$id?";
@@ -60,6 +62,7 @@ const POST_REVIEW = "review";
 //average rating
 GET_AVG_RATING_ID(id) => "rating/$id";
 
+GET_AVG_RATING_BYOWNER(id) => "rating/byowner/$id";
 
 //ticket
 const GET_TICKET = "ticket";
