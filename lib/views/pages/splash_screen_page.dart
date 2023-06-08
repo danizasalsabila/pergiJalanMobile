@@ -1,6 +1,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:pergijalan_mobile/views/pages/login_user.dart';
+import 'package:pergijalan_mobile/views/widgets/bar_mainnavigation.dart';
 import 'package:splash_screen_view/SplashScreenView.dart';
 
 class Splashscreen extends StatefulWidget {
@@ -18,7 +19,8 @@ class _SplashscreenState extends State<Splashscreen> {
       backgroundColor: Color.fromARGB(255, 0, 162, 184),
       imageSrc: 'assets/logo/logo_splashscreen.png',
       imageSize: 170,
-      navigateRoute: const LoginUser(),
+      navigateRoute:  MainNavigation(),
+      // navigateRoute: const LoginUser(),
       duration: 500,
     );
   }

@@ -12,6 +12,7 @@ class ReviewController extends ChangeNotifier {
   ReviewResponse? reviewResponse;
   List<Review>? reviewData;
 
+int? reviewDataStatusCode;
   Future<dynamic> reviewDestinasiId(id) async {
     print("get review destinasi by id");
 
@@ -30,10 +31,15 @@ class ReviewController extends ChangeNotifier {
 
         reviewResponse = reviewResponseFromJson(response.body);
         reviewData = reviewResponse?.review;
-        
+        reviewDataStatusCode = response.statusCode;
         notifyListeners();
       } else if (response.statusCode == 404) {
         print(data["message"]);
+        reviewDataStatusCode = response.statusCode;
+
+      }else {
+        reviewDataStatusCode = response.statusCode;
+
       }
     } catch (e) {
       print("ERROR MESSAGE: $e");

@@ -1,16 +1,14 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/container.dart';
-import 'package:flutter/src/widgets/framework.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
 import 'package:pergijalan_mobile/config/theme_color.dart';
 import 'package:pergijalan_mobile/controllers/owner_business_controller.dart';
-import 'package:pergijalan_mobile/models/ownerbusiness.dart';
+import 'package:pergijalan_mobile/views/pages/business_owner/edit_profile_owner.dart';
 import 'package:pergijalan_mobile/views/pages/business_owner/home.dart';
-import 'package:pergijalan_mobile/views/pages/business_owner/login_owner.dart';
-import 'package:pergijalan_mobile/views/pages/login_user.dart';
 import 'package:provider/provider.dart';
+
+import '../splash_screen_page.dart';
 
 class OwnerProfilePage extends StatefulWidget {
   const OwnerProfilePage({super.key});
@@ -54,8 +52,8 @@ class _OwnerProfilePageState extends State<OwnerProfilePage> {
       body: isLoading
           ? const Center(child: CircularProgressIndicator())
           : SingleChildScrollView(
-            child: Consumer<OwnerBusinessController>(
-                builder: (context, profileCon, child) {
+              child: Consumer<OwnerBusinessController>(
+                  builder: (context, profileCon, child) {
                 return Column(children: [
                   Stack(
                     children: [
@@ -98,7 +96,8 @@ class _OwnerProfilePageState extends State<OwnerProfilePage> {
                               Padding(
                                 padding: const EdgeInsets.only(left: 14),
                                 child: InkWell(
-                                    onTap: () =>Navigator.of(context).pushAndRemoveUntil(
+                                    onTap: () => Navigator.of(context)
+                                        .pushAndRemoveUntil(
                                             MaterialPageRoute(
                                                 builder: (context) =>
                                                     HomePageOwner()),
@@ -111,19 +110,19 @@ class _OwnerProfilePageState extends State<OwnerProfilePage> {
                                 child: InkWell(
                                   onTap: () => Navigator.of(context).pop(),
                                   child: CircleAvatar(
-                                    radius: 23,
-                                    backgroundColor: Colors.grey.shade300,
-                                    child: CircleAvatar(
+                                      radius: 23,
+                                      backgroundColor: Colors.grey.shade300,
+                                      child: CircleAvatar(
                                         radius: 22,
                                         backgroundColor: thirdColor,
                                         child: CircleAvatar(
-                                          radius: 19,
-                                          backgroundImage:  AssetImage("assets/logo/owner.png",)
-                                         ),
-                                        )),
-                                  ),
+                                            radius: 19,
+                                            backgroundImage: AssetImage(
+                                              "assets/logo/owner.png",
+                                            )),
+                                      )),
                                 ),
-                              
+                              ),
                             ],
                           ),
                           const SizedBox(height: 6),
@@ -133,7 +132,8 @@ class _OwnerProfilePageState extends State<OwnerProfilePage> {
                               padding:
                                   const EdgeInsets.only(left: 16.0, right: 16),
                               child: Row(
-                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
                                 children: [
                                   Padding(
                                     padding: const EdgeInsets.only(left: 10.0),
@@ -151,8 +151,8 @@ class _OwnerProfilePageState extends State<OwnerProfilePage> {
                                               fontWeight: FontWeight.w500),
                                         ),
                                         Text(
-                                          profileCon
-                                              .ownerBusinessUserDetail!.namaOwner
+                                          profileCon.ownerBusinessUserDetail!
+                                              .namaOwner
                                               .toString(),
                                           style: GoogleFonts.openSans(
                                               fontSize: 19,
@@ -171,34 +171,52 @@ class _OwnerProfilePageState extends State<OwnerProfilePage> {
                                       ],
                                     ),
                                   ),
-                                  Container(
-                                    // height: 20,
-                                    decoration: BoxDecoration(
-                                        color: Colors.white,
-                                        borderRadius: BorderRadius.circular(5)),
-                                    child: Padding(
-                                      padding: const EdgeInsets.only(
-                                          left: 5.0,
-                                          right: 5.0,
-                                          top: 2,
-                                          bottom: 2),
-                                      child: Row(
-                                        children: [
-                                          Text(
-                                            "Ubah Profile",
-                                            style: GoogleFonts.openSans(
-                                                fontSize: 9,
-                                                color: thirdColor,
-                                                fontWeight: FontWeight.w500),
-                                          ),
-                                          const Padding(
-                                            padding: EdgeInsets.only(left: 4.0),
-                                            child: FaIcon(
-                                              FontAwesomeIcons.pencil,
-                                              size: 13,
+                                  InkWell(
+                                    onTap: () {
+                                      final profileCon =
+                                          Provider.of<OwnerBusinessController>(
+                                              context,
+                                              listen: false);
+                                      Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                              builder: (context) =>
+                                                  EditProfileOwnerPage(
+                                                    id: profileCon
+                                                        .ownerBusinessUserDetail!,
+                                                  )));
+                                    },
+                                    child: Container(
+                                      // height: 20,
+                                      decoration: BoxDecoration(
+                                          color: Colors.white,
+                                          borderRadius:
+                                              BorderRadius.circular(5)),
+                                      child: Padding(
+                                        padding: const EdgeInsets.only(
+                                            left: 5.0,
+                                            right: 5.0,
+                                            top: 2,
+                                            bottom: 2),
+                                        child: Row(
+                                          children: [
+                                            Text(
+                                              "Ubah Profile",
+                                              style: GoogleFonts.openSans(
+                                                  fontSize: 9,
+                                                  color: thirdColor,
+                                                  fontWeight: FontWeight.w500),
                                             ),
-                                          )
-                                        ],
+                                            const Padding(
+                                              padding:
+                                                  EdgeInsets.only(left: 4.0),
+                                              child: FaIcon(
+                                                FontAwesomeIcons.pencil,
+                                                size: 13,
+                                              ),
+                                            )
+                                          ],
+                                        ),
                                       ),
                                     ),
                                   )
@@ -252,7 +270,8 @@ class _OwnerProfilePageState extends State<OwnerProfilePage> {
                                       ),
                                     ),
                                     Row(
-                                      mainAxisAlignment: MainAxisAlignment.center,
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
                                       crossAxisAlignment:
                                           CrossAxisAlignment.center,
                                       children: [
@@ -267,7 +286,7 @@ class _OwnerProfilePageState extends State<OwnerProfilePage> {
                                           padding: const EdgeInsets.only(
                                               left: 8.0, top: 5),
                                           child: Text(
-                                            "1.000.000",
+                                            "-",
                                             style: GoogleFonts.kanit(
                                                 fontSize: 24,
                                                 color: thirdColor,
@@ -278,16 +297,16 @@ class _OwnerProfilePageState extends State<OwnerProfilePage> {
                                     ),
                                     Container(
                                       height: 4,
-                                      width:
-                                          MediaQuery.of(context).size.width * 0.6,
+                                      width: MediaQuery.of(context).size.width *
+                                          0.6,
                                       decoration: BoxDecoration(
                                           color: labelColorBack,
                                           borderRadius:
                                               BorderRadius.circular(30)),
                                     ),
                                     SizedBox(
-                                      width:
-                                          MediaQuery.of(context).size.width * 0.6,
+                                      width: MediaQuery.of(context).size.width *
+                                          0.6,
                                       child: Align(
                                         alignment: Alignment.bottomRight,
                                         child: Row(
@@ -303,7 +322,7 @@ class _OwnerProfilePageState extends State<OwnerProfilePage> {
                                                   fontWeight: FontWeight.w500),
                                             ),
                                             Text(
-                                              "120",
+                                              "0",
                                               style: GoogleFonts.openSans(
                                                   fontSize: 11,
                                                   color: thirdColor,
@@ -313,12 +332,12 @@ class _OwnerProfilePageState extends State<OwnerProfilePage> {
                                         ),
                                       ),
                                     ),
-                                    SizedBox(
+                                    const SizedBox(
                                       height: 8,
                                     ),
                                     Container(
-                                      width:
-                                          MediaQuery.of(context).size.width * 0.6,
+                                      width: MediaQuery.of(context).size.width *
+                                          0.6,
                                       height: 27,
                                       decoration: BoxDecoration(
                                           color: thirdColor,
@@ -375,14 +394,16 @@ class _OwnerProfilePageState extends State<OwnerProfilePage> {
                               children: [
                                 Container(
                                   height: 100,
-                                  width: MediaQuery.of(context).size.width * 0.4,
+                                  width:
+                                      MediaQuery.of(context).size.width * 0.4,
                                   decoration: BoxDecoration(
                                     color: Colors.white,
                                     borderRadius: BorderRadius.circular(10),
                                     boxShadow: [
                                       BoxShadow(
-                                        color: Color.fromARGB(255, 194, 194, 194)
-                                            .withOpacity(0.5),
+                                        color:
+                                            Color.fromARGB(255, 194, 194, 194)
+                                                .withOpacity(0.5),
                                         spreadRadius: 2,
                                         blurRadius: 3,
                                         offset: const Offset(
@@ -392,38 +413,57 @@ class _OwnerProfilePageState extends State<OwnerProfilePage> {
                                   ),
                                   child: Center(
                                     child: Column(
-                                      mainAxisAlignment: MainAxisAlignment.center,
-                                      crossAxisAlignment: CrossAxisAlignment.center,
-                                      children: [
-                                      Container(
-                                        height: 42,
-                                        width: MediaQuery.of(context).size.width *
-                                            0.12,
-                                        decoration:  BoxDecoration(
-                                          borderRadius: BorderRadius.circular(15),
-                                            color:
-                                                Color.fromARGB(85, 36, 78, 79)),
-                                      ),
-                                      Padding(
-                                        padding: const EdgeInsets.only(top: 6.0),
-                                        child: Text("Rating",  style: GoogleFonts.inter(
-                                                fontSize: 13,
-                                                color: thirdColor,
-                                                fontWeight: FontWeight.w600),),
-                                      )
-                                    ]),
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.center,
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.center,
+                                        children: [
+                                          Container(
+                                            height: 42,
+                                            width: MediaQuery.of(context)
+                                                    .size
+                                                    .width *
+                                                0.12,
+                                            decoration: BoxDecoration(
+                                                borderRadius:
+                                                    BorderRadius.circular(15),
+                                                color: Color.fromARGB(
+                                                    85, 36, 78, 79)),
+                                            child: Padding(
+                                              padding:
+                                                  const EdgeInsets.all(7.0),
+                                              child: Image.asset(
+                                                "assets/servicebar/rating.png",
+                                                fit: BoxFit.fill,
+                                              ),
+                                            ),
+                                          ),
+                                          Padding(
+                                            padding:
+                                                const EdgeInsets.only(top: 6.0),
+                                            child: Text(
+                                              "Rating",
+                                              style: GoogleFonts.inter(
+                                                  fontSize: 13,
+                                                  color: thirdColor,
+                                                  fontWeight: FontWeight.w600),
+                                            ),
+                                          )
+                                        ]),
                                   ),
                                 ),
                                 Container(
                                   height: 100,
-                                  width: MediaQuery.of(context).size.width * 0.4,
+                                  width:
+                                      MediaQuery.of(context).size.width * 0.4,
                                   decoration: BoxDecoration(
                                     color: Colors.white,
                                     borderRadius: BorderRadius.circular(10),
                                     boxShadow: [
                                       BoxShadow(
-                                        color: Color.fromARGB(255, 194, 194, 194)
-                                            .withOpacity(0.5),
+                                        color:
+                                            Color.fromARGB(255, 194, 194, 194)
+                                                .withOpacity(0.5),
                                         spreadRadius: 2,
                                         blurRadius: 3,
                                         offset: const Offset(
@@ -433,46 +473,65 @@ class _OwnerProfilePageState extends State<OwnerProfilePage> {
                                   ),
                                   child: Center(
                                     child: Column(
-                                      mainAxisAlignment: MainAxisAlignment.center,
-                                      crossAxisAlignment: CrossAxisAlignment.center,
-                                      children: [
-                                      Container(
-                                        height: 42,
-                                        width: MediaQuery.of(context).size.width *
-                                            0.12,
-                                        decoration:  BoxDecoration(
-                                          borderRadius: BorderRadius.circular(15),
-                                            color:
-                                                Color.fromARGB(85, 75, 150, 111)),
-                                      ),
-                                      Padding(
-                                        padding: const EdgeInsets.only(top: 6.0),
-                                        child: Text("Ulasan",  style: GoogleFonts.inter(
-                                                fontSize: 13,
-                                                color: thirdColor,
-                                                fontWeight: FontWeight.w600),),
-                                      )
-                                    ]),
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.center,
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.center,
+                                        children: [
+                                          Container(
+                                            height: 42,
+                                            width: MediaQuery.of(context)
+                                                    .size
+                                                    .width *
+                                                0.12,
+                                            child: Padding(
+                                              padding:
+                                                  const EdgeInsets.all(7.0),
+                                              child: Image.asset(
+                                                "assets/servicebar/ulasan.png",
+                                                fit: BoxFit.fill,
+                                              ),
+                                            ),
+                                            decoration: BoxDecoration(
+                                                borderRadius:
+                                                    BorderRadius.circular(15),
+                                                color: Color.fromARGB(
+                                                    85, 75, 150, 111)),
+                                          ),
+                                          Padding(
+                                            padding:
+                                                const EdgeInsets.only(top: 6.0),
+                                            child: Text(
+                                              "Ulasan",
+                                              style: GoogleFonts.inter(
+                                                  fontSize: 13,
+                                                  color: thirdColor,
+                                                  fontWeight: FontWeight.w600),
+                                            ),
+                                          )
+                                        ]),
                                   ),
                                 ),
                               ],
                             ),
                           ),
-                           Padding(
+                          Padding(
                             padding: const EdgeInsets.only(top: 18.0),
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
                                 Container(
                                   height: 100,
-                                  width: MediaQuery.of(context).size.width * 0.4,
+                                  width:
+                                      MediaQuery.of(context).size.width * 0.4,
                                   decoration: BoxDecoration(
                                     color: Colors.white,
                                     borderRadius: BorderRadius.circular(10),
                                     boxShadow: [
                                       BoxShadow(
-                                        color: Color.fromARGB(255, 194, 194, 194)
-                                            .withOpacity(0.5),
+                                        color:
+                                            Color.fromARGB(255, 194, 194, 194)
+                                                .withOpacity(0.5),
                                         spreadRadius: 2,
                                         blurRadius: 3,
                                         offset: const Offset(
@@ -482,38 +541,57 @@ class _OwnerProfilePageState extends State<OwnerProfilePage> {
                                   ),
                                   child: Center(
                                     child: Column(
-                                      mainAxisAlignment: MainAxisAlignment.center,
-                                      crossAxisAlignment: CrossAxisAlignment.center,
-                                      children: [
-                                      Container(
-                                        height: 42,
-                                        width: MediaQuery.of(context).size.width *
-                                            0.12,
-                                        decoration:  BoxDecoration(
-                                          borderRadius: BorderRadius.circular(15),
-                                            color:
-                                                Color.fromARGB(85, 1, 141, 159)),
-                                      ),
-                                      Padding(
-                                        padding: const EdgeInsets.only(top: 6.0),
-                                        child: Text("Tiket",  style: GoogleFonts.inter(
-                                                fontSize: 13,
-                                                color: thirdColor,
-                                                fontWeight: FontWeight.w600),),
-                                      )
-                                    ]),
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.center,
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.center,
+                                        children: [
+                                          Container(
+                                            height: 42,
+                                            width: MediaQuery.of(context)
+                                                    .size
+                                                    .width *
+                                                0.12,
+                                            child: Padding(
+                                              padding:
+                                                  const EdgeInsets.all(7.0),
+                                              child: Image.asset(
+                                                "assets/servicebar/tiket.png",
+                                                fit: BoxFit.fill,
+                                              ),
+                                            ),
+                                            decoration: BoxDecoration(
+                                                borderRadius:
+                                                    BorderRadius.circular(15),
+                                                color: Color.fromARGB(
+                                                    85, 1, 141, 159)),
+                                          ),
+                                          Padding(
+                                            padding:
+                                                const EdgeInsets.only(top: 6.0),
+                                            child: Text(
+                                              "Tiket",
+                                              style: GoogleFonts.inter(
+                                                  fontSize: 13,
+                                                  color: thirdColor,
+                                                  fontWeight: FontWeight.w600),
+                                            ),
+                                          )
+                                        ]),
                                   ),
                                 ),
                                 Container(
                                   height: 100,
-                                  width: MediaQuery.of(context).size.width * 0.4,
+                                  width:
+                                      MediaQuery.of(context).size.width * 0.4,
                                   decoration: BoxDecoration(
                                     color: Colors.white,
                                     borderRadius: BorderRadius.circular(10),
                                     boxShadow: [
                                       BoxShadow(
-                                        color: Color.fromARGB(255, 194, 194, 194)
-                                            .withOpacity(0.5),
+                                        color:
+                                            Color.fromARGB(255, 194, 194, 194)
+                                                .withOpacity(0.5),
                                         spreadRadius: 2,
                                         blurRadius: 3,
                                         offset: const Offset(
@@ -523,26 +601,43 @@ class _OwnerProfilePageState extends State<OwnerProfilePage> {
                                   ),
                                   child: Center(
                                     child: Column(
-                                      mainAxisAlignment: MainAxisAlignment.center,
-                                      crossAxisAlignment: CrossAxisAlignment.center,
-                                      children: [
-                                      Container(
-                                        height: 42,
-                                        width: MediaQuery.of(context).size.width *
-                                            0.12,
-                                        decoration:  BoxDecoration(
-                                          borderRadius: BorderRadius.circular(15),
-                                            color:
-                                                Color.fromARGB(85, 12, 69, 104)),
-                                      ),
-                                      Padding(
-                                        padding: const EdgeInsets.only(top: 6.0),
-                                        child: Text("Keuangan",  style: GoogleFonts.inter(
-                                                fontSize: 13,
-                                                color: thirdColor,
-                                                fontWeight: FontWeight.w600),),
-                                      )
-                                    ]),
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.center,
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.center,
+                                        children: [
+                                          Container(
+                                            child: Padding(
+                                              padding:
+                                                  const EdgeInsets.all(7.0),
+                                              child: Image.asset(
+                                                "assets/servicebar/keuangan.png",
+                                                fit: BoxFit.fill,
+                                              ),
+                                            ),
+                                            height: 42,
+                                            width: MediaQuery.of(context)
+                                                    .size
+                                                    .width *
+                                                0.12,
+                                            decoration: BoxDecoration(
+                                                borderRadius:
+                                                    BorderRadius.circular(15),
+                                                color: Color.fromARGB(
+                                                    85, 12, 69, 104)),
+                                          ),
+                                          Padding(
+                                            padding:
+                                                const EdgeInsets.only(top: 6.0),
+                                            child: Text(
+                                              "Keuangan",
+                                              style: GoogleFonts.inter(
+                                                  fontSize: 13,
+                                                  color: thirdColor,
+                                                  fontWeight: FontWeight.w600),
+                                            ),
+                                          )
+                                        ]),
                                   ),
                                 ),
                               ],
@@ -558,7 +653,8 @@ class _OwnerProfilePageState extends State<OwnerProfilePage> {
                       decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(10),
                           color: Colors.white,
-                          border: Border.all(color: Colors.grey.shade300, width: 2)),
+                          border: Border.all(
+                              color: Colors.grey.shade300, width: 2)),
                       child: Padding(
                         padding: const EdgeInsets.fromLTRB(22, 16, 22, 10),
                         child: Column(
@@ -585,7 +681,8 @@ class _OwnerProfilePageState extends State<OwnerProfilePage> {
                             InkWell(
                               onTap: () {},
                               child: Padding(
-                                padding: const EdgeInsets.fromLTRB(5, 8.0, 5, 10),
+                                padding:
+                                    const EdgeInsets.fromLTRB(5, 8.0, 5, 10),
                                 child: Row(
                                   children: [
                                     Icon(
@@ -594,10 +691,12 @@ class _OwnerProfilePageState extends State<OwnerProfilePage> {
                                       color: labelColor,
                                     ),
                                     Padding(
-                                      padding: const EdgeInsets.only(left: 16.0),
+                                      padding:
+                                          const EdgeInsets.only(left: 16.0),
                                       child: Container(
-                                        width: MediaQuery.of(context).size.width *
-                                            0.59,
+                                        width:
+                                            MediaQuery.of(context).size.width *
+                                                0.59,
                                         child: Row(
                                           mainAxisAlignment:
                                               MainAxisAlignment.spaceBetween,
@@ -622,11 +721,11 @@ class _OwnerProfilePageState extends State<OwnerProfilePage> {
                                 ),
                               ),
                             ),
-                           Expanded(
-                                    child: Divider(
-                                  thickness: 1,
-                                  color: Colors.grey.shade200,
-                                )),
+                            Expanded(
+                                child: Divider(
+                              thickness: 1,
+                              color: Colors.grey.shade200,
+                            )),
                             Padding(
                               padding: const EdgeInsets.fromLTRB(5, 8.0, 5, 10),
                               child: Row(
@@ -640,10 +739,10 @@ class _OwnerProfilePageState extends State<OwnerProfilePage> {
                                     padding: const EdgeInsets.only(left: 16.0),
                                     child: InkWell(
                                       onTap: () async {
-                                        final ownerCon =
-                                            Provider.of<OwnerBusinessController>(
-                                                context,
-                                                listen: false);
+                                        final ownerCon = Provider.of<
+                                                OwnerBusinessController>(
+                                            context,
+                                            listen: false);
 
                                         try {
                                           await ownerCon.logoutOwnerBusiness();
@@ -651,15 +750,17 @@ class _OwnerProfilePageState extends State<OwnerProfilePage> {
                                           print(e);
                                         }
 
-                                        Navigator.of(context).pushAndRemoveUntil(
-                                            MaterialPageRoute(
-                                                builder: (context) =>
-                                                    LoginOwner()),
-                                            (route) => false);
+                                        Navigator.of(context)
+                                            .pushAndRemoveUntil(
+                                                MaterialPageRoute(
+                                                    builder: (context) =>
+                                                        Splashscreen()),
+                                                (route) => false);
                                       },
                                       child: Container(
-                                        width: MediaQuery.of(context).size.width *
-                                            0.59,
+                                        width:
+                                            MediaQuery.of(context).size.width *
+                                                0.59,
                                         child: Row(
                                           mainAxisAlignment:
                                               MainAxisAlignment.spaceBetween,
@@ -694,10 +795,12 @@ class _OwnerProfilePageState extends State<OwnerProfilePage> {
                       ),
                     ),
                   ),
-                  const SizedBox(height: 28,)
+                  const SizedBox(
+                    height: 28,
+                  )
                 ]);
               }),
-          ),
+            ),
     );
   }
 }

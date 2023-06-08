@@ -231,12 +231,14 @@ class _SearchPageState extends State<SearchPage> {
                 ),
               );
             });
-      } else if (searchCon.destinasiQueryData!.isEmpty) {
-        searchCon.clearData();
+      }
+      else if (searchCon.destinasiQueryData!.isEmpty && searchCon.statusCodeSearch != 200) {
+        // searchCon.clearData();
         print("b");
         print(searchCon.destinasiQueryData);
         return const SizedBox();
-      } else if (searchCon.statusCodeSearch == 404) {
+      }
+      else if (searchCon.statusCodeSearch == 404) {
         print("c");
         return Center(child: Text("404"));
       } else {

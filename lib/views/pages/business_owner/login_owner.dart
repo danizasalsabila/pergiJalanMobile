@@ -1,6 +1,7 @@
 import 'package:email_validator/email_validator.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:pergijalan_mobile/config/theme_color.dart';
 import 'package:pergijalan_mobile/controllers/owner_business_controller.dart';
@@ -161,15 +162,22 @@ class _LoginOwnerState extends State<LoginOwner> {
                                 toggleShow();
                               });
                             },
-                            child: Padding(
-                              padding:
-                                  const EdgeInsets.symmetric(horizontal: 12),
-                              child: isObscureText
-                                  ? const Icon(Icons.remove_red_eye,
-                                      size: 21, color: descColor)
-                                  : const Icon(Icons.close,
-                                      size: 21, color: descColor),
-                            ),
+                            child: isObscureText
+                              ? const Padding(
+                                  padding: EdgeInsets.symmetric(vertical: 14),
+                                  child: FaIcon(FontAwesomeIcons.solidEye,
+                                      textDirection: TextDirection.rtl,
+                                      size: 18,
+                                      color: descColor),
+                                )
+                              : const Padding(
+                                  padding: EdgeInsets.symmetric(vertical: 14),
+                                  child: FaIcon(
+                                      FontAwesomeIcons.solidEyeSlash,
+                                      textDirection: TextDirection.rtl,
+                                      size: 18,
+                                      color: descColor),
+                                ),
                           ),
                           border: InputBorder.none,
                         ),

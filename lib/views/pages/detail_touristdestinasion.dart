@@ -1,19 +1,18 @@
 import 'dart:async';
-// import 'dart:ffi';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:pergijalan_mobile/config/theme_color.dart';
 import 'package:pergijalan_mobile/controllers/review_controller.dart';
 import 'package:pergijalan_mobile/controllers/user_controller.dart';
 import 'package:pergijalan_mobile/models/destinasi.dart';
+import 'package:pergijalan_mobile/views/pages/login_user.dart';
 import 'package:provider/provider.dart';
 import 'package:readmore/readmore.dart';
 import 'package:url_launcher/url_launcher.dart';
-
 import '../../controllers/destinasi_controller.dart';
 
 class DetailDestination extends StatefulWidget {
@@ -36,7 +35,9 @@ class _DetailDestinationState extends State<DetailDestination> {
 
   bool isLoading = false;
   bool isLoading2 = false;
-  String text = '';
+  bool isUserLogin = false;
+
+  String? text;
   bool avgRatingBool = false;
   double? avgRating;
 
@@ -48,15 +49,18 @@ class _DetailDestinationState extends State<DetailDestination> {
   void initState() {
     print(" ");
     print("-------------DIRECT TO LIST DATA BY CATEGORY-----------");
-    final detailData = Provider.of<DestinasiController>(context, listen: false);
+    // final detailData = Provider.of<DestinasiController>(context, listen: false);
     final reviewData = Provider.of<ReviewController>(context, listen: false);
+    final profileCon = Provider.of<UserController>(context, listen: false);
+
     isLoading = true;
 
-    Future.delayed(Duration(seconds: 1)).then((value) async {
+    Future.delayed(const Duration(seconds: 1)).then((value) async {
       try {
         print("get title destinasi : ${widget.id.nameDestinasi}");
         await reviewData.reviewDestinasiId(widget.id.id);
         await reviewData.getRatingAverageById(widget.id.id);
+
         if (reviewData.statusCodeAvgRating == 200) {
           avgRatingBool = true;
           avgRating = reviewData.avgRating!;
@@ -64,12 +68,20 @@ class _DetailDestinationState extends State<DetailDestination> {
           avgRatingBool = false;
         }
 
+        if (profileCon.isLogin == false) {
+          isUserLogin = false;
+        } else {
+          isUserLogin = true;
+        }
+
         await Future.delayed(Duration.zero);
         text = widget.id.fasility.toString();
-        if (text.contains(',')) {
-          data = text.split(',');
+
+        if (text!.contains(',')) {
+          data = text!.split(',');
         } else {
           print('Teks fasilitas tidak mengandung koma');
+          data = [text!];
         }
       } catch (e) {
         e;
@@ -803,7 +815,7 @@ class _DetailDestinationState extends State<DetailDestination> {
                                                 ? Text(
                                                     "Tidak terdapat fasilitas",
                                                     style: GoogleFonts.openSans(
-                                                        fontSize: 12,
+                                                        fontSize: 11,
                                                         color: descColor,
                                                         fontWeight:
                                                             FontWeight.w400),
@@ -813,8 +825,10 @@ class _DetailDestinationState extends State<DetailDestination> {
                                                         const EdgeInsets.only(
                                                             left: 10.0),
                                                     child: SizedBox(
-                                                      height: 35,
+                                                      height: 30,
                                                       child: ListView.builder(
+                                                          padding:
+                                                              EdgeInsets.zero,
                                                           shrinkWrap: true,
                                                           // controller: _scrollController,
                                                           scrollDirection:
@@ -1068,283 +1082,322 @@ class _DetailDestinationState extends State<DetailDestination> {
                                               const SizedBox(
                                                 height: 20,
                                               ),
-                                              InkWell(
-                                                onTap: () async {
-                                                  await showDialog(
-                                                      context: context,
-                                                      builder: (context) {
-                                                        return AlertDialog(
-                                                          backgroundColor:
-                                                              Colors.white,
-                                                          title: Column(
-                                                              mainAxisAlignment:
-                                                                  MainAxisAlignment
-                                                                      .start,
-                                                              crossAxisAlignment:
-                                                                  CrossAxisAlignment
-                                                                      .start,
-                                                              children: [
-                                                                Text(
-                                                                  "Berapa penilaian anda tentang tempat wisata ini?",
-                                                                  style: GoogleFonts.openSans(
-                                                                      fontSize:
-                                                                          13,
-                                                                      color: Colors
-                                                                          .black,
-                                                                      fontWeight:
-                                                                          FontWeight
-                                                                              .w600),
-                                                                ),
-                                                                Padding(
-                                                                  padding:
-                                                                      const EdgeInsets
-                                                                          .all(10),
-                                                                  child: RatingBar
-                                                                      .builder(
-                                                                    initialRating:
-                                                                        5,
-                                                                    minRating:
-                                                                        1,
-                                                                    direction: Axis
-                                                                        .horizontal,
-                                                                    allowHalfRating:
-                                                                        false,
-                                                                    itemCount:
-                                                                        5,
-                                                                    itemPadding:
-                                                                        EdgeInsets.symmetric(
-                                                                            horizontal:
-                                                                                4.0),
-                                                                    itemBuilder:
-                                                                        (context,
-                                                                                _) =>
-                                                                            Icon(
-                                                                      Icons
-                                                                          .star,
-                                                                      color: Colors
-                                                                          .amber,
-                                                                    ),
-                                                                    onRatingUpdate:
-                                                                        (rating) {
-                                                                      setState(
-                                                                          () {
-                                                                        ratingController =
-                                                                            rating;
-                                                                      });
-                                                                      print(
-                                                                          rating);
-                                                                    },
-                                                                  ),
-                                                                ),
-                                                                Row(
-                                                                  children: [],
-                                                                ),
-                                                                SizedBox(
-                                                                  height: 20,
-                                                                ),
-                                                                Text(
-                                                                  "Tulis ulasan anda",
-                                                                  style: GoogleFonts.openSans(
-                                                                      fontSize:
-                                                                          13,
-                                                                      color: Colors
-                                                                          .black,
-                                                                      fontWeight:
-                                                                          FontWeight
-                                                                              .w600),
-                                                                ),
-                                                                Padding(
-                                                                  padding: const EdgeInsets
-                                                                          .only(
-                                                                      top:
-                                                                          10.0),
-                                                                  child:
-                                                                      Container(
-                                                                    height: 50,
-                                                                    decoration: BoxDecoration(
-                                                                        borderRadius:
-                                                                            BorderRadius.circular(
-                                                                                8),
-                                                                        border: Border.all(
+                                              isUserLogin == true
+                                                  ? InkWell(
+                                                      onTap: () async {
+                                                        await showDialog(
+                                                            context: context,
+                                                            builder: (context) {
+                                                              return AlertDialog(
+                                                                backgroundColor:
+                                                                    Colors
+                                                                        .white,
+                                                                title: Column(
+                                                                    mainAxisAlignment:
+                                                                        MainAxisAlignment
+                                                                            .start,
+                                                                    crossAxisAlignment:
+                                                                        CrossAxisAlignment
+                                                                            .start,
+                                                                    children: [
+                                                                      Text(
+                                                                        "Berapa penilaian anda tentang tempat wisata ini?",
+                                                                        style: GoogleFonts.openSans(
+                                                                            fontSize:
+                                                                                13,
                                                                             color:
-                                                                                descColor)),
-                                                                    child:
-                                                                        TextField(
-                                                                      controller:
-                                                                          reviewController,
-                                                                      keyboardType:
-                                                                          TextInputType
-                                                                              .multiline,
-                                                                      textInputAction:
-                                                                          TextInputAction
-                                                                              .next,
-                                                                      onChanged:
-                                                                          (text) {
-                                                                        setState(
-                                                                            () {
-                                                                          _review =
-                                                                              text;
-                                                                        });
-                                                                      },
-                                                                      onSubmitted:
-                                                                          (text) {
-                                                                        setState(
-                                                                            () {
-                                                                          _review =
-                                                                              text;
-                                                                        });
-                                                                      },
-                                                                    ),
-                                                                  ),
-                                                                ),
-                                                                GestureDetector(
-                                                                  onTap:
-                                                                      () async {
-                                                                    setState(
-                                                                        () {
-                                                                      isLoading2 =
-                                                                          true;
-                                                                    });
-                                                                    // final reviewText = reviewController.text;
-                                                                    final reviewData = Provider.of<
-                                                                            ReviewController>(
-                                                                        context,
-                                                                        listen:
-                                                                            false);
-                                                                             final userCon = Provider.of<
-                                                                            UserController>(
-                                                                        context,
-                                                                        listen:
-                                                                            false);
-                                                                    try {
-                                                                      int intRating =
-                                                                          ratingController
-                                                                              .toInt();
-                                                                      await reviewData.addReviewId(
-                                                                          id: widget
-                                                                              .id
-                                                                              .id,
-                                                                            idUser: userCon.idUserLogin,
-                                                                          rating:
-                                                                              intRating,
-                                                                          review:
-                                                                              _review);
-
-                                                                      if (reviewData
-                                                                              .statusCode ==
-                                                                          200) {
-                                                                        setState(
-                                                                            () {
-                                                                          isLoading2 =
-                                                                              false;
-                                                                        });
-                                                                        Fluttertoast.showToast(
-                                                                            // msg: reviewData.messageAddReview
-                                                                            //     .toString(),
-                                                                            msg: "Terima kasih atas review Anda!",
-                                                                            toastLength: Toast.LENGTH_SHORT,
-                                                                            gravity: ToastGravity.BOTTOM,
-                                                                            timeInSecForIosWeb: 1,
-                                                                            backgroundColor: primaryColor.withOpacity(0.6),
-                                                                            textColor: Colors.white,
-                                                                            fontSize: 13);
-                                                                        // ignore: use_build_context_synchronously
-                                                                        Navigator.pop(
-                                                                            context,
-                                                                            false);
-                                                                        await reviewData.reviewDestinasiId(widget
-                                                                            .id
-                                                                            .id);
-                                                                      }
-                                                                    } catch (e) {
-                                                                      print(
-                                                                          "$e");
-                                                                    }
-                                                                    setState(
-                                                                        () {
-                                                                      isLoading2 =
-                                                                          false;
-                                                                    });
-                                                                  },
-                                                                  child:
-                                                                      Padding(
-                                                                    padding: const EdgeInsets
-                                                                            .only(
-                                                                        bottom:
-                                                                            10,
-                                                                        top:
-                                                                            40),
-                                                                    child:
-                                                                        Container(
-                                                                      height:
-                                                                          40,
-                                                                      width: MediaQuery.of(
-                                                                              context)
-                                                                          .size
-                                                                          .width,
-                                                                      decoration:
-                                                                          BoxDecoration(
-                                                                        borderRadius:
-                                                                            BorderRadius.circular(5),
-                                                                        color:
-                                                                            secondaryColor,
+                                                                                Colors.black,
+                                                                            fontWeight: FontWeight.w600),
                                                                       ),
-                                                                      child: const Center(
-                                                                          child: Text(
-                                                                              "Kirim",
-                                                                              style: TextStyle(color: Colors.white, fontSize: 12, fontWeight: FontWeight.w600))),
-                                                                    ),
-                                                                  ),
-                                                                )
-                                                              ]),
-                                                        );
-                                                      });
-                                                },
-                                                child: Container(
-                                                  height: 40,
-                                                  decoration: BoxDecoration(
-                                                      borderRadius:
-                                                          BorderRadius.circular(
-                                                              8),
-                                                      border: Border.all(
-                                                          color: descColor)),
-                                                  child: Row(
-                                                    mainAxisAlignment:
-                                                        MainAxisAlignment
-                                                            .spaceBetween,
-                                                    children: [
-                                                      Padding(
-                                                        padding:
-                                                            const EdgeInsets
-                                                                    .only(
-                                                                left: 16.0),
-                                                        child: Text(
-                                                          "Tulis tinjauan disini",
-                                                          style: GoogleFonts
-                                                              .openSans(
-                                                                  fontSize: 11,
-                                                                  color:
-                                                                      descColor,
-                                                                  fontWeight:
-                                                                      FontWeight
-                                                                          .w400),
+                                                                      Padding(
+                                                                        padding:
+                                                                            const EdgeInsets.all(10),
+                                                                        child: RatingBar
+                                                                            .builder(
+                                                                          initialRating:
+                                                                              5,
+                                                                          minRating:
+                                                                              1,
+                                                                          direction:
+                                                                              Axis.horizontal,
+                                                                          allowHalfRating:
+                                                                              false,
+                                                                          itemCount:
+                                                                              5,
+                                                                          itemPadding:
+                                                                              EdgeInsets.symmetric(horizontal: 4.0),
+                                                                          itemBuilder: (context, _) =>
+                                                                              Icon(
+                                                                            Icons.star,
+                                                                            color:
+                                                                                Colors.amber,
+                                                                          ),
+                                                                          onRatingUpdate:
+                                                                              (rating) {
+                                                                            setState(() {
+                                                                              ratingController = rating;
+                                                                            });
+                                                                            print(rating);
+                                                                          },
+                                                                        ),
+                                                                      ),
+                                                                      Row(
+                                                                        children: [],
+                                                                      ),
+                                                                      SizedBox(
+                                                                        height:
+                                                                            20,
+                                                                      ),
+                                                                      Text(
+                                                                        "Tulis ulasan anda",
+                                                                        style: GoogleFonts.openSans(
+                                                                            fontSize:
+                                                                                13,
+                                                                            color:
+                                                                                Colors.black,
+                                                                            fontWeight: FontWeight.w600),
+                                                                      ),
+                                                                      Padding(
+                                                                        padding:
+                                                                            const EdgeInsets.only(top: 10.0),
+                                                                        child:
+                                                                            Container(
+                                                                          height:
+                                                                              50,
+                                                                          decoration: BoxDecoration(
+                                                                              borderRadius: BorderRadius.circular(8),
+                                                                              border: Border.all(color: descColor)),
+                                                                          child:
+                                                                              TextField(
+                                                                            controller:
+                                                                                reviewController,
+                                                                            keyboardType:
+                                                                                TextInputType.multiline,
+                                                                            textInputAction:
+                                                                                TextInputAction.next,
+                                                                            onChanged:
+                                                                                (text) {
+                                                                              setState(() {
+                                                                                _review = text;
+                                                                              });
+                                                                            },
+                                                                            onSubmitted:
+                                                                                (text) {
+                                                                              setState(() {
+                                                                                _review = text;
+                                                                              });
+                                                                            },
+                                                                          ),
+                                                                        ),
+                                                                      ),
+                                                                      GestureDetector(
+                                                                        onTap:
+                                                                            () async {
+                                                                          setState(
+                                                                              () {
+                                                                            isLoading2 =
+                                                                                true;
+                                                                          });
+                                                                          // final reviewText = reviewController.text;
+                                                                          final reviewData = Provider.of<ReviewController>(
+                                                                              context,
+                                                                              listen: false);
+                                                                          final userCon = Provider.of<UserController>(
+                                                                              context,
+                                                                              listen: false);
+                                                                          try {
+                                                                            int intRating =
+                                                                                ratingController.toInt();
+
+                                                                            await reviewData.addReviewId(
+                                                                                id: widget.id.id,
+                                                                                idUser: userCon.idUserLogin,
+                                                                                rating: intRating,
+                                                                                review: _review);
+
+                                                                            if (reviewData.statusCode ==
+                                                                                200) {
+                                                                              setState(() {
+                                                                                isLoading2 = false;
+                                                                              });
+                                                                              Fluttertoast.showToast(
+                                                                                  // msg: reviewData.messageAddReview
+                                                                                  //     .toString(),
+                                                                                  msg: "Terima kasih atas review Anda!",
+                                                                                  toastLength: Toast.LENGTH_SHORT,
+                                                                                  gravity: ToastGravity.BOTTOM,
+                                                                                  timeInSecForIosWeb: 1,
+                                                                                  backgroundColor: primaryColor.withOpacity(0.6),
+                                                                                  textColor: Colors.white,
+                                                                                  fontSize: 13);
+                                                                              // ignore: use_build_context_synchronously
+                                                                              Navigator.pop(context, false);
+                                                                              await reviewData.reviewDestinasiId(widget.id.id);
+                                                                            }
+                                                                          } catch (e) {
+                                                                            print("$e");
+                                                                          }
+                                                                          setState(
+                                                                              () {
+                                                                            isLoading2 =
+                                                                                false;
+                                                                          });
+                                                                        },
+                                                                        child:
+                                                                            Padding(
+                                                                          padding: const EdgeInsets.only(
+                                                                              bottom: 10,
+                                                                              top: 40),
+                                                                          child:
+                                                                              Container(
+                                                                            height:
+                                                                                40,
+                                                                            width:
+                                                                                MediaQuery.of(context).size.width,
+                                                                            decoration:
+                                                                                BoxDecoration(
+                                                                              borderRadius: BorderRadius.circular(5),
+                                                                              color: secondaryColor,
+                                                                            ),
+                                                                            child:
+                                                                                const Center(child: Text("Kirim", style: TextStyle(color: Colors.white, fontSize: 12, fontWeight: FontWeight.w600))),
+                                                                          ),
+                                                                        ),
+                                                                      )
+                                                                    ]),
+                                                              );
+                                                            });
+                                                      },
+                                                      child: Container(
+                                                        height: 40,
+                                                        decoration: BoxDecoration(
+                                                            borderRadius:
+                                                                BorderRadius
+                                                                    .circular(
+                                                                        8),
+                                                            border: Border.all(
+                                                                color:
+                                                                    descColor)),
+                                                        child: Row(
+                                                          mainAxisAlignment:
+                                                              MainAxisAlignment
+                                                                  .spaceBetween,
+                                                          children: [
+                                                            Padding(
+                                                              padding:
+                                                                  const EdgeInsets
+                                                                          .only(
+                                                                      left:
+                                                                          16.0),
+                                                              child: Text(
+                                                                "Tulis tinjauan disini",
+                                                                style: GoogleFonts.openSans(
+                                                                    fontSize:
+                                                                        11,
+                                                                    color:
+                                                                        descColor,
+                                                                    fontWeight:
+                                                                        FontWeight
+                                                                            .w400),
+                                                              ),
+                                                            ),
+                                                            const Padding(
+                                                              padding: EdgeInsets
+                                                                  .only(
+                                                                      right:
+                                                                          8.0),
+                                                              child: Icon(
+                                                                Icons.edit,
+                                                                size: 20,
+                                                                color:
+                                                                    descColor,
+                                                              ),
+                                                            )
+                                                          ],
                                                         ),
                                                       ),
-                                                      const Padding(
-                                                        padding:
-                                                            EdgeInsets.only(
-                                                                right: 8.0),
-                                                        child: Icon(
-                                                          Icons.edit,
-                                                          size: 20,
-                                                          color: descColor,
+                                                    )
+                                                  : InkWell(
+                                                      onTap: () async {
+                                                        Fluttertoast.showToast(
+                                                            msg:
+                                                                "Masuk ke akun anda sebelum memberikan ulasan",
+                                                            toastLength: Toast
+                                                                .LENGTH_SHORT,
+                                                            gravity:
+                                                                ToastGravity
+                                                                    .BOTTOM,
+                                                            timeInSecForIosWeb:
+                                                                1,
+                                                            backgroundColor:
+                                                                primaryColor
+                                                                    .withOpacity(
+                                                                        0.5),
+                                                            textColor:
+                                                                Colors.white,
+                                                            fontSize: 16.0);
+                                                        await Navigator.push(
+                                                          context,
+                                                          MaterialPageRoute(
+                                                            builder: (context) =>
+                                                                const LoginUser(),
+                                                          ),
+                                                        );
+                                                      },
+                                                      child: Container(
+                                                        height: 40,
+                                                        decoration: BoxDecoration(
+                                                            borderRadius:
+                                                                BorderRadius
+                                                                    .circular(
+                                                                        8),
+                                                            border: Border.all(
+                                                                color:
+                                                                    descColor)),
+                                                        child: Row(
+                                                          mainAxisAlignment:
+                                                              MainAxisAlignment
+                                                                  .spaceBetween,
+                                                          children: [
+                                                            Padding(
+                                                              padding:
+                                                                  const EdgeInsets
+                                                                          .only(
+                                                                      left:
+                                                                          16.0),
+                                                              child: Text(
+                                                                "Tulis tinjauan disini",
+                                                                style: GoogleFonts.openSans(
+                                                                    fontSize:
+                                                                        11,
+                                                                    color:
+                                                                        descColor,
+                                                                    fontWeight:
+                                                                        FontWeight
+                                                                            .w400),
+                                                              ),
+                                                            ),
+                                                            const Padding(
+                                                              padding: EdgeInsets
+                                                                  .only(
+                                                                      right:
+                                                                          8.0),
+                                                              child: Icon(
+                                                                Icons.edit,
+                                                                size: 20,
+                                                                color:
+                                                                    descColor,
+                                                              ),
+                                                            )
+                                                          ],
                                                         ),
-                                                      )
-                                                    ],
-                                                  ),
-                                                ),
-                                              ),
+                                                      ),
+                                                    ),
+                                              const SizedBox(height: 5),
                                               ListView.builder(
+                                                  physics:
+                                                      const ClampingScrollPhysics(),
+                                                  padding: EdgeInsets.zero,
                                                   shrinkWrap: true,
                                                   controller: _scrollController,
                                                   scrollDirection:
@@ -1373,9 +1426,10 @@ class _DetailDestinationState extends State<DetailDestination> {
                                                                         230,
                                                                         230,
                                                                         230),
-                                                                child: Icon(
-                                                                  Icons
-                                                                      .people_alt_outlined,
+                                                                child: FaIcon(
+                                                                  FontAwesomeIcons
+                                                                      .solidUser,
+                                                                  size: 15,
                                                                   color:
                                                                       secondaryColor,
                                                                 ),
@@ -1386,8 +1440,7 @@ class _DetailDestinationState extends State<DetailDestination> {
                                                                             .only(
                                                                         left:
                                                                             10.0),
-                                                                child:
-                                                                    Container(
+                                                                child: SizedBox(
                                                                   child: Column(
                                                                     mainAxisAlignment:
                                                                         MainAxisAlignment
@@ -1401,7 +1454,7 @@ class _DetailDestinationState extends State<DetailDestination> {
                                                                               MainAxisAlignment.center,
                                                                           children: [
                                                                             Text(
-                                                                              reviewData.reviewData![index].user!.name!.toString() != null ? reviewData.reviewData![index].user!.name! :'-' ,
+                                                                              reviewData.reviewData![index].user!.name!.toString() != null ? reviewData.reviewData![index].user!.name! : '-',
                                                                               style: GoogleFonts.openSans(fontSize: 11, color: titleColor, fontWeight: FontWeight.w500),
                                                                             ),
                                                                             const Padding(
@@ -1451,7 +1504,7 @@ class _DetailDestinationState extends State<DetailDestination> {
                                                                         context)
                                                                     .size
                                                                     .width,
-                                                            color: descColor,
+                                                            color: Colors.grey.shade300,
                                                           ),
                                                         )
                                                       ],
@@ -1478,7 +1531,22 @@ class _DetailDestinationState extends State<DetailDestination> {
                   child: CircularProgressIndicator(),
                 )
               : GestureDetector(
-                  onTap: () {},
+                  onTap: () async {
+                    Fluttertoast.showToast(
+                        msg: "Masuk ke akun anda sebelum membeli tiket",
+                        toastLength: Toast.LENGTH_SHORT,
+                        gravity: ToastGravity.BOTTOM,
+                        timeInSecForIosWeb: 1,
+                        backgroundColor: primaryColor.withOpacity(0.5),
+                        textColor: Colors.white,
+                        fontSize: 16.0);
+                    await Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => const LoginUser(),
+                      ),
+                    );
+                  },
                   child: Padding(
                     padding: const EdgeInsets.only(
                         left: 18.0, right: 18, bottom: 10, top: 10),

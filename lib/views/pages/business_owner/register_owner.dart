@@ -140,124 +140,115 @@ class _RegisterOwnerState extends State<RegisterOwner> {
                     ),
                   ),
                 ),
-                Container(
-                  width: MediaQuery.of(context).size.width,
-                  height: 59,
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Padding(
-                        padding: const EdgeInsets.only(left: 16.0, top: 16),
-                        child: Container(
-                          padding: const EdgeInsets.symmetric(horizontal: 16),
-                          decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(10),
-                              color: Colors.grey.shade300),
-                          width: MediaQuery.of(context).size.width * 0.45,
-                          child: TextField(
-                            style: GoogleFonts.openSans(
-                                fontSize: 13,
-                                color: titleColor,
-                                fontWeight: FontWeight.w600),
-                            onChanged: (text) {
-                              setState(() {
-                                isPasswordValid = text.length >= 6;
-                                print("password $text");
-                              });
-                            },
-                            obscureText: isObscureText,
-                            controller: passwordController,
-                            keyboardType: TextInputType.visiblePassword,
-                            textInputAction: TextInputAction.next,
-                            decoration: InputDecoration(
-                              hintText: 'Password',
-                              hintStyle: TextStyle(color: Colors.grey.shade500),
-                              suffixIcon: GestureDetector(
-                                onTap: () {
-                                  setState(() {
-                                    toggleShow();
-                                  });
-                                },
-                                child: isObscureText
-                                    ? const Padding(
-                                        padding: EdgeInsets.symmetric(vertical: 14),
-                                        child: FaIcon(FontAwesomeIcons.solidEye,
-                                            textDirection: TextDirection.rtl,
-                                            size: 18,
-                                            color: descColor),
-                                      )
-                                    : const Padding(
-                                        padding: EdgeInsets.symmetric(vertical: 14),
-                                        child: FaIcon(
-                                            FontAwesomeIcons.solidEyeSlash,
-                                            textDirection: TextDirection.rtl,
-                                            size: 18,
-                                            color: descColor),
-                                      ),
-                              ),
-                              border: InputBorder.none,
-                            ),
-                          ),
+                Padding(
+                  padding: const EdgeInsets.only(left: 16.0, top: 16, right: 16),
+                  child: Container(
+                    padding: const EdgeInsets.symmetric(horizontal: 16),
+                    decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(10),
+                        color: Colors.grey.shade300),
+                    width: MediaQuery.of(context).size.width ,
+                    child: TextField(
+                      style: GoogleFonts.openSans(
+                          fontSize: 13,
+                          color: titleColor,
+                          fontWeight: FontWeight.w600),
+                      onChanged: (text) {
+                        setState(() {
+                          isPasswordValid = text.length >= 6;
+                          print("password $text");
+                        });
+                      },
+                      obscureText: isObscureText,
+                      controller: passwordController,
+                      keyboardType: TextInputType.visiblePassword,
+                      textInputAction: TextInputAction.next,
+                      decoration: InputDecoration(
+                        hintText: 'Password',
+                        hintStyle: TextStyle(color: Colors.grey.shade500),
+                        suffixIcon: GestureDetector(
+                          onTap: () {
+                            setState(() {
+                              toggleShow();
+                            });
+                          },
+                          child: isObscureText
+                              ? const Padding(
+                                  padding: EdgeInsets.symmetric(vertical: 14),
+                                  child: FaIcon(FontAwesomeIcons.solidEye,
+                                      textDirection: TextDirection.rtl,
+                                      size: 18,
+                                      color: descColor),
+                                )
+                              : const Padding(
+                                  padding: EdgeInsets.symmetric(vertical: 14),
+                                  child: FaIcon(
+                                      FontAwesomeIcons.solidEyeSlash,
+                                      textDirection: TextDirection.rtl,
+                                      size: 18,
+                                      color: descColor),
+                                ),
                         ),
+                        border: InputBorder.none,
                       ),
-                      Padding(
-                        padding: const EdgeInsets.only(right: 16.0, top: 16),
-                        child: Container(
-                          padding: const EdgeInsets.symmetric(horizontal: 16),
-                          decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(10),
-                              color: Colors.grey.shade300),
-                          width: MediaQuery.of(context).size.width * 0.45,
-                          child: TextField(
-                            style: GoogleFonts.openSans(
-                                fontSize: 13,
-                                color: titleColor,
-                                fontWeight: FontWeight.w600),
-                            onChanged: (text) {
-                              setState(() {
-                                isPasswordAndConfirmValid =
-                                    passwordController.text ==
-                                        confirmPasswordController.text;
-                                print(
-                                    "is password & confirm password match? $isPasswordAndConfirmValid");
-                              });
-                            },
-                            obscureText: isObscureText,
-                            controller: confirmPasswordController,
-                            keyboardType: TextInputType.text,
-                            textInputAction: TextInputAction.done,
-                            decoration: InputDecoration(
-                              hintText: 'Konfirmasi Password',
-                              hintStyle: TextStyle(color: Colors.grey.shade500),
-                              suffixIcon: GestureDetector(
-                                onTap: () {
-                                  setState(() {
-                                    toggleShow();
-                                  });
-                                },
-                                child: isObscureText
-                                    ? const Padding(
-                                        padding: EdgeInsets.symmetric(vertical: 14),
-                                        child: FaIcon(FontAwesomeIcons.solidEye,
-                                            textDirection: TextDirection.rtl,
-                                            size: 18,
-                                            color: descColor),
-                                      )
-                                    : const Padding(
-                                        padding: EdgeInsets.symmetric(vertical: 14),
-                                        child: FaIcon(
-                                            FontAwesomeIcons.solidEyeSlash,
-                                            textDirection: TextDirection.rtl,
-                                            size: 18,
-                                            color: descColor),
-                                      ),
-                              ),
-                              border: InputBorder.none,
-                            ),
-                          ),
+                    ),
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.only(right: 16.0, top: 16, left: 16),
+                  child: Container(
+                    padding: const EdgeInsets.symmetric(horizontal: 16),
+                    decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(10),
+                        color: Colors.grey.shade300),
+                    width: MediaQuery.of(context).size.width,
+                    child: TextField(
+                      style: GoogleFonts.openSans(
+                          fontSize: 13,
+                          color: titleColor,
+                          fontWeight: FontWeight.w600),
+                      onChanged: (text) {
+                        setState(() {
+                          isPasswordAndConfirmValid =
+                              passwordController.text ==
+                                  confirmPasswordController.text;
+                          print(
+                              "is password & confirm password match? $isPasswordAndConfirmValid");
+                        });
+                      },
+                      obscureText: isObscureText,
+                      controller: confirmPasswordController,
+                      keyboardType: TextInputType.text,
+                      textInputAction: TextInputAction.done,
+                      decoration: InputDecoration(
+                        hintText: 'Konfirmasi Password',
+                        hintStyle: TextStyle(color: Colors.grey.shade500),
+                        suffixIcon: GestureDetector(
+                          onTap: () {
+                            setState(() {
+                              toggleShow();
+                            });
+                          },
+                          child: isObscureText
+                              ? const Padding(
+                                  padding: EdgeInsets.symmetric(vertical: 14),
+                                  child: FaIcon(FontAwesomeIcons.solidEye,
+                                      textDirection: TextDirection.rtl,
+                                      size: 18,
+                                      color: descColor),
+                                )
+                              : const Padding(
+                                  padding: EdgeInsets.symmetric(vertical: 14),
+                                  child: FaIcon(
+                                      FontAwesomeIcons.solidEyeSlash,
+                                      textDirection: TextDirection.rtl,
+                                      size: 18,
+                                      color: descColor),
+                                ),
                         ),
+                        border: InputBorder.none,
                       ),
-                    ],
+                    ),
                   ),
                 ),
                 Padding(
@@ -314,64 +305,59 @@ class _RegisterOwnerState extends State<RegisterOwner> {
                     ),
                   ),
                 ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Padding(
-                      padding: const EdgeInsets.only(left: 16.0, top: 16),
-                      child: Container(
-                        decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(10),
-                            border: Border.all(
-                              width: 1.8,
-                              color: Colors.grey.shade300,
-                            )),
-                        width: MediaQuery.of(context).size.width * 0.45,
-                        child: TextField(
-                          style: GoogleFonts.openSans(
-                              fontSize: 13,
-                              color: titleColor,
-                              fontWeight: FontWeight.w600),
-                          controller: phoneNumberController,
-                          keyboardType: TextInputType.number,
-                          textInputAction: TextInputAction.next,
-                          decoration: InputDecoration(
-                            hintText: 'Nomor Handphone',
-                            hintStyle: TextStyle(color: Colors.grey.shade500),
-                            border: InputBorder.none,
-                            contentPadding: EdgeInsets.only(left: 16),
-                          ),
-                        ),
+                Padding(
+                  padding: const EdgeInsets.only(left: 16.0, top: 16, right: 16),
+                  child: Container(
+                    decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(10),
+                        border: Border.all(
+                          width: 1.8,
+                          color: Colors.grey.shade300,
+                        )),
+                    width: MediaQuery.of(context).size.width,
+                    child: TextField(
+                      style: GoogleFonts.openSans(
+                          fontSize: 13,
+                          color: titleColor,
+                          fontWeight: FontWeight.w600),
+                      controller: phoneNumberController,
+                      keyboardType: TextInputType.number,
+                      textInputAction: TextInputAction.next,
+                      decoration: InputDecoration(
+                        hintText: 'Nomor Handphone',
+                        hintStyle: TextStyle(color: Colors.grey.shade500),
+                        border: InputBorder.none,
+                        contentPadding: EdgeInsets.only(left: 16),
                       ),
                     ),
-                    Padding(
-                      padding: const EdgeInsets.only(right: 16.0, top: 10),
-                      child: Container(
-                        decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(10),
-                            border: Border.all(
-                              width: 1.8,
-                              color: Colors.grey.shade300,
-                            )),
-                        width: MediaQuery.of(context).size.width * 0.45,
-                        child: TextField(
-                          style: GoogleFonts.openSans(
-                              fontSize: 13,
-                              color: titleColor,
-                              fontWeight: FontWeight.w600),
-                          controller: idCardNumberController,
-                          keyboardType: TextInputType.number,
-                          textInputAction: TextInputAction.next,
-                          decoration: InputDecoration(
-                            hintText: 'Nomor Identitas',
-                            hintStyle: TextStyle(color: Colors.grey.shade500),
-                            border: InputBorder.none,
-                            contentPadding: EdgeInsets.only(left: 16),
-                          ),
-                        ),
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.only(right: 16.0, top: 10, left: 16),
+                  child: Container(
+                    decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(10),
+                        border: Border.all(
+                          width: 1.8,
+                          color: Colors.grey.shade300,
+                        )),
+                    width: MediaQuery.of(context).size.width,
+                    child: TextField(
+                      style: GoogleFonts.openSans(
+                          fontSize: 13,
+                          color: titleColor,
+                          fontWeight: FontWeight.w600),
+                      controller: idCardNumberController,
+                      keyboardType: TextInputType.number,
+                      textInputAction: TextInputAction.next,
+                      decoration: InputDecoration(
+                        hintText: 'Nomor Identitas',
+                        hintStyle: TextStyle(color: Colors.grey.shade500),
+                        border: InputBorder.none,
+                        contentPadding: EdgeInsets.only(left: 16),
                       ),
                     ),
-                  ],
+                  ),
                 ),
                 const SizedBox(
                   height: 36,

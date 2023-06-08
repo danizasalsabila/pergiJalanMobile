@@ -1,13 +1,19 @@
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:salomon_bottom_bar/salomon_bottom_bar.dart';
+
 import 'package:pergijalan_mobile/config/theme_color.dart';
 import 'package:pergijalan_mobile/views/pages/home.dart';
 import 'package:pergijalan_mobile/views/pages/search2.dart';
 import 'package:pergijalan_mobile/views/pages/search_page.dart';
 import 'package:pergijalan_mobile/views/pages/user_page.dart';
-import 'package:salomon_bottom_bar/salomon_bottom_bar.dart';
 
 class MainNavigation extends StatefulWidget {
-  const MainNavigation({super.key});
+  int indexNav;
+  MainNavigation({
+    Key? key,
+    this.indexNav = 0,
+  }) : super(key: key);
 
   @override
   State<MainNavigation> createState() => _MainNavigationState();
@@ -22,6 +28,12 @@ class _MainNavigationState extends State<MainNavigation> {
   ];
 
   @override
+  void initState() {
+    super.initState();
+    _indexBNav = widget.indexNav;
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: _widgetOptions.elementAt(_indexBNav),
@@ -33,7 +45,7 @@ class _MainNavigationState extends State<MainNavigation> {
           color: secondaryColor,
           boxShadow: [
             BoxShadow(
-              color: Color.fromARGB(255, 190, 190, 190).withOpacity(0.7),
+              color: const Color.fromARGB(255, 190, 190, 190).withOpacity(0.7),
               spreadRadius: 4,
               blurRadius: 6,
               offset: const Offset(4, 1), // changes position of shadow
@@ -50,15 +62,18 @@ class _MainNavigationState extends State<MainNavigation> {
           items: [
             SalomonBottomBarItem(
               icon: const Icon(Icons.home),
-              title: const Text("Home"),
+              title: const Text("Beranda"),
             ),
             SalomonBottomBarItem(
               icon: const Icon(Icons.search),
-              title: const Text("Search"),
+              title: const Text("Pencarian"),
             ),
             SalomonBottomBarItem(
-              icon: const Icon(Icons.people),
-              title: const Text("User"),
+              icon: const FaIcon(
+                FontAwesomeIcons.solidUser,
+                size: 17,
+              ),
+              title: const Text("Saya"),
             ),
           ],
           unselectedItemColor: Colors.grey.shade300,

@@ -163,7 +163,8 @@ class OwnerBusinessController extends ChangeNotifier {
   int? idOBLogin;
   String? emailLogin;
   String? nameLogin;
-  Future<void> setLoginOwnerBusinessPreferences(LoginOwnerUser loginData) async {
+  Future<void> setLoginOwnerBusinessPreferences(
+      LoginOwnerUser loginData) async {
     loginOwnerUser = loginData;
     final prefs = await SharedPreferences.getInstance();
     await prefs.setString(
@@ -209,14 +210,14 @@ class OwnerBusinessController extends ChangeNotifier {
     notifyListeners();
   }
 
-    Future<dynamic> ownerDetail() async {
+  Future<dynamic> ownerDetail() async {
     print("Detail User Data");
     print("ID USER: $idOBLogin");
     var url = Uri.parse(BASE_URL + GET_OWNER_BY_ID + "$idOBLogin");
     print("URL = $url");
     try {
       var response = await http.get(url);
-      
+
       var data = json.decode(response.body);
       if (response.statusCode == 200) {
         print("CODE: ${response.statusCode}");
@@ -226,6 +227,53 @@ class OwnerBusinessController extends ChangeNotifier {
         notifyListeners();
       } else if (response.statusCode == 404) {
         print("CODE: ${response.statusCode}");
+        var dataError = data["data"];
+        print("$dataError");
+      }
+    } catch (e) {
+      print("ERROR MESSAGE: $e");
+    }
+  }
+
+  int? statusCodeEditProfileOwner;
+  String? messageEditProfileOwner;
+  Future<dynamic> editOwner(
+      {idOBLogin,
+      String? nameOwner,
+      String? contactNumber,
+      String? address,
+      String? idCardNumber}) async {
+    print("EDIT User Data");
+    print("ID USER: $idOBLogin");
+    var url = Uri.parse(BASE_URL + UPDATE_OWNER(idOBLogin));
+    final body = {
+      'nama_owner': nameOwner,
+      'contact_number': contactNumber,
+      'id_card_number': idCardNumber,
+      'address': address
+    };
+    print("URL = $url");
+    try {
+      var response = await http.put(
+        url,
+        body: json.encode(body),
+        headers: {
+          "content-type": "application/json",
+        },
+      );
+
+      var data = json.decode(response.body);
+      if (response.statusCode == 200) {
+        statusCodeEditProfileOwner = response.statusCode;
+        messageEditProfileOwner = data["message"];
+        print("CODE: $statusCodeEditProfileOwner");
+        print(data);
+
+        notifyListeners();
+      } else if (response.statusCode == 404) {
+        statusCodeEditProfileOwner = response.statusCode;
+        messageEditProfileOwner = data["message"];
+        print("CODE: $statusCodeEditProfileOwner");
         var dataError = data["data"];
         print("$dataError");
       }

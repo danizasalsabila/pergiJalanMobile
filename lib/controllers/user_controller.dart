@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:isolate';
 
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
@@ -9,6 +10,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 class UserController extends ChangeNotifier {
   UserResponse? userResponse;
   User? userDataDetail;
+  bool isLogin = false;
   // List<User>? userData;
   // List<User> userData =[];
 
@@ -68,7 +70,6 @@ class UserController extends ChangeNotifier {
       }
     } catch (e) {
       print("ERROR MESSAGE $e");
-
     }
   }
 
@@ -95,6 +96,7 @@ class UserController extends ChangeNotifier {
         messageLogin = data["message"];
         print("message login: $messageLogin");
         statusCodeLogin = response.statusCode;
+        isLogin = true;
         // tokenAuthSP = data["data"]["token"];
 
         // final prefs = await SharedPreferences.getInstance();
@@ -141,8 +143,7 @@ class UserController extends ChangeNotifier {
     var url = Uri.parse(BASE_URL + LOGOUT_USER);
     print("URL = $url");
     try {
-      var response = await http.post(url, 
-      headers: {
+      var response = await http.post(url, headers: {
         "content-type": "application/json",
         "authorization": "Bearer $tokenLogin",
       });
@@ -153,6 +154,7 @@ class UserController extends ChangeNotifier {
         final SharedPreferences prefs = await SharedPreferences.getInstance();
         await prefs.remove('login');
         print("user data login is removed");
+        isLogin = false;
 
         print("data : $data");
         messageLogout = data["message"];
@@ -260,14 +262,14 @@ class UserController extends ChangeNotifier {
   //   await prefs.setString("getTokenUser", json.encode({'token':}) )
   // }
 
-    Future<dynamic> userDetail() async {
+  Future<dynamic> userDetail() async {
     print("Detail User Data");
     print("ID USER: $idUserLogin");
     var url = Uri.parse(BASE_URL + GET_USER_BY_ID + "$idUserLogin");
     print("URL = $url");
     try {
       var response = await http.get(url);
-      
+
       var data = json.decode(response.body);
       if (response.statusCode == 200) {
         print("CODE: ${response.statusCode}");
@@ -277,6 +279,50 @@ class UserController extends ChangeNotifier {
         notifyListeners();
       } else if (response.statusCode == 404) {
         print("CODE: ${response.statusCode}");
+        var dataError = data["data"];
+        print("$dataError");
+      }
+    } catch (e) {
+      print("ERROR MESSAGE: $e");
+    }
+  }
+
+  int? statusCodeEditProfile;
+  String? messageEditProfile;
+  Future<dynamic> editUser(
+      {idUserLogin,
+      String? name,
+      String? phoneNumber,
+      String? idCardNumber}) async {
+    print("EDIT User Data");
+    print("ID USER: $idUserLogin");
+    var url = Uri.parse(BASE_URL + UPDATE_USER(idUserLogin));
+    final body = {
+      'name': name,
+      'phone_number': phoneNumber,
+      'id_card_number': idCardNumber
+    };
+    print("URL = $url");
+    try {
+      var response = await http.put(
+        url,
+        body: json.encode(body),
+        headers: {
+          "content-type": "application/json",
+        },
+      );
+
+      var data = json.decode(response.body);
+      if (response.statusCode == 200) {
+        statusCodeEditProfile = response.statusCode;
+        messageEditProfile = data["message"];
+        print("CODE: $statusCodeEditProfile");
+        print(data);
+        notifyListeners();
+      } else if (response.statusCode == 404) {
+        statusCodeEditProfile = response.statusCode;
+        messageEditProfile = data["message"];
+        print("CODE: $statusCodeEditProfile");
         var dataError = data["data"];
         print("$dataError");
       }

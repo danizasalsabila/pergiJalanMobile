@@ -18,6 +18,8 @@ const GET_USER = "user";
 
 GET_USER_BY_EMAIL(email) => "email/user?q=$email";
 
+UPDATE_USER(id) => "user/$id";
+
 const GET_USER_BY_ID = "user/";
 
 //OwnerBusiness
@@ -28,6 +30,9 @@ const LOGIN_OWNERBUSINESS = "owner/login";
 const LOGOUT_OWNERBUSINESS = "owner/logout";
 
 const GET_OWNER_BY_ID = "owner/";
+
+UPDATE_OWNER(id) => "owner/$id";
+
 
 
 //ENDPOINT

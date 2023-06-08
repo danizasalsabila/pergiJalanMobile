@@ -96,51 +96,51 @@ class _LoginUserState extends State<LoginUser> {
                   mainAxisAlignment: MainAxisAlignment.center,
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
+                    // const SizedBox(
+                    //   height: 50,
+                    // ),
+                    // Align(
+                    //   alignment: Alignment.topRight,
+                    //   child: Padding(
+                    //     padding: const EdgeInsets.only(left: 17.0, right: 17.0),
+                    //     child: InkWell(
+                    //       onTap: () {
+                    //         Navigator.push(
+                    //             context,
+                    //             MaterialPageRoute(
+                    //                 builder: (context) => const LoginOwner()));
+                    //       },
+                    //       child: Container(
+                    //         decoration: BoxDecoration(
+                    //             boxShadow: [
+                    //               BoxShadow(
+                    //                 color: Color.fromARGB(255, 92, 92, 92)
+                    //                     .withOpacity(0.5),
+                    //                 spreadRadius: 2,
+                    //                 blurRadius: 7,
+                    //                 offset: const Offset(
+                    //                     2, 0), // changes position of shadow
+                    //               ),
+                    //             ],
+                    //             color: thirdColor,
+                    //             borderRadius: BorderRadius.circular(10)),
+                    //         child: Padding(
+                    //           padding: const EdgeInsets.fromLTRB(8.0, 4, 8, 4),
+                    //           child: Text(
+                    //             "Promosi Tempat Wisata",
+                    //             textAlign: TextAlign.end,
+                    //             style: GoogleFonts.openSans(
+                    //                 fontSize: 11,
+                    //                 color: Colors.white,
+                    //                 fontWeight: FontWeight.w400),
+                    //           ),
+                    //         ),
+                    //       ),
+                    //     ),
+                    //   ),
+                    // ),
                     const SizedBox(
-                      height: 50,
-                    ),
-                    Align(
-                      alignment: Alignment.topRight,
-                      child: Padding(
-                        padding: const EdgeInsets.only(left: 17.0, right: 17.0),
-                        child: InkWell(
-                          onTap: () {
-                            Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) => const LoginOwner()));
-                          },
-                          child: Container(
-                            decoration: BoxDecoration(
-                                boxShadow: [
-                                  BoxShadow(
-                                    color: Color.fromARGB(255, 92, 92, 92)
-                                        .withOpacity(0.5),
-                                    spreadRadius: 2,
-                                    blurRadius: 7,
-                                    offset: const Offset(
-                                        2, 0), // changes position of shadow
-                                  ),
-                                ],
-                                color: thirdColor,
-                                borderRadius: BorderRadius.circular(10)),
-                            child: Padding(
-                              padding: const EdgeInsets.fromLTRB(8.0, 4, 8, 4),
-                              child: Text(
-                                "Promosi Tempat Wisata",
-                                textAlign: TextAlign.end,
-                                style: GoogleFonts.openSans(
-                                    fontSize: 11,
-                                    color: Colors.white,
-                                    fontWeight: FontWeight.w400),
-                              ),
-                            ),
-                          ),
-                        ),
-                      ),
-                    ),
-                    const SizedBox(
-                      height: 100,
+                      height: 200,
                     ),
 
                     Padding(
@@ -348,7 +348,7 @@ class _LoginUserState extends State<LoginUser> {
                                   context,
                                   MaterialPageRoute(
                                       builder: (context) =>
-                                          const MainNavigation()),
+                                           MainNavigation()),
                                   (route) => false);
                             } else if (userCon.statusCodeLogin == 422) {
                               print("login failed");

@@ -3,11 +3,11 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:pergijalan_mobile/config/theme_color.dart';
 import 'package:pergijalan_mobile/controllers/review_controller.dart';
-import 'package:pergijalan_mobile/controllers/user_controller.dart';
 import 'package:pergijalan_mobile/models/destinasi.dart';
 import 'package:provider/provider.dart';
 import 'package:readmore/readmore.dart';
@@ -29,9 +29,15 @@ class _DetailDestinationOwnerState extends State<DetailDestinationOwner> {
   TextEditingController? reviewController;
 
   String _review = '';
+  double? avgRating;
+
 
   double ratingController = 5;
   // int ratingController2 = 1;
+  String text = '';
+  bool avgRatingBool = false;
+
+  List<String> data = [];
 
   bool isLoading = false;
   bool isLoading2 = false;
@@ -49,6 +55,24 @@ class _DetailDestinationOwnerState extends State<DetailDestinationOwner> {
       try {
         print("get title destinasi : ${widget.id.nameDestinasi}");
         await reviewData.reviewDestinasiId(widget.id.id);
+        await reviewData.getRatingAverageById(widget.id.id);
+
+        
+        if (reviewData.statusCodeAvgRating == 200) {
+          avgRatingBool = true;
+          avgRating = reviewData.avgRating!;
+        } else {
+          avgRatingBool = false;
+        }
+
+
+        await Future.delayed(Duration.zero);
+        text = widget.id.fasility.toString();
+        if (text.contains(',')) {
+          data = text.split(',');
+        } else {
+          print('Teks fasilitas tidak mengandung koma');
+        }
       } catch (e) {
         e;
       }
@@ -86,31 +110,39 @@ class _DetailDestinationOwnerState extends State<DetailDestinationOwner> {
                               fit: BoxFit.cover,
                             )),
                       ),
-                     Align(
-                          alignment: Alignment.bottomRight,
-                          child: Column(
+                      Align(
+                        alignment: Alignment.bottomRight,
+                        child: Column(
                           mainAxisAlignment: MainAxisAlignment.end,
                           crossAxisAlignment: CrossAxisAlignment.end,
                           children: [
-                              SizedBox(height: 295, ),
-                              Padding(
-                                padding: const EdgeInsets.only(right: 16.0),
-                                child: Container(
-                                  decoration: BoxDecoration(color: thirdColor, borderRadius: BorderRadius.circular(15)),
+                            SizedBox(
+                              height: 295,
+                            ),
+                            Padding(
+                              padding: const EdgeInsets.only(right: 16.0),
+                              child: Container(
+                                  decoration: BoxDecoration(
+                                      color: thirdColor,
+                                      borderRadius: BorderRadius.circular(15)),
                                   child: Padding(
-                                    padding: const EdgeInsets.only(left: 13.0, right: 13.0, top: 3, bottom: 3),
-                                    child: Text(widget.id.category.toString(), style: GoogleFonts
-                                                              .openSans(
-                                                                  fontSize: 11,
-                                                                  color:
-                                                                      backgroundColor,
-                                                                  fontWeight:
-                                                                      FontWeight
-                                                                          .w500),),
+                                    padding: const EdgeInsets.only(
+                                        left: 13.0,
+                                        right: 13.0,
+                                        top: 3,
+                                        bottom: 3),
+                                    child: Text(
+                                      widget.id.category.toString(),
+                                      style: GoogleFonts.openSans(
+                                          fontSize: 11,
+                                          color: backgroundColor,
+                                          fontWeight: FontWeight.w500),
+                                    ),
                                   )),
-                              )
-                            ],),
+                            )
+                          ],
                         ),
+                      ),
                       Positioned(
                           top: 40,
                           left: 16,
@@ -122,7 +154,6 @@ class _DetailDestinationOwnerState extends State<DetailDestinationOwner> {
                                 child: const Icon(Icons.chevron_left,
                                     color: primaryColor)),
                           )),
-                          
                       Column(children: [
                         SizedBox(
                           height: 330,
@@ -267,7 +298,43 @@ class _DetailDestinationOwnerState extends State<DetailDestinationOwner> {
                                           ),
                                   ],
                                 ),
-                              )
+                              ),
+                              
+                                avgRatingBool
+                                    ? Align(
+                                        alignment: Alignment.topLeft,
+                                        child: Row(
+                                          children: [
+                                            Padding(
+                                              padding: const EdgeInsets.only(
+                                                  left: 4, top: 8),
+                                              child: RatingBarIndicator(
+                                                rating: avgRating!,
+                                                itemBuilder: (context, ndex) =>
+                                                    Icon(
+                                                  Icons.star,
+                                                  color: Colors.amber,
+                                                ),
+                                                itemCount: 5,
+                                                itemSize: 17.0,
+                                              ),
+                                            ),
+                                            Padding(
+                                              padding: const EdgeInsets.only(
+                                                  left: 4.0, top: 8.0),
+                                              child: Text(
+                                                avgRating!.toStringAsFixed(1),
+                                                style: GoogleFonts.openSans(
+                                                    fontSize: 13,
+                                                    color: descColor,
+                                                    fontWeight:
+                                                        FontWeight.w600),
+                                              ),
+                                            )
+                                          ],
+                                        ),
+                                      )
+                                    : const SizedBox(),
                             ]),
                           ),
                         )
@@ -299,7 +366,7 @@ class _DetailDestinationOwnerState extends State<DetailDestinationOwner> {
                     Container(
                       height: MediaQuery.of(context).size.height * 0.8,
                       child: TabBarView(
-                          physics: NeverScrollableScrollPhysics(),
+                          physics: const NeverScrollableScrollPhysics(),
                           children: [
                             SingleChildScrollView(
                               child: Column(
@@ -395,7 +462,7 @@ class _DetailDestinationOwnerState extends State<DetailDestinationOwner> {
                                       ),
                                     ),
                                   ),
-                                  SizedBox(
+                                  const SizedBox(
                                     height: 10,
                                   ),
                                   Container(
@@ -704,38 +771,68 @@ class _DetailDestinationOwnerState extends State<DetailDestinationOwner> {
                                                 color: primaryColor,
                                                 fontWeight: FontWeight.w500),
                                           ),
-                                          Padding(
-                                            padding: const EdgeInsets.all(8.0),
-                                            child: widget.id.fasility != null
-                                                ? Container(
-                                                    decoration: BoxDecoration(
-                                                        borderRadius:
-                                                            BorderRadius
-                                                                .circular(10),
-                                                        color: labelColorBack),
-                                                    child: Text(
-                                                      widget.id.fasility
-                                                          .toString(),
-                                                      style:
-                                                          GoogleFonts.openSans(
-                                                              fontSize: 13,
-                                                              color:
-                                                                  primaryColor,
-                                                              fontWeight:
-                                                                  FontWeight
-                                                                      .w400),
-                                                    ),
-                                                  )
-                                                : Text(
-                                                    "Anda belum memasukkan fasilitas umum",
-                                                    maxLines: 4,
-                                                    style: GoogleFonts.openSans(
-                                                        fontSize: 9,
-                                                        color:
-                                                            Colors.red.shade600,
-                                                        fontWeight:
-                                                            FontWeight.w500)),
-                                          ),
+                                          widget.id.fasility!.isEmpty ||
+                                                  widget.id.fasility == ''
+                                              ? Text(
+                                                  "Tidak terdapat fasilitas",
+                                                  style: GoogleFonts.openSans(
+                                                      fontSize: 12,
+                                                      color: descColor,
+                                                      fontWeight:
+                                                          FontWeight.w400),
+                                                )
+                                              : Padding(
+                                                  padding:
+                                                      const EdgeInsets.only(
+                                                          left: 10.0),
+                                                  child: SizedBox(
+                                                    height: 35,
+                                                    child: ListView.builder(
+                                                        shrinkWrap: true,
+                                                        // controller: _scrollController,
+                                                        scrollDirection:
+                                                            Axis.horizontal,
+                                                        itemCount: data.length,
+                                                        itemBuilder:
+                                                            (context, i) {
+                                                          return Padding(
+                                                            padding:
+                                                                const EdgeInsets
+                                                                        .only(
+                                                                    top: 8.0,
+                                                                    right: 8.0),
+                                                            child: Container(
+                                                              decoration: BoxDecoration(
+                                                                  borderRadius:
+                                                                      BorderRadius
+                                                                          .circular(
+                                                                              15),
+                                                                  color:
+                                                                      labelColorBack),
+                                                              child: Padding(
+                                                                padding: const EdgeInsets
+                                                                        .only(
+                                                                    left: 12.0,
+                                                                    right:
+                                                                        12.0),
+                                                                child: Center(
+                                                                  child: Text(
+                                                                    data[i],
+                                                                    style: GoogleFonts.openSans(
+                                                                        fontSize:
+                                                                            13,
+                                                                        color:
+                                                                            primaryColor,
+                                                                        fontWeight:
+                                                                            FontWeight.w400),
+                                                                  ),
+                                                                ),
+                                                              ),
+                                                            ),
+                                                          );
+                                                        }),
+                                                  ),
+                                                ),
                                           const SizedBox(
                                             height: 10,
                                           )
@@ -867,21 +964,30 @@ class _DetailDestinationOwnerState extends State<DetailDestinationOwner> {
                                                         ),
                                                       )
                                                     : SizedBox(
-                                                       width: MediaQuery.of(
+                                                        width: MediaQuery.of(
                                                                     context)
                                                                 .size
                                                                 .width *
                                                             0.2,
-                                                      child: Align(
-                                                        alignment: Alignment.topRight,
-                                                        child: CircleAvatar(
+                                                        child: Align(
+                                                          alignment: Alignment
+                                                              .topRight,
+                                                          child: CircleAvatar(
                                                             backgroundColor:
-                                                                Colors.red.shade600,
-                                                            child: Text("!", style:TextStyle(fontSize: 12, fontWeight: FontWeight.w600),),
+                                                                Colors.red
+                                                                    .shade600,
+                                                            child: Text(
+                                                              "!",
+                                                              style: TextStyle(
+                                                                  fontSize: 12,
+                                                                  fontWeight:
+                                                                      FontWeight
+                                                                          .w600),
+                                                            ),
                                                             radius: 9,
                                                           ),
+                                                        ),
                                                       ),
-                                                    ),
                                               ),
                                             ],
                                           ),
@@ -961,429 +1067,432 @@ class _DetailDestinationOwnerState extends State<DetailDestinationOwner> {
                                 : Consumer<ReviewController>(
                                     builder: (context, reviewData, child) {
                                     return SingleChildScrollView(
-                                        child: Container(
-                                      width: MediaQuery.of(context).size.width,
-                                      color: Color.fromARGB(255, 250, 250, 250),
-                                      child: Padding(
-                                        padding: const EdgeInsets.only(
-                                            left: 16.0, right: 16),
-                                        child: Column(
-                                          children: [
-                                            const SizedBox(
-                                              height: 20,
-                                            ),
-                                            InkWell(
-                                              onTap: () async {
-                                                await showDialog(
-                                                    context: context,
-                                                    builder: (context) {
-                                                      return AlertDialog(
-                                                        backgroundColor:
-                                                            Colors.white,
-                                                        title: Column(
-                                                            mainAxisAlignment:
-                                                                MainAxisAlignment
-                                                                    .start,
-                                                            crossAxisAlignment:
-                                                                CrossAxisAlignment
-                                                                    .start,
-                                                            children: [
-                                                              Text(
-                                                                "Berapa penilaian anda tentang tempat wisata ini?",
-                                                                style: GoogleFonts.openSans(
-                                                                    fontSize:
-                                                                        13,
-                                                                    color: Colors
-                                                                        .black,
-                                                                    fontWeight:
-                                                                        FontWeight
-                                                                            .w600),
-                                                              ),
-                                                              Padding(
-                                                                padding:
-                                                                    const EdgeInsets
-                                                                        .all(10),
-                                                                child: RatingBar
-                                                                    .builder(
-                                                                  initialRating:
-                                                                      5,
-                                                                  minRating: 1,
-                                                                  direction: Axis
-                                                                      .horizontal,
-                                                                  allowHalfRating:
-                                                                      false,
-                                                                  itemCount: 5,
-                                                                  itemPadding: EdgeInsets
-                                                                      .symmetric(
-                                                                          horizontal:
-                                                                              4.0),
-                                                                  itemBuilder:
-                                                                      (context,
-                                                                              _) =>
-                                                                          Icon(
-                                                                    Icons.star,
-                                                                    color: Colors
-                                                                        .amber,
-                                                                  ),
-                                                                  onRatingUpdate:
-                                                                      (rating) {
-                                                                    setState(
-                                                                        () {
-                                                                      ratingController =
-                                                                          rating;
-                                                                    });
-                                                                    print(
-                                                                        rating);
-                                                                  },
-                                                                ),
-                                                              ),
-                                                              Row(
-                                                                children: [],
-                                                              ),
-                                                              SizedBox(
-                                                                height: 20,
-                                                              ),
-                                                              Text(
-                                                                "Tulis ulasan anda",
-                                                                style: GoogleFonts.openSans(
-                                                                    fontSize:
-                                                                        13,
-                                                                    color: Colors
-                                                                        .black,
-                                                                    fontWeight:
-                                                                        FontWeight
-                                                                            .w600),
-                                                              ),
-                                                              Padding(
-                                                                padding:
-                                                                    const EdgeInsets
-                                                                            .only(
-                                                                        top:
-                                                                            10.0),
-                                                                child:
-                                                                    Container(
-                                                                  height: 50,
-                                                                  decoration: BoxDecoration(
-                                                                      borderRadius:
-                                                                          BorderRadius.circular(
-                                                                              8),
-                                                                      border: Border.all(
-                                                                          color:
-                                                                              descColor)),
-                                                                  child:
-                                                                      TextField(
-                                                                    controller:
-                                                                        reviewController,
-                                                                    keyboardType:
-                                                                        TextInputType
-                                                                            .multiline,
-                                                                    textInputAction:
-                                                                        TextInputAction
-                                                                            .next,
-                                                                    onChanged:
-                                                                        (text) {
-                                                                      setState(
-                                                                          () {
-                                                                        _review =
-                                                                            text;
-                                                                      });
-                                                                    },
-                                                                    onSubmitted:
-                                                                        (text) {
-                                                                      setState(
-                                                                          () {
-                                                                        _review =
-                                                                            text;
-                                                                      });
-                                                                    },
-                                                                  ),
-                                                                ),
-                                                              ),
-                                                              GestureDetector(
-                                                                onTap:
-                                                                    () async {
-                                                                  setState(() {
-                                                                    isLoading2 =
-                                                                        true;
-                                                                  });
-                                                                  // final reviewText = reviewController.text;
-                                                                  final reviewData = Provider.of<
-                                                                          ReviewController>(
-                                                                      context,
-                                                                      listen:
-                                                                          false);
-                                                                  final userCon = Provider.of<
-                                                                          UserController>(
-                                                                      context,
-                                                                      listen:
-                                                                          false);
-                                                                  try {
-                                                                    int intRating =
-                                                                        ratingController
-                                                                            .toInt();
-                                                                    await reviewData.addReviewId(
-                                                                        id: widget
-                                                                            .id
-                                                                            .id,
-                                                                            idUser: userCon.idUserLogin,
-                                                                        rating:
-                                                                            intRating,
-                                                                        review:
-                                                                            _review);
+                                        child: reviewData.reviewData!.isEmpty
+                                            ? SizedBox(
+                                                height: 150,
+                                                child: Center(
+                                                    child: Text(
+                                                  "Belum terdapat ulasan",
+                                                  style: GoogleFonts.openSans(
+                                                      fontSize: 12,
+                                                      color: descColor,
+                                                      fontWeight:
+                                                          FontWeight.w400),
+                                                )),
+                                              )
+                                            : Container(
+                                                width: MediaQuery.of(context)
+                                                    .size
+                                                    .width,
+                                                color: const Color.fromARGB(
+                                                    255, 250, 250, 250),
+                                                child: Padding(
+                                                  padding:
+                                                      const EdgeInsets.only(
+                                                          left: 16.0,
+                                                          right: 16),
+                                                  child: Column(
+                                                    // mainAxisAlignment: MainAxisAlignment.start,
+                                                    children: [
+                                                      // const SizedBox(
+                                                      //   height: 20,
+                                                      // ),
+                                                      // InkWell(
+                                                      //   onTap: () async {
+                                                      //     await showDialog(
+                                                      //         context: context,
+                                                      //         builder: (context) {
+                                                      //           return AlertDialog(
+                                                      //             backgroundColor:
+                                                      //                 Colors.white,
+                                                      //             title: Column(
+                                                      //                 mainAxisAlignment:
+                                                      //                     MainAxisAlignment
+                                                      //                         .start,
+                                                      //                 crossAxisAlignment:
+                                                      //                     CrossAxisAlignment
+                                                      //                         .start,
+                                                      //                 children: [
+                                                      //                   Text(
+                                                      //                     "Berapa penilaian anda tentang tempat wisata ini?",
+                                                      //                     style: GoogleFonts.openSans(
+                                                      //                         fontSize:
+                                                      //                             13,
+                                                      //                         color: Colors
+                                                      //                             .black,
+                                                      //                         fontWeight:
+                                                      //                             FontWeight
+                                                      //                                 .w600),
+                                                      //                   ),
+                                                      //                   Padding(
+                                                      //                     padding:
+                                                      //                         const EdgeInsets
+                                                      //                             .all(10),
+                                                      //                     child: RatingBar
+                                                      //                         .builder(
+                                                      //                       initialRating:
+                                                      //                           5,
+                                                      //                       minRating: 1,
+                                                      //                       direction: Axis
+                                                      //                           .horizontal,
+                                                      //                       allowHalfRating:
+                                                      //                           false,
+                                                      //                       itemCount: 5,
+                                                      //                       itemPadding: EdgeInsets
+                                                      //                           .symmetric(
+                                                      //                               horizontal:
+                                                      //                                   4.0),
+                                                      //                       itemBuilder:
+                                                      //                           (context,
+                                                      //                                   _) =>
+                                                      //                               Icon(
+                                                      //                         Icons.star,
+                                                      //                         color: Colors
+                                                      //                             .amber,
+                                                      //                       ),
+                                                      //                       onRatingUpdate:
+                                                      //                           (rating) {
+                                                      //                         setState(
+                                                      //                             () {
+                                                      //                           ratingController =
+                                                      //                               rating;
+                                                      //                         });
+                                                      //                         print(
+                                                      //                             rating);
+                                                      //                       },
+                                                      //                     ),
+                                                      //                   ),
+                                                      //                   Row(
+                                                      //                     children: [],
+                                                      //                   ),
+                                                      //                   SizedBox(
+                                                      //                     height: 20,
+                                                      //                   ),
+                                                      //                   Text(
+                                                      //                     "Tulis ulasan anda",
+                                                      //                     style: GoogleFonts.openSans(
+                                                      //                         fontSize:
+                                                      //                             13,
+                                                      //                         color: Colors
+                                                      //                             .black,
+                                                      //                         fontWeight:
+                                                      //                             FontWeight
+                                                      //                                 .w600),
+                                                      //                   ),
+                                                      //                   Padding(
+                                                      //                     padding:
+                                                      //                         const EdgeInsets
+                                                      //                                 .only(
+                                                      //                             top:
+                                                      //                                 10.0),
+                                                      //                     child:
+                                                      //                         Container(
+                                                      //                       height: 50,
+                                                      //                       decoration: BoxDecoration(
+                                                      //                           borderRadius:
+                                                      //                               BorderRadius.circular(
+                                                      //                                   8),
+                                                      //                           border: Border.all(
+                                                      //                               color:
+                                                      //                                   descColor)),
+                                                      //                       child:
+                                                      //                           TextField(
+                                                      //                         controller:
+                                                      //                             reviewController,
+                                                      //                         keyboardType:
+                                                      //                             TextInputType
+                                                      //                                 .multiline,
+                                                      //                         textInputAction:
+                                                      //                             TextInputAction
+                                                      //                                 .next,
+                                                      //                         onChanged:
+                                                      //                             (text) {
+                                                      //                           setState(
+                                                      //                               () {
+                                                      //                             _review =
+                                                      //                                 text;
+                                                      //                           });
+                                                      //                         },
+                                                      //                         onSubmitted:
+                                                      //                             (text) {
+                                                      //                           setState(
+                                                      //                               () {
+                                                      //                             _review =
+                                                      //                                 text;
+                                                      //                           });
+                                                      //                         },
+                                                      //                       ),
+                                                      //                     ),
+                                                      //                   ),
+                                                      //                   GestureDetector(
+                                                      //                     onTap:
+                                                      //                         () async {
+                                                      //                       setState(() {
+                                                      //                         isLoading2 =
+                                                      //                             true;
+                                                      //                       });
+                                                      //                       // final reviewText = reviewController.text;
+                                                      //                       final reviewData = Provider.of<
+                                                      //                               ReviewController>(
+                                                      //                           context,
+                                                      //                           listen:
+                                                      //                               false);
+                                                      //                       final userCon = Provider.of<
+                                                      //                               UserController>(
+                                                      //                           context,
+                                                      //                           listen:
+                                                      //                               false);
+                                                      //                       try {
+                                                      //                         int intRating =
+                                                      //                             ratingController
+                                                      //                                 .toInt();
+                                                      //                         await reviewData.addReviewId(
+                                                      //                             id: widget
+                                                      //                                 .id
+                                                      //                                 .id,
+                                                      //                                 idUser: userCon.idUserLogin,
+                                                      //                             rating:
+                                                      //                                 intRating,
+                                                      //                             review:
+                                                      //                                 _review);
 
-                                                                    if (reviewData
-                                                                            .statusCode ==
-                                                                        200) {
-                                                                      setState(
-                                                                          () {
-                                                                        isLoading2 =
-                                                                            false;
-                                                                      });
-                                                                      Fluttertoast.showToast(
-                                                                          // msg: reviewData.messageAddReview
-                                                                          //     .toString(),
-                                                                          msg: "Terima kasih atas review Anda!",
-                                                                          toastLength: Toast.LENGTH_SHORT,
-                                                                          gravity: ToastGravity.BOTTOM,
-                                                                          timeInSecForIosWeb: 1,
-                                                                          backgroundColor: primaryColor.withOpacity(0.6),
-                                                                          textColor: Colors.white,
-                                                                          fontSize: 13);
-                                                                      // ignore: use_build_context_synchronously
-                                                                      Navigator.pop(
-                                                                          context,
-                                                                          false);
-                                                                      await reviewData.reviewDestinasiId(
-                                                                          widget
-                                                                              .id
-                                                                              .id);
-                                                                    }
-                                                                  } catch (e) {
-                                                                    print("$e");
-                                                                  }
-                                                                  setState(() {
-                                                                    isLoading2 =
-                                                                        false;
-                                                                  });
-                                                                },
-                                                                child: Padding(
+                                                      //                         if (reviewData
+                                                      //                                 .statusCode ==
+                                                      //                             200) {
+                                                      //                           setState(
+                                                      //                               () {
+                                                      //                             isLoading2 =
+                                                      //                                 false;
+                                                      //                           });
+                                                      //                           Fluttertoast.showToast(
+                                                      //                               // msg: reviewData.messageAddReview
+                                                      //                               //     .toString(),
+                                                      //                               msg: "Terima kasih atas review Anda!",
+                                                      //                               toastLength: Toast.LENGTH_SHORT,
+                                                      //                               gravity: ToastGravity.BOTTOM,
+                                                      //                               timeInSecForIosWeb: 1,
+                                                      //                               backgroundColor: primaryColor.withOpacity(0.6),
+                                                      //                               textColor: Colors.white,
+                                                      //                               fontSize: 13);
+                                                      //                           // ignore: use_build_context_synchronously
+                                                      //                           Navigator.pop(
+                                                      //                               context,
+                                                      //                               false);
+                                                      //                           await reviewData.reviewDestinasiId(
+                                                      //                               widget
+                                                      //                                   .id
+                                                      //                                   .id);
+                                                      //                         }
+                                                      //                       } catch (e) {
+                                                      //                         print("$e");
+                                                      //                       }
+                                                      //                       setState(() {
+                                                      //                         isLoading2 =
+                                                      //                             false;
+                                                      //                       });
+                                                      //                     },
+                                                      //                     child: Padding(
+                                                      //                       padding: const EdgeInsets
+                                                      //                               .only(
+                                                      //                           bottom:
+                                                      //                               10,
+                                                      //                           top: 40),
+                                                      //                       child:
+                                                      //                           Container(
+                                                      //                         height: 40,
+                                                      //                         width: MediaQuery.of(
+                                                      //                                 context)
+                                                      //                             .size
+                                                      //                             .width,
+                                                      //                         decoration:
+                                                      //                             BoxDecoration(
+                                                      //                           borderRadius:
+                                                      //                               BorderRadius.circular(
+                                                      //                                   5),
+                                                      //                           color:
+                                                      //                               secondaryColor,
+                                                      //                         ),
+                                                      //                         child: const Center(
+                                                      //                             child: Text(
+                                                      //                                 "Kirim",
+                                                      //                                 style: TextStyle(
+                                                      //                                     color: Colors.white,
+                                                      //                                     fontSize: 12,
+                                                      //                                     fontWeight: FontWeight.w600))),
+                                                      //                       ),
+                                                      //                     ),
+                                                      //                   )
+                                                      //                 ]),
+                                                      //           );
+                                                      //         });
+                                                      //   },
+                                                      //   child: Container(
+                                                      //     height: 40,
+                                                      //     decoration: BoxDecoration(
+                                                      //         borderRadius:
+                                                      //             BorderRadius.circular(
+                                                      //                 8),
+                                                      //         border: Border.all(
+                                                      //             color: descColor)),
+                                                      //     child: Row(
+                                                      //       mainAxisAlignment:
+                                                      //           MainAxisAlignment
+                                                      //               .spaceBetween,
+                                                      //       children: [
+                                                      //         Padding(
+                                                      //           padding:
+                                                      //               const EdgeInsets.only(
+                                                      //                   left: 16.0),
+                                                      //           child: Text(
+                                                      //             "Tulis tinjauan disini",
+                                                      //             style: GoogleFonts
+                                                      //                 .openSans(
+                                                      //                     fontSize: 11,
+                                                      //                     color:
+                                                      //                         descColor,
+                                                      //                     fontWeight:
+                                                      //                         FontWeight
+                                                      //                             .w400),
+                                                      //           ),
+                                                      //         ),
+                                                      //         const Padding(
+                                                      //           padding: EdgeInsets.only(
+                                                      //               right: 8.0),
+                                                      //           child: Icon(
+                                                      //             Icons.edit,
+                                                      //             size: 20,
+                                                      //             color: descColor,
+                                                      //           ),
+                                                      //         )
+                                                      //       ],
+                                                      //     ),
+                                                      //   ),
+                                                      // ),
+                                                      ListView.builder(
+                                                        physics: ClampingScrollPhysics(),
+                                                          shrinkWrap: true,
+                                                          padding: EdgeInsets.zero,
+                                                          controller:
+                                                              _scrollController,
+                                                          scrollDirection:
+                                                              Axis.vertical,
+                                                          itemCount: reviewData
+                                                              .reviewData!
+                                                              .length,
+                                                          itemBuilder:
+                                                              (context, index) {
+                                                            return Column(
+                                                              children: [
+                                                                Padding(
                                                                   padding: const EdgeInsets
                                                                           .only(
                                                                       bottom:
-                                                                          10,
-                                                                      top: 40),
+                                                                          8.0,
+                                                                      top: 20.0,
+                                                                      right: 8,
+                                                                      left: 6),
+                                                                  child: Row(
+                                                                    children: [
+                                                                      const CircleAvatar(
+                                                                        radius:
+                                                                            20,
+                                                                        backgroundColor: Color.fromARGB(
+                                                                            255,
+                                                                            230,
+                                                                            230,
+                                                                            230),
+                                                                        child:
+                                                                             FaIcon(
+                                                                          FontAwesomeIcons
+                                                                              .solidUser,
+                                                                          size:
+                                                                              15,
+                                                                          color:
+                                                                              secondaryColor,
+                                                                        ),
+                                                                      ),
+                                                                      Padding(
+                                                                        padding:
+                                                                            const EdgeInsets.only(left: 10.0),
+                                                                        child:
+                                                                            Container(
+                                                                          child:
+                                                                              Column(
+                                                                            mainAxisAlignment:
+                                                                                MainAxisAlignment.center,
+                                                                            crossAxisAlignment:
+                                                                                CrossAxisAlignment.start,
+                                                                            children: [
+                                                                              Row(mainAxisAlignment: MainAxisAlignment.center, children: [
+                                                                                Text(
+                                                                                  reviewData.reviewData![index].user!.name!.toString() != null ? reviewData.reviewData![index].user!.name! : '-',
+                                                                                  style: GoogleFonts.openSans(fontSize: 11, color: titleColor, fontWeight: FontWeight.w500),
+                                                                                ),
+                                                                                const Padding(
+                                                                                  padding: EdgeInsets.only(left: 8.0, right: 8.0),
+                                                                                  child: CircleAvatar(
+                                                                                    radius: 2,
+                                                                                    backgroundColor: Colors.black,
+                                                                                  ),
+                                                                                ),
+                                                                                Text(
+                                                                                  reviewData.reviewData![index].rating.toString(),
+                                                                                  style: GoogleFonts.openSans(fontSize: 11, color: titleColor, fontWeight: FontWeight.w500),
+                                                                                ),
+                                                                                const Padding(
+                                                                                  padding: EdgeInsets.only(left: 4.0),
+                                                                                  child: Icon(
+                                                                                    Icons.star,
+                                                                                    size: 15,
+                                                                                    color: Colors.amber,
+                                                                                  ),
+                                                                                ),
+                                                                              ]),
+                                                                              Padding(
+                                                                                padding: const EdgeInsets.only(top: 3.0),
+                                                                                child: Text(reviewData.reviewData![index].review!, style: GoogleFonts.openSans(fontSize: 13, color: descColor, fontWeight: FontWeight.w500)),
+                                                                              )
+                                                                            ],
+                                                                          ),
+                                                                        ),
+                                                                      ),
+                                                                    ],
+                                                                  ),
+                                                                ),
+                                                                Padding(
+                                                                  padding: const EdgeInsets
+                                                                          .only(
+                                                                      left: 8.0,
+                                                                      right:
+                                                                          8.0),
                                                                   child:
                                                                       Container(
-                                                                    height: 40,
+                                                                    height: 1,
                                                                     width: MediaQuery.of(
                                                                             context)
                                                                         .size
                                                                         .width,
-                                                                    decoration:
-                                                                        BoxDecoration(
-                                                                      borderRadius:
-                                                                          BorderRadius.circular(
-                                                                              5),
-                                                                      color:
-                                                                          secondaryColor,
-                                                                    ),
-                                                                    child: const Center(
-                                                                        child: Text(
-                                                                            "Kirim",
-                                                                            style: TextStyle(
-                                                                                color: Colors.white,
-                                                                                fontSize: 12,
-                                                                                fontWeight: FontWeight.w600))),
+                                                                    color: Colors
+                                                                        .grey
+                                                                        .shade300,
                                                                   ),
-                                                                ),
-                                                              )
-                                                            ]),
-                                                      );
-                                                    });
-                                              },
-                                              child: Container(
-                                                height: 40,
-                                                decoration: BoxDecoration(
-                                                    borderRadius:
-                                                        BorderRadius.circular(
-                                                            8),
-                                                    border: Border.all(
-                                                        color: descColor)),
-                                                child: Row(
-                                                  mainAxisAlignment:
-                                                      MainAxisAlignment
-                                                          .spaceBetween,
-                                                  children: [
-                                                    Padding(
-                                                      padding:
-                                                          const EdgeInsets.only(
-                                                              left: 16.0),
-                                                      child: Text(
-                                                        "Tulis tinjauan disini",
-                                                        style: GoogleFonts
-                                                            .openSans(
-                                                                fontSize: 11,
-                                                                color:
-                                                                    descColor,
-                                                                fontWeight:
-                                                                    FontWeight
-                                                                        .w400),
-                                                      ),
-                                                    ),
-                                                    const Padding(
-                                                      padding: EdgeInsets.only(
-                                                          right: 8.0),
-                                                      child: Icon(
-                                                        Icons.edit,
-                                                        size: 20,
-                                                        color: descColor,
-                                                      ),
-                                                    )
-                                                  ],
-                                                ),
-                                              ),
-                                            ),
-                                            ListView.builder(
-                                                shrinkWrap: true,
-                                                controller: _scrollController,
-                                                scrollDirection: Axis.vertical,
-                                                itemCount: reviewData
-                                                    .reviewData!.length,
-                                                itemBuilder: (context, index) {
-                                                  return Column(
-                                                    children: [
-                                                      Padding(
-                                                        padding:
-                                                            const EdgeInsets
-                                                                    .only(
-                                                                bottom: 8.0,
-                                                                top: 20.0,
-                                                                right: 8,
-                                                                left: 6),
-                                                        child: Row(
-                                                          children: [
-                                                            const CircleAvatar(
-                                                              radius: 20,
-                                                              backgroundColor:
-                                                                  Color
-                                                                      .fromARGB(
-                                                                          255,
-                                                                          230,
-                                                                          230,
-                                                                          230),
-                                                              child: Icon(
-                                                                Icons
-                                                                    .people_alt_outlined,
-                                                                color:
-                                                                    secondaryColor,
-                                                              ),
-                                                            ),
-                                                            Padding(
-                                                              padding:
-                                                                  const EdgeInsets
-                                                                          .only(
-                                                                      left:
-                                                                          10.0),
-                                                              child: Container(
-                                                                child: Column(
-                                                                  mainAxisAlignment:
-                                                                      MainAxisAlignment
-                                                                          .center,
-                                                                  crossAxisAlignment:
-                                                                      CrossAxisAlignment
-                                                                          .start,
-                                                                  children: [
-                                                                    Row(
-                                                                        mainAxisAlignment:
-                                                                            MainAxisAlignment.center,
-                                                                        children: [
-                                                                          Text(
-                                                                            "Nama User",
-                                                                            style: GoogleFonts.openSans(
-                                                                                fontSize: 11,
-                                                                                color: titleColor,
-                                                                                fontWeight: FontWeight.w500),
-                                                                          ),
-                                                                          const Padding(
-                                                                            padding:
-                                                                                EdgeInsets.only(left: 8.0, right: 8.0),
-                                                                            child:
-                                                                                CircleAvatar(
-                                                                              radius: 2,
-                                                                              backgroundColor: Colors.black,
-                                                                            ),
-                                                                          ),
-                                                                          Text(
-                                                                            reviewData.reviewData![index].rating.toString(),
-                                                                            style: GoogleFonts.openSans(
-                                                                                fontSize: 11,
-                                                                                color: titleColor,
-                                                                                fontWeight: FontWeight.w500),
-                                                                          ),
-                                                                          const Padding(
-                                                                            padding:
-                                                                                EdgeInsets.only(left: 4.0),
-                                                                            child:
-                                                                                Icon(
-                                                                              Icons.star,
-                                                                              size: 15,
-                                                                              color: Colors.amber,
-                                                                            ),
-                                                                          ),
-                                                                        ]),
-                                                                    Padding(
-                                                                      padding: const EdgeInsets
-                                                                              .only(
-                                                                          top:
-                                                                              3.0),
-                                                                      child: Text(
-                                                                          reviewData
-                                                                              .reviewData![
-                                                                                  index]
-                                                                              .review!,
-                                                                          style: GoogleFonts.openSans(
-                                                                              fontSize: 13,
-                                                                              color: descColor,
-                                                                              fontWeight: FontWeight.w500)),
-                                                                    )
-                                                                  ],
-                                                                ),
-                                                              ),
-                                                            ),
-                                                          ],
-                                                        ),
-                                                      ),
-                                                      Padding(
-                                                        padding:
-                                                            const EdgeInsets
-                                                                    .only(
-                                                                left: 8.0,
-                                                                right: 8.0),
-                                                        child: Container(
-                                                          height: 1,
-                                                          width: MediaQuery.of(
-                                                                  context)
-                                                              .size
-                                                              .width,
-                                                          color: descColor,
-                                                        ),
+                                                                )
+                                                              ],
+                                                            );
+                                                          }),
+                                                      const SizedBox(
+                                                        height: 20,
                                                       )
                                                     ],
-                                                  );
-                                                }),
-                                            const SizedBox(
-                                              height: 20,
-                                            )
-                                          ],
-                                        ),
-                                      ),
-                                    ));
+                                                  ),
+                                                ),
+                                              ));
                                   })
                           ]),
                     ),
-                    SizedBox(
-                      height: 80,
-                    )
+                    // SizedBox(
+                    //   height: 80,
+                    // )
                   ]);
                 }),
               ),

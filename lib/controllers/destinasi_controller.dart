@@ -51,7 +51,8 @@ class DestinasiController extends ChangeNotifier {
     }
   }
 
-    Future<dynamic> destinasiByIdOwner(id) async {
+  int? destinasiByOwnerStatusCode;
+  Future<dynamic> destinasiByIdOwner(id) async {
     print("ID: $id");
     var url = Uri.parse(BASE_URL + GET_DESTINASI_IDOWNER(id));
     print("URL = $url");
@@ -64,12 +65,15 @@ class DestinasiController extends ChangeNotifier {
         var data = json.decode(response.body);
         print("code: ${response.statusCode}");
         print(data["status"]);
-
+        destinasiByOwnerStatusCode = response.statusCode;
         destinasiResponse = destinasiFromJson(response.body);
         destinasiDataByOwner = destinasiResponse?.destinasi;
         notifyListeners();
       } else if (response.statusCode == 404) {
+        destinasiByOwnerStatusCode = response.statusCode;
         print(messageDestinasi);
+      } else{
+        destinasiByOwnerStatusCode = response.statusCode;
       }
     } catch (e) {
       print("ERROR MESSAGE: $e");

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:pergijalan_mobile/controllers/destinasi_controller.dart';
+import 'package:pergijalan_mobile/views/pages/all_destinasidata.dart';
 import 'package:pergijalan_mobile/views/pages/list_category.dart';
 import 'package:pergijalan_mobile/views/pages/detail_touristdestinasion.dart';
 import 'package:provider/provider.dart';
@@ -428,7 +429,7 @@ class _HomePageState extends State<HomePage> {
                                     MaterialPageRoute(
                                         builder: (context) =>
                                             const ListByCategory(
-                                                q: "cagar alam")));
+                                                q: "Cagar Alam")));
                               },
                               child: SizedBox(
                                 height: 80,
@@ -466,7 +467,7 @@ class _HomePageState extends State<HomePage> {
                                     context,
                                     MaterialPageRoute(
                                         builder: (context) =>
-                                            const ListByCategory(q: "budaya")));
+                                            const ListByCategory(q: "Budaya")));
                               },
                               child: SizedBox(
                                 height: 80,
@@ -505,7 +506,7 @@ class _HomePageState extends State<HomePage> {
                                     MaterialPageRoute(
                                         builder: (context) =>
                                             const ListByCategory(
-                                                q: "taman hiburan")));
+                                                q: "Taman Hiburan")));
                               },
                               child: SizedBox(
                                 height: 80,
@@ -543,7 +544,7 @@ class _HomePageState extends State<HomePage> {
                                     context,
                                     MaterialPageRoute(
                                         builder: (context) =>
-                                            const ListByCategory(q: "bahari")));
+                                            const ListByCategory(q: "Bahari")));
                               },
                               child: SizedBox(
                                 height: 80,
@@ -582,7 +583,7 @@ class _HomePageState extends State<HomePage> {
                                     MaterialPageRoute(
                                         builder: (context) =>
                                             const ListByCategory(
-                                                q: "tempat ibadah")));
+                                                q: "Tempat Ibadah")));
                               },
                               child: SizedBox(
                                 height: 80,
@@ -623,7 +624,7 @@ class _HomePageState extends State<HomePage> {
                     ),
                     Padding(
                       padding: const EdgeInsets.only(
-                          left: 16, top: 8.0, bottom: 0, right: 16),
+                          left: 16, top: 8.0, bottom: 0, right: 26),
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
@@ -637,16 +638,25 @@ class _HomePageState extends State<HomePage> {
                                   fontWeight: FontWeight.w700),
                             ),
                           ),
-                          const CircleAvatar(
-                            radius: 13,
-                            backgroundColor:
-                                const Color.fromARGB(172, 255, 255, 255),
-                            child: Icon(
-                              Icons.arrow_forward_ios_rounded,
-                              color: Colors.grey,
-                              size: 15,
-                            ),
-                          ),
+                          InkWell(
+                            onTap: (){
+                            Navigator.push(
+                                            context,
+                                            MaterialPageRoute(
+                                                builder: (context) =>
+                                                    AllDestinasiPage())) ; 
+                            },
+                            child: Align(
+                                alignment: Alignment.topRight,
+                                child: Text(
+                                  "Lihat Semua",
+                                  style: GoogleFonts.inter(
+                                      fontSize: 9,
+                                      color: Colors.grey.shade500,
+                                      fontWeight: FontWeight.w500),
+                                ),
+                              ),
+                          )
                         ],
                       ),
                     ),
@@ -696,9 +706,10 @@ class _HomePageState extends State<HomePage> {
                                           width:
                                               MediaQuery.of(context).size.width,
                                           child: Row(
-                                              mainAxisAlignment:
-                                                  MainAxisAlignment
-                                                      .spaceBetween,
+                                            mainAxisAlignment: MainAxisAlignment.start,
+                                              // mainAxisAlignment:
+                                              //     MainAxisAlignment
+                                              //         .spaceBetween,
                                               children: [
                                                 Container(
                                                   height: 70,
@@ -715,42 +726,79 @@ class _HomePageState extends State<HomePage> {
                                                         fit: BoxFit.cover,
                                                       )),
                                                 ),
-                                                Container(
-                                                  width: MediaQuery.of(context)
-                                                          .size
-                                                          .width *
-                                                      0.4,
-                                                  child: Column(
-                                                      crossAxisAlignment:
-                                                          CrossAxisAlignment
-                                                              .start,
-                                                      mainAxisAlignment:
-                                                          MainAxisAlignment
-                                                              .center,
-                                                      children: [
-                                                        Text(
-                                                          homeCon
-                                                              .destinasiData![
-                                                                  index]
-                                                              .nameDestinasi!,
-                                                          style: GoogleFonts
-                                                              .notoSansDisplay(
-                                                                  fontSize: 13,
+                                                Padding(
+                                                  padding: const EdgeInsets.only(left: 12.0),
+                                                  child: Container(
+                                                    width: MediaQuery.of(context)
+                                                            .size
+                                                            .width *
+                                                        0.4,
+                                                    child: Column(
+                                                        crossAxisAlignment:
+                                                            CrossAxisAlignment
+                                                                .start,
+                                                        mainAxisAlignment:
+                                                            MainAxisAlignment
+                                                                .center,
+                                                        children: [
+                                                          Text(
+                                                            homeCon
+                                                                .destinasiData![
+                                                                    index]
+                                                                .nameDestinasi!,
+                                                            style: GoogleFonts
+                                                                .notoSansDisplay(
+                                                                    fontSize: 13,
+                                                                    color:
+                                                                        secondaryColor,
+                                                                    fontWeight:
+                                                                        FontWeight
+                                                                            .w600),
+                                                            overflow: TextOverflow
+                                                                .ellipsis,
+                                                          ),
+                                                          Padding(
+                                                            padding:
+                                                                const EdgeInsets
+                                                                        .only(
+                                                                    top: 2.0,
+                                                                    bottom: 2.0),
+                                                            child: Row(
+                                                              mainAxisAlignment:
+                                                                  MainAxisAlignment
+                                                                      .start,
+                                                              crossAxisAlignment:
+                                                                  CrossAxisAlignment
+                                                                      .start,
+                                                              children: [
+                                                                Icon(
+                                                                  Icons
+                                                                      .location_on_outlined,
+                                                                  size: 15,
                                                                   color:
-                                                                      secondaryColor,
-                                                                  fontWeight:
-                                                                      FontWeight
-                                                                          .w600),
-                                                          overflow: TextOverflow
-                                                              .ellipsis,
-                                                        ),
-                                                        Padding(
-                                                          padding:
-                                                              const EdgeInsets
-                                                                      .only(
-                                                                  top: 2.0,
-                                                                  bottom: 2.0),
-                                                          child: Row(
+                                                                      titleColor,
+                                                                ),
+                                                                Text(
+                                                                  homeCon
+                                                                      .destinasiDataSortIntoTen![
+                                                                          index]
+                                                                      .city!,
+                                                                  style: GoogleFonts.notoSansDisplay(
+                                                                      fontSize:
+                                                                          11,
+                                                                      color:
+                                                                          descColor,
+                                                                      fontWeight:
+                                                                          FontWeight
+                                                                              .w500),
+                                                                  overflow:
+                                                                      TextOverflow
+                                                                          .ellipsis,
+                                                                )
+                                                              ],
+                                                            ),
+                                                          ),
+                                                          Row(
                                                             mainAxisAlignment:
                                                                 MainAxisAlignment
                                                                     .start,
@@ -758,91 +806,15 @@ class _HomePageState extends State<HomePage> {
                                                                 CrossAxisAlignment
                                                                     .start,
                                                             children: [
-                                                              Icon(
-                                                                Icons
-                                                                    .location_on_outlined,
-                                                                size: 15,
-                                                                color:
-                                                                    titleColor,
-                                                              ),
-                                                              Text(
-                                                                homeCon
-                                                                    .destinasiDataSortIntoTen![
-                                                                        index]
-                                                                    .city!,
-                                                                style: GoogleFonts.notoSansDisplay(
-                                                                    fontSize:
-                                                                        11,
-                                                                    color:
-                                                                        descColor,
-                                                                    fontWeight:
-                                                                        FontWeight
-                                                                            .w500),
-                                                                overflow:
-                                                                    TextOverflow
-                                                                        .ellipsis,
-                                                              )
-                                                            ],
-                                                          ),
-                                                        ),
-                                                        Row(
-                                                          mainAxisAlignment:
-                                                              MainAxisAlignment
-                                                                  .start,
-                                                          crossAxisAlignment:
-                                                              CrossAxisAlignment
-                                                                  .start,
-                                                          children: [
-                                                            Container(
-                                                                height: 17,
-                                                                decoration: BoxDecoration(
-                                                                    borderRadius:
-                                                                        BorderRadius
-                                                                            .circular(
-                                                                                8),
-                                                                    color:
-                                                                        thirdColor),
-                                                                child: Center(
-                                                                  child:
-                                                                      Padding(
-                                                                    padding: const EdgeInsets
-                                                                            .only(
-                                                                        left:
-                                                                            5.0,
-                                                                        right:
-                                                                            5.0),
-                                                                    child: homeCon.destinasiDataSortIntoTen![index].hobby !=
-                                                                            null
-                                                                        ? Text(
-                                                                            homeCon.destinasiDataSortIntoTen![index].hobby!.toString(),
-                                                                            style: GoogleFonts.notoSansDisplay(
-                                                                                fontSize: 9,
-                                                                                color: Colors.white,
-                                                                                fontWeight: FontWeight.w500),
-                                                                            overflow:
-                                                                                TextOverflow.ellipsis,
-                                                                          )
-                                                                        :  Text(
-                                                                            "Lainnya",  style: GoogleFonts.notoSansDisplay(
-                                                                                fontSize: 9,
-                                                                                color: Colors.white,
-                                                                                fontWeight: FontWeight.w500),),
-                                                                  ),
-                                                                )),
-                                                            Padding(
-                                                              padding:
-                                                                  const EdgeInsets
-                                                                          .only(
-                                                                      left:
-                                                                          5.0),
-                                                              child: Container(
+                                                              Container(
                                                                   height: 17,
                                                                   decoration: BoxDecoration(
                                                                       borderRadius:
-                                                                          BorderRadius.circular(
-                                                                              8),
+                                                                          BorderRadius
+                                                                              .circular(
+                                                                                  8),
                                                                       color:
-                                                                          labelColor),
+                                                                          thirdColor),
                                                                   child: Center(
                                                                     child:
                                                                         Padding(
@@ -852,67 +824,109 @@ class _HomePageState extends State<HomePage> {
                                                                               5.0,
                                                                           right:
                                                                               5.0),
-                                                                      child:
-                                                                          Text(
-                                                                        homeCon
-                                                                            .destinasiDataSortIntoTen![index]
-                                                                            .category!,
-                                                                        style: GoogleFonts.notoSansDisplay(
-                                                                            fontSize:
-                                                                                9,
-                                                                            color:
-                                                                                Colors.black,
-                                                                            fontWeight: FontWeight.w500),
-                                                                        overflow:
-                                                                            TextOverflow.ellipsis,
-                                                                      ),
+                                                                      child: homeCon.destinasiDataSortIntoTen![index].hobby !=
+                                                                              null
+                                                                          ? Text(
+                                                                              homeCon.destinasiDataSortIntoTen![index].hobby!.toString(),
+                                                                              style: GoogleFonts.notoSansDisplay(
+                                                                                  fontSize: 9,
+                                                                                  color: Colors.white,
+                                                                                  fontWeight: FontWeight.w500),
+                                                                              overflow:
+                                                                                  TextOverflow.ellipsis,
+                                                                            )
+                                                                          :  Text(
+                                                                              "Lainnya",  style: GoogleFonts.notoSansDisplay(
+                                                                                  fontSize: 9,
+                                                                                  color: Colors.white,
+                                                                                  fontWeight: FontWeight.w500),),
                                                                     ),
                                                                   )),
-                                                            )
-                                                          ],
-                                                        )
-                                                      ]),
+                                                              Padding(
+                                                                padding:
+                                                                    const EdgeInsets
+                                                                            .only(
+                                                                        left:
+                                                                            5.0),
+                                                                child: Container(
+                                                                    height: 17,
+                                                                    decoration: BoxDecoration(
+                                                                        borderRadius:
+                                                                            BorderRadius.circular(
+                                                                                8),
+                                                                        color:
+                                                                            labelColor),
+                                                                    child: Center(
+                                                                      child:
+                                                                          Padding(
+                                                                        padding: const EdgeInsets
+                                                                                .only(
+                                                                            left:
+                                                                                5.0,
+                                                                            right:
+                                                                                5.0),
+                                                                        child:
+                                                                            Text(
+                                                                          homeCon
+                                                                              .destinasiDataSortIntoTen![index]
+                                                                              .category!,
+                                                                          style: GoogleFonts.notoSansDisplay(
+                                                                              fontSize:
+                                                                                  9,
+                                                                              color:
+                                                                                  Colors.black,
+                                                                              fontWeight: FontWeight.w500),
+                                                                          overflow:
+                                                                              TextOverflow.ellipsis,
+                                                                        ),
+                                                                      ),
+                                                                    )),
+                                                              )
+                                                            ],
+                                                          )
+                                                        ]),
+                                                  ),
                                                 ),
-                                                Container(
-                                                  width: MediaQuery.of(context)
-                                                          .size
-                                                          .width *
-                                                      0.15,
-                                                  child: Column(
-                                                      mainAxisAlignment:
-                                                          MainAxisAlignment
-                                                              .center,
-                                                      crossAxisAlignment:
-                                                          CrossAxisAlignment
-                                                              .end,
-                                                      children: [
-                                                        Container(
-                                                          width: MediaQuery.of(
-                                                                      context)
-                                                                  .size
-                                                                  .width *
-                                                              0.065,
-                                                          child: Icon(
-                                                              Icons
-                                                                  .compare_arrows_rounded,
-                                                              color: descColor,
-                                                              size: 19),
-                                                        ),
-                                                        Text(
-                                                          "Jarak",
-                                                          style: GoogleFonts
-                                                              .notoSansDisplay(
-                                                                  fontSize: 11,
-                                                                  color:
-                                                                      descColor,
-                                                                  fontWeight:
-                                                                      FontWeight
-                                                                          .w400),
-                                                          overflow: TextOverflow
-                                                              .ellipsis,
-                                                        ),
-                                                      ]),
-                                                )
+                                                // Container(
+                                                //   width: MediaQuery.of(context)
+                                                //           .size
+                                                //           .width *
+                                                //       0.15,
+                                                //   child: Column(
+                                                //       mainAxisAlignment:
+                                                //           MainAxisAlignment
+                                                //               .center,
+                                                //       crossAxisAlignment:
+                                                //           CrossAxisAlignment
+                                                //               .end,
+                                                //       children: [
+                                                //         Container(
+                                                //           width: MediaQuery.of(
+                                                //                       context)
+                                                //                   .size
+                                                //                   .width *
+                                                //               0.065,
+                                                //           child: Icon(
+                                                //               Icons
+                                                //                   .compare_arrows_rounded,
+                                                //               color: descColor,
+                                                //               size: 19),
+                                                //         ),
+                                                //         Text(
+                                                //           "Jarak",
+                                                //           style: GoogleFonts
+                                                //               .notoSansDisplay(
+                                                //                   fontSize: 11,
+                                                //                   color:
+                                                //                       descColor,
+                                                //                   fontWeight:
+                                                //                       FontWeight
+                                                //                           .w400),
+                                                //           overflow: TextOverflow
+                                                //               .ellipsis,
+                                                //         ),
+                                                //       ]),
+                                                // )
                                               ]),
                                         ),
                                       ),
