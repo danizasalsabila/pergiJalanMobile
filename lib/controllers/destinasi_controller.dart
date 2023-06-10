@@ -64,7 +64,7 @@ class DestinasiController extends ChangeNotifier {
       if (response.statusCode == 200) {
         var data = json.decode(response.body);
         print("code: ${response.statusCode}");
-        print(data["status"]);
+        // print(data["status"]);
         destinasiByOwnerStatusCode = response.statusCode;
         destinasiResponse = destinasiFromJson(response.body);
         destinasiDataByOwner = destinasiResponse?.destinasi;

@@ -221,7 +221,7 @@ class OwnerBusinessController extends ChangeNotifier {
       var data = json.decode(response.body);
       if (response.statusCode == 200) {
         print("CODE: ${response.statusCode}");
-        print(data);
+        // print(data);
         var dataDetail = data["data"];
         ownerBusinessUserDetail = OwnerBusinessUser.fromJson(dataDetail);
         notifyListeners();

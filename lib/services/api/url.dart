@@ -80,4 +80,12 @@ DELETE_TICKET(idDestinasi) => "ticket/destroy/$idDestinasi";
 
 PUT_TICKET(idDestinasi) => "ticket/update/$idDestinasi?";
 
+GET_TICKETSOLD_OWNER(id) => "ticketsold/owner?id_owner=$id";
+
+GET_TICKETSOLD_DESTINASI(id) => "ticketsold?id_destinasi=$id";
+
+
+
+//eticket
+GET_ETICKET_OWNER(id) => "eticket/byowner/$id";
 

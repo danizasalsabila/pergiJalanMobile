@@ -3,11 +3,14 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
 import 'package:pergijalan_mobile/config/theme_color.dart';
+import 'package:pergijalan_mobile/controllers/eticket_controller.dart';
 import 'package:pergijalan_mobile/controllers/owner_business_controller.dart';
 import 'package:pergijalan_mobile/views/pages/business_owner/edit_profile_owner.dart';
 import 'package:pergijalan_mobile/views/pages/business_owner/home.dart';
+import 'package:pergijalan_mobile/views/pages/business_owner/ticketsales_history.dart';
 import 'package:provider/provider.dart';
 
+import '../../../controllers/ticket_controller.dart';
 import '../splash_screen_page.dart';
 
 class OwnerProfilePage extends StatefulWidget {
@@ -27,11 +30,13 @@ class _OwnerProfilePageState extends State<OwnerProfilePage> {
     print("-------------DIRECT TO PROFILE OWNER-----------");
     final profileCon =
         Provider.of<OwnerBusinessController>(context, listen: false);
+    final eticketCon = Provider.of<ETicketController>(context, listen: false);
     isLoading = true;
 
     Future.delayed(Duration(seconds: 1)).then((value) async {
       try {
         await profileCon.ownerDetail();
+        await eticketCon.allEticketByOwner(profileCon.idOBLogin);
       } catch (e) {
         print(e);
       }
@@ -46,6 +51,8 @@ class _OwnerProfilePageState extends State<OwnerProfilePage> {
   @override
   Widget build(BuildContext context) {
     String formattedDate = DateFormat('d/MM/yyyy').format(now);
+    final eticketCon = Provider.of<ETicketController>(context, listen: false);
+    final ticketData = Provider.of<TicketController>(context, listen: false);
 
     return Scaffold(
       backgroundColor: backgroundColor,
@@ -286,7 +293,10 @@ class _OwnerProfilePageState extends State<OwnerProfilePage> {
                                           padding: const EdgeInsets.only(
                                               left: 8.0, top: 5),
                                           child: Text(
-                                            "-",
+                                            eticketCon.totalIncomeTicket != 0
+                                                ? eticketCon.totalIncomeTicket
+                                                    .toString()
+                                                : "-",
                                             style: GoogleFonts.kanit(
                                                 fontSize: 24,
                                                 color: thirdColor,
@@ -322,7 +332,10 @@ class _OwnerProfilePageState extends State<OwnerProfilePage> {
                                                   fontWeight: FontWeight.w500),
                                             ),
                                             Text(
-                                              "0",
+                                              ticketData.ticketSoldOwner != 0
+                                                  ? ticketData.ticketSoldOwner
+                                                      .toString()
+                                                  : "0",
                                               style: GoogleFonts.openSans(
                                                   fontSize: 11,
                                                   color: thirdColor,
@@ -335,22 +348,32 @@ class _OwnerProfilePageState extends State<OwnerProfilePage> {
                                     const SizedBox(
                                       height: 8,
                                     ),
-                                    Container(
-                                      width: MediaQuery.of(context).size.width *
-                                          0.6,
-                                      height: 27,
-                                      decoration: BoxDecoration(
-                                          color: thirdColor,
-                                          borderRadius:
-                                              BorderRadius.circular(20)),
-                                      child: Center(
-                                          child: Text(
-                                        "Riwayat Penjualan",
-                                        style: GoogleFonts.openSans(
-                                            fontSize: 10,
-                                            color: Colors.white,
-                                            fontWeight: FontWeight.w600),
-                                      )),
+                                    InkWell(
+                                      onTap: () {
+                                        Navigator.push(
+                                            context,
+                                            MaterialPageRoute(
+                                                builder: (context) =>
+                                                    TicketSalesHistory()));
+                                      },
+                                      child: Container(
+                                        width:
+                                            MediaQuery.of(context).size.width *
+                                                0.6,
+                                        height: 27,
+                                        decoration: BoxDecoration(
+                                            color: thirdColor,
+                                            borderRadius:
+                                                BorderRadius.circular(20)),
+                                        child: Center(
+                                            child: Text(
+                                          "Riwayat Penjualan",
+                                          style: GoogleFonts.openSans(
+                                              fontSize: 10,
+                                              color: Colors.white,
+                                              fontWeight: FontWeight.w600),
+                                        )),
+                                      ),
                                     )
                                   ],
                                 ),
