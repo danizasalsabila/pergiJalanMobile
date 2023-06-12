@@ -6,7 +6,7 @@ import 'package:pergijalan_mobile/config/theme_color.dart';
 import 'package:pergijalan_mobile/views/pages/home.dart';
 import 'package:pergijalan_mobile/views/pages/search2.dart';
 import 'package:pergijalan_mobile/views/pages/search_page.dart';
-import 'package:pergijalan_mobile/views/pages/user_page.dart';
+import 'package:pergijalan_mobile/views/pages/account_user_page.dart';
 
 class MainNavigation extends StatefulWidget {
   int indexNav;

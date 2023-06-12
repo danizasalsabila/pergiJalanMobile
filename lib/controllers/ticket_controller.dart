@@ -7,11 +7,11 @@ import 'package:http/http.dart' as http;
 import '../models/ticket.dart';
 import '../services/api/url.dart';
 
-class TicketController extends ChangeNotifier{
+class TicketController extends ChangeNotifier {
   Ticket? ticketDataDetail;
+  TicketResponse? ticketResponse;
+  List<Ticket>? ticketData;
 
-  
-  
   int? statusCodeGetTicketByIdOwner;
   int? ticketSoldOwner;
   Future<dynamic> getTicketbyIdOwner(id) async {
@@ -35,6 +35,34 @@ class TicketController extends ChangeNotifier{
       }
     } catch (e) {
       print("ERROR MESSAGE: $e");
+    }
+  }
+
+  bool anyTicket = false;
+
+  Future<dynamic> getTicketbyIdDestination(id) async {
+    print("get ticket by id destinasi $id");
+    var url = Uri.parse(BASE_URL + GET_TICKET_ID(id));
+    print("URL = $url");
+    try {
+      var response = await http.get(url);
+
+      var data = json.decode(response.body);
+
+      if (response.statusCode == 200) {
+        print("code : ${response.statusCode}");
+        ticketResponse = ticketFromJson(response.body);
+        ticketData = ticketResponse?.ticket;
+        anyTicket = true;
+        notifyListeners();
+      } else if (response.statusCode == 404) {
+        anyTicket = false;
+
+        print("code: ${response.statusCode}");
+      }
+    } catch (e) {
+      print("ERROR MESSAGE: $e");
+      anyTicket = false;
     }
   }
 }

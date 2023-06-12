@@ -6,7 +6,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:pergijalan_mobile/config/theme_color.dart';
 import 'package:pergijalan_mobile/controllers/owner_business_controller.dart';
 import 'package:pergijalan_mobile/controllers/user_controller.dart';
-import 'package:pergijalan_mobile/views/pages/user_page.dart';
+import 'package:pergijalan_mobile/views/pages/account_user_page.dart';
 import 'package:pergijalan_mobile/views/widgets/bar_mainnavigation.dart';
 import 'package:provider/provider.dart';
 

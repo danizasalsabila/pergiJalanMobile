@@ -9,3 +9,4 @@ const Color labelColor = Color.fromARGB(255, 75, 150, 111);
 const Color labelColorBack = Color.fromARGB(255, 199, 231, 153);
 const Color titleColor = Color.fromARGB(255, 106, 106, 106);
 const Color descColor = Color.fromARGB(255, 154, 154, 154);
+const Color captColor = Color.fromARGB(255, 181, 181, 181);

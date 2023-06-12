@@ -9,7 +9,8 @@ import 'package:pergijalan_mobile/config/theme_color.dart';
 import 'package:pergijalan_mobile/controllers/review_controller.dart';
 import 'package:pergijalan_mobile/controllers/user_controller.dart';
 import 'package:pergijalan_mobile/models/destinasi.dart';
-import 'package:pergijalan_mobile/views/pages/login_user.dart';
+import 'package:pergijalan_mobile/views/pages/ticket_list_page.dart';
+import 'package:pergijalan_mobile/views/pages/account_login_user.dart';
 import 'package:provider/provider.dart';
 import 'package:readmore/readmore.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -1504,7 +1505,8 @@ class _DetailDestinationState extends State<DetailDestination> {
                                                                         context)
                                                                     .size
                                                                     .width,
-                                                            color: Colors.grey.shade300,
+                                                            color: Colors
+                                                                .grey.shade300,
                                                           ),
                                                         )
                                                       ],
@@ -1530,42 +1532,73 @@ class _DetailDestinationState extends State<DetailDestination> {
               ? Center(
                   child: CircularProgressIndicator(),
                 )
-              : GestureDetector(
-                  onTap: () async {
-                    Fluttertoast.showToast(
-                        msg: "Masuk ke akun anda sebelum membeli tiket",
-                        toastLength: Toast.LENGTH_SHORT,
-                        gravity: ToastGravity.BOTTOM,
-                        timeInSecForIosWeb: 1,
-                        backgroundColor: primaryColor.withOpacity(0.5),
-                        textColor: Colors.white,
-                        fontSize: 16.0);
-                    await Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => const LoginUser(),
+              : isUserLogin == true
+                  ? GestureDetector(
+                      onTap: () async {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) =>  ListTicketDestination(
+                              id: widget.id,
+                            ),
+                          ),
+                        );
+                      },
+                      child: Padding(
+                        padding: const EdgeInsets.only(
+                            left: 18.0, right: 18, bottom: 10, top: 10),
+                        child: Container(
+                          height: MediaQuery.of(context).size.height * 0.06,
+                          width: MediaQuery.of(context).size.width,
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(5),
+                            color: secondaryColor,
+                          ),
+                          child: const Center(
+                              child: Text("Pesan Tiket",
+                                  style: TextStyle(
+                                      color: Colors.white,
+                                      fontSize: 12,
+                                      fontWeight: FontWeight.w600))),
+                        ),
                       ),
-                    );
-                  },
-                  child: Padding(
-                    padding: const EdgeInsets.only(
-                        left: 18.0, right: 18, bottom: 10, top: 10),
-                    child: Container(
-                      height: MediaQuery.of(context).size.height * 0.06,
-                      width: MediaQuery.of(context).size.width,
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(5),
-                        color: secondaryColor,
+                    )
+                  : GestureDetector(
+                      onTap: () async {
+                        Fluttertoast.showToast(
+                            msg: "Masuk ke akun anda sebelum membeli tiket",
+                            toastLength: Toast.LENGTH_SHORT,
+                            gravity: ToastGravity.BOTTOM,
+                            timeInSecForIosWeb: 1,
+                            backgroundColor: primaryColor.withOpacity(0.5),
+                            textColor: Colors.white,
+                            fontSize: 16.0);
+                        await Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => const LoginUser(),
+                          ),
+                        );
+                      },
+                      child: Padding(
+                        padding: const EdgeInsets.only(
+                            left: 18.0, right: 18, bottom: 10, top: 10),
+                        child: Container(
+                          height: MediaQuery.of(context).size.height * 0.06,
+                          width: MediaQuery.of(context).size.width,
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(5),
+                            color: secondaryColor,
+                          ),
+                          child: const Center(
+                              child: Text("Pesan Tiket",
+                                  style: TextStyle(
+                                      color: Colors.white,
+                                      fontSize: 12,
+                                      fontWeight: FontWeight.w600))),
+                        ),
                       ),
-                      child: const Center(
-                          child: Text("Pesan Tiket",
-                              style: TextStyle(
-                                  color: Colors.white,
-                                  fontSize: 12,
-                                  fontWeight: FontWeight.w600))),
-                    ),
-                  ),
-                )),
+                    )),
     );
   }
 }

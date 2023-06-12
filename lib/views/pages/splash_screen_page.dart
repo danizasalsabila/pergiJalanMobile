@@ -1,6 +1,6 @@
 
 import 'package:flutter/material.dart';
-import 'package:pergijalan_mobile/views/pages/login_user.dart';
+import 'package:pergijalan_mobile/views/pages/account_login_user.dart';
 import 'package:pergijalan_mobile/views/widgets/bar_mainnavigation.dart';
 import 'package:splash_screen_view/SplashScreenView.dart';
 

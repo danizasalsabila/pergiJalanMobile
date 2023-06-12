@@ -8,7 +8,7 @@ import 'package:pergijalan_mobile/controllers/owner_business_controller.dart';
 import 'package:pergijalan_mobile/controllers/user_controller.dart';
 import 'package:pergijalan_mobile/views/pages/business_owner/home.dart';
 import 'package:pergijalan_mobile/views/pages/business_owner/register_owner.dart';
-import 'package:pergijalan_mobile/views/pages/register_user.dart';
+import 'package:pergijalan_mobile/views/pages/account_register_user.dart';
 import 'package:pergijalan_mobile/views/widgets/bar_mainnavigation.dart';
 import 'package:provider/provider.dart';
 

@@ -84,6 +84,7 @@ flutter:
     - assets/background/
     - assets/images/
     - assets/logo/
+    - assets/lottie/
   # assets:
   #   - images/a_dot_burr.jpeg
   #   - images/a_dot_ham.jpeg

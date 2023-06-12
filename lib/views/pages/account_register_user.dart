@@ -4,7 +4,7 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:pergijalan_mobile/config/theme_color.dart';
 import 'package:pergijalan_mobile/controllers/user_controller.dart';
-import 'package:pergijalan_mobile/views/pages/login_user.dart';
+import 'package:pergijalan_mobile/views/pages/account_login_user.dart';
 import 'package:provider/provider.dart';
 
 class RegisterUser extends StatefulWidget {

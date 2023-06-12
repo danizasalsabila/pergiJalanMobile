@@ -5,19 +5,19 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:pergijalan_mobile/config/theme_color.dart';
 import 'package:pergijalan_mobile/controllers/destinasi_controller.dart';
 import 'package:pergijalan_mobile/views/pages/about_pergijalan.dart';
-import 'package:pergijalan_mobile/views/pages/login_user.dart';
+import 'package:pergijalan_mobile/views/pages/account_login_user.dart';
 import 'package:pergijalan_mobile/views/pages/splash_screen_page.dart';
-import 'package:pergijalan_mobile/views/pages/tipsandtrick.dart';
+import 'package:pergijalan_mobile/views/pages/account_tipsandtrick.dart';
 import 'package:provider/provider.dart';
 
+import '../../controllers/eticket_controller.dart';
 import '../../controllers/user_controller.dart';
 import '../widgets/bar_mainnavigation.dart';
 import 'business_owner/login_owner.dart';
-import 'edit_profile_page.dart';
+import 'account_edit_profile_page.dart';
 
 class UserPage extends StatefulWidget {
-  
-   UserPage({super.key});
+  UserPage({super.key});
 
   @override
   State<UserPage> createState() => _UserPageState();
@@ -193,7 +193,8 @@ class _UserPageState extends State<UserPage> {
                                               MaterialPageRoute(
                                                   builder: (context) =>
                                                       EditProfilePage(
-                                                        id: userCon.userDataDetail!,
+                                                        id: userCon
+                                                            .userDataDetail!,
                                                       )));
                                         },
                                         child: Align(
@@ -439,19 +440,29 @@ class _UserPageState extends State<UserPage> {
                                     )),
                                   ),
                                 ),
-                                SizedBox(
-                                    width:
-                                        MediaQuery.of(context).size.width * 0.5,
-                                    child: Padding(
-                                      padding: const EdgeInsets.only(left: 8.0),
-                                      child: Text(
-                                        "Riwayat Pemesanan Tiket",
-                                        style: GoogleFonts.inter(
-                                            fontSize: 15,
-                                            color: thirdColor,
-                                            fontWeight: FontWeight.w600),
-                                      ),
-                                    )),
+                                InkWell(
+                                  onTap: () async {
+                                    final eticketCon =
+                                        Provider.of<ETicketController>(context,
+                                            listen: false);
+
+                                    await eticketCon.eticketById(7);
+                                  },
+                                  child: SizedBox(
+                                      width: MediaQuery.of(context).size.width *
+                                          0.5,
+                                      child: Padding(
+                                        padding:
+                                            const EdgeInsets.only(left: 8.0),
+                                        child: Text(
+                                          "Riwayat Pemesanan Tiket",
+                                          style: GoogleFonts.inter(
+                                              fontSize: 15,
+                                              color: thirdColor,
+                                              fontWeight: FontWeight.w600),
+                                        ),
+                                      )),
+                                ),
                               ],
                             ),
                             SizedBox(
@@ -565,7 +576,6 @@ class _UserPageState extends State<UserPage> {
                                     )
                                   ],
                                 ),
-                                
                                 InkWell(
                                   onTap: () {},
                                   child: Padding(
@@ -582,12 +592,12 @@ class _UserPageState extends State<UserPage> {
                                           padding:
                                               const EdgeInsets.only(left: 16.0),
                                           child: InkWell(
-                                            onTap: (){
+                                            onTap: () {
                                               Navigator.push(
-                                                context,
-                                                MaterialPageRoute(
-                                                    builder: (context) =>
-                                                        TipsAndTrick()));
+                                                  context,
+                                                  MaterialPageRoute(
+                                                      builder: (context) =>
+                                                          TipsAndTrick()));
                                             },
                                             child: Container(
                                               width: MediaQuery.of(context)
@@ -622,10 +632,10 @@ class _UserPageState extends State<UserPage> {
                                   ),
                                 ),
                                 Expanded(
-                                        child: Divider(
-                                      thickness: 1,
-                                      color: Colors.grey.shade200,
-                                    )),
+                                    child: Divider(
+                                  thickness: 1,
+                                  color: Colors.grey.shade200,
+                                )),
                                 InkWell(
                                   onTap: () {},
                                   child: Padding(
@@ -642,12 +652,12 @@ class _UserPageState extends State<UserPage> {
                                           padding:
                                               const EdgeInsets.only(left: 16.0),
                                           child: InkWell(
-                                            onTap: (){
+                                            onTap: () {
                                               Navigator.push(
-                                                context,
-                                                MaterialPageRoute(
-                                                    builder: (context) =>
-                                                        AboutPergiJalan()));
+                                                  context,
+                                                  MaterialPageRoute(
+                                                      builder: (context) =>
+                                                          AboutPergiJalan()));
                                             },
                                             child: Container(
                                               width: MediaQuery.of(context)
@@ -681,7 +691,7 @@ class _UserPageState extends State<UserPage> {
                                     ),
                                   ),
                                 ),
-                                 Row(
+                                Row(
                                   children: [
                                     Expanded(
                                         child: Divider(

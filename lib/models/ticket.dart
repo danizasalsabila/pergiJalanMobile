@@ -1,5 +1,51 @@
+import 'dart:convert';
+
 import 'package:pergijalan_mobile/models/destinasi.dart';
 
+
+TicketResponse ticketFromJson(String str) =>
+    TicketResponse.fromJson(json.decode(str));
+
+String ticketToJson(TicketResponse data) => json.encode(data.toJson());
+
+
+class TicketResponse {
+  String? _status;
+  List<Ticket>? _ticket;
+
+  TicketResponse({String? status, List<Ticket>? ticket}) {
+    if (status != null) {
+      this._status = status;
+    }
+    if (ticket != null) {
+      this._ticket = ticket;
+    }
+  }
+
+  String? get status => _status;
+  set status(String? status) => _status = status;
+  List<Ticket>? get ticket => _ticket;
+  set ticket(List<Ticket>? ticket) => _ticket = ticket;
+
+  TicketResponse.fromJson(Map<String, dynamic> json) {
+    _status = json['status'];
+    if (json['data'] != null) {
+      _ticket = <Ticket>[];
+      json['data'].forEach((v) {
+        _ticket!.add(new Ticket.fromJson(v));
+      });
+    }
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['status'] = this._status;
+    if (this._ticket != null) {
+      data['data'] = this._ticket!.map((v) => v.toJson()).toList();
+    }
+    return data;
+  }
+}
 
 class Ticket {
   int? _id;

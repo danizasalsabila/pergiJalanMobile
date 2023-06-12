@@ -7,7 +7,7 @@ import 'package:pergijalan_mobile/controllers/ticket_controller.dart';
 import 'package:pergijalan_mobile/controllers/user_controller.dart';
 import 'package:pergijalan_mobile/views/pages/splash_screen_page.dart';
 import 'package:pergijalan_mobile/views/pages/home.dart';
-import 'package:pergijalan_mobile/views/pages/login_user.dart';
+import 'package:pergijalan_mobile/views/pages/account_login_user.dart';
 import 'package:pergijalan_mobile/views/widgets/bar_mainnavigation.dart';
 import 'package:provider/provider.dart';
 

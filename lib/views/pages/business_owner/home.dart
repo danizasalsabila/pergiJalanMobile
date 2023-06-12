@@ -12,7 +12,7 @@ import 'package:pergijalan_mobile/controllers/ticket_controller.dart';
 import 'package:pergijalan_mobile/views/pages/business_owner/detail_touristdestinasion.dart';
 import 'package:pergijalan_mobile/views/pages/business_owner/edit_destinationtour.dart';
 import 'package:pergijalan_mobile/views/pages/business_owner/profile_owner.dart';
-import 'package:pergijalan_mobile/views/pages/login_user.dart';
+import 'package:pergijalan_mobile/views/pages/account_login_user.dart';
 import 'package:provider/provider.dart';
 
 import '../../../controllers/destinasi_controller.dart';

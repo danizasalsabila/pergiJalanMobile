@@ -1,0 +1,930 @@
+import 'package:flutter/material.dart';
+import 'package:flutter/src/widgets/container.dart';
+import 'package:flutter/src/widgets/framework.dart';
+import 'package:fluttertoast/fluttertoast.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:google_fonts/google_fonts.dart';
+import 'package:intl/intl.dart';
+import 'package:pergijalan_mobile/config/theme_color.dart';
+import 'package:pergijalan_mobile/controllers/eticket_controller.dart';
+import 'package:pergijalan_mobile/models/ticket.dart';
+import 'package:pergijalan_mobile/views/pages/ticket_order_statuspayment_ticket.dart';
+import 'package:provider/provider.dart';
+
+import '../../controllers/ticket_controller.dart';
+import '../../controllers/user_controller.dart';
+import '../../models/destinasi.dart';
+
+class CreateOrderDetail extends StatefulWidget {
+  final Destinasi idDestinasi;
+  final Ticket idTicket;
+
+  CreateOrderDetail({
+    super.key,
+    required this.idDestinasi,
+    required this.idTicket,
+  });
+
+  @override
+  State<CreateOrderDetail> createState() => _CreateOrderDetailState();
+}
+
+class _CreateOrderDetailState extends State<CreateOrderDetail> {
+  bool isLoading = false;
+  String? emailUser;
+  DateTime selectedDate = DateTime.now();
+  TextEditingController nameVisitor = TextEditingController();
+  TextEditingController contactVisitor = TextEditingController();
+  // TextEditingController dateVisit = TextEditingController();
+
+  @override
+  void initState() {
+    print(" ");
+    print("-------------DIRECT TO LIST TIKET-----------");
+    isLoading = true;
+
+    Future.delayed(Duration(seconds: 1)).then((value) async {
+      try {
+        final userCon = Provider.of<UserController>(context, listen: false);
+
+        print("id ticket: ${widget.idTicket.id}");
+        print("id owner: ${widget.idDestinasi.idOwner}");
+        print("id destinasi: ${widget.idDestinasi.id}");
+        print("id user: ${userCon.idUserLogin}");
+        emailUser = userCon.emailLogin;
+      } catch (e) {
+        print(e);
+      }
+
+      setState(() {
+        isLoading = false;
+      });
+    });
+    super.initState();
+  }
+
+  Future<void> _selectDate(BuildContext context) async {
+    final DateTime? picked = await showDatePicker(
+        context: context,
+        builder: (BuildContext context, Widget? child) {
+          return Theme(
+            data: ThemeData(
+              primarySwatch: Colors.grey,
+              splashColor: secondaryColor,
+              textTheme: TextTheme(
+                subtitle1: TextStyle(color: Colors.black),
+                button: TextStyle(color: Colors.black),
+              ),
+              accentColor: Colors.black,
+              colorScheme: ColorScheme.light(
+                  primary: secondaryColor,
+                  primaryVariant: Color.fromARGB(255, 49, 49, 49),
+                  secondaryVariant: Color.fromARGB(255, 49, 49, 49),
+                  onSecondary: Color.fromARGB(255, 49, 49, 49),
+                  onPrimary: Colors.white,
+                  surface: Color.fromARGB(255, 49, 49, 49),
+                  onSurface: Color.fromARGB(255, 49, 49, 49),
+                  secondary: Color.fromARGB(255, 49, 49, 49)),
+              dialogBackgroundColor: Colors.white,
+            ),
+            child: child ?? Text(""),
+          );
+        },
+        initialDate: selectedDate,
+        firstDate: DateTime(2022, 8),
+        lastDate: DateTime(2101));
+
+    if (picked != null && picked != selectedDate) {
+      setState(() {
+        selectedDate = picked;
+      });
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    String formattedDate =
+        DateFormat('EEEEE, d MMMM yyyy').format(selectedDate);
+
+    return Scaffold(
+      backgroundColor: Color.fromARGB(255, 250, 250, 250),
+      appBar: AppBar(
+        elevation: 0,
+        backgroundColor: Color.fromARGB(255, 250, 250, 250),
+        title: Text(
+          "Detail Pemesanan",
+          style: GoogleFonts.openSans(
+              fontSize: 17,
+              color: Color.fromARGB(255, 49, 49, 49),
+              fontWeight: FontWeight.w600),
+        ),
+        centerTitle: true,
+        leading: InkWell(
+          onTap: () {
+            Navigator.pop(context);
+          },
+          child: const Icon(
+            Icons.chevron_left,
+            color: Color.fromARGB(255, 49, 49, 49),
+            size: 25,
+          ),
+        ),
+      ),
+      body: isLoading
+          ? const Center(
+              child: CircularProgressIndicator(
+                color: Colors.blue,
+              ),
+            )
+          : SingleChildScrollView(
+              child: Column(
+                children: [
+                  SizedBox(
+                    height: 14,
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.only(left: 25.0, right: 25),
+                    child: Container(
+                      width: MediaQuery.of(context).size.width,
+                      // height: 100,
+                      decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(8),
+                          boxShadow: [
+                            BoxShadow(
+                              color: Color.fromARGB(255, 199, 199, 199)
+                                  .withOpacity(0.8),
+                              spreadRadius: 2,
+                              blurRadius: 4,
+                              offset: const Offset(
+                                  0, 2), // changes position of shadow
+                            ),
+                          ],
+                          color: Colors.white),
+                      child: Padding(
+                        padding: const EdgeInsets.fromLTRB(16.0, 20, 16, 20),
+                        child: Column(
+                          children: [
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Column(
+                                  mainAxisAlignment: MainAxisAlignment.start,
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Align(
+                                      alignment: Alignment.topLeft,
+                                      child: Text(
+                                        widget.idDestinasi.nameDestinasi
+                                            .toString(),
+                                        style: GoogleFonts.openSans(
+                                            fontSize: 15,
+                                            color:
+                                                Color.fromARGB(255, 49, 49, 49),
+                                            fontWeight: FontWeight.w600),
+                                      ),
+                                    ),
+                                    Padding(
+                                      padding: const EdgeInsets.only(
+                                          top: 12.0, bottom: 10),
+                                      child: Container(
+                                        height: 0.7,
+                                        width:
+                                            MediaQuery.of(context).size.width *
+                                                0.4,
+                                        color: captColor,
+                                      ),
+                                    ),
+                                    Text(
+                                      "LOKASI",
+                                      style: GoogleFonts.openSans(
+                                          fontSize: 9,
+                                          color: captColor,
+                                          fontWeight: FontWeight.w600),
+                                    ),
+                                    SizedBox(
+                                      width: MediaQuery.of(context).size.width *
+                                          0.4,
+                                      child: Text(
+                                        widget.idDestinasi.address.toString(),
+                                        style: GoogleFonts.openSans(
+                                            fontSize: 13,
+                                            color:
+                                                Color.fromARGB(255, 49, 49, 49),
+                                            fontWeight: FontWeight.w500),
+                                      ),
+                                    ),
+                                    Padding(
+                                      padding: const EdgeInsets.only(
+                                          top: 10.0, bottom: 10),
+                                      child: Container(
+                                          child: Row(
+                                        children: [
+                                          Column(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.start,
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.start,
+                                            children: [
+                                              Text(
+                                                "JAM BUKA",
+                                                style: GoogleFonts.openSans(
+                                                    fontSize: 9,
+                                                    color: captColor,
+                                                    fontWeight:
+                                                        FontWeight.w600),
+                                              ),
+                                              SizedBox(
+                                                child: Text(
+                                                  widget.idDestinasi.openHour
+                                                      .toString(),
+                                                  style: GoogleFonts.openSans(
+                                                      fontSize: 13,
+                                                      color: Color.fromARGB(
+                                                          255, 49, 49, 49),
+                                                      fontWeight:
+                                                          FontWeight.w500),
+                                                ),
+                                              ),
+                                            ],
+                                          ),
+                                          Padding(
+                                            padding: const EdgeInsets.only(
+                                                left: 8.0, right: 8.0),
+                                            child: Container(
+                                              width: 1,
+                                              height: 22,
+                                              color: captColor,
+                                            ),
+                                          ),
+                                          Column(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.start,
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.start,
+                                            children: [
+                                              Text(
+                                                "JAM TUTUP",
+                                                style: GoogleFonts.openSans(
+                                                    fontSize: 9,
+                                                    color: captColor,
+                                                    fontWeight:
+                                                        FontWeight.w600),
+                                              ),
+                                              SizedBox(
+                                                child: Text(
+                                                  widget.idDestinasi.closedHour
+                                                      .toString(),
+                                                  style: GoogleFonts.openSans(
+                                                      fontSize: 13,
+                                                      color: Color.fromARGB(
+                                                          255, 49, 49, 49),
+                                                      fontWeight:
+                                                          FontWeight.w500),
+                                                ),
+                                              ),
+                                            ],
+                                          ),
+                                        ],
+                                      )),
+                                    ),
+                                  ],
+                                ),
+                                Align(
+                                  alignment: Alignment.topRight,
+                                  child: Column(
+                                    mainAxisAlignment: MainAxisAlignment.start,
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      Stack(
+                                        children: [
+                                          SizedBox(
+                                            height: 65,
+                                            width: MediaQuery.of(context)
+                                                    .size
+                                                    .width *
+                                                0.27,
+                                            child: ClipRRect(
+                                              borderRadius:
+                                                  BorderRadius.circular(8),
+                                              child: Image.asset(
+                                                "assets/images/slicing.jpg",
+                                                fit: BoxFit.cover,
+                                              ),
+                                            ),
+                                          ),
+                                          Container(
+                                            height: 65,
+                                            width: MediaQuery.of(context)
+                                                    .size
+                                                    .width *
+                                                0.27,
+                                            decoration: BoxDecoration(
+                                                borderRadius:
+                                                    BorderRadius.circular(8),
+                                                color: Color.fromARGB(
+                                                    88, 255, 255, 255)),
+                                          ),
+                                        ],
+                                      ),
+                                      Padding(
+                                        padding:
+                                            const EdgeInsets.only(top: 12.0),
+                                        child: Text(
+                                          "KONTAK",
+                                          style: GoogleFonts.openSans(
+                                              fontSize: 9,
+                                              color: captColor,
+                                              fontWeight: FontWeight.w600),
+                                        ),
+                                      ),
+                                      SizedBox(
+                                        child: Text(
+                                          widget.idDestinasi.contact.toString(),
+                                          style: GoogleFonts.openSans(
+                                              fontSize: 13,
+                                              color: Color.fromARGB(
+                                                  255, 49, 49, 49),
+                                              fontWeight: FontWeight.w500),
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              ],
+                            ),
+                            Padding(
+                              padding:
+                                  const EdgeInsets.only(top: 6.0, bottom: 10),
+                              child: Container(
+                                height: 0.7,
+                                width: MediaQuery.of(context).size.width,
+                                color: captColor,
+                              ),
+                            ),
+                            Padding(
+                              padding: const EdgeInsets.only(top: 1.0),
+                              child: Align(
+                                alignment: Alignment.topLeft,
+                                child: Text(
+                                  "DETAIL TIKET",
+                                  style: GoogleFonts.openSans(
+                                      fontSize: 9,
+                                      color: captColor,
+                                      fontWeight: FontWeight.w600),
+                                ),
+                              ),
+                            ),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                SizedBox(
+                                  child: Text(
+                                    "Jenis Tiket",
+                                    style: GoogleFonts.openSans(
+                                        fontSize: 13,
+                                        color: Color.fromARGB(255, 49, 49, 49),
+                                        fontWeight: FontWeight.w600),
+                                  ),
+                                ),
+                                Text(
+                                  "Rp ${widget.idTicket.price.toString()}",
+                                  style: GoogleFonts.openSans(
+                                      fontSize: 13,
+                                      color: Color.fromARGB(255, 49, 49, 49),
+                                      fontWeight: FontWeight.w600),
+                                ),
+                              ],
+                            ),
+                            Padding(
+                              padding: const EdgeInsets.only(top: 15.0),
+                              child: Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Column(
+                                    mainAxisAlignment: MainAxisAlignment.start,
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      Row(
+                                        children: [
+                                          FaIcon(
+                                            FontAwesomeIcons.textSlash,
+                                            size: 10,
+                                            color: captColor,
+                                          ),
+                                          Padding(
+                                            padding: const EdgeInsets.only(
+                                                left: 3.0),
+                                            child: Text(
+                                              "Tidak bisa merubah datail pengunjung",
+                                              overflow: TextOverflow.ellipsis,
+                                              style: GoogleFonts.openSans(
+                                                  fontSize: 9,
+                                                  color: captColor,
+                                                  fontWeight: FontWeight.w500),
+                                            ),
+                                          )
+                                        ],
+                                      ),
+                                      Row(
+                                        children: [
+                                          FaIcon(
+                                            FontAwesomeIcons.cancel,
+                                            size: 10,
+                                            color: captColor,
+                                          ),
+                                          Padding(
+                                            padding: const EdgeInsets.only(
+                                                left: 5.0),
+                                            child: Text(
+                                              "Tidak bisa dibatalkan",
+                                              overflow: TextOverflow.ellipsis,
+                                              style: GoogleFonts.openSans(
+                                                  fontSize: 9,
+                                                  color: captColor,
+                                                  fontWeight: FontWeight.w500),
+                                            ),
+                                          )
+                                        ],
+                                      )
+                                    ],
+                                  ),
+                                  Column(
+                                    mainAxisAlignment: MainAxisAlignment.end,
+                                    crossAxisAlignment: CrossAxisAlignment.end,
+                                    children: [
+                                      Text(
+                                        "1 Tiket",
+                                        overflow: TextOverflow.ellipsis,
+                                        style: GoogleFonts.openSans(
+                                            fontSize: 9,
+                                            color: captColor,
+                                            fontWeight: FontWeight.w500),
+                                      ),
+                                      Text(
+                                        "Harga termaksud pajak",
+                                        overflow: TextOverflow.ellipsis,
+                                        style: GoogleFonts.openSans(
+                                            fontSize: 9,
+                                            color: captColor,
+                                            fontWeight: FontWeight.w500),
+                                      ),
+                                    ],
+                                  )
+                                ],
+                              ),
+                            )
+                          ],
+                        ),
+                      ),
+                    ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.only(left: 25.0, right: 25),
+                    child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          SizedBox(
+                            height: 28,
+                          ),
+                          Text(
+                            "Detail Pengunjung",
+                            style: GoogleFonts.inter(
+                                fontSize: 16,
+                                color: Color.fromARGB(255, 61, 61, 61),
+                                fontWeight: FontWeight.w600),
+                          ),
+                          Padding(
+                            padding:
+                                const EdgeInsets.only(top: 12.0, bottom: 9),
+                            child: Text(
+                              "Nama Pengunjung",
+                              style: GoogleFonts.inter(
+                                  fontSize: 13,
+                                  color: Color.fromARGB(255, 61, 61, 61),
+                                  fontWeight: FontWeight.w500),
+                            ),
+                          ),
+                          Container(
+                            decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(10),
+                                border: Border.all(
+                                  width: 1,
+                                  color: captColor,
+                                )),
+                            width: MediaQuery.of(context).size.width,
+                            child: TextField(
+                              style: GoogleFonts.openSans(
+                                  fontSize: 13,
+                                  color: titleColor,
+                                  fontWeight: FontWeight.w600),
+                              controller: nameVisitor,
+                              keyboardType: TextInputType.text,
+                              textInputAction: TextInputAction.next,
+                              decoration: InputDecoration(
+                                focusedBorder: OutlineInputBorder(
+                                    borderRadius: BorderRadius.circular(10),
+                                    borderSide: BorderSide(
+                                      width: 1,
+                                      color: primaryColor,
+                                    )),
+                                hintText: 'Nama Lengkap',
+                                hintStyle:
+                                    TextStyle(color: Colors.grey.shade500),
+                                border: InputBorder.none,
+                                contentPadding: EdgeInsets.only(left: 16),
+                              ),
+                            ),
+                          ),
+                          Padding(
+                            padding:
+                                const EdgeInsets.only(top: 17.0, bottom: 9),
+                            child: Text(
+                              "Nomor Handphone",
+                              style: GoogleFonts.inter(
+                                  fontSize: 13,
+                                  color: Color.fromARGB(255, 61, 61, 61),
+                                  fontWeight: FontWeight.w500),
+                            ),
+                          ),
+                          Container(
+                            decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(10),
+                                border: Border.all(
+                                  width: 1,
+                                  color: captColor,
+                                )),
+                            width: MediaQuery.of(context).size.width,
+                            child: TextField(
+                              style: GoogleFonts.openSans(
+                                  fontSize: 13,
+                                  color: titleColor,
+                                  fontWeight: FontWeight.w600),
+                              controller: contactVisitor,
+                              keyboardType: TextInputType.text,
+                              textInputAction: TextInputAction.next,
+                              decoration: InputDecoration(
+                                focusedBorder: OutlineInputBorder(
+                                    borderRadius: BorderRadius.circular(10),
+                                    borderSide: BorderSide(
+                                      width: 1,
+                                      color: primaryColor,
+                                    )),
+                                hintText: 'Nomor Aktif',
+                                hintStyle:
+                                    TextStyle(color: Colors.grey.shade500),
+                                border: InputBorder.none,
+                                contentPadding: EdgeInsets.only(left: 16),
+                              ),
+                            ),
+                          ),
+                          Padding(
+                            padding:
+                                const EdgeInsets.only(top: 17.0, bottom: 9),
+                            child: Text(
+                              "Tanggal Kunjungan",
+                              style: GoogleFonts.inter(
+                                  fontSize: 13,
+                                  color: Color.fromARGB(255, 61, 61, 61),
+                                  fontWeight: FontWeight.w500),
+                            ),
+                          ),
+                          InkWell(
+                            onTap: () {
+                              _selectDate(context);
+                            },
+                            child: Container(
+                              decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(10),
+                                  color: Color.fromARGB(244, 61, 61, 61)),
+                              width: MediaQuery.of(context).size.width,
+                              height: 50,
+                              child: Padding(
+                                padding: const EdgeInsets.only(left: 16.0),
+                                child: Row(
+                                  children: [
+                                    FaIcon(
+                                      FontAwesomeIcons.calendar,
+                                      size: 15,
+                                      color: Colors.white,
+                                    ),
+                                    Padding(
+                                      padding:
+                                          const EdgeInsets.only(left: 10.0),
+                                      child: Text(
+                                        (formattedDate).toString(),
+                                        style: GoogleFonts.inter(
+                                            fontSize: 13,
+                                            color: Color.fromARGB(
+                                                255, 255, 255, 255),
+                                            fontWeight: FontWeight.w500),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ),
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.only(
+                              top: 25.0,
+                            ),
+                            child: Row(
+                              children: [
+                                FaIcon(
+                                  FontAwesomeIcons.addressCard,
+                                  size: 15,
+                                  color: captColor,
+                                ),
+                                Padding(
+                                  padding: const EdgeInsets.only(left: 8.0),
+                                  child: Text(
+                                    emailUser.toString(),
+                                    style: GoogleFonts.inter(
+                                        fontSize: 13,
+                                        color: captColor,
+                                        fontWeight: FontWeight.w500),
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                          Padding(
+                            padding:
+                                const EdgeInsets.only(top: 17.0, bottom: 17),
+                            child: Container(
+                              decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(10),
+                                  border: Border.all(
+                                    width: 1,
+                                    color: captColor,
+                                  )),
+                              width: MediaQuery.of(context).size.width,
+                              child: Column(
+                                mainAxisAlignment: MainAxisAlignment.start,
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Padding(
+                                    padding: const EdgeInsets.only(
+                                        top: 17.0, bottom: 14, left: 16),
+                                    child: Text(
+                                      "Metode Pembayaran",
+                                      style: GoogleFonts.inter(
+                                          fontSize: 13,
+                                          color:
+                                              Color.fromARGB(255, 61, 61, 61),
+                                          fontWeight: FontWeight.w600),
+                                    ),
+                                  ),
+                                  Padding(
+                                    padding: const EdgeInsets.only(
+                                        bottom: 20, left: 15, right: 15),
+                                    child: Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceBetween,
+                                      children: [
+                                        Row(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.start,
+                                          children: [
+                                            Container(
+                                              width: MediaQuery.of(context)
+                                                      .size
+                                                      .width *
+                                                  0.11,
+                                              child: Image.asset(
+                                                "assets/logo/mandiri_logo.jpg",
+                                                fit: BoxFit.cover,
+                                              ),
+                                            ),
+                                            Padding(
+                                              padding: const EdgeInsets.only(
+                                                  left: 15.0),
+                                              child: Text(
+                                                "Mandiri Virtual Akun",
+                                                style: GoogleFonts.inter(
+                                                    fontSize: 13,
+                                                    color: Color.fromARGB(
+                                                        255, 61, 61, 61),
+                                                    fontWeight:
+                                                        FontWeight.w500),
+                                              ),
+                                            ),
+                                          ],
+                                        ),
+                                        Padding(
+                                          padding:
+                                              const EdgeInsets.only(right: 5.0),
+                                          child: FaIcon(
+                                            FontAwesomeIcons.dotCircle,
+                                            size: 15,
+                                            color: Colors.green,
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ),
+                          SizedBox(
+                            height: 50,
+                          )
+                          //  Center(
+                          //    child: Padding(
+                          //      padding: const EdgeInsets.only(top: 17.0),
+                          //      child: Container(
+                          //         decoration: BoxDecoration(
+                          //             borderRadius: BorderRadius.circular(10),
+                          //             color: Color.fromARGB(244, 226, 226, 226)),
+                          //         width: MediaQuery.of(context).size.width,
+                          //         height: 50,
+                          //         child: Padding(
+                          //           padding: const EdgeInsets.only(left:16.0),
+                          //           child: Padding(
+                          //             padding: const EdgeInsets.only(left: 10.0),
+                          //             child: Text(
+                          //             emailUser.toString(),
+                          //             style: GoogleFonts.inter(
+                          //                 fontSize: 13,
+                          //                 color: Color.fromARGB(255, 255, 255, 255),
+                          //                 fontWeight: FontWeight.w500),
+                          //             ),
+                          //           ),
+                          //         ),
+                          //       ),
+                          //    ),
+                          //  ),
+                          // Container(
+                          //   child: Column(
+                          //     mainAxisSize: MainAxisSize.min,
+                          //     children: <Widget>[
+                          //       Text(
+                          //         "${(formattedDate).toString()}",
+                          //         style: GoogleFonts.inter(
+                          //             fontSize: 13,
+                          //             color: Color.fromARGB(255, 61, 61, 61),
+                          //             fontWeight: FontWeight.w500),
+                          //       ),
+                          //       const SizedBox(
+                          //         height: 20.0,
+                          //       ),
+                          //       ElevatedButton(
+                          //         onPressed: () => _selectDate(context),
+                          //         child: const Text('Select date'),
+                          //       ),
+                          //     ],
+                          //   ),
+                          // )
+                        ]),
+                  ),
+                ],
+              ),
+            ),
+      bottomNavigationBar: isLoading
+          ? const SizedBox()
+          : Container(
+              decoration: BoxDecoration(
+                color: Colors.grey.shade100,
+                boxShadow: <BoxShadow>[
+                  BoxShadow(
+                    color: Color.fromARGB(255, 192, 192, 192),
+                    blurRadius: 10,
+                  ),
+                ],
+              ),
+              height: MediaQuery.of(context).size.height * 0.09,
+              width: MediaQuery.of(context).size.width,
+              child: Padding(
+                padding: const EdgeInsets.fromLTRB(20, 10.0, 20, 10),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Container(
+                      width: MediaQuery.of(context).size.width * 0.3,
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            "Total Harga",
+                            style: GoogleFonts.inter(
+                                fontSize: 12,
+                                color: captColor,
+                                fontWeight: FontWeight.w500),
+                          ),
+                          Text(
+                            "Rp ${widget.idTicket.price.toString()}",
+                            style: GoogleFonts.inter(
+                                fontSize: 19,
+                                color: secondaryColor,
+                                fontWeight: FontWeight.w700),
+                          ),
+                        ],
+                      ),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.only(top: 7, bottom: 7),
+                      child: InkWell(
+                        onTap: () async {
+                          print("a");
+                          isLoading = true;
+
+                          final eticketCon = Provider.of<ETicketController>(
+                              context,
+                              listen: false);
+                          final userCon = Provider.of<UserController>(context,
+                              listen: false);
+                          // Provider.of(context, listen: false);
+                          if (nameVisitor.text.isEmpty ||
+                              contactVisitor.text.isEmpty ||
+                              formattedDate.isEmpty) {
+                            Fluttertoast.showToast(
+                                msg: "Data pengunjunga boleh kosong",
+                                toastLength: Toast.LENGTH_SHORT,
+                                gravity: ToastGravity.BOTTOM,
+                                timeInSecForIosWeb: 1,
+                                backgroundColor: Colors.red[300],
+                                textColor: Colors.white,
+                                fontSize: 16.0);
+
+                            setState(() {
+                              isLoading = false;
+                            });
+                            return;
+                          }
+                          try {
+                            await eticketCon.postEticket(
+                                idUser: userCon.idUserLogin,
+                                idTicket: widget.idTicket.id,
+                                idDestinasi: widget.idDestinasi.id,
+                                idOwner: widget.idDestinasi.idOwner,
+                                nameVisitor: nameVisitor.text,
+                                contactVisitor: contactVisitor.text,
+                                dateVisit: formattedDate.toString());
+
+                            if (eticketCon.statusCodeAddEticket == 200) {
+                              setState(() {
+                                isLoading = false;
+                              });
+                              Navigator.pushAndRemoveUntil(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) => StatusOrderPayment(
+                                            id: eticketCon.idAddETicket!,
+                                            idDestinasi: widget.idDestinasi,
+                                          )),
+                                  (route) => false);
+                            } else {
+                              setState(() {
+                                isLoading = false;
+                              });
+                              Fluttertoast.showToast(
+                                  msg: eticketCon.messageAddEticket.toString(),
+                                  toastLength: Toast.LENGTH_SHORT,
+                                  gravity: ToastGravity.BOTTOM,
+                                  timeInSecForIosWeb: 1,
+                                  backgroundColor: Colors.red[300],
+                                  textColor: Colors.white,
+                                  fontSize: 16.0);
+                              return;
+                            }
+                          } catch (error) {
+                            error;
+                            setState(() {
+                              isLoading = false;
+                            });
+                          }
+                          setState(() {
+                            isLoading = false;
+                          });
+                        },
+                        child: Container(
+                          decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(10),
+                              color: secondaryColor),
+                          width: MediaQuery.of(context).size.width * 0.36,
+
+                          // height: 50,
+                          child: Center(
+                            child: Text(
+                              "Bayar",
+                              style: GoogleFonts.inter(
+                                  fontSize: 13,
+                                  color: Colors.white,
+                                  fontWeight: FontWeight.w600),
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ),
+    );
+  }
+}

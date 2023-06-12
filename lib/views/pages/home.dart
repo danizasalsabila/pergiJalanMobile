@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:pergijalan_mobile/controllers/destinasi_controller.dart';
-import 'package:pergijalan_mobile/views/pages/all_destinasidata.dart';
-import 'package:pergijalan_mobile/views/pages/list_category.dart';
+import 'package:pergijalan_mobile/views/pages/home_all_destinasidata.dart';
+import 'package:pergijalan_mobile/views/pages/home_list_category.dart';
 import 'package:pergijalan_mobile/views/pages/detail_touristdestinasion.dart';
 import 'package:provider/provider.dart';
 
 import '../../config/theme_color.dart';
+
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
