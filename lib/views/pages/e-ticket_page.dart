@@ -18,7 +18,6 @@ class ETicketPage extends StatefulWidget {
   final int id;
   final Destinasi idDestinasi;
 
-
   const ETicketPage({super.key, required this.id, required this.idDestinasi});
 
   @override
@@ -281,8 +280,8 @@ class _ETicketPageState extends State<ETicketPage> {
                                               padding: const EdgeInsets.only(
                                                   top: 5.0),
                                               child: Text(
-                                                ticketCon
-                                                    .eticketDataiD!.contactVisitor
+                                                ticketCon.eticketDataiD!
+                                                    .contactVisitor
                                                     .toString(),
                                                 style: GoogleFonts.inter(
                                                     fontSize: 13,
@@ -382,9 +381,7 @@ class _ETicketPageState extends State<ETicketPage> {
                                               padding: const EdgeInsets.only(
                                                   top: 5.0),
                                               child: Text(
-                                               "Rp ${ticketCon
-                                                    .eticketDataiD!.price
-                                                    .toString()}",
+                                                "Rp ${ticketCon.eticketDataiD!.price.toString()}",
                                                 style: GoogleFonts.inter(
                                                     fontSize: 13,
                                                     color: primaryColor,
@@ -401,6 +398,8 @@ class _ETicketPageState extends State<ETicketPage> {
                                     height: 12,
                                   ),
                                   Row(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
                                     children: [
                                       Container(
                                         width:
@@ -421,7 +420,8 @@ class _ETicketPageState extends State<ETicketPage> {
                                               padding: const EdgeInsets.only(
                                                   top: 5.0),
                                               child: Text(
-                                                "Nama Wisata",
+                                                widget.idDestinasi.nameDestinasi
+                                                    .toString(),
                                                 maxLines: 4,
                                                 style: GoogleFonts.inter(
                                                     fontSize: 10,
@@ -434,7 +434,7 @@ class _ETicketPageState extends State<ETicketPage> {
                                               padding: const EdgeInsets.only(
                                                   top: 2.0),
                                               child: Text(
-                                                "Jam tutup buka",
+                                                "${widget.idDestinasi.openHour.toString()} - ${widget.idDestinasi.closedHour.toString()}",
                                                 style: GoogleFonts.inter(
                                                     fontSize: 10,
                                                     color: primaryColor,
@@ -452,11 +452,13 @@ class _ETicketPageState extends State<ETicketPage> {
                                         child: Column(
                                           crossAxisAlignment:
                                               CrossAxisAlignment.start,
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.start,
                                           children: [
                                             Text(
                                               "Lokasi",
                                               style: GoogleFonts.inter(
-                                                  fontSize: 10,
+                                                  fontSize: 8,
                                                   color: captColor,
                                                   fontWeight: FontWeight.w400),
                                             ),
@@ -464,10 +466,11 @@ class _ETicketPageState extends State<ETicketPage> {
                                               padding: const EdgeInsets.only(
                                                   top: 5.0),
                                               child: Text(
-                                                "Alamat",
+                                                widget.idDestinasi.address
+                                                    .toString(),
                                                 maxLines: 5,
                                                 style: GoogleFonts.inter(
-                                                    fontSize: 13,
+                                                    fontSize: 10,
                                                     color: primaryColor,
                                                     fontWeight:
                                                         FontWeight.w600),
