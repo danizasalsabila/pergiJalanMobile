@@ -67,6 +67,8 @@ class Eticket {
   String? _updatedAt;
   Ticket? _ticket;
 
+  DestinasiEticket? _destinasi;
+
   Eticket(
       {int? id,
       int? idUser,
@@ -81,7 +83,8 @@ class Eticket {
       String? dateBook,
       String? createdAt,
       String? updatedAt,
-      Ticket? ticket}) {
+      Ticket? ticket,
+      DestinasiEticket? destinasi}) {
     if (id != null) {
       this._id = id;
     }
@@ -124,6 +127,9 @@ class Eticket {
     if (ticket != null) {
       this._ticket = ticket;
     }
+    if (destinasi != null) {
+      this._destinasi = destinasi;
+    }
   }
 
   int? get id => _id;
@@ -156,6 +162,8 @@ class Eticket {
   set updatedAt(String? updatedAt) => _updatedAt = updatedAt;
   Ticket? get ticket => _ticket;
   set ticket(Ticket? ticket) => _ticket = ticket;
+  DestinasiEticket? get destinasi => _destinasi;
+  set destinasi(DestinasiEticket? destinasi) => _destinasi = destinasi;
 
   Eticket.fromJson(Map<String, dynamic> json) {
     _id = json['id'];
@@ -173,6 +181,9 @@ class Eticket {
     _updatedAt = json['updated_at'];
     _ticket =
         json['ticket'] != null ? new Ticket.fromJson(json['ticket']) : null;
+    _destinasi = json['destinasi'] != null
+        ? new DestinasiEticket.fromJson(json['destinasi'])
+        : null;
   }
 
   Map<String, dynamic> toJson() {
@@ -192,6 +203,9 @@ class Eticket {
     data['updated_at'] = this._updatedAt;
     if (this._ticket != null) {
       data['ticket'] = this._ticket!.toJson();
+    }
+    if (this._destinasi != null) {
+      data['destinasi'] = this._destinasi!.toJson();
     }
     return data;
   }
@@ -224,6 +238,75 @@ class Ticket {
     final Map<String, dynamic> data = new Map<String, dynamic>();
     data['id'] = this._id;
     data['price'] = this._price;
+    return data;
+  }
+}
+
+class DestinasiEticket {
+  int? _id;
+  String? _nameDestinasi;
+  String? _address;
+  String? _contact;
+  String? _openHour;
+  String? _closedHour;
+
+  DestinasiEticket(
+      {int? id,
+      String? nameDestinasi,
+      String? address,
+      String? contact,
+      String? openHour,
+      String? closedHour}) {
+    if (id != null) {
+      this._id = id;
+    }
+    if (nameDestinasi != null) {
+      this._nameDestinasi = nameDestinasi;
+    }
+    if (address != null) {
+      this._address = address;
+    }
+    if (contact != null) {
+      this._contact = contact;
+    }
+    if (openHour != null) {
+      this._openHour = openHour;
+    }
+    if (closedHour != null) {
+      this._closedHour = closedHour;
+    }
+  }
+
+  int? get id => _id;
+  set id(int? id) => _id = id;
+  String? get nameDestinasi => _nameDestinasi;
+  set nameDestinasi(String? nameDestinasi) => _nameDestinasi = nameDestinasi;
+  String? get address => _address;
+  set address(String? address) => _address = address;
+  String? get contact => _contact;
+  set contact(String? contact) => _contact = contact;
+  String? get openHour => _openHour;
+  set openHour(String? openHour) => _openHour = openHour;
+  String? get closedHour => _closedHour;
+  set closedHour(String? closedHour) => _closedHour = closedHour;
+
+  DestinasiEticket.fromJson(Map<String, dynamic> json) {
+    _id = json['id'];
+    _nameDestinasi = json['name_destinasi'];
+    _address = json['address'];
+    _contact = json['contact'];
+    _openHour = json['open_hour'];
+    _closedHour = json['closed_hour'];
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['id'] = this._id;
+    data['name_destinasi'] = this._nameDestinasi;
+    data['address'] = this._address;
+    data['contact'] = this._contact;
+    data['open_hour'] = this._openHour;
+    data['closed_hour'] = this._closedHour;
     return data;
   }
 }

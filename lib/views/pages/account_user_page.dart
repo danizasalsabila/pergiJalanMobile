@@ -6,6 +6,7 @@ import 'package:pergijalan_mobile/config/theme_color.dart';
 import 'package:pergijalan_mobile/controllers/destinasi_controller.dart';
 import 'package:pergijalan_mobile/views/pages/about_pergijalan.dart';
 import 'package:pergijalan_mobile/views/pages/account_login_user.dart';
+import 'package:pergijalan_mobile/views/pages/e-ticket_page.dart';
 import 'package:pergijalan_mobile/views/pages/splash_screen_page.dart';
 import 'package:pergijalan_mobile/views/pages/account_tipsandtrick.dart';
 import 'package:provider/provider.dart';
@@ -34,6 +35,7 @@ class _UserPageState extends State<UserPage> {
   int _index = 0;
 
   int? _selectedListUser;
+  bool isanyTicketHistory = false;
   bool isSelected = false;
   onSelectedListUser(int i) {
     setState(() {
@@ -57,14 +59,23 @@ class _UserPageState extends State<UserPage> {
     print("-------------DIRECT TO PROFILE-----------");
     final profileCon = Provider.of<UserController>(context, listen: false);
     final homeCon = Provider.of<DestinasiController>(context, listen: false);
+    final eticketCon = Provider.of<ETicketController>(context, listen: false);
 
     isLoading = true;
 
     Future.delayed(Duration(seconds: 1)).then((value) async {
       try {
-        await homeCon.allDestinasi();
-
+        // await homeCon.allDestinasi();
         await profileCon.userDetail();
+        await eticketCon.allEticketByUser(profileCon.idUserLogin);
+        if (eticketCon.eticketDataUser!.isNotEmpty) {
+          isanyTicketHistory = true;
+          // print("ada");
+        } else {
+          isanyTicketHistory = false;
+          // print("ga ada");
+        }
+        print("is there any ticket history : $isanyTicketHistory");
       } catch (e) {
         print(e);
       }
@@ -415,146 +426,191 @@ class _UserPageState extends State<UserPage> {
                       //         )),
                       //   ),
                       // ),
-                      Padding(
-                        padding: EdgeInsets.only(left: 25, right: 25, top: 2),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.start,
-                              crossAxisAlignment: CrossAxisAlignment.center,
-                              children: [
-                                Container(
-                                  width: 25,
-                                  height: 23,
-                                  child: Container(
-                                    decoration: BoxDecoration(
-                                        borderRadius: BorderRadius.circular(8),
-                                        color: Color.fromARGB(255, 36, 78, 79)
-                                            .withOpacity(0.65)),
-                                    child: const Center(
-                                        child: FaIcon(
-                                      FontAwesomeIcons.clockRotateLeft,
-                                      color: Colors.white,
-                                      size: 13,
-                                    )),
-                                  ),
-                                ),
-                                InkWell(
-                                  onTap: () async {
-                                    final eticketCon =
-                                        Provider.of<ETicketController>(context,
-                                            listen: false);
-
-                                    await eticketCon.eticketById(7);
-                                  },
-                                  child: SizedBox(
-                                      width: MediaQuery.of(context).size.width *
-                                          0.5,
-                                      child: Padding(
-                                        padding:
-                                            const EdgeInsets.only(left: 8.0),
-                                        child: Text(
-                                          "Riwayat Pemesanan Tiket",
-                                          style: GoogleFonts.inter(
-                                              fontSize: 15,
-                                              color: thirdColor,
-                                              fontWeight: FontWeight.w600),
+                      isanyTicketHistory == true
+                          ? Padding(
+                              padding:
+                                  EdgeInsets.only(left: 25, right: 25, top: 2),
+                              child: Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Row(
+                                    mainAxisAlignment: MainAxisAlignment.start,
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.center,
+                                    children: [
+                                      Container(
+                                        width: 25,
+                                        height: 23,
+                                        child: Container(
+                                          decoration: BoxDecoration(
+                                              borderRadius:
+                                                  BorderRadius.circular(8),
+                                              color: Color.fromARGB(
+                                                      255, 36, 78, 79)
+                                                  .withOpacity(0.65)),
+                                          child: const Center(
+                                              child: FaIcon(
+                                            FontAwesomeIcons.clockRotateLeft,
+                                            color: Colors.white,
+                                            size: 13,
+                                          )),
                                         ),
-                                      )),
-                                ),
-                              ],
-                            ),
-                            SizedBox(
-                                child: Align(
-                              alignment: Alignment.topRight,
-                              child: Text(
-                                "Lihat Semua",
-                                style: GoogleFonts.inter(
-                                    fontSize: 9,
-                                    color: Colors.grey.shade500,
-                                    fontWeight: FontWeight.w500),
-                              ),
-                            ))
-                          ],
-                        ),
-                      ),
-                      Container(
-                        width: MediaQuery.of(context).size.width,
-                        height: 120,
-                        child: Padding(
-                          padding: const EdgeInsets.only(left: 25.0, top: 10),
-                          child: Consumer<DestinasiController>(
-                              builder: (context, ticketCon, child) {
-                            return ListView.builder(
-                              scrollDirection: Axis.horizontal,
-                              itemCount: ticketCon.destinasiData?.length,
-                              controller: PageController(viewportFraction: 0.3),
-                              itemBuilder: (context, index) {
-                                return Padding(
-                                  padding: const EdgeInsets.only(right: 4.0),
-                                  child: Card(
-                                    color: _colors[index % _colors.length],
-                                    elevation: 3,
-                                    shape: RoundedRectangleBorder(
-                                        borderRadius:
-                                            BorderRadius.circular(10)),
-                                    child: SizedBox(
-                                      height: 135,
-                                      width: 95,
-                                      child: Padding(
-                                        padding: const EdgeInsets.only(
-                                            left: 7.0, bottom: 8.0, right: 7),
-                                        child: Column(
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.end,
-                                            crossAxisAlignment:
-                                                CrossAxisAlignment.start,
-                                            children: [
-                                              Text(
-                                                "Nama Wisata",
-                                                style:
-                                                    GoogleFonts.notoSansDisplay(
-                                                        fontSize: 13,
-                                                        color: Colors.white,
-                                                        fontWeight:
-                                                            FontWeight.w600),
-                                                overflow: TextOverflow.ellipsis,
-                                                maxLines: 1,
-                                              ),
-                                              Text(
-                                                "02/02/2020",
-                                                style:
-                                                    GoogleFonts.notoSansDisplay(
-                                                        fontSize: 11,
-                                                        color: thirdColor,
-                                                        fontWeight:
-                                                            FontWeight.w500),
-                                                overflow: TextOverflow.ellipsis,
-                                                maxLines: 1,
-                                              )
-                                            ]),
                                       ),
-                                    ),
+                                      InkWell(
+                                        onTap: () async {
+                                          final eticketCon =
+                                              Provider.of<ETicketController>(
+                                                  context,
+                                                  listen: false);
+
+                                          await eticketCon.eticketById(7);
+                                        },
+                                        child: SizedBox(
+                                            width: MediaQuery.of(context)
+                                                    .size
+                                                    .width *
+                                                0.5,
+                                            child: Padding(
+                                              padding: const EdgeInsets.only(
+                                                  left: 8.0),
+                                              child: Text(
+                                                "Riwayat Pemesanan Tiket",
+                                                style: GoogleFonts.inter(
+                                                    fontSize: 15,
+                                                    color: thirdColor,
+                                                    fontWeight:
+                                                        FontWeight.w600),
+                                              ),
+                                            )),
+                                      ),
+                                    ],
                                   ),
-                                );
-                              },
-                            );
-                          }),
-                        ),
-                      ),
+                                  // SizedBox(
+                                  //     child: Align(
+                                  //   alignment: Alignment.topRight,
+                                  //   child: Text(
+                                  //     "Lihat Semua",
+                                  //     style: GoogleFonts.inter(
+                                  //         fontSize: 9,
+                                  //         color: Colors.grey.shade500,
+                                  //         fontWeight: FontWeight.w500),
+                                  //   ),
+                                  // ))
+                                ],
+                              ),
+                            )
+                          : SizedBox(),
+                      isanyTicketHistory == true
+                          ? Container(
+                              width: MediaQuery.of(context).size.width,
+                              height: 120,
+                              child: Padding(
+                                padding:
+                                    const EdgeInsets.only(left: 25.0, top: 10),
+                                child: Consumer<ETicketController>(
+                                    builder: (context, ticketCon, child) {
+                                  return ListView.builder(
+                                    scrollDirection: Axis.horizontal,
+                                    itemCount:
+                                        ticketCon.eticketDataUser!.length,
+                                    controller:
+                                        PageController(viewportFraction: 0.3),
+                                    itemBuilder: (context, index) {
+                                      return InkWell(
+                                                                            onTap:(){
+                                        Navigator.push(
+                                                  context,
+                                                  MaterialPageRoute(
+                                                      builder: (context) =>
+                                                          ETicketPage(id: ticketCon.eticketDataUser![index].id!.toInt(), )));
+                                    },
+                                        child: Padding(
+                                          padding:
+                                              const EdgeInsets.only(right: 4.0),
+                                          child: Card(
+                                            color:
+                                                _colors[index % _colors.length],
+                                            elevation: 3,
+                                            shape: RoundedRectangleBorder(
+                                                borderRadius:
+                                                    BorderRadius.circular(10)),
+                                            child: SizedBox(
+                                              height: 135,
+                                              width: 95,
+                                              child: Padding(
+                                                padding: const EdgeInsets.only(
+                                                    left: 7.0,
+                                                    bottom: 8.0,
+                                                    right: 7),
+                                                child: Column(
+                                                    mainAxisAlignment:
+                                                        MainAxisAlignment.end,
+                                                    crossAxisAlignment:
+                                                        CrossAxisAlignment.start,
+                                                    children: [
+                                                      Text(
+                                                        ticketCon
+                                                            .eticketDataUser![
+                                                                index]
+                                                            .destinasi!
+                                                            .nameDestinasi
+                                                            .toString(),
+                                                        style: GoogleFonts
+                                                            .notoSansDisplay(
+                                                                fontSize: 13,
+                                                                color:
+                                                                    Colors.white,
+                                                                fontWeight:
+                                                                    FontWeight
+                                                                        .w600),
+                                                        overflow:
+                                                            TextOverflow.ellipsis,
+                                                        maxLines: 1,
+                                                      ),
+                                                      Text(
+                                                        ticketCon
+                                                            .eticketDataUser![
+                                                                index]
+                                                            .dateVisit
+                                                            .toString(),
+                                                        style: GoogleFonts
+                                                            .notoSansDisplay(
+                                                                fontSize: 11,
+                                                                color: thirdColor,
+                                                                fontWeight:
+                                                                    FontWeight
+                                                                        .w500),
+                                                        overflow:
+                                                            TextOverflow.ellipsis,
+                                                        maxLines: 1,
+                                                      )
+                                                    ]),
+                                              ),
+                                            ),
+                                          ),
+                                        ),
+                                      );
+                                    },
+                                  );
+                                }),
+                              ),
+                            )
+                          : SizedBox(),
                       Padding(
                         padding: const EdgeInsets.fromLTRB(25, 25.0, 25, 8),
                         child: Container(
-                          height: 210,
+                          height: 170,
                           width: MediaQuery.of(context).size.width,
                           decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(10),
                               color: Colors.white,
                               border: Border.all(color: descColor, width: 1.5)),
                           child: Padding(
-                            padding: const EdgeInsets.fromLTRB(22, 16, 22, 10),
+                            padding: const EdgeInsets.fromLTRB(22, 16, 22, 16),
                             child: Column(
+                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                              // crossAxisAlignment: CrossAxisAlignment.center,
                               children: [
                                 Row(
                                   children: [
@@ -631,66 +687,66 @@ class _UserPageState extends State<UserPage> {
                                     ),
                                   ),
                                 ),
-                                Expanded(
-                                    child: Divider(
-                                  thickness: 1,
-                                  color: Colors.grey.shade200,
-                                )),
-                                InkWell(
-                                  onTap: () {},
-                                  child: Padding(
-                                    padding: const EdgeInsets.fromLTRB(
-                                        5, 8.0, 5, 10),
-                                    child: Row(
-                                      children: [
-                                        Icon(
-                                          Icons.people_alt,
-                                          size: 20,
-                                          color: labelColor,
-                                        ),
-                                        Padding(
-                                          padding:
-                                              const EdgeInsets.only(left: 16.0),
-                                          child: InkWell(
-                                            onTap: () {
-                                              Navigator.push(
-                                                  context,
-                                                  MaterialPageRoute(
-                                                      builder: (context) =>
-                                                          AboutPergiJalan()));
-                                            },
-                                            child: Container(
-                                              width: MediaQuery.of(context)
-                                                      .size
-                                                      .width *
-                                                  0.59,
-                                              child: Row(
-                                                mainAxisAlignment:
-                                                    MainAxisAlignment
-                                                        .spaceBetween,
-                                                children: [
-                                                  Text(
-                                                    "Tentang PergiJalan",
-                                                    style: GoogleFonts.openSans(
-                                                        fontSize: 15,
-                                                        color: titleColor,
-                                                        fontWeight:
-                                                            FontWeight.w600),
-                                                  ),
-                                                  Icon(
-                                                    Icons.arrow_forward_ios,
-                                                    size: 15,
-                                                    color: Colors.grey.shade300,
-                                                  ),
-                                                ],
-                                              ),
-                                            ),
-                                          ),
-                                        ),
-                                      ],
-                                    ),
-                                  ),
-                                ),
+                                // Expanded(
+                                //     child: Divider(
+                                //   thickness: 1,
+                                //   color: Colors.grey.shade200,
+                                // )),
+                                // InkWell(
+                                //   onTap: () {},
+                                //   child: Padding(
+                                //     padding: const EdgeInsets.fromLTRB(
+                                //         5, 8.0, 5, 10),
+                                //     child: Row(
+                                //       children: [
+                                //         Icon(
+                                //           Icons.people_alt,
+                                //           size: 20,
+                                //           color: labelColor,
+                                //         ),
+                                //         Padding(
+                                //           padding:
+                                //               const EdgeInsets.only(left: 16.0),
+                                //           child: InkWell(
+                                //             onTap: () {
+                                //               Navigator.push(
+                                //                   context,
+                                //                   MaterialPageRoute(
+                                //                       builder: (context) =>
+                                //                           AboutPergiJalan()));
+                                //             },
+                                //             child: Container(
+                                //               width: MediaQuery.of(context)
+                                //                       .size
+                                //                       .width *
+                                //                   0.59,
+                                //               child: Row(
+                                //                 mainAxisAlignment:
+                                //                     MainAxisAlignment
+                                //                         .spaceBetween,
+                                //                 children: [
+                                //                   Text(
+                                //                     "Tentang PergiJalan",
+                                //                     style: GoogleFonts.openSans(
+                                //                         fontSize: 15,
+                                //                         color: titleColor,
+                                //                         fontWeight:
+                                //                             FontWeight.w600),
+                                //                   ),
+                                //                   Icon(
+                                //                     Icons.arrow_forward_ios,
+                                //                     size: 15,
+                                //                     color: Colors.grey.shade300,
+                                //                   ),
+                                //                 ],
+                                //               ),
+                                //             ),
+                                //           ),
+                                //         ),
+                                //       ],
+                                //     ),
+                                //   ),
+                                // ),
                                 Row(
                                   children: [
                                     Expanded(

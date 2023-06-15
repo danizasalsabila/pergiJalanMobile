@@ -19,6 +19,7 @@ class UserController extends ChangeNotifier {
 
   int? statusCodeRegister;
   String? messageRegister;
+  
   Future<dynamic> registerUser(String name, String email, String password,
       String confirmPassword, String phoneNumber, String idCardNumber) async {
     print("register user");

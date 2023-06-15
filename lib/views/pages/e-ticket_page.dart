@@ -16,9 +16,11 @@ import '../../models/destinasi.dart';
 
 class ETicketPage extends StatefulWidget {
   final int id;
-  final Destinasi idDestinasi;
+  // final Destinasi idDestinasi;
 
-  const ETicketPage({super.key, required this.id, required this.idDestinasi});
+  const ETicketPage({super.key, required this.id, 
+  // required this.idDestinasi
+  });
 
   @override
   State<ETicketPage> createState() => _ETicketPageState();
@@ -65,7 +67,7 @@ class _ETicketPageState extends State<ETicketPage> {
                   Navigator.push(
                     context,
                     MaterialPageRoute(
-                      builder: (context) => MainNavigation(),
+                      builder: (context) => MainNavigation(indexNav: 2,),
                     ),
                   );
                 },
@@ -420,7 +422,7 @@ class _ETicketPageState extends State<ETicketPage> {
                                               padding: const EdgeInsets.only(
                                                   top: 5.0),
                                               child: Text(
-                                                widget.idDestinasi.nameDestinasi
+                                                ticketCon.eticketDataiD!.destinasi!.nameDestinasi.toString()
                                                     .toString(),
                                                 maxLines: 4,
                                                 style: GoogleFonts.inter(
@@ -434,7 +436,7 @@ class _ETicketPageState extends State<ETicketPage> {
                                               padding: const EdgeInsets.only(
                                                   top: 2.0),
                                               child: Text(
-                                                "${widget.idDestinasi.openHour.toString()} - ${widget.idDestinasi.closedHour.toString()}",
+                                                "${ticketCon.eticketDataiD!.destinasi!.openHour.toString()} - ${ticketCon.eticketDataiD!.destinasi!.closedHour.toString()}",
                                                 style: GoogleFonts.inter(
                                                     fontSize: 10,
                                                     color: primaryColor,
@@ -466,7 +468,7 @@ class _ETicketPageState extends State<ETicketPage> {
                                               padding: const EdgeInsets.only(
                                                   top: 5.0),
                                               child: Text(
-                                                widget.idDestinasi.address
+                                                ticketCon.eticketDataiD!.destinasi!.address
                                                     .toString(),
                                                 maxLines: 5,
                                                 style: GoogleFonts.inter(

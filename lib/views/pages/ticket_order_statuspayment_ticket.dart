@@ -15,8 +15,10 @@ import '../../models/eticket.dart';
 
 class StatusOrderPayment extends StatefulWidget {
   final int id;
-  final Destinasi idDestinasi;
-  StatusOrderPayment({super.key, required this.id, required this.idDestinasi});
+  // final Destinasi idDestinasi;
+  StatusOrderPayment({super.key, required this.id, 
+  // required this.idDestinasi
+  });
 
   @override
   State<StatusOrderPayment> createState() => _StatusOrderPaymentState();
@@ -41,7 +43,7 @@ class _StatusOrderPaymentState extends State<StatusOrderPayment> {
       }
        Timer(Duration(seconds: 11), () {
           Navigator.of(context)
-              .push(MaterialPageRoute(builder: (context) => ETicketPage(id: widget.id, idDestinasi: widget.idDestinasi,)));
+              .push(MaterialPageRoute(builder: (context) => ETicketPage(id: widget.id, )));
         });
 
       setState(() {

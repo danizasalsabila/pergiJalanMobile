@@ -7,6 +7,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:pergijalan_mobile/config/theme_color.dart';
 import 'package:pergijalan_mobile/controllers/review_controller.dart';
+import 'package:pergijalan_mobile/controllers/ticket_controller.dart';
 import 'package:pergijalan_mobile/controllers/user_controller.dart';
 import 'package:pergijalan_mobile/models/destinasi.dart';
 import 'package:pergijalan_mobile/views/pages/ticket_list_page.dart';
@@ -41,6 +42,7 @@ class _DetailDestinationState extends State<DetailDestination> {
   String? text;
   bool avgRatingBool = false;
   double? avgRating;
+  bool anyTicketData = false;
 
   List<String> data = [];
   final Completer<GoogleMapController> _controller = Completer();
@@ -53,6 +55,7 @@ class _DetailDestinationState extends State<DetailDestination> {
     // final detailData = Provider.of<DestinasiController>(context, listen: false);
     final reviewData = Provider.of<ReviewController>(context, listen: false);
     final profileCon = Provider.of<UserController>(context, listen: false);
+    final ticketCon = Provider.of<TicketController>(context, listen: false);
 
     isLoading = true;
 
@@ -61,6 +64,7 @@ class _DetailDestinationState extends State<DetailDestination> {
         print("get title destinasi : ${widget.id.nameDestinasi}");
         await reviewData.reviewDestinasiId(widget.id.id);
         await reviewData.getRatingAverageById(widget.id.id);
+        await ticketCon.getTicketbyIdDestination(widget.id.id);
 
         if (reviewData.statusCodeAvgRating == 200) {
           avgRatingBool = true;
@@ -83,6 +87,14 @@ class _DetailDestinationState extends State<DetailDestination> {
         } else {
           print('Teks fasilitas tidak mengandung koma');
           data = [text!];
+        }
+
+        if (ticketCon.anyTicket == true) {
+          anyTicketData = true;
+          print("ada $anyTicketData");
+        } else {
+          anyTicketData = false;
+          print("tidak ada $anyTicketData");
         }
       } catch (e) {
         e;
@@ -1522,48 +1534,18 @@ class _DetailDestinationState extends State<DetailDestination> {
                                     })
                             ]),
                       ),
-                      SizedBox(
+                      const SizedBox(
                         height: 80,
                       )
                     ]);
                   }),
                 ),
           bottomNavigationBar: isLoading
-              ? Center(
+              ? const Center(
                   child: CircularProgressIndicator(),
                 )
-              : isUserLogin == true
+              : isUserLogin == false 
                   ? GestureDetector(
-                      onTap: () async {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) =>  ListTicketDestination(
-                              id: widget.id,
-                            ),
-                          ),
-                        );
-                      },
-                      child: Padding(
-                        padding: const EdgeInsets.only(
-                            left: 18.0, right: 18, bottom: 10, top: 10),
-                        child: Container(
-                          height: MediaQuery.of(context).size.height * 0.06,
-                          width: MediaQuery.of(context).size.width,
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(5),
-                            color: secondaryColor,
-                          ),
-                          child: const Center(
-                              child: Text("Pesan Tiket",
-                                  style: TextStyle(
-                                      color: Colors.white,
-                                      fontSize: 12,
-                                      fontWeight: FontWeight.w600))),
-                        ),
-                      ),
-                    )
-                  : GestureDetector(
                       onTap: () async {
                         Fluttertoast.showToast(
                             msg: "Masuk ke akun anda sebelum membeli tiket",
@@ -1598,7 +1580,39 @@ class _DetailDestinationState extends State<DetailDestination> {
                                       fontWeight: FontWeight.w600))),
                         ),
                       ),
-                    )),
+                    )
+                  : anyTicketData == true 
+                      ? GestureDetector(
+                          onTap: () async {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => ListTicketDestination(
+                                  id: widget.id,
+                                ),
+                              ),
+                            );
+                          },
+                          child: Padding(
+                            padding: const EdgeInsets.only(
+                                left: 18.0, right: 18, bottom: 10, top: 10),
+                            child: Container(
+                              height: MediaQuery.of(context).size.height * 0.06,
+                              width: MediaQuery.of(context).size.width,
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(5),
+                                color: secondaryColor,
+                              ),
+                              child: const Center(
+                                  child: Text("Pesan Tiket",
+                                      style: TextStyle(
+                                          color: Colors.white,
+                                          fontSize: 12,
+                                          fontWeight: FontWeight.w600))),
+                            ),
+                          ),
+                        )
+                      : const SizedBox()),
     );
   }
 }

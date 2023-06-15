@@ -10,6 +10,7 @@ import '../services/api/url.dart';
 class ETicketController extends ChangeNotifier {
   EticketResponse? eticketResponse;
   List<Eticket>? eticketData;
+  List<Eticket>? eticketDataUser;
   List<Eticket> eticketDataId = [];
   // List<Eticket>? eticketDataiD;
   Eticket? eticketDataiD;
@@ -54,6 +55,32 @@ class ETicketController extends ChangeNotifier {
       int price = item['price'];
       totalIncome += price;
       totalIncomeTicket = totalIncome;
+    }
+  }
+
+  Future<dynamic> allEticketByUser(id) async {
+    print("get all data user eticket by $id");
+    var url = Uri.parse(BASE_URL + GET_ETICKET_USER(id));
+    print("URL = $url");
+    try {
+      var response = await http.get(url);
+
+      if (response.statusCode == 200) {
+        var data = json.decode(response.body);
+        print("code: ${response.statusCode}");
+        print(data["status"]);
+
+        eticketResponse = eticketFromJson(response.body);
+        eticketDataUser = eticketResponse?.eticket;
+
+        notifyListeners();
+      } else if (response.statusCode == 404) {
+        print("code: ${response.statusCode}");
+        eticketDataUser = null;
+        // totalIncomeTicket = 0;
+      }
+    } catch (e) {
+      print("ERROR MESSAGE: $e");
     }
   }
 

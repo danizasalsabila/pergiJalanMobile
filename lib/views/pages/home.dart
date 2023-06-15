@@ -112,44 +112,22 @@ class _HomePageState extends State<HomePage> {
                             ),
                             Container(
                               height: 75,
-                              child: Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
-                                children: [
-                                  Container(
-                                      width: MediaQuery.of(context).size.width *
-                                          0.7,
-                                      child: Padding(
-                                        padding: const EdgeInsets.only(
-                                            left: 16.0, top: 20, bottom: 8),
-                                        child: Text(
-                                          "Jelajahi keindahan Indonesia dengan minatmu!",
-                                          style: GoogleFonts.notoSansDisplay(
-                                              fontSize: 16,
-                                              color: Colors.white,
-                                              fontWeight: FontWeight.w600),
-                                        ),
-                                      )),
-                                  Container(
+                              child: Align(
+                                alignment: Alignment.topLeft,
+                                child: Container(
+                                    width: MediaQuery.of(context).size.width *
+                                        0.8,
                                     child: Padding(
                                       padding: const EdgeInsets.only(
-                                          top: 8, bottom: 8, right: 16),
-                                      child: ElevatedButton(
-                                        onPressed: () {},
-                                        child: Icon(
-                                          Icons.arrow_forward_ios_rounded,
-                                          color: Colors.grey.shade600,
-                                          size: 20,
-                                        ),
-                                        style: ElevatedButton.styleFrom(
-                                          shape: const CircleBorder(),
-                                          backgroundColor: const Color.fromARGB(
-                                              172, 255, 255, 255),
-                                        ),
+                                          left: 16.0, top: 20, bottom: 8),
+                                      child: Text(
+                                        "Jelajahi keindahan Indonesia dengan minatmu!",
+                                        style: GoogleFonts.notoSansDisplay(
+                                            fontSize: 16,
+                                            color: Colors.white,
+                                            fontWeight: FontWeight.w600),
                                       ),
-                                    ),
-                                  )
-                                ],
+                                    )),
                               ),
                             ),
                             Container(

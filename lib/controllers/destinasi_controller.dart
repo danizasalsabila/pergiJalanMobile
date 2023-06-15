@@ -71,8 +71,9 @@ class DestinasiController extends ChangeNotifier {
         notifyListeners();
       } else if (response.statusCode == 404) {
         destinasiByOwnerStatusCode = response.statusCode;
+        destinasiQueryData!.clear();
         print(messageDestinasi);
-      } else{
+      } else {
         destinasiByOwnerStatusCode = response.statusCode;
       }
     } catch (e) {
@@ -126,6 +127,7 @@ class DestinasiController extends ChangeNotifier {
     }
   }
 
+  bool isfirstpage = false;
   int? statusCodeSearch;
   Future<dynamic> searchDestinasi(String q) async {
     var url = Uri.parse(BASE_URL + GET_DESTINASI_QUERY(q));
@@ -135,14 +137,25 @@ class DestinasiController extends ChangeNotifier {
 
       var data = json.decode(response.body);
       if (response.statusCode == 200) {
-        print("masuk");
+        isfirstpage = true;
         print(response.statusCode);
+        statusCodeSearch = response.statusCode;
         destinasiResponse = destinasiFromJson(response.body);
         destinasiQueryData = destinasiResponse?.destinasi;
         notifyListeners();
       } else if (response.statusCode == 404) {
+        isfirstpage = false;
+
         statusCodeSearch = response.statusCode;
+        destinasiQueryData!.clear();
         print(statusCodeSearch);
+        notifyListeners();
+      } else if (response.statusCode == 400) {
+        isfirstpage = false;
+        statusCodeSearch = response.statusCode;
+        destinasiQueryData!.clear();
+        print(statusCodeSearch);
+        notifyListeners();
       }
     } catch (e) {
       print("ERROR MESSAGE: $e");

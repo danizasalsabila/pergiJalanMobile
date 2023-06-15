@@ -89,6 +89,8 @@ GET_TICKETSOLD_DESTINASI(id) => "ticketsold?id_destinasi=$id";
 //eticket
 GET_ETICKET_OWNER(id) => "eticket/$id";
 
+GET_ETICKET_USER(id) => "eticket/byuser/$id";
+
 GET_ETICKET_ID(id) => "eticket/$id";
 
 const POST_ETICKET = "eticket";

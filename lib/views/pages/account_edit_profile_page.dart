@@ -66,7 +66,16 @@ class _EditProfilePageState extends State<EditProfilePage> {
     return Scaffold(
       backgroundColor: backgroundColor,
       appBar: AppBar(
-        automaticallyImplyLeading: false,
+        // automaticallyImplyLeading: true,
+        leading: InkWell(
+          onTap: (){
+            Navigator.pop(context);
+          },
+          child: const Icon(
+            Icons.chevron_left,
+            color: primaryColor,
+          ),
+        ),
         backgroundColor: backgroundColor,
         elevation: 0,
         centerTitle: true,

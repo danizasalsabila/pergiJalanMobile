@@ -9,7 +9,7 @@ import 'package:provider/provider.dart';
 
 import '../../controllers/destinasi_controller.dart';
 
-enum DestinasiL { loading, noData, hasData, error }
+// enum DestinasiL { loading, noData, hasData, error }
 
 class SearchPage extends StatefulWidget {
   const SearchPage({super.key});
@@ -22,6 +22,7 @@ class _SearchPageState extends State<SearchPage> {
   // String? queries;
   bool isLoading2 = false;
   bool isLoading = false;
+  bool isfirst = false;
   final TextEditingController queryController = TextEditingController();
   final ScrollController _scrollController = ScrollController();
 
@@ -34,6 +35,8 @@ class _SearchPageState extends State<SearchPage> {
     Future.delayed(Duration(seconds: 1)).then((value) async {
       try {
         searchCon.destinasiQueryData!.clear();
+        isfirst = searchCon.isfirstpage;
+        print("ada data ga? $isfirst");
       } catch (e) {
         print(e);
       }
@@ -49,6 +52,7 @@ class _SearchPageState extends State<SearchPage> {
       if (searchCon.destinasiQueryData != null &&
           searchCon.destinasiQueryData!.isNotEmpty) {
         print("a");
+        searchCon.isfirstpage = false;
 
         return ListView.builder(
             shrinkWrap: true,
@@ -231,17 +235,22 @@ class _SearchPageState extends State<SearchPage> {
                 ),
               );
             });
-      }
-      else if (searchCon.destinasiQueryData!.isEmpty && searchCon.statusCodeSearch != 200) {
+      } else if (searchCon.destinasiQueryData!.isEmpty &&
+          searchCon.statusCodeSearch != 200) {
+        searchCon.isfirstpage = true;
+
         // searchCon.clearData();
         print("b");
         print(searchCon.destinasiQueryData);
         return const SizedBox();
-      }
-      else if (searchCon.statusCodeSearch == 404) {
+      } else if (searchCon.statusCodeSearch == 404) {
+        searchCon.isfirstpage = true;
+
         print("c");
         return Center(child: Text("404"));
       } else {
+        searchCon.isfirstpage = true;
+
         return const SizedBox();
       }
     });
@@ -268,17 +277,11 @@ class _SearchPageState extends State<SearchPage> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   const SizedBox(
-                    // flex: 1,
                     child: Padding(
                       padding: EdgeInsets.only(bottom: 15.0),
                       child: SearchAppBar(),
                     ),
                   ),
-
-                  // queries!.isEmpty
-                  //     ? const SizedBox()
-
-                  //     :
                   Expanded(
                     child: SizedBox(
                       height: MediaQuery.of(context).size.height - 0.5,
@@ -290,7 +293,9 @@ class _SearchPageState extends State<SearchPage> {
                                   child: CircularProgressIndicator(),
                                 ),
                               )
-                            : resultData(context),
+                            : searchCon.isfirstpage == true && searchCon.statusCodeSearch ==200
+                                ? resultData(context)
+                                : SizedBox(),
                       ),
                     ),
                   )

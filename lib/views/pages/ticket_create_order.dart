@@ -875,7 +875,7 @@ class _CreateOrderDetailState extends State<CreateOrderDetail> {
                                   MaterialPageRoute(
                                       builder: (context) => StatusOrderPayment(
                                             id: eticketCon.idAddETicket!,
-                                            idDestinasi: widget.idDestinasi,
+                                            // idDestinasi: widget.idDestinasi,
                                           )),
                                   (route) => false);
                             } else {
