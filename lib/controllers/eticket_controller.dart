@@ -55,6 +55,7 @@ class ETicketController extends ChangeNotifier {
       int price = item['price'];
       totalIncome += price;
       totalIncomeTicket = totalIncome;
+      print(totalIncomeTicket);
     }
   }
 

@@ -33,8 +33,6 @@ const GET_OWNER_BY_ID = "owner/";
 
 UPDATE_OWNER(id) => "owner/$id";
 
-
-
 //ENDPOINT
 //destinasi
 const GET_DESTINASI = "destinasi";
@@ -55,14 +53,12 @@ GET_DESTINASI_CITY(String q) => "city/destinasi?q=$q";
 
 GET_DESTINASI_CATEGORY(String q) => "category/destinasi?q=$q";
 
-
 //review
 const GET_REVIEW = "review";
 
 GET_REVIEW_ID(id) => "review/$id";
 
 const POST_REVIEW = "review";
-
 
 //average rating
 GET_AVG_RATING_ID(id) => "rating/$id";
@@ -84,15 +80,27 @@ GET_TICKETSOLD_OWNER(id) => "ticketsold/owner?id_owner=$id";
 
 GET_TICKETSOLD_DESTINASI(id) => "ticketsold?id_destinasi=$id";
 
+GET_MOSTSALES_TICKET_BYOWNER(id) => "ticket/mostsales/owner?id_owner=$id";
 
 
 //eticket
-GET_ETICKET_OWNER(id) => "eticket/$id";
-
-GET_ETICKET_USER(id) => "eticket/byuser/$id";
+const GET_ETICKET = "eticket";
 
 GET_ETICKET_ID(id) => "eticket/$id";
 
+GET_ETICKET_OWNER(id) => "eticket/byowner/$id";
+
+GET_ETICKET_USER(id) => "eticket/byuser/$id";
+
+GET_ETICKET_TICKET(id) => "eticket/byticket/$id";
+
+GET_ETICKET_BYOWNER_LASTYEAR(id) => "eticket/byowner/year/$id?year=";
+
+GET_ETICKET_BYOWNER_MONTH(id, year, month) => "eticket/byowner/month/$id?year=$year&month=$month";
+
+GET_ETICKET_BYOWNER_WEEK(id, date) => "eticket/byowner/week/$id?date=$date";
+
+
+
+
 const POST_ETICKET = "eticket";
-
-

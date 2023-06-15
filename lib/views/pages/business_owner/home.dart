@@ -12,7 +12,6 @@ import 'package:pergijalan_mobile/controllers/ticket_controller.dart';
 import 'package:pergijalan_mobile/views/pages/business_owner/detail_touristdestinasion.dart';
 import 'package:pergijalan_mobile/views/pages/business_owner/edit_destinationtour.dart';
 import 'package:pergijalan_mobile/views/pages/business_owner/profile_owner.dart';
-import 'package:pergijalan_mobile/views/pages/account_login_user.dart';
 import 'package:provider/provider.dart';
 
 import '../../../controllers/destinasi_controller.dart';
@@ -29,10 +28,19 @@ class _HomePageOwnerState extends State<HomePageOwner> {
   final ScrollController _scrollController = ScrollController();
 
   var now = new DateTime.now();
+  int _index = 0;
 
   bool isLoading = false;
   double? avgRating;
   bool anyData = false;
+  bool anyMostSales = false;
+  List<T> createDotMap<T>(List list, Function handler) {
+    List<T> result = [];
+    for (var i = 0; i < list.length; i++) {
+      result.add(handler(i, list[i]));
+    }
+    return result;
+  }
 
   @override
   void initState() {
@@ -52,6 +60,7 @@ class _HomePageOwnerState extends State<HomePageOwner> {
       try {
         await ownerBusinessHomeCon.destinasiByIdOwner(ownerCon.idOBLogin);
         await reviewData.getRatingAverageByOwner(ownerCon.idOBLogin);
+        await ticketData.getMostSalesTicketByOwner(ownerCon.idOBLogin);
 
         if (reviewData.statusCodeAvgRatingOwner == 200) {
           // avgRatingBool = true;
@@ -71,6 +80,12 @@ class _HomePageOwnerState extends State<HomePageOwner> {
           anyData = false;
 
           print(" gak oke");
+        }
+
+        if (ticketData.anySoldTicket == true) {
+          anyMostSales = true;
+        } else {
+          anyMostSales = false;
         }
       } catch (e) {
         print(e);
@@ -370,228 +385,356 @@ class _HomePageOwnerState extends State<HomePageOwner> {
                       height: 30,
                     ),
                     //banner ticket sold (slicing)
-                    Padding(
-                      padding: const EdgeInsets.only(left: 20.0, right: 20),
-                      child: Container(
-                        height: 220,
-                        width: MediaQuery.of(context).size.width,
-                        decoration: BoxDecoration(
-                            // color: primaFryColor,
-                            gradient: const LinearGradient(
-                              end: Alignment.bottomLeft,
-                              begin: Alignment.center,
-                              colors: [
-                                thirdColor,
-                                Color.fromARGB(255, 37, 138, 151),
-                                // thirdColor,
-                              ],
-                            ),
-                            borderRadius: BorderRadius.circular(5)),
-                        child: Column(children: [
-                          Padding(
-                            padding: const EdgeInsets.fromLTRB(16, 15.0, 16, 0),
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                Container(
-                                  width:
-                                      MediaQuery.of(context).size.width * 0.37,
-                                  decoration: BoxDecoration(
-                                      borderRadius: BorderRadius.circular(5),
-                                      color: Color.fromARGB(71, 255, 255, 255)),
-                                  child: Padding(
-                                    padding: const EdgeInsets.all(5.0),
-                                    child: Center(
-                                      child: Text(
-                                        "Penjualan Tiket Terbanyak",
-                                        style: GoogleFonts.openSans(
-                                            fontSize: 10,
-                                            color: Colors.white,
-                                            fontWeight: FontWeight.w500),
+                    anyMostSales == true
+                        ? Container(
+                            height: 220,
+                            child: Consumer<TicketController>(
+                                builder: (context, ticketCon, child) {
+                              return PageView.builder(
+                                  itemCount:
+                                      ticketCon.ticketDataMostSales?.length,
+                                  controller:
+                                      PageController(viewportFraction: 0.85),
+                                  onPageChanged: (int index) => setState(() {
+                                        _index = index;
+                                      }),
+                                  itemBuilder: (context, index) {
+                                    return Transform.scale(
+                                      scale: index == _index ? 1 : 0.8,
+                                      child: Container(
+                                        height: 220,
+                                        width:
+                                            MediaQuery.of(context).size.width,
+                                        decoration: BoxDecoration(
+                                            gradient: const LinearGradient(
+                                              end: Alignment.bottomLeft,
+                                              begin: Alignment.center,
+                                              colors: [
+                                                thirdColor,
+                                                Color.fromARGB(
+                                                    255, 37, 138, 151),
+                                              ],
+                                            ),
+                                            borderRadius:
+                                                BorderRadius.circular(5)),
+                                        child: Column(children: [
+                                          Padding(
+                                            padding: const EdgeInsets.fromLTRB(
+                                                16, 15.0, 16, 0),
+                                            child: Row(
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment
+                                                      .spaceBetween,
+                                              children: [
+                                                Container(
+                                                  width: MediaQuery.of(context)
+                                                          .size
+                                                          .width *
+                                                      0.37,
+                                                  decoration: BoxDecoration(
+                                                      borderRadius:
+                                                          BorderRadius.circular(
+                                                              5),
+                                                      color: Color.fromARGB(
+                                                          71, 255, 255, 255)),
+                                                  child: Padding(
+                                                    padding:
+                                                        const EdgeInsets.all(
+                                                            5.0),
+                                                    child: Center(
+                                                      child: Text(
+                                                        "Penjualan Tiket Terbanyak",
+                                                        style: GoogleFonts
+                                                            .openSans(
+                                                                fontSize: 10,
+                                                                color: Colors
+                                                                    .white,
+                                                                fontWeight:
+                                                                    FontWeight
+                                                                        .w500),
+                                                      ),
+                                                    ),
+                                                  ),
+                                                ),
+                                                Text(
+                                                 "${index +1}",
+                                                  style: GoogleFonts.kanit(
+                                                      fontSize: 20,
+                                                      color: Colors.white,
+                                                      fontWeight:
+                                                          FontWeight.w800),
+                                                ),
+                                              ],
+                                            ),
+                                          ),
+                                          const SizedBox(
+                                            height: 17,
+                                          ),
+                                          Text(
+                                            "Hari Ini",
+                                            style: GoogleFonts.openSans(
+                                                fontSize: 12,
+                                                color: Colors.white,
+                                                fontWeight: FontWeight.w500),
+                                          ),
+                                          Text(
+                                            formattedDate,
+                                            style: GoogleFonts.openSans(
+                                                fontSize: 18,
+                                                color: Colors.grey.shade400,
+                                                fontWeight: FontWeight.w500),
+                                          ),
+                                          const SizedBox(
+                                            height: 22,
+                                          ),
+                                          Padding(
+                                            padding: const EdgeInsets.only(
+                                                left: 16.0, right: 16),
+                                            child: Container(
+                                              height: 73,
+                                              decoration: BoxDecoration(
+                                                  color: Colors.white,
+                                                  borderRadius:
+                                                      BorderRadius.circular(1)),
+                                              child: Row(
+                                                  mainAxisAlignment:
+                                                      MainAxisAlignment
+                                                          .spaceEvenly,
+                                                  children: [
+                                                    Column(
+                                                      mainAxisAlignment:
+                                                          MainAxisAlignment
+                                                              .center,
+                                                      crossAxisAlignment:
+                                                          CrossAxisAlignment
+                                                              .center,
+                                                      children: [
+                                                        SizedBox(
+                                                          width: MediaQuery.of(
+                                                                      context)
+                                                                  .size
+                                                                  .width *
+                                                              0.2,
+                                                          child: Center(
+                                                            child: Text(
+                                                              "Terjual",
+                                                              style: GoogleFonts.openSans(
+                                                                  fontSize: 12,
+                                                                  color: Color
+                                                                      .fromARGB(
+                                                                          166,
+                                                                          36,
+                                                                          78,
+                                                                          79),
+                                                                  fontWeight:
+                                                                      FontWeight
+                                                                          .w600),
+                                                            ),
+                                                          ),
+                                                        ),
+                                                        SizedBox(
+                                                          width: MediaQuery.of(
+                                                                      context)
+                                                                  .size
+                                                                  .width *
+                                                              0.2,
+                                                          child: Center(
+                                                            child: Text(
+                                                              ticketCon
+                                                                  .ticketDataMostSales![
+                                                                      index]
+                                                                  .ticketSold
+                                                                  .toString(),
+                                                              style: GoogleFonts.kanit(
+                                                                  fontSize: 26,
+                                                                  color:
+                                                                      thirdColor,
+                                                                  fontWeight:
+                                                                      FontWeight
+                                                                          .w600),
+                                                            ),
+                                                          ),
+                                                        ),
+                                                      ],
+                                                    ),
+                                                    Container(
+                                                      height: 52,
+                                                      width: 1,
+                                                      color: Color.fromARGB(
+                                                          92, 36, 78, 79),
+                                                    ),
+                                                    Column(
+                                                      mainAxisAlignment:
+                                                          MainAxisAlignment
+                                                              .center,
+                                                      crossAxisAlignment:
+                                                          CrossAxisAlignment
+                                                              .center,
+                                                      children: [
+                                                        SizedBox(
+                                                          width: MediaQuery.of(
+                                                                      context)
+                                                                  .size
+                                                                  .width *
+                                                              0.2,
+                                                          child: Center(
+                                                            child: Text(
+                                                              textAlign:
+                                                                  TextAlign
+                                                                      .center,
+                                                              "Tempat Wisata",
+                                                              style: GoogleFonts.openSans(
+                                                                  fontSize: 10,
+                                                                  color: Color
+                                                                      .fromARGB(
+                                                                          166,
+                                                                          36,
+                                                                          78,
+                                                                          79),
+                                                                  fontWeight:
+                                                                      FontWeight
+                                                                          .w600),
+                                                            ),
+                                                          ),
+                                                        ),
+                                                        SizedBox(
+                                                          height: 39,
+                                                          width: MediaQuery.of(
+                                                                      context)
+                                                                  .size
+                                                                  .width *
+                                                              0.2,
+                                                          child: Center(
+                                                            child: Text(
+                                                              ticketCon
+                                                                  .ticketDataMostSales![
+                                                                      index]
+                                                                  .destinasi!
+                                                                  .nameDestinasi
+                                                                  .toString(),
+                                                              textAlign:
+                                                                  TextAlign
+                                                                      .center,
+                                                              style: GoogleFonts.kanit(
+                                                                  fontSize: 13,
+                                                                  color:
+                                                                      thirdColor,
+                                                                  fontWeight:
+                                                                      FontWeight
+                                                                          .w600),
+                                                              overflow:
+                                                                  TextOverflow
+                                                                      .fade,
+                                                              maxLines: 2,
+                                                            ),
+                                                          ),
+                                                        ),
+                                                      ],
+                                                    ),
+                                                    Container(
+                                                      height: 52,
+                                                      width: 1,
+                                                      color: Color.fromARGB(
+                                                          92, 36, 78, 79),
+                                                    ),
+                                                    Column(
+                                                      mainAxisAlignment:
+                                                          MainAxisAlignment
+                                                              .center,
+                                                      crossAxisAlignment:
+                                                          CrossAxisAlignment
+                                                              .center,
+                                                      children: [
+                                                        SizedBox(
+                                                          width: MediaQuery.of(
+                                                                      context)
+                                                                  .size
+                                                                  .width *
+                                                              0.2,
+                                                          child: Center(
+                                                            child: Text(
+                                                              "Sisa Stok",
+                                                              style: GoogleFonts.openSans(
+                                                                  fontSize: 12,
+                                                                  color: Color
+                                                                      .fromARGB(
+                                                                          166,
+                                                                          36,
+                                                                          78,
+                                                                          79),
+                                                                  fontWeight:
+                                                                      FontWeight
+                                                                          .w600),
+                                                            ),
+                                                          ),
+                                                        ),
+                                                        SizedBox(
+                                                          child: Center(
+                                                            child: Text(
+                                                              ticketCon
+                                                                  .ticketDataMostSales![
+                                                                      index]
+                                                                  .stock
+                                                                  .toString(),
+                                                              style: GoogleFonts.kanit(
+                                                                  fontSize: 26,
+                                                                  color:
+                                                                      thirdColor,
+                                                                  fontWeight:
+                                                                      FontWeight
+                                                                          .w600),
+                                                            ),
+                                                          ),
+                                                        ),
+                                                      ],
+                                                    ),
+                                                  ]),
+                                            ),
+                                          ),
+                                        ]),
                                       ),
+                                    );
+                                  });
+                            }),
+                          )
+                        : SizedBox(),
+
+                    anyMostSales == true
+                        ? Column(
+                            children: [
+                              SizedBox(height: 12),
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: <Widget>[
+                                  Row(
+                                    children: createDotMap<Widget>(
+                                      ticketData.ticketDataMostSales!,
+                                      // listHeaderBanner2,
+                                      (index, image) {
+                                        return Container(
+                                          alignment: Alignment.centerLeft,
+                                          height: 6,
+                                          width: 6,
+                                          margin:
+                                              const EdgeInsets.only(right: 8),
+                                          decoration: BoxDecoration(
+                                              shape: BoxShape.circle,
+                                              color: _index == index
+                                                  ? primaryColor
+                                                  : secondaryColor),
+                                        );
+                                      },
                                     ),
                                   ),
-                                ),
-                                Text(
-                                  "1",
-                                  style: GoogleFonts.kanit(
-                                      fontSize: 20,
-                                      color: Colors.white,
-                                      fontWeight: FontWeight.w800),
-                                ),
-                              ],
-                            ),
-                          ),
-                          const SizedBox(
-                            height: 17,
-                          ),
-                          Text(
-                            "Hari Ini",
-                            style: GoogleFonts.openSans(
-                                fontSize: 12,
-                                color: Colors.white,
-                                fontWeight: FontWeight.w500),
-                          ),
-                          Text(
-                            formattedDate,
-                            style: GoogleFonts.openSans(
-                                fontSize: 18,
-                                color: Colors.grey.shade400,
-                                fontWeight: FontWeight.w500),
-                          ),
-                          const SizedBox(
-                            height: 22,
-                          ),
-                          Padding(
-                            padding:
-                                const EdgeInsets.only(left: 16.0, right: 16),
-                            child: Container(
-                              height: 73,
-                              decoration: BoxDecoration(
-                                  color: Colors.white,
-                                  borderRadius: BorderRadius.circular(1)),
-                              child: Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceEvenly,
-                                  children: [
-                                    Column(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.center,
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.center,
-                                      children: [
-                                        SizedBox(
-                                          width: MediaQuery.of(context)
-                                                  .size
-                                                  .width *
-                                              0.2,
-                                          child: Center(
-                                            child: Text(
-                                              "Terjual",
-                                              style: GoogleFonts.openSans(
-                                                  fontSize: 12,
-                                                  color: Color.fromARGB(
-                                                      166, 36, 78, 79),
-                                                  fontWeight: FontWeight.w600),
-                                            ),
-                                          ),
-                                        ),
-                                        SizedBox(
-                                          width: MediaQuery.of(context)
-                                                  .size
-                                                  .width *
-                                              0.2,
-                                          child: Center(
-                                            child: Text(
-                                              "90",
-                                              style: GoogleFonts.kanit(
-                                                  fontSize: 26,
-                                                  color: thirdColor,
-                                                  fontWeight: FontWeight.w600),
-                                            ),
-                                          ),
-                                        ),
-                                      ],
-                                    ),
-                                    Container(
-                                      height: 52,
-                                      width: 1,
-                                      color: Color.fromARGB(92, 36, 78, 79),
-                                    ),
-                                    Column(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.center,
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.center,
-                                      children: [
-                                        SizedBox(
-                                          width: MediaQuery.of(context)
-                                                  .size
-                                                  .width *
-                                              0.2,
-                                          child: Center(
-                                            child: Text(
-                                              textAlign: TextAlign.center,
-                                              "Tempat Wisata",
-                                              style: GoogleFonts.openSans(
-                                                  fontSize: 10,
-                                                  color: Color.fromARGB(
-                                                      166, 36, 78, 79),
-                                                  fontWeight: FontWeight.w600),
-                                            ),
-                                          ),
-                                        ),
-                                        SizedBox(
-                                          height: 39,
-                                          width: MediaQuery.of(context)
-                                                  .size
-                                                  .width *
-                                              0.2,
-                                          child: Center(
-                                            child: Text(
-                                              "Nama Wisata",
-                                              textAlign: TextAlign.center,
-                                              style: GoogleFonts.kanit(
-                                                  fontSize: 13,
-                                                  color: thirdColor,
-                                                  fontWeight: FontWeight.w600),
-                                              overflow: TextOverflow.fade,
-                                              maxLines: 2,
-                                            ),
-                                          ),
-                                        ),
-                                      ],
-                                    ),
-                                    Container(
-                                      height: 52,
-                                      width: 1,
-                                      color: Color.fromARGB(92, 36, 78, 79),
-                                    ),
-                                    Column(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.center,
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.center,
-                                      children: [
-                                        SizedBox(
-                                          width: MediaQuery.of(context)
-                                                  .size
-                                                  .width *
-                                              0.2,
-                                          child: Center(
-                                            child: Text(
-                                              "Sisa Tiket",
-                                              style: GoogleFonts.openSans(
-                                                  fontSize: 12,
-                                                  color: Color.fromARGB(
-                                                      166, 36, 78, 79),
-                                                  fontWeight: FontWeight.w600),
-                                            ),
-                                          ),
-                                        ),
-                                        SizedBox(
-                                          child: Center(
-                                            child: Text(
-                                              "20",
-                                              style: GoogleFonts.kanit(
-                                                  fontSize: 26,
-                                                  color: thirdColor,
-                                                  fontWeight: FontWeight.w600),
-                                            ),
-                                          ),
-                                        ),
-                                      ],
-                                    ),
-                                  ]),
-                            ),
-                          ),
-                        ]),
-                      ),
-                    ),
+                                ],
+                              ),
+                            ],
+                          )
+                        : const SizedBox(),
                     const SizedBox(
                       height: 30,
                     ),
-                    const SizedBox(height: 20),
+                    // const SizedBox(height: 20),
                     Padding(
                       padding: const EdgeInsets.only(
                         left: 20.0,

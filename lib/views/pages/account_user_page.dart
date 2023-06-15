@@ -4,7 +4,6 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:pergijalan_mobile/config/theme_color.dart';
 import 'package:pergijalan_mobile/controllers/destinasi_controller.dart';
-import 'package:pergijalan_mobile/views/pages/about_pergijalan.dart';
 import 'package:pergijalan_mobile/views/pages/account_login_user.dart';
 import 'package:pergijalan_mobile/views/pages/e-ticket_page.dart';
 import 'package:pergijalan_mobile/views/pages/splash_screen_page.dart';
@@ -13,7 +12,6 @@ import 'package:provider/provider.dart';
 
 import '../../controllers/eticket_controller.dart';
 import '../../controllers/user_controller.dart';
-import '../widgets/bar_mainnavigation.dart';
 import 'business_owner/login_owner.dart';
 import 'account_edit_profile_page.dart';
 
@@ -518,13 +516,19 @@ class _UserPageState extends State<UserPage> {
                                         PageController(viewportFraction: 0.3),
                                     itemBuilder: (context, index) {
                                       return InkWell(
-                                                                            onTap:(){
-                                        Navigator.push(
-                                                  context,
-                                                  MaterialPageRoute(
-                                                      builder: (context) =>
-                                                          ETicketPage(id: ticketCon.eticketDataUser![index].id!.toInt(), )));
-                                    },
+                                        onTap: () {
+                                          Navigator.push(
+                                              context,
+                                              MaterialPageRoute(
+                                                  builder: (context) =>
+                                                      ETicketPage(
+                                                        id: ticketCon
+                                                            .eticketDataUser![
+                                                                index]
+                                                            .id!
+                                                            .toInt(),
+                                                      )));
+                                        },
                                         child: Padding(
                                           padding:
                                               const EdgeInsets.only(right: 4.0),
@@ -547,7 +551,8 @@ class _UserPageState extends State<UserPage> {
                                                     mainAxisAlignment:
                                                         MainAxisAlignment.end,
                                                     crossAxisAlignment:
-                                                        CrossAxisAlignment.start,
+                                                        CrossAxisAlignment
+                                                            .start,
                                                     children: [
                                                       Text(
                                                         ticketCon
@@ -559,13 +564,13 @@ class _UserPageState extends State<UserPage> {
                                                         style: GoogleFonts
                                                             .notoSansDisplay(
                                                                 fontSize: 13,
-                                                                color:
-                                                                    Colors.white,
+                                                                color: Colors
+                                                                    .white,
                                                                 fontWeight:
                                                                     FontWeight
                                                                         .w600),
-                                                        overflow:
-                                                            TextOverflow.ellipsis,
+                                                        overflow: TextOverflow
+                                                            .ellipsis,
                                                         maxLines: 1,
                                                       ),
                                                       Text(
@@ -577,12 +582,13 @@ class _UserPageState extends State<UserPage> {
                                                         style: GoogleFonts
                                                             .notoSansDisplay(
                                                                 fontSize: 11,
-                                                                color: thirdColor,
+                                                                color:
+                                                                    thirdColor,
                                                                 fontWeight:
                                                                     FontWeight
                                                                         .w500),
-                                                        overflow:
-                                                            TextOverflow.ellipsis,
+                                                        overflow: TextOverflow
+                                                            .ellipsis,
                                                         maxLines: 1,
                                                       )
                                                     ]),

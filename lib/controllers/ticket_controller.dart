@@ -10,7 +10,9 @@ import '../services/api/url.dart';
 class TicketController extends ChangeNotifier {
   Ticket? ticketDataDetail;
   TicketResponse? ticketResponse;
+  TicketResponse? ticketResponseMostSales;
   List<Ticket>? ticketData;
+  List<Ticket>? ticketDataMostSales;
 
   int? statusCodeGetTicketByIdOwner;
   int? ticketSoldOwner;
@@ -63,6 +65,33 @@ class TicketController extends ChangeNotifier {
     } catch (e) {
       print("ERROR MESSAGE: $e");
       anyTicket = false;
+    }
+  }
+
+// int? mostsalesStatusCode;
+  bool anySoldTicket = false;
+  Future<dynamic> getMostSalesTicketByOwner(id) async {
+    print("get most sales by id owner $id");
+
+    var url = Uri.parse(BASE_URL + GET_MOSTSALES_TICKET_BYOWNER(id));
+    print("URL = $url");
+    try {
+      var response = await http.get(url);
+      var data = json.decode(response.body);
+      if (response.statusCode == 200) {
+        print("code : ${response.statusCode}");
+        ticketResponseMostSales = ticketFromJson(response.body);
+        ticketDataMostSales = ticketResponseMostSales?.ticket;
+        anySoldTicket = true;
+        notifyListeners();
+      } else if (response.statusCode == 404) {
+        anySoldTicket = false;
+      } else {
+        print("code: ${response.statusCode}");
+        anySoldTicket = false;
+      }
+    } catch (e) {
+      print("ERROR MESSAGE: $e");
     }
   }
 }

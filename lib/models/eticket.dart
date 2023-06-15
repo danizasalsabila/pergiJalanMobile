@@ -1,5 +1,7 @@
 import 'dart:convert';
 
+import 'package:pergijalan_mobile/models/user.dart';
+
 EticketResponse eticketFromJson(String str) =>
     EticketResponse.fromJson(json.decode(str));
 
@@ -66,8 +68,8 @@ class Eticket {
   String? _createdAt;
   String? _updatedAt;
   Ticket? _ticket;
-
   DestinasiEticket? _destinasi;
+  User? _user;
 
   Eticket(
       {int? id,
@@ -84,6 +86,7 @@ class Eticket {
       String? createdAt,
       String? updatedAt,
       Ticket? ticket,
+      User? user,
       DestinasiEticket? destinasi}) {
     if (id != null) {
       this._id = id;
@@ -130,6 +133,9 @@ class Eticket {
     if (destinasi != null) {
       this._destinasi = destinasi;
     }
+    if (user != null) {
+      this._user = user;
+    }
   }
 
   int? get id => _id;
@@ -164,6 +170,8 @@ class Eticket {
   set ticket(Ticket? ticket) => _ticket = ticket;
   DestinasiEticket? get destinasi => _destinasi;
   set destinasi(DestinasiEticket? destinasi) => _destinasi = destinasi;
+  User? get user => _user;
+  set user(User? user) => _user = user;
 
   Eticket.fromJson(Map<String, dynamic> json) {
     _id = json['id'];
@@ -184,6 +192,7 @@ class Eticket {
     _destinasi = json['destinasi'] != null
         ? new DestinasiEticket.fromJson(json['destinasi'])
         : null;
+    _user = json['user'] != null ? new User.fromJson(json['user']) : null;
   }
 
   Map<String, dynamic> toJson() {
@@ -206,6 +215,9 @@ class Eticket {
     }
     if (this._destinasi != null) {
       data['destinasi'] = this._destinasi!.toJson();
+    }
+    if (this._user != null) {
+      data['user'] = this._user!.toJson();
     }
     return data;
   }
