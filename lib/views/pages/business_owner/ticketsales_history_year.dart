@@ -1,8 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/scheduler.dart';
-import 'package:flutter/src/widgets/container.dart';
-import 'package:flutter/src/widgets/framework.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:lottie/lottie.dart';
 import 'package:pergijalan_mobile/config/theme_color.dart';
@@ -13,8 +9,6 @@ import 'package:provider/provider.dart';
 import 'dart:async';
 import 'dart:math';
 import 'package:fl_chart/fl_chart.dart';
-
-import '../../../controllers/ticket_controller.dart';
 
 class HistoryTicketByYear extends StatefulWidget {
   const HistoryTicketByYear({super.key});
@@ -29,29 +23,31 @@ class _HistoryTicketByYearState extends State<HistoryTicketByYear> {
   bool isLoading = false;
   int touchedIndex = -1;
   String? nameDestinasiChart;
-
-  bool isPressed = false;
   DateTime currentDate = DateTime.now();
   final ScrollController _scrollController = ScrollController();
 
   @override
   void initState() {
     print(" ");
-    print("-------------DIRECT TO HOMEPAGE-----------");
+    print("-------------DIRECT TO SALES HISTORY BY YEAR-----------");
     final eticketCon = Provider.of<ETicketController>(context, listen: false);
     final ownerCon =
         Provider.of<OwnerBusinessController>(context, listen: false);
     isLoading = true;
-    Future.delayed(Duration(seconds: 1)).then((value) async {
+    Future.delayed(const Duration(seconds: 2)).then((value) async {
       try {
+        eticketCon.uniqueDestinations.clear();
+        eticketCon.uniqueNameDestinations.clear();
+        eticketCon.listTicketSoldIdDestinasi.clear();
+
         String currentYear = currentDate.year.toString();
         await eticketCon.allEticketByOwnerInYear(
             ownerCon.idOBLogin, currentYear);
-        getChartDestinasi();
+
+        await eticketCon.getHistoryByYear();
       } catch (e) {
         print(e);
       }
-
       setState(() {
         isLoading = false;
       });
@@ -59,31 +55,44 @@ class _HistoryTicketByYearState extends State<HistoryTicketByYear> {
     super.initState();
   }
 
-  void getChartDestinasi() {
+  getChartDestinasi() async {
     final eticketCon = Provider.of<ETicketController>(context, listen: false);
+    final ownerCon =
+        Provider.of<OwnerBusinessController>(context, listen: false);
     isLoading = true;
+    try {
+      eticketCon.uniqueNameDestinations.clear();
+      eticketCon.uniqueDestinations.clear();
+      eticketCon.listTicketSoldIdDestinasi.clear();
 
-    Future.delayed(Duration(seconds: 1)).then((value) async {
-      try {
-        eticketCon.getHistoryByYear();
-      } catch (e) {
-        print(e);
-      }
+      await eticketCon.allEticketByOwnerInYear(
+          ownerCon.idOBLogin, selectedYear);
 
+      await eticketCon.getHistoryByYear();
+    } catch (e) {
+      print(e);
+    } finally {
       setState(() {
         isLoading = false;
       });
-    });
+    }
+  }
 
-    // setState(() {
-    //   isLoading = false;
-    // });
+  Color getRandomColor(int index) {
+    // isLoading = true;
+    Random random = Random(index);
+    return Color.fromARGB(
+      255,
+      random.nextInt(242),
+      random.nextInt(234),
+      random.nextInt(211),
+    );
   }
 
   @override
   Widget build(BuildContext context) {
-    final ownerCon =
-        Provider.of<OwnerBusinessController>(context, listen: false);
+    // final ownerCon =
+    //     Provider.of<OwnerBusinessController>(context, listen: false);
     return Scaffold(
       backgroundColor: backgroundColor,
       body: isLoading
@@ -97,35 +106,32 @@ class _HistoryTicketByYearState extends State<HistoryTicketByYear> {
                 child: Consumer<ETicketController>(
                     builder: (context, eticketCon, child) {
                   return Column(children: [
-                    // SizedBox(height: 20,),
-                    Stack(
-                      children: [
-                        Container(
-                          height: 450,
-                          width: MediaQuery.of(context).size.width,
-                          decoration: BoxDecoration(
-                              color: Colors.white,
-                              borderRadius: BorderRadius.only(
-                                  bottomLeft: Radius.circular(40),
-                                  bottomRight: Radius.circular(40))),
-                        ),
-                        SizedBox(
-                          height: 450,
-                          width: MediaQuery.of(context).size.width,
-                          child: Padding(
-                            padding:
-                                const EdgeInsets.only(left: 20.0, right: 20),
-                            child: Column(children: [
-                              SizedBox(
-                                height: 20,
-                              ),
-                              Row(
+                    Container(
+                      height: 510,
+                      width: MediaQuery.of(context).size.width,
+                      decoration: const BoxDecoration(
+                          color: Colors.white,
+                          borderRadius: BorderRadius.only(
+                              bottomLeft: Radius.circular(40),
+                              bottomRight: Radius.circular(40))),
+                      child: SizedBox(
+                        // height: 600,
+                        width: MediaQuery.of(context).size.width,
+                        child: Padding(
+                          padding: const EdgeInsets.only(left: 20.0, right: 20),
+                          child: Column(children: [
+                            const SizedBox(
+                              height: 25,
+                            ),
+                            SizedBox(
+                              height: 50,
+                              child: Row(
                                 mainAxisAlignment:
                                     MainAxisAlignment.spaceBetween,
                                 children: [
-                                  Container(
-                                    width: MediaQuery.of(context).size.width *
-                                        0.65,
+                                  SizedBox(
+                                    width:
+                                        MediaQuery.of(context).size.width * 0.7,
                                     child: Column(
                                       mainAxisAlignment:
                                           MainAxisAlignment.start,
@@ -133,24 +139,43 @@ class _HistoryTicketByYearState extends State<HistoryTicketByYear> {
                                           CrossAxisAlignment.start,
                                       children: [
                                         selectedYear == null
-                                            ? Text(
-                                                "Laporan Tahun Terakhir",
-                                                style: GoogleFonts.openSans(
-                                                    fontSize: 20,
-                                                    color: thirdColor,
-                                                    fontWeight:
-                                                        FontWeight.w700),
+                                            ? SizedBox(
+                                                width: MediaQuery.of(context)
+                                                        .size
+                                                        .width *
+                                                    0.6,
+                                                child: Text(
+                                                  "Laporan Tahun Terakhir",
+                                                  maxLines: 2,
+                                                  style: GoogleFonts.openSans(
+                                                      fontSize: 18,
+                                                      color: thirdColor,
+                                                      fontWeight:
+                                                          FontWeight.w700),
+                                                ),
                                               )
-                                            : Text(
-                                                "Laporan Tahunan $selectedYear",
-                                                style: GoogleFonts.openSans(
-                                                    fontSize: 20,
-                                                    color: thirdColor,
-                                                    fontWeight:
-                                                        FontWeight.w700),
+                                            : SizedBox(
+                                                width: MediaQuery.of(context)
+                                                        .size
+                                                        .width *
+                                                    0.6,
+                                                child: Text(
+                                                  "Laporan Tahun $selectedYear",
+                                                  maxLines: 2,
+                                                  style: GoogleFonts.openSans(
+                                                      fontSize: 18,
+                                                      color: thirdColor,
+                                                      fontWeight:
+                                                          FontWeight.w700),
+                                                ),
                                               ),
+                                        const SizedBox(
+                                          height: 2,
+                                        ),
                                         Text(
-                                          "Tiket akan diurutkan berdasarkan satu tahun terakhir",
+                                          selectedYear == null
+                                              ? "Tiket diurutkan berdasarkan tahun terakhir"
+                                              : "Tiket diurutkan berdasarkan tahun $selectedYear",
                                           style: GoogleFonts.notoSansDisplay(
                                               fontSize: 12,
                                               color: captColor,
@@ -174,31 +199,30 @@ class _HistoryTicketByYearState extends State<HistoryTicketByYear> {
                                       child: const Center(
                                         child: Icon(
                                           Icons.calendar_month_outlined,
-                                          color: Colors.grey,
+                                          color:
+                                              Color.fromARGB(136, 36, 78, 79),
                                           size: 20,
                                         ),
                                       ),
                                     ),
-                                    icon: SizedBox(),
+                                    icon: const SizedBox(),
                                     onChanged: (String? newValue) async {
                                       setState(() {
                                         selectedYear = newValue;
-                                        isPressed = true;
                                       });
+
                                       isLoading = true;
-
-                                      eticketCon.uniqueNameDestinations.clear();
-                                      eticketCon.uniqueDestinations.clear();
-                                      eticketCon.listTicketSoldIdDestinasi!
-                                          .clear();
-
-                                      await eticketCon.allEticketByOwnerInYear(
-                                          ownerCon.idOBLogin, selectedYear);
-
-                                      getChartDestinasi();
-
-                                      setState(() {
-                                        isLoading = false;
+                                      Future.delayed(const Duration(seconds: 1))
+                                          .then((value) async {
+                                        try {
+                                          await getChartDestinasi();
+                                        } catch (e) {
+                                          e;
+                                        } finally {
+                                          setState(() {
+                                            isLoading = false;
+                                          });
+                                        }
                                       });
                                     },
                                     items: dropDownYear.map((String year) {
@@ -223,9 +247,10 @@ class _HistoryTicketByYearState extends State<HistoryTicketByYear> {
                                                   .size
                                                   .width *
                                               0.1,
-                                          child: Icon(
+                                          child: const Icon(
                                             Icons.calendar_month_outlined,
-                                            color: Colors.grey,
+                                            color:
+                                                Color.fromARGB(136, 36, 78, 79),
                                             size: 20,
                                           ),
                                         );
@@ -234,267 +259,401 @@ class _HistoryTicketByYearState extends State<HistoryTicketByYear> {
                                   ))
                                 ],
                               ),
-                              SizedBox(
-                                height: 20,
-                              ),
-                              isLoading
-                                  ? const Center(
-                                      child: CircularProgressIndicator(
-                                        color: Colors.blue,
-                                      ),
-                                    )
-                                  : Row(
-                                      children: <Widget>[
-                                        // const SizedBox(
-                                        //   height: 18,
-                                        // ),
-                                        eticketCon.eticketDataOwnerByYear !=
-                                                null
-                                            ? Expanded(
-                                                child: AspectRatio(
-                                                  aspectRatio: 2,
-                                                  child: PieChart(
-                                                    PieChartData(
-                                                      pieTouchData:
-                                                          PieTouchData(
-                                                        touchCallback:
-                                                            (FlTouchEvent event,
-                                                                pieTouchResponse) {
-                                                          setState(() {
-                                                            if (!event
-                                                                    .isInterestedForInteractions ||
-                                                                pieTouchResponse ==
-                                                                    null ||
-                                                                pieTouchResponse
-                                                                        .touchedSection ==
-                                                                    null) {
-                                                              touchedIndex = -1;
-                                                              return;
-                                                            }
-                                                            touchedIndex =
-                                                                pieTouchResponse
-                                                                    .touchedSection!
-                                                                    .touchedSectionIndex;
-                                                          });
-                                                        },
-                                                      ),
-                                                      borderData: FlBorderData(
-                                                        show: false,
-                                                      ),
-                                                      sectionsSpace: 0,
-                                                      centerSpaceRadius: 50,
-                                                      sections: List.generate(
-                                                          eticketCon
-                                                              .listTicketSoldIdDestinasi!
-                                                              .length, (i) {
-                                                        final isTouched =
-                                                            i == touchedIndex;
-                                                        final fontSize =
-                                                            isTouched
-                                                                ? 25.0
-                                                                : 16.0;
-                                                        final radius = isTouched
-                                                            ? 60.0
-                                                            : 50.0;
-                                                        const shadows = [
-                                                          Shadow(
-                                                              color:
-                                                                  Colors.black,
-                                                              blurRadius: 2)
-                                                        ];
-                                                        Color randomColor =
-                                                            getRandomColor(i);
-
-                                                        return PieChartSectionData(
-                                                          color: randomColor,
-                                                          // value: 40,
-                                                          title: eticketCon
-                                                              .listTicketSoldIdDestinasi![
-                                                                  i]
-                                                              .toString(),
-                                                          radius: radius,
-                                                          titleStyle: TextStyle(
-                                                            fontSize: fontSize,
-                                                            fontWeight:
-                                                                FontWeight.bold,
-                                                            color: Colors.white,
-                                                            shadows: shadows,
-                                                          ),
-                                                        );
-                                                      }),
-                                                    ),
-                                                  ),
-                                                ),
-                                              )
-                                            : SizedBox(
-                                                width: MediaQuery.of(context)
-                                                        .size
-                                                        .width *
-                                                    0.8,
-                                                height: 200,
-                                                child: Center(
-                                                    child: Lottie.asset(
-                                                        alignment: Alignment
-                                                            .bottomCenter,
-                                                        "assets/lottie/no_data.json")),
-                                              ),
-
-                                        SizedBox(
-                                          width: 28,
-                                        ),
-                                      ],
-                                    ),
-                              SizedBox(
-                                height: 40,
-                              ),
-                              isLoading
-                                  ? const Center(
-                                      child: CircularProgressIndicator(
-                                        color: Colors.blue,
-                                      ),
-                                    )
-                                  : Align(
-                                      alignment: Alignment.topLeft,
-                                      child: Container(
-                                        height: 80,
-                                        // width: MediaQuery.of(context).size.width,
-                                        child: ListView.builder(
-                                            padding: EdgeInsets.zero,
-                                            shrinkWrap: true,
-                                            controller: _scrollController,
-                                            scrollDirection: Axis.horizontal,
-                                            itemCount: eticketCon
-                                                .uniqueNameDestinations.length,
-                                            itemBuilder: (context, index) {
-                                              Color randomColor =
-                                                  getRandomColor(index);
-                                              return Padding(
-                                                padding: const EdgeInsets.only(
-                                                    right: 30.0),
-                                                child: Column(
-                                                  crossAxisAlignment:
-                                                      CrossAxisAlignment.start,
-                                                  children: [
-                                                    Text(
-                                                      eticketCon
-                                                          .uniqueNameDestinations
-                                                          .toList()[index],
+                            ),
+                            SizedBox(
+                              height: 10,
+                            ),
+                            eticketCon.eticketDataOwnerByYear != null
+                                ? Padding(
+                                    padding: const EdgeInsets.only(
+                                        left: 10.0, right: 10),
+                                    child: Container(
+                                      height: 56,
+                                      decoration: BoxDecoration(
+                                          border: Border.all(
+                                            color: const Color.fromARGB(
+                                                255, 211, 211, 211),
+                                            width: 0.7,
+                                          ),
+                                          borderRadius:
+                                              BorderRadius.circular(10)),
+                                      child: Padding(
+                                        padding: const EdgeInsets.only(
+                                            left: 10.0, right: 10),
+                                        child: Row(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.spaceAround,
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
+                                          children: [
+                                            SizedBox(
+                                              height: 50,
+                                              width: MediaQuery.of(context)
+                                                      .size
+                                                      .width *
+                                                  0.3,
+                                              child: Column(
+                                                mainAxisAlignment:
+                                                    MainAxisAlignment.center,
+                                                crossAxisAlignment:
+                                                    CrossAxisAlignment.center,
+                                                children: [
+                                                  Align(
+                                                    alignment:
+                                                        Alignment.topLeft,
+                                                    child: Text(
+                                                      "Total Pendapatan",
                                                       style: GoogleFonts
                                                           .notoSansDisplay(
-                                                              fontSize: 12,
+                                                              fontSize: 11,
                                                               color: captColor,
                                                               fontWeight:
                                                                   FontWeight
                                                                       .w500),
                                                     ),
-                                                    Row(
-                                                      children: [
-                                                        Text(
-                                                          eticketCon
-                                                              .listTicketSoldIdDestinasi![
-                                                                  index]
-                                                              .toString(),
-                                                          style: GoogleFonts
-                                                              .notoSansDisplay(
-                                                                  fontSize: 25,
-                                                                  color: Color
-                                                                      .fromARGB(
-                                                                          255,
-                                                                          49,
-                                                                          49,
-                                                                          49),
-                                                                  fontWeight:
-                                                                      FontWeight
-                                                                          .w600),
-                                                        ),
-                                                        Text(
-                                                          " Terjual",
-                                                          style: GoogleFonts
-                                                              .notoSansDisplay(
-                                                                  fontSize: 12,
-                                                                  color: Color
-                                                                      .fromARGB(
-                                                                          255,
-                                                                          49,
-                                                                          49,
-                                                                          49),
-                                                                  fontWeight:
-                                                                      FontWeight
-                                                                          .w600),
-                                                        ),
-                                                      ],
-                                                    ),
-                                                    SizedBox(
-                                                      height: 2,
-                                                    ),
-                                                    Container(
-                                                      decoration: BoxDecoration(
-                                                        borderRadius:
-                                                            BorderRadius
-                                                                .circular(10),
-                                                        color: randomColor,
+                                                  ),
+                                                  Padding(
+                                                    padding:
+                                                        const EdgeInsets.only(
+                                                            top: 2.0),
+                                                    child: Align(
+                                                      alignment:
+                                                          Alignment.topLeft,
+                                                      child: Text(
+                                                        "Rp ${eticketCon.totalIncomeTicketByYear.toString()}",
+                                                        style: GoogleFonts
+                                                            .notoSansDisplay(
+                                                                fontSize: 13,
+                                                                color: const Color
+                                                                        .fromARGB(
+                                                                    255,
+                                                                    49,
+                                                                    49,
+                                                                    49),
+                                                                fontWeight:
+                                                                    FontWeight
+                                                                        .w600),
                                                       ),
-                                                      height: 10,
-                                                      width:
-                                                          MediaQuery.of(context)
-                                                                  .size
-                                                                  .width *
-                                                              0.3,
                                                     ),
-                                                    // SizedBox(
-                                                    //   height: 20,
-                                                    // )
+                                                  ),
+                                                ],
+                                              ),
+                                            ),
+                                            Center(
+                                              child: Container(
+                                                height: 35,
+                                                width: 1,
+                                                color: const Color.fromARGB(
+                                                    255, 218, 218, 218),
+                                              ),
+                                            ),
+                                            Padding(
+                                              padding: const EdgeInsets.only(
+                                                  left: 10.0),
+                                              child: SizedBox(
+                                                width: MediaQuery.of(context)
+                                                        .size
+                                                        .width *
+                                                    0.3,
+                                                child: Column(
+                                                  mainAxisAlignment:
+                                                      MainAxisAlignment.center,
+                                                  crossAxisAlignment:
+                                                      CrossAxisAlignment.center,
+                                                  children: [
+                                                    Align(
+                                                      alignment:
+                                                          Alignment.topLeft,
+                                                      child: Text(
+                                                        "Total Penjualan",
+                                                        style: GoogleFonts
+                                                            .notoSansDisplay(
+                                                                fontSize: 11,
+                                                                color:
+                                                                    captColor,
+                                                                fontWeight:
+                                                                    FontWeight
+                                                                        .w500),
+                                                      ),
+                                                    ),
+                                                    Padding(
+                                                      padding:
+                                                          const EdgeInsets.only(
+                                                              top: 2.0),
+                                                      child: Align(
+                                                        alignment:
+                                                            Alignment.topLeft,
+                                                        child: Text(
+                                                          "${eticketCon.eticketDataOwnerByYear!.length.toString()} Tiket",
+                                                          style: GoogleFonts
+                                                              .notoSansDisplay(
+                                                                  fontSize: 13,
+                                                                  color: const Color
+                                                                          .fromARGB(
+                                                                      255,
+                                                                      49,
+                                                                      49,
+                                                                      49),
+                                                                  fontWeight:
+                                                                      FontWeight
+                                                                          .w600),
+                                                        ),
+                                                      ),
+                                                    ),
                                                   ],
                                                 ),
-                                              );
-                                              // Column(
-                                              //   mainAxisAlignment:
-                                              //       MainAxisAlignment.end,
-                                              //   crossAxisAlignment:
-                                              //       CrossAxisAlignment.start,
-                                              //   children: <Widget>[
-                                              //     Indicator(
-                                              //       color: Colors.blue,
-                                              //       text: uniqueNameDestinations
-                                              //           .toList()[index],
-                                              //       isSquare: true,
-                                              //     ),
-                                              //   ],
-                                              // );
-                                            }),
+                                              ),
+                                            ),
+                                          ],
+                                        ),
                                       ),
                                     ),
-                              eticketCon.eticketDataOwnerByYear != null
-                                  ? Column(
-                                      children: [
-                                        Align(
-                                          alignment: Alignment.topLeft,
-                                          child: Text(
-                                            "Total Pendapatan",
+                                  )
+                                : const SizedBox(),
+                            isLoading
+                                ? const Center(
+                                    child: CircularProgressIndicator(
+                                      color: Colors.blue,
+                                    ),
+                                  )
+                                : eticketCon.eticketDataOwnerByYear != null
+                                    ? Expanded(
+                                        flex: 1,
+                                        child: AspectRatio(
+                                          aspectRatio: 2,
+                                          child: PieChart(
+                                            PieChartData(
+                                              pieTouchData: PieTouchData(
+                                                touchCallback:
+                                                    (FlTouchEvent event,
+                                                        pieTouchResponse) {
+                                                  setState(() {
+                                                    if (!event
+                                                            .isInterestedForInteractions ||
+                                                        pieTouchResponse ==
+                                                            null ||
+                                                        pieTouchResponse
+                                                                .touchedSection ==
+                                                            null) {
+                                                      touchedIndex = -1;
+                                                      return;
+                                                    }
+                                                    touchedIndex =
+                                                        pieTouchResponse
+                                                            .touchedSection!
+                                                            .touchedSectionIndex;
+                                                  });
+                                                },
+                                              ),
+                                              borderData: FlBorderData(
+                                                show: false,
+                                              ),
+                                              sectionsSpace: 0,
+                                              centerSpaceRadius: 50,
+                                              sections: List.generate(
+                                                  eticketCon
+                                                      .listTicketSoldIdDestinasi
+                                                      .length, (index) {
+                                                final isTouched =
+                                                    index == touchedIndex;
+                                                final fontSize =
+                                                    isTouched ? 35.0 : 22.0;
+                                                final radius =
+                                                    isTouched ? 60.0 : 50.0;
+                                                const shadows = [
+                                                  Shadow(
+                                                      color: Colors.black,
+                                                      blurRadius: 2)
+                                                ];
+                                                Color randomColor =
+                                                    getRandomColor(index);
+                                                return PieChartSectionData(
+                                                  color: randomColor,
+                                                  value: double.parse(eticketCon
+                                                          .listTicketSoldIdDestinasi[
+                                                      index]),
+                                                  title: eticketCon
+                                                      .listTicketSoldIdDestinasi[
+                                                          index]
+                                                      .toString(),
+                                                  radius: radius,
+                                                  titleStyle: GoogleFonts.kanit(
+                                                    fontSize: fontSize,
+                                                    fontWeight: FontWeight.bold,
+                                                    color: Colors.white,
+                                                    shadows: shadows,
+                                                  ),
+                                                );
+                                              }),
+                                            ),
+                                          ),
+                                        ),
+                                      )
+                                    : SizedBox(
+                                        width:
+                                            MediaQuery.of(context).size.width *
+                                                0.8,
+                                        height: 220,
+                                        child: Center(
+                                            child: Lottie.asset(
+                                                alignment:
+                                                    Alignment.bottomCenter,
+                                                "assets/lottie/no_data.json")),
+                                      ),
+                            eticketCon.eticketDataOwnerByYear != null
+                                ? Center(
+                                    child: SizedBox(
+                                      width: MediaQuery.of(context).size.width *
+                                          0.8,
+                                      child: Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.spaceBetween,
+                                        children: [
+                                          Text(
+                                            "Tempat Wisata",
                                             style: GoogleFonts.notoSansDisplay(
-                                                fontSize: 12,
+                                                fontSize: 10,
                                                 color: captColor,
                                                 fontWeight: FontWeight.w500),
                                           ),
-                                        ),
-                                        Align(
-                                          alignment: Alignment.topLeft,
-                                          child: Text(
-                                            "Rp ${eticketCon.totalIncomeTicketByYear.toString()}",
+                                          Text(
+                                            "Terjual",
                                             style: GoogleFonts.notoSansDisplay(
-                                                fontSize: 16,
-                                                color: Color.fromARGB(
-                                                    255, 49, 49, 49),
-                                                fontWeight: FontWeight.w600),
+                                                fontSize: 10,
+                                                color: captColor,
+                                                fontWeight: FontWeight.w500),
                                           ),
-                                        ),
-                                      ],
-                                    )
-                                  : SizedBox(),
-                            ]),
-                          ),
-                        )
-                      ],
+                                        ],
+                                      ),
+                                    ),
+                                  )
+                                : const SizedBox(),
+                            const SizedBox(
+                              height: 5,
+                            ),
+                            eticketCon.eticketDataOwnerByYear != null
+                                ? Container(
+                                    color: const Color.fromARGB(
+                                        255, 202, 202, 202),
+                                    width:
+                                        MediaQuery.of(context).size.width * 0.8,
+                                    height: 0.6,
+                                  )
+                                : SizedBox(),
+                            const SizedBox(
+                              height: 10,
+                            ),
+                            isLoading
+                                ? const Center(
+                                    child: CircularProgressIndicator(
+                                      color: Colors.blue,
+                                    ),
+                                  )
+                                : Align(
+                                    alignment: Alignment.topCenter,
+                                    child: SizedBox(
+                                      height: 90,
+                                      width: MediaQuery.of(context).size.width *
+                                          0.8,
+                                      child: ListView.builder(
+                                          padding: EdgeInsets.zero,
+                                          shrinkWrap: true,
+                                          controller: _scrollController,
+                                          scrollDirection: Axis.vertical,
+                                          itemCount: eticketCon
+                                              .uniqueNameDestinations.length,
+                                          itemBuilder: (context, index) {
+                                            Color randomColor =
+                                                getRandomColor(index);
+                                            return Padding(
+                                              padding: const EdgeInsets.only(
+                                                  right: 10.0,
+                                                  left: 10,
+                                                  bottom: 10),
+                                              child: Row(
+                                                crossAxisAlignment:
+                                                    CrossAxisAlignment.center,
+                                                mainAxisAlignment:
+                                                    MainAxisAlignment
+                                                        .spaceBetween,
+                                                // mainAxisAlignment: MainAxisAlignment.start,
+                                                children: [
+                                                  Row(
+                                                    children: [
+                                                      Container(
+                                                        decoration:
+                                                            BoxDecoration(
+                                                          borderRadius:
+                                                              BorderRadius
+                                                                  .circular(5),
+                                                          color: randomColor,
+                                                        ),
+                                                        height: 15,
+                                                        width: 25,
+                                                      ),
+                                                      Padding(
+                                                        padding:
+                                                            const EdgeInsets
+                                                                    .only(
+                                                                left: 6.0),
+                                                        child: Text(
+                                                          eticketCon
+                                                              .uniqueNameDestinations
+                                                              .toList()[index],
+                                                          style: GoogleFonts
+                                                              .notoSansDisplay(
+                                                                  fontSize: 11,
+                                                                  color: const Color
+                                                                      .fromARGB(
+                                                                          255,
+                                                                          64,
+                                                                          64,
+                                                                          64),
+                                                                  fontWeight:
+                                                                      FontWeight
+                                                                          .w600),
+                                                        ),
+                                                      ),
+                                                    ],
+                                                  ),
+                                                  Padding(
+                                                    padding:
+                                                        const EdgeInsets.only(
+                                                            left: 10.0),
+                                                    child: Text(
+                                                      // ignore: unnecessary_null_comparison
+                                                      eticketCon.listTicketSoldIdDestinasi[
+                                                                  index] ==
+                                                              null
+                                                          ? "-"
+                                                          : "${eticketCon.listTicketSoldIdDestinasi[index].toString()} Tiket",
+                                                      style: GoogleFonts
+                                                          .notoSansDisplay(
+                                                              fontSize: 11,
+                                                              color: const Color
+                                                                      .fromARGB(
+                                                                  255,
+                                                                  66,
+                                                                  66,
+                                                                  66),
+                                                              fontWeight:
+                                                                  FontWeight
+                                                                      .w600),
+                                                    ),
+                                                  ),
+
+                                                  // SizedBox(
+                                                  //   height: 20,
+                                                  // )
+                                                ],
+                                              ),
+                                            );
+                                          }),
+                                    ),
+                                  ),
+                          ]),
+                        ),
+                      ),
                     ),
                     const SizedBox(
                       height: 20,
@@ -508,7 +667,7 @@ class _HistoryTicketByYearState extends State<HistoryTicketByYear> {
                           Text(
                             "Penjualan Terbaru",
                             style: GoogleFonts.openSans(
-                                fontSize: 18,
+                                fontSize: 16,
                                 color: thirdColor,
                                 fontWeight: FontWeight.w700),
                           ),
@@ -518,14 +677,14 @@ class _HistoryTicketByYearState extends State<HistoryTicketByYear> {
                                   style: GoogleFonts.notoSansDisplay(
                                       fontSize: 10,
                                       color: captColor,
-                                      fontWeight: FontWeight.w600),
+                                      fontWeight: FontWeight.w500),
                                 )
                               : Text(
                                   "Tahun $selectedYear",
                                   style: GoogleFonts.notoSansDisplay(
                                       fontSize: 10,
                                       color: captColor,
-                                      fontWeight: FontWeight.w600),
+                                      fontWeight: FontWeight.w500),
                                 ),
                         ],
                       ),
@@ -534,7 +693,7 @@ class _HistoryTicketByYearState extends State<HistoryTicketByYear> {
                       height: 12,
                     ),
                     eticketCon.eticketDataOwnerByYear != null
-                        ? Container(
+                        ? SizedBox(
                             // width: MediaQuery.of(context),
                             child: ListView.builder(
                               padding: EdgeInsets.zero,
@@ -545,11 +704,11 @@ class _HistoryTicketByYearState extends State<HistoryTicketByYear> {
                                   eticketCon.eticketDataOwnerByYear!.length,
                               itemBuilder: (context, index) {
                                 return Padding(
-                                  padding: EdgeInsets.only(
+                                  padding: const EdgeInsets.only(
                                       left: 30, right: 30, bottom: 15),
                                   child: Container(
                                     width: MediaQuery.of(context).size.width,
-                                    height: 100,
+                                    height: 85,
                                     decoration: BoxDecoration(
                                         boxShadow: [
                                           BoxShadow(
@@ -572,7 +731,7 @@ class _HistoryTicketByYearState extends State<HistoryTicketByYear> {
                                         mainAxisAlignment:
                                             MainAxisAlignment.spaceBetween,
                                         children: [
-                                          Container(
+                                          SizedBox(
                                             width: MediaQuery.of(context)
                                                     .size
                                                     .width *
@@ -585,7 +744,7 @@ class _HistoryTicketByYearState extends State<HistoryTicketByYear> {
                                                         "assets/logo/owner.png"))),
                                             // color: Colors.black,
                                           ),
-                                          Container(
+                                          SizedBox(
                                             width: MediaQuery.of(context)
                                                     .size
                                                     .width *
@@ -634,7 +793,7 @@ class _HistoryTicketByYearState extends State<HistoryTicketByYear> {
                                                   ),
                                                 ]),
                                           ),
-                                          Container(
+                                          SizedBox(
                                             width: MediaQuery.of(context)
                                                     .size
                                                     .width *
@@ -730,151 +889,13 @@ class _HistoryTicketByYearState extends State<HistoryTicketByYear> {
                               ),
                             ),
                           ),
-                    SizedBox(
+                    const SizedBox(
                       height: 20,
                     ),
                   ]);
                 }),
               ),
             ),
-    );
-  }
-
-  // void countIdDestinasi(){
-
-  // }
-
-  List<PieChartSectionData> showingSections() {
-    return List.generate(4, (i) {
-      final isTouched = i == touchedIndex;
-      final fontSize = isTouched ? 25.0 : 16.0;
-      final radius = isTouched ? 60.0 : 50.0;
-      const shadows = [Shadow(color: Colors.black, blurRadius: 2)];
-      switch (i) {
-        case 0:
-          return PieChartSectionData(
-            color: Colors.blue,
-            value: 40,
-            title: '40%',
-            radius: radius,
-            titleStyle: TextStyle(
-              fontSize: fontSize,
-              fontWeight: FontWeight.bold,
-              color: Colors.white,
-              shadows: shadows,
-            ),
-          );
-        case 1:
-          return PieChartSectionData(
-            color: Colors.yellow,
-            value: 30,
-            title: '30%',
-            radius: radius,
-            titleStyle: TextStyle(
-              fontSize: fontSize,
-              fontWeight: FontWeight.bold,
-              color: Colors.white,
-              shadows: shadows,
-            ),
-          );
-        case 2:
-          return PieChartSectionData(
-            color: Colors.purple,
-            value: 15,
-            title: '15%',
-            radius: radius,
-            titleStyle: TextStyle(
-              fontSize: fontSize,
-              fontWeight: FontWeight.bold,
-              color: Colors.white,
-              shadows: shadows,
-            ),
-          );
-        case 3:
-          return PieChartSectionData(
-            color: Colors.green,
-            value: 15,
-            title: '15%',
-            radius: radius,
-            titleStyle: TextStyle(
-              fontSize: fontSize,
-              fontWeight: FontWeight.bold,
-              color: Colors.white,
-              shadows: shadows,
-            ),
-          );
-        default:
-          throw Error();
-      }
-    });
-  }
-}
-
-// class PieChartByYear extends StatefulWidget {
-//   const PieChartByYear({super.key});
-
-//   @override
-//   State<StatefulWidget> createState() => PieChart2State();
-// }
-
-// class PieChart2State extends State<PieChartByYear> {
-
-//   @override
-//   Widget build(BuildContext context) {
-//     return
-//   }
-
-// }
-
-Color getRandomColor(int index) {
-  Random random = Random(index);
-  return Color.fromARGB(
-    255,
-    random.nextInt(256),
-    random.nextInt(256),
-    random.nextInt(256),
-  );
-}
-
-class Indicator extends StatelessWidget {
-  const Indicator({
-    super.key,
-    required this.color,
-    required this.text,
-    required this.isSquare,
-    this.size = 16,
-    this.textColor,
-  });
-  final Color color;
-  final String text;
-  final bool isSquare;
-  final double size;
-  final Color? textColor;
-
-  @override
-  Widget build(BuildContext context) {
-    return Row(
-      children: <Widget>[
-        Container(
-          width: size,
-          height: size,
-          decoration: BoxDecoration(
-            shape: isSquare ? BoxShape.rectangle : BoxShape.circle,
-            color: color,
-          ),
-        ),
-        const SizedBox(
-          width: 4,
-        ),
-        Text(
-          text,
-          style: TextStyle(
-            fontSize: 16,
-            fontWeight: FontWeight.bold,
-            color: textColor,
-          ),
-        )
-      ],
     );
   }
 }
