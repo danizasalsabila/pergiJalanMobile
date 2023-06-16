@@ -3,7 +3,6 @@ import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
-import 'package:pergijalan_mobile/models/review.dart';
 
 import '../models/destinasi.dart';
 import '../models/ticket.dart';

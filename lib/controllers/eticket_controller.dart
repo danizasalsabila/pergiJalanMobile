@@ -11,11 +11,16 @@ class ETicketController extends ChangeNotifier {
   EticketResponse? eticketResponse;
   List<Eticket>? eticketData;
   List<Eticket>? eticketDataUser;
+  List<Eticket>? eticketDataOwnerByYear;
+  List<String> getticketSoldByIdDestinasi = [];
+  List<Eticket>? eticketDataOwnerByWeek;
+  List<Eticket>? eticketDataOwnerByMonth;
   List<Eticket> eticketDataId = [];
   // List<Eticket>? eticketDataiD;
   Eticket? eticketDataiD;
 
   int? totalIncomeTicket;
+  int? totalIncomeTicketByYear;
 
   Future<dynamic> allEticketByOwner(id) async {
     print("get all data eticket by $id");
@@ -55,7 +60,7 @@ class ETicketController extends ChangeNotifier {
       int price = item['price'];
       totalIncome += price;
       totalIncomeTicket = totalIncome;
-      print(totalIncomeTicket);
+      // print(totalIncomeTicket);
     }
   }
 
@@ -174,4 +179,116 @@ class ETicketController extends ChangeNotifier {
       print("ERROR MESSAGE: $e");
     }
   }
+
+  Set<String> uniqueDestinations = Set<String>();
+  Set<String> uniqueNameDestinations = Set<String>();
+  Future<dynamic> allEticketByOwnerInYear(id, year) async {
+    print("get all eticket by $id in $year");
+    var url = Uri.parse(BASE_URL + GET_ETICKET_BYOWNER_LASTYEAR(id) + year);
+    print("URL = $url");
+    try {
+      var response = await http.get(url);
+
+      var data = json.decode(response.body);
+      if (response.statusCode == 200) {
+        print("code: ${response.statusCode}");
+
+        var data2 = data["data"];
+        totalIncomeTickets(data2);
+        eticketResponse = eticketFromJson(response.body);
+        eticketDataOwnerByYear = eticketResponse?.eticket;
+
+        for (int i = 0; i < eticketDataOwnerByYear!.length; i++) {
+          uniqueDestinations
+              .add(eticketDataOwnerByYear![i].idDestinasi.toString());
+          uniqueNameDestinations.add(
+              eticketDataOwnerByYear![i].destinasi!.nameDestinasi.toString());
+        }
+        totalIncomeTicketsByYear(data2);
+
+        seperatedIdDestinasi!.clear();
+        notifyListeners();
+      } else if (response.statusCode == 404) {
+        print("code: ${response.statusCode}");
+        eticketDataOwnerByYear = null;
+        notifyListeners();
+      }
+    } catch (e) {
+      print("ERROR MESSAGE: $e");
+    }
+  }
+
+  void totalIncomeTicketsByYear(List data2) {
+    int totalIncome = 0;
+
+    for (var item in data2) {
+      int price = item['price'];
+      totalIncome += price;
+      totalIncomeTicketByYear = totalIncome;
+      // print(totalIncomeTicket);
+    }
+  }
+
+  int? statusCodeGetTicketByIdDestinasi;
+  int? ticketSoldIdDestinasi;
+  Future<dynamic> getTicketSoldbyIdDestinasi(id) async {
+    print("get ticket by id owner $id");
+    var url = Uri.parse(BASE_URL + GET_TICKETSOLD_DESTINASI(id));
+    print("URL = $url");
+    try {
+      var response = await http.get(url);
+      var data = json.decode(response.body);
+      if (response.statusCode == 200) {
+        ticketSoldIdDestinasi = data["ticket_sold"];
+        print("TICKET SOLD ID $id: $ticketSoldIdDestinasi");
+        listTicketSoldIdDestinasi!.add(ticketSoldIdDestinasi.toString());
+        notifyListeners();
+      } else if (response.statusCode == 404) {
+        statusCodeGetTicketByIdDestinasi = response.statusCode;
+        ticketSoldIdDestinasi = 0;
+        print("code: $statusCodeGetTicketByIdDestinasi");
+      }
+    } catch (e) {
+      print("ERROR MESSAGE: $e");
+    }
+  }
+
+  // for (int i = 0; i < eticketDataOwnerByYear!.length; i++) {
+  //   uniqueDestinations
+  //       .add(eticketDataOwnerByYear![i].idDestinasi.toString());
+  //   uniqueNameDestinations
+  //       .add(eticketDataOwnerByYear![i].idDestinasi.toString());
+  // }
+
+  // Set<String> uniqueNameDestinations = Set<String>();
+  List<String>? seperatedIdDestinasi;
+
+  List<String>? listTicketSoldIdDestinasi;
+  Future<void> getHistoryByYear() async {
+    seperatedIdDestinasi = uniqueDestinations.toList();
+    listTicketSoldIdDestinasi = [];
+
+    for (String value in seperatedIdDestinasi!) {
+      await getTicketSoldbyIdDestinasi(value);
+    }
+
+    print("data data ticket sold: $listTicketSoldIdDestinasi");
+  }
+
+  // void getHistoryByYear() async {
+  //   seperatedIdDestinasi = uniqueDestinations.toList();
+  //   listTicketSoldIdDestinasi = [];
+
+  //   for (String value in seperatedIdDestinasi!) {
+  //     // print(value);
+  //     await getTicketSoldbyIdDestinasi(value);
+  //   }
+
+  // for (int i = 0; i < getticketSoldByIdDestinasi.length; i++) {
+  //   listTicketSoldIdDestinasi!.add(ticketSoldIdDestinasi.toString());
+  // }
+
+  // print("data data ticket sold: $listTicketSoldIdDestinasi");
+
+  // }
 }

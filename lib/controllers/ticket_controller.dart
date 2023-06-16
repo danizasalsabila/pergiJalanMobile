@@ -40,6 +40,29 @@ class TicketController extends ChangeNotifier {
     }
   }
 
+  int? statusCodeGetTicketByIdDestinasi;
+  int? ticketSoldIdDestinasi;
+  Future<dynamic> getTicketSoldbyIdDestinasi(id) async {
+    print("get ticket by id owner $id");
+    var url = Uri.parse(BASE_URL + GET_TICKETSOLD_DESTINASI(id));
+    print("URL = $url");
+    try {
+      var response = await http.get(url);
+      var data = json.decode(response.body);
+      if (response.statusCode == 200) {
+        ticketSoldIdDestinasi = data["ticket_sold"];
+        print(ticketSoldIdDestinasi);
+        notifyListeners();
+      } else if (response.statusCode == 404) {
+        statusCodeGetTicketByIdDestinasi = response.statusCode;
+        ticketSoldIdDestinasi = 0;
+        print("code: $statusCodeGetTicketByIdDestinasi");
+      }
+    } catch (e) {
+      print("ERROR MESSAGE: $e");
+    }
+  }
+
   bool anyTicket = false;
 
   Future<dynamic> getTicketbyIdDestination(id) async {
