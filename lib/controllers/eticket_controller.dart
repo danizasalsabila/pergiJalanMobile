@@ -180,6 +180,10 @@ class ETicketController extends ChangeNotifier {
   int? statusCodeGetTicketByIdDestinasi;
   int? ticketSoldIdDestinasi;
   List<String> listTicketSoldIdDestinasi = [];
+  List<String> listTicketSoldIdDestinasiMonth = [];
+  bool isDataYear = false;
+  bool isDataMonth = false;
+  bool isDataWeek = false;
   Future<dynamic> getTicketSoldbyIdDestinasi(id) async {
     print("get ticket by id owner $id");
     var url = Uri.parse(BASE_URL + GET_TICKETSOLD_DESTINASI(id));
@@ -190,7 +194,27 @@ class ETicketController extends ChangeNotifier {
       if (response.statusCode == 200) {
         ticketSoldIdDestinasi = data["ticket_sold"];
         print("TICKET SOLD ID $id: $ticketSoldIdDestinasi");
-        listTicketSoldIdDestinasi.add(ticketSoldIdDestinasi.toString());
+
+        if (isDataYear == true && isDataMonth == false && isDataWeek == false) {
+          print("ambil tahun");
+          listTicketSoldIdDestinasi.add(ticketSoldIdDestinasi.toString());
+        } else if (isDataYear == false &&
+            isDataMonth == true &&
+            isDataWeek == false) {
+          print("ambil bulan");
+
+          listTicketSoldIdDestinasiMonth.add(ticketSoldIdDestinasi.toString());
+          print(listTicketSoldIdDestinasiMonth);
+        } else if (isDataYear == false &&
+            isDataMonth == false &&
+            isDataWeek == true) {
+          print("ambil minggu");
+        } else {
+          print("tahun : $isDataYear");
+          print("month : $isDataMonth");
+          print("minggu : $isDataWeek");
+          print("ga masuk");
+        }
         notifyListeners();
       } else if (response.statusCode == 404) {
         statusCodeGetTicketByIdDestinasi = response.statusCode;
@@ -263,11 +287,22 @@ class ETicketController extends ChangeNotifier {
       await getTicketSoldbyIdDestinasi(value);
     }
   }
-  // GET SALES BY HISTORY SALES IN A YEAR
+
+  // GET SALES BY HISTORY SALES IN A MONTH
   List<Eticket>? eticketDataOwnerByMonth;
   Set<String> uniqueDestinationsMonth = Set<String>();
   Set<String> uniqueNameDestinationsMonth = Set<String>();
   List<String>? seperatedIdDestinasiMonth;
+  int? listTicketSoldIdDestinasiByMonth;
+  List countByDestinasi = [];
+  int? countMonthDataLength;
+  // int a = 0;
+  // List<int> counts = [];
+  // String? output;
+  // List<int> uniqueCounts = [];
+  // List<int> addData = [];
+  Set<int> addcountMonthDataLength = Set<int>();
+
   Future<dynamic> allEticketByOwnerInMonth(id, year, month) async {
     print("get all eticket by $id in $year");
     var url = Uri.parse(BASE_URL + GET_ETICKET_BYOWNER_MONTH(id, year, month));
@@ -286,13 +321,20 @@ class ETicketController extends ChangeNotifier {
         for (int i = 0; i < eticketDataOwnerByMonth!.length; i++) {
           uniqueDestinationsMonth
               .add(eticketDataOwnerByMonth![i].idDestinasi.toString());
-
           uniqueNameDestinationsMonth.add(
               eticketDataOwnerByMonth![i].destinasi!.nameDestinasi.toString());
+
+          countMonthDataLength = eticketDataOwnerByMonth!
+              .where((data) => eticketDataOwnerByMonth![i]
+                  .idDestinasi
+                  .toString()
+                  .contains(data.idDestinasi.toString()))
+              .length;
+          addcountMonthDataLength.add(countMonthDataLength!);
         }
 
-        totalIncomeTicketsByYear(data2);
-        seperatedIdDestinasiMonth!.clear();
+        totalIncomeTicketsByMonth(data2);
+        // seperatedIdDestinasiMonth!.clear();
         notifyListeners();
       } else if (response.statusCode == 404) {
         print("code: ${response.statusCode}");
@@ -304,4 +346,23 @@ class ETicketController extends ChangeNotifier {
     }
   }
 
+  int? totalIncomeTicketByMonth;
+  void totalIncomeTicketsByMonth(List data2) {
+    int totalIncome = 0;
+
+    for (var item in data2) {
+      int price = item['price'];
+      totalIncome += price;
+      totalIncomeTicketByMonth = totalIncome;
+    }
+  }
+
+  Future<void> getHistoryByMonth() async {
+    seperatedIdDestinasiMonth = uniqueDestinationsMonth.toList();
+    listTicketSoldIdDestinasiMonth = [];
+
+    for (String value in seperatedIdDestinasiMonth!) {
+      await getTicketSoldbyIdDestinasi(value);
+    }
+  }
 }

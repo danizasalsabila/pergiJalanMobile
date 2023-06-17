@@ -1,7 +1,5 @@
-import 'package:flutter/src/widgets/container.dart';
-import 'package:flutter/src/widgets/framework.dart';
-
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:lottie/lottie.dart';
 import 'package:pergijalan_mobile/config/theme_color.dart';
@@ -21,33 +19,125 @@ class HistoryTicketByMonths extends StatefulWidget {
 }
 
 class _HistoryTicketByMonthsState extends State<HistoryTicketByMonths> {
-  final List<String> dropDownYear = ['2022', '2023', '2024'];
+  final List<String> dropDownYear = ['2022', '2023'];
+  List<DropdownMenuItem<String>> get dropdownItems {
+    List<DropdownMenuItem<String>> menuMonth = [
+      DropdownMenuItem(
+          value: "1",
+          child: Text(
+            "Januari",
+            style: GoogleFonts.notoSansDisplay(
+                fontSize: 14, color: titleColor, fontWeight: FontWeight.w400),
+          )),
+      DropdownMenuItem(
+          value: "2",
+          child: Text(
+            "Februari",
+            style: GoogleFonts.notoSansDisplay(
+                fontSize: 14, color: titleColor, fontWeight: FontWeight.w400),
+          )),
+      DropdownMenuItem(
+          value: "3",
+          child: Text(
+            "Maret",
+            style: GoogleFonts.notoSansDisplay(
+                fontSize: 14, color: titleColor, fontWeight: FontWeight.w400),
+          )),
+      DropdownMenuItem(
+          value: "4",
+          child: Text(
+            "April",
+            style: GoogleFonts.notoSansDisplay(
+                fontSize: 14, color: titleColor, fontWeight: FontWeight.w400),
+          )),
+      DropdownMenuItem(
+          value: "5",
+          child: Text(
+            "Mei",
+            style: GoogleFonts.notoSansDisplay(
+                fontSize: 14, color: titleColor, fontWeight: FontWeight.w400),
+          )),
+      DropdownMenuItem(
+          value: "6",
+          child: Text(
+            "Juni",
+            style: GoogleFonts.notoSansDisplay(
+                fontSize: 14, color: titleColor, fontWeight: FontWeight.w400),
+          )),
+      DropdownMenuItem(
+          value: "7",
+          child: Text(
+            "Juli",
+            style: GoogleFonts.notoSansDisplay(
+                fontSize: 14, color: titleColor, fontWeight: FontWeight.w400),
+          )),
+      DropdownMenuItem(
+          value: "8",
+          child: Text(
+            "Agustus",
+            style: GoogleFonts.notoSansDisplay(
+                fontSize: 14, color: titleColor, fontWeight: FontWeight.w400),
+          )),
+      DropdownMenuItem(
+          value: "9",
+          child: Text(
+            "September",
+            style: GoogleFonts.notoSansDisplay(
+                fontSize: 14, color: titleColor, fontWeight: FontWeight.w400),
+          )),
+      DropdownMenuItem(
+          value: "10",
+          child: Text(
+            "Oktober",
+            style: GoogleFonts.notoSansDisplay(
+                fontSize: 14, color: titleColor, fontWeight: FontWeight.w400),
+          )),
+      DropdownMenuItem(
+          value: "11",
+          child: Text(
+            "November",
+            style: GoogleFonts.notoSansDisplay(
+                fontSize: 14, color: titleColor, fontWeight: FontWeight.w400),
+          )),
+      DropdownMenuItem(
+          value: "12",
+          child: Text(
+            "Desember",
+            style: GoogleFonts.notoSansDisplay(
+                fontSize: 14, color: titleColor, fontWeight: FontWeight.w400),
+          )),
+    ];
+    return menuMonth;
+  }
+
   String? selectedYear;
+  String? selectedMonth;
+
   bool isLoading = false;
   int touchedIndex = -1;
-  String? nameDestinasiChart;
   DateTime currentDate = DateTime.now();
+  DateTime currentMonth = DateTime.now();
   final ScrollController _scrollController = ScrollController();
 
   @override
   void initState() {
     print(" ");
-    print("-------------DIRECT TO SALES HISTORY BY YEAR-----------");
+    print("-------------DIRECT TO SALES HISTORY BY MONTH-----------");
     final eticketCon = Provider.of<ETicketController>(context, listen: false);
     final ownerCon =
         Provider.of<OwnerBusinessController>(context, listen: false);
     isLoading = true;
     Future.delayed(const Duration(seconds: 2)).then((value) async {
       try {
-        eticketCon.uniqueDestinations.clear();
-        eticketCon.uniqueNameDestinations.clear();
-        eticketCon.listTicketSoldIdDestinasi.clear();
-
+        eticketCon.uniqueDestinationsMonth.clear();
+        eticketCon.uniqueNameDestinationsMonth.clear();
+        eticketCon.addcountMonthDataLength.clear();
         String currentYear = currentDate.year.toString();
-        await eticketCon.allEticketByOwnerInYear(
-            ownerCon.idOBLogin, currentYear);
+        String currentMonth = currentDate.month.toString();
+        eticketCon.ticketSoldIdDestinasi = 0;
 
-        await eticketCon.getHistoryByYear();
+        await eticketCon.allEticketByOwnerInMonth(
+            ownerCon.idOBLogin, currentYear, currentMonth);
       } catch (e) {
         print(e);
       }
@@ -64,14 +154,13 @@ class _HistoryTicketByMonthsState extends State<HistoryTicketByMonths> {
         Provider.of<OwnerBusinessController>(context, listen: false);
     isLoading = true;
     try {
-      eticketCon.uniqueNameDestinations.clear();
-      eticketCon.uniqueDestinations.clear();
-      eticketCon.listTicketSoldIdDestinasi.clear();
+      eticketCon.uniqueDestinationsMonth.clear();
+      eticketCon.uniqueNameDestinationsMonth.clear();
+      // eticketCon.listTicketSoldIdDestinasiMonth.clear();
+      eticketCon.addcountMonthDataLength.clear();
 
-      await eticketCon.allEticketByOwnerInYear(
-          ownerCon.idOBLogin, selectedYear);
-
-      await eticketCon.getHistoryByYear();
+      await eticketCon.allEticketByOwnerInMonth(
+          ownerCon.idOBLogin, selectedYear, selectedMonth);
     } catch (e) {
       print(e);
     } finally {
@@ -91,6 +180,53 @@ class _HistoryTicketByMonthsState extends State<HistoryTicketByMonths> {
       random.nextInt(211),
     );
   }
+
+  // void showDatePickerDialog(BuildContext context) async {
+  //   final DateTime? pickedDate = await showDatePicker(
+  //     context: context,
+  //     initialDate:
+  //         DateTime(int.parse(selectedYear!), int.parse(selectedMonth!)),
+  //     firstDate: DateTime(DateTime.now().year - 5),
+  //     lastDate: DateTime(DateTime.now().year + 5),
+  //   );
+
+  //   if (pickedDate != null) {
+  //     setState(() {
+  //       selectedMonth = pickedDate.month.toString();
+  //       selectedYear = pickedDate.year.toString();
+  //     });
+  //   }
+  // }
+
+//   void showDatePickerDialog(BuildContext context) {
+//   showDatePicker(
+//     context: context,
+//     initialDate: DateTime.now(),
+//     firstDate: DateTime(2000),
+//     lastDate: DateTime(2100),
+//     builder: (BuildContext context, Widget? child) {
+//       return Theme(
+//         data: ThemeData.light().copyWith(
+//           colorScheme: ColorScheme.light(
+//             primary: Colors.blue, // Warna utama
+//             onPrimary: Colors.white, // Warna teks pada tampilan utama
+//           ),
+//           // Atur warna tampilan dialog picker
+//           dialogBackgroundColor: Colors.white,
+//         ),
+//         child: child!,
+//       );
+//     },
+//   ).then((selectedDate) {
+//     if (selectedDate != null) {
+//       // Format tanggal ke dalam format bulan dan tahun
+//       final formattedDate = '${selectedDate.month}/${selectedDate.year}';
+//       setState(() {
+//         _dateController.text = formattedDate;
+//       });
+//     }
+//   });
+// }
 
   @override
   Widget build(BuildContext context) {
@@ -127,7 +263,7 @@ class _HistoryTicketByMonthsState extends State<HistoryTicketByMonths> {
                               height: 25,
                             ),
                             SizedBox(
-                              height: 50,
+                              height: 70,
                               child: Row(
                                 mainAxisAlignment:
                                     MainAxisAlignment.spaceBetween,
@@ -148,10 +284,10 @@ class _HistoryTicketByMonthsState extends State<HistoryTicketByMonths> {
                                                         .width *
                                                     0.6,
                                                 child: Text(
-                                                  "Laporan Tahun Terakhir",
+                                                  "Laporan Bulan Terakhir",
                                                   maxLines: 2,
                                                   style: GoogleFonts.openSans(
-                                                      fontSize: 18,
+                                                      fontSize: 16,
                                                       color: thirdColor,
                                                       fontWeight:
                                                           FontWeight.w700),
@@ -161,12 +297,13 @@ class _HistoryTicketByMonthsState extends State<HistoryTicketByMonths> {
                                                 width: MediaQuery.of(context)
                                                         .size
                                                         .width *
-                                                    0.6,
+                                                    0.7,
                                                 child: Text(
-                                                  "Laporan Tahun $selectedYear",
+                                                  "Laporan Bulan $selectedMonth",
                                                   maxLines: 2,
+                                                  textAlign: TextAlign.left,
                                                   style: GoogleFonts.openSans(
-                                                      fontSize: 18,
+                                                      fontSize: 16,
                                                       color: thirdColor,
                                                       fontWeight:
                                                           FontWeight.w700),
@@ -177,8 +314,8 @@ class _HistoryTicketByMonthsState extends State<HistoryTicketByMonths> {
                                         ),
                                         Text(
                                           selectedYear == null
-                                              ? "Tiket diurutkan berdasarkan tahun terakhir"
-                                              : "Tiket diurutkan berdasarkan tahun $selectedYear",
+                                              ? "Tiket diurutkan berdasarkan bulan terakhir"
+                                              : "Tiket diurutkan berdasarkan bulan $selectedMonth di tahun $selectedYear",
                                           style: GoogleFonts.notoSansDisplay(
                                               fontSize: 12,
                                               color: captColor,
@@ -187,11 +324,284 @@ class _HistoryTicketByMonthsState extends State<HistoryTicketByMonths> {
                                       ],
                                     ),
                                   ),
-                                  Center(
-                                      child: DropdownButton<String>(
-                                    value: selectedYear,
-                                    isDense: true,
-                                    hint: Container(
+                                  InkWell(
+                                    onTap: () async {
+                                      // print(
+                                      //     "INI YAAAAAAAAAAAAAAA ${eticketCon.b.toList().toString()}");
+                                      await showDialog(
+                                        context: context,
+                                        builder: (BuildContext context) {
+                                          return StatefulBuilder(builder:
+                                              (BuildContext context,
+                                                  StateSetter setState) {
+                                            return AlertDialog(
+                                              title: Text(
+                                                'Pilih bulan dan tahun untuk mendapatkan laporan yang diinginkan',
+                                                style:
+                                                    GoogleFonts.notoSansDisplay(
+                                                        fontSize: 12,
+                                                        color: titleColor,
+                                                        fontWeight:
+                                                            FontWeight.w400),
+                                              ),
+                                              content: Container(
+                                                height: 70,
+                                                child: Column(
+                                                  children: [
+                                                    Row(
+                                                      mainAxisAlignment:
+                                                          MainAxisAlignment
+                                                              .spaceBetween,
+                                                      children: [
+                                                        Container(
+                                                          width: MediaQuery.of(
+                                                                      context)
+                                                                  .size
+                                                                  .width *
+                                                              0.2,
+                                                          child: Text(
+                                                            'Bulan',
+                                                            style: GoogleFonts
+                                                                .notoSansDisplay(
+                                                                    fontSize:
+                                                                        12,
+                                                                    color:
+                                                                        captColor,
+                                                                    fontWeight:
+                                                                        FontWeight
+                                                                            .w400),
+                                                          ),
+                                                        ),
+                                                        SizedBox(
+                                                          width: MediaQuery.of(
+                                                                      context)
+                                                                  .size
+                                                                  .width *
+                                                              0.3,
+                                                          child: DropdownButton<
+                                                                  String>(
+                                                              underline:
+                                                                  const SizedBox(),
+                                                              value:
+                                                                  selectedMonth,
+                                                              isExpanded: true,
+                                                              isDense: true,
+                                                              hint: Text(
+                                                                selectedMonth !=
+                                                                        null
+                                                                    ? "${selectedMonth.toString()}"
+                                                                    : 'Cari Bulan',
+                                                                style: GoogleFonts.notoSansDisplay(
+                                                                    fontSize:
+                                                                        13,
+                                                                    color:
+                                                                        captColor,
+                                                                    fontWeight:
+                                                                        FontWeight
+                                                                            .w400),
+                                                              ),
+                                                              onChanged: (String?
+                                                                  value) async {
+                                                                setState(() {
+                                                                  selectedMonth =
+                                                                      value;
+                                                                });
+                                                              },
+                                                              items:
+                                                                  dropdownItems),
+                                                        ),
+                                                      ],
+                                                    ),
+                                                    const SizedBox(
+                                                        height: 15.0),
+                                                    Row(
+                                                      mainAxisAlignment:
+                                                          MainAxisAlignment
+                                                              .spaceBetween,
+                                                      children: [
+                                                        Container(
+                                                          width: MediaQuery.of(
+                                                                      context)
+                                                                  .size
+                                                                  .width *
+                                                              0.2,
+                                                          child: Text(
+                                                            'Tahun',
+                                                            style: GoogleFonts
+                                                                .notoSansDisplay(
+                                                                    fontSize:
+                                                                        12,
+                                                                    color:
+                                                                        captColor,
+                                                                    fontWeight:
+                                                                        FontWeight
+                                                                            .w400),
+                                                          ),
+                                                        ),
+                                                        SizedBox(
+                                                            width: MediaQuery.of(
+                                                                        context)
+                                                                    .size
+                                                                    .width *
+                                                                0.3,
+                                                            child:
+                                                                DropdownButton<
+                                                                    String>(
+                                                              underline:
+                                                                  const SizedBox(),
+                                                              isDense: true,
+                                                              isExpanded: true,
+                                                              hint: Text(
+                                                                selectedYear !=
+                                                                        null
+                                                                    ? selectedYear
+                                                                        .toString()
+                                                                    : "Cari Tahun",
+                                                                style: GoogleFonts.notoSansDisplay(
+                                                                    fontSize:
+                                                                        13,
+                                                                    color:
+                                                                        captColor,
+                                                                    fontWeight:
+                                                                        FontWeight
+                                                                            .w400),
+                                                              ),
+                                                              value:
+                                                                  selectedYear,
+                                                              onChanged: (String?
+                                                                  newValue) async {
+                                                                setState(() {
+                                                                  selectedYear =
+                                                                      newValue;
+                                                                });
+                                                              },
+                                                              items: dropDownYear
+                                                                  .map((String
+                                                                      year) {
+                                                                return DropdownMenuItem<
+                                                                    String>(
+                                                                  value: year,
+                                                                  child: Text(
+                                                                    year,
+                                                                    style: GoogleFonts.notoSansDisplay(
+                                                                        fontSize:
+                                                                            14,
+                                                                        color:
+                                                                            titleColor,
+                                                                        fontWeight:
+                                                                            FontWeight.w400),
+                                                                  ),
+                                                                );
+                                                              }).toList(),
+                                                            )),
+                                                      ],
+                                                    ),
+                                                  ],
+                                                ),
+                                              ),
+                                              actions: [
+                                                Padding(
+                                                  padding:
+                                                      const EdgeInsets.only(
+                                                          left: 28.0,
+                                                          right: 28),
+                                                  child: Center(
+                                                    child: ElevatedButton(
+                                                      // style: B,
+                                                      style: ButtonStyle(
+                                                        backgroundColor:
+                                                            MaterialStateProperty
+                                                                .all<Color>(
+                                                                    labelColor), // Mengubah warna latar belakang
+                                                        foregroundColor:
+                                                            MaterialStateProperty
+                                                                .all<Color>(Colors
+                                                                    .white), // Mengubah warna teks
+                                                        padding: MaterialStateProperty
+                                                            .all<EdgeInsets>(
+                                                                const EdgeInsets
+                                                                        .all(
+                                                                    10)), // Mengubah padding
+                                                        shape: MaterialStateProperty
+                                                            .all<
+                                                                RoundedRectangleBorder>(
+                                                          RoundedRectangleBorder(
+                                                            borderRadius:
+                                                                BorderRadius
+                                                                    .circular(
+                                                                        8), // Mengubah bentuk border
+                                                          ),
+                                                        ),
+                                                      ),
+                                                      onPressed: () async {
+                                                        isLoading = true;
+                                                        if (selectedMonth ==
+                                                                null ||
+                                                            selectedYear ==
+                                                                null) {
+                                                          Fluttertoast.showToast(
+                                                              msg:
+                                                                  "Bulan atau waktu tidak boleh kosong",
+                                                              toastLength: Toast
+                                                                  .LENGTH_SHORT,
+                                                              gravity:
+                                                                  ToastGravity
+                                                                      .BOTTOM,
+                                                              timeInSecForIosWeb:
+                                                                  1,
+                                                              backgroundColor:
+                                                                  Colors
+                                                                      .red[300],
+                                                              textColor:
+                                                                  Colors.white,
+                                                              fontSize: 16.0);
+                                                          return;
+                                                        } else {
+                                                          print(
+                                                              "data ditekan $selectedMonth and $selectedYear");
+                                                          Future.delayed(
+                                                                  const Duration(
+                                                                      seconds:
+                                                                          1))
+                                                              .then(
+                                                                  (value) async {
+                                                            try {
+                                                              await getChartDestinasi();
+                                                            } catch (e) {
+                                                              e;
+                                                            } finally {
+                                                              Navigator.of(
+                                                                      context)
+                                                                  .pop();
+                                                              setState(() {
+                                                                isLoading =
+                                                                    false;
+                                                              });
+                                                            }
+                                                          });
+                                                        }
+                                                      },
+                                                      child: Text(
+                                                        'Pilih',
+                                                        style: GoogleFonts
+                                                            .openSans(
+                                                                fontSize: 12,
+                                                                color: Colors
+                                                                    .white,
+                                                                fontWeight:
+                                                                    FontWeight
+                                                                        .w600),
+                                                      ),
+                                                    ),
+                                                  ),
+                                                ),
+                                              ],
+                                            );
+                                          });
+                                        },
+                                      );
+                                    },
+                                    child: Container(
                                       decoration: BoxDecoration(
                                         color: Colors.grey.shade200,
                                         borderRadius: BorderRadius.circular(10),
@@ -199,74 +609,20 @@ class _HistoryTicketByMonthsState extends State<HistoryTicketByMonths> {
                                       height: 50,
                                       width: MediaQuery.of(context).size.width *
                                           0.1,
-                                      child: const Center(
-                                        child: Icon(
-                                          Icons.calendar_month_outlined,
-                                          color:
-                                              Color.fromARGB(136, 36, 78, 79),
-                                          size: 20,
-                                        ),
+                                      child: const Icon(
+                                        Icons.calendar_month_outlined,
+                                        color: Color.fromARGB(136, 36, 78, 79),
+                                        size: 20,
                                       ),
                                     ),
-                                    icon: const SizedBox(),
-                                    onChanged: (String? newValue) async {
-                                      setState(() {
-                                        selectedYear = newValue;
-                                      });
-
-                                      isLoading = true;
-                                      Future.delayed(const Duration(seconds: 1))
-                                          .then((value) async {
-                                        try {
-                                          await getChartDestinasi();
-                                        } catch (e) {
-                                          e;
-                                        } finally {
-                                          setState(() {
-                                            isLoading = false;
-                                          });
-                                        }
-                                      });
-                                    },
-                                    items: dropDownYear.map((String year) {
-                                      return DropdownMenuItem<String>(
-                                        value: year,
-                                        child: Text(year),
-                                      );
-                                    }).toList(),
-                                    underline: Container(),
-                                    selectedItemBuilder:
-                                        (BuildContext context) {
-                                      return dropDownYear
-                                          .map<Widget>((String year) {
-                                        return Container(
-                                          decoration: BoxDecoration(
-                                            color: Colors.grey.shade200,
-                                            borderRadius:
-                                                BorderRadius.circular(10),
-                                          ),
-                                          height: 50,
-                                          width: MediaQuery.of(context)
-                                                  .size
-                                                  .width *
-                                              0.1,
-                                          child: const Icon(
-                                            Icons.calendar_month_outlined,
-                                            color:
-                                                Color.fromARGB(136, 36, 78, 79),
-                                            size: 20,
-                                          ),
-                                        );
-                                      }).toList();
-                                    },
-                                  ))
+                                  )
                                 ],
                               ),
                             ),
-                            SizedBox(
+                            const SizedBox(
                               height: 10,
                             ),
-                            eticketCon.eticketDataOwnerByYear != null
+                            eticketCon.eticketDataOwnerByMonth != null
                                 ? Padding(
                                     padding: const EdgeInsets.only(
                                         left: 10.0, right: 10),
@@ -323,7 +679,7 @@ class _HistoryTicketByMonthsState extends State<HistoryTicketByMonths> {
                                                       alignment:
                                                           Alignment.topLeft,
                                                       child: Text(
-                                                        "Rp ${eticketCon.totalIncomeTicketByYear.toString()}",
+                                                        "Rp ${eticketCon.totalIncomeTicketByMonth.toString()}",
                                                         style: GoogleFonts
                                                             .notoSansDisplay(
                                                                 fontSize: 13,
@@ -387,7 +743,7 @@ class _HistoryTicketByMonthsState extends State<HistoryTicketByMonths> {
                                                         alignment:
                                                             Alignment.topLeft,
                                                         child: Text(
-                                                          "${eticketCon.eticketDataOwnerByYear!.length.toString()} Tiket",
+                                                          "${eticketCon.eticketDataOwnerByMonth!.length.toString()} Tiket",
                                                           style: GoogleFonts
                                                               .notoSansDisplay(
                                                                   fontSize: 13,
@@ -419,7 +775,7 @@ class _HistoryTicketByMonthsState extends State<HistoryTicketByMonths> {
                                       color: Colors.blue,
                                     ),
                                   )
-                                : eticketCon.eticketDataOwnerByYear != null
+                                : eticketCon.eticketDataOwnerByMonth != null
                                     ? Expanded(
                                         flex: 1,
                                         child: AspectRatio(
@@ -454,9 +810,7 @@ class _HistoryTicketByMonthsState extends State<HistoryTicketByMonths> {
                                               sectionsSpace: 0,
                                               centerSpaceRadius: 50,
                                               sections: List.generate(
-                                                  eticketCon
-                                                      .listTicketSoldIdDestinasi
-                                                      .length, (index) {
+                                                  eticketCon.addcountMonthDataLength.length, (index) {
                                                 final isTouched =
                                                     index == touchedIndex;
                                                 final fontSize =
@@ -473,11 +827,11 @@ class _HistoryTicketByMonthsState extends State<HistoryTicketByMonths> {
                                                 return PieChartSectionData(
                                                   color: randomColor,
                                                   value: double.parse(eticketCon
-                                                          .listTicketSoldIdDestinasi[
-                                                      index]),
-                                                  title: eticketCon
-                                                      .listTicketSoldIdDestinasi[
-                                                          index]
+                                                      .addcountMonthDataLength
+                                                      .toList()[index]
+                                                      .toString()),
+                                                  title: eticketCon.addcountMonthDataLength
+                                                      .toList()[index]
                                                       .toString(),
                                                   radius: radius,
                                                   titleStyle: GoogleFonts.kanit(
@@ -503,7 +857,7 @@ class _HistoryTicketByMonthsState extends State<HistoryTicketByMonths> {
                                                     Alignment.bottomCenter,
                                                 "assets/lottie/no_data.json")),
                                       ),
-                            eticketCon.eticketDataOwnerByYear != null
+                            eticketCon.eticketDataOwnerByMonth != null
                                 ? Center(
                                     child: SizedBox(
                                       width: MediaQuery.of(context).size.width *
@@ -534,7 +888,7 @@ class _HistoryTicketByMonthsState extends State<HistoryTicketByMonths> {
                             const SizedBox(
                               height: 5,
                             ),
-                            eticketCon.eticketDataOwnerByYear != null
+                            eticketCon.eticketDataOwnerByMonth != null
                                 ? Container(
                                     color: const Color.fromARGB(
                                         255, 202, 202, 202),
@@ -564,8 +918,30 @@ class _HistoryTicketByMonthsState extends State<HistoryTicketByMonths> {
                                           controller: _scrollController,
                                           scrollDirection: Axis.vertical,
                                           itemCount: eticketCon
-                                              .uniqueNameDestinations.length,
+                                              .uniqueNameDestinationsMonth
+                                              .length,
                                           itemBuilder: (context, index) {
+                                            // List<int> addData = [];
+
+                                            // int d = eticketCon
+                                            //     .eticketDataOwnerByMonth!
+                                            //     .where((data) => eticketCon
+                                            //         .eticketDataOwnerByMonth![
+                                            //             index]
+                                            //         .idDestinasi
+                                            //         .toString()
+                                            //         .contains(data.idDestinasi
+                                            //             .toString()))
+                                            //     .length;
+                                            // print("2222");
+                                            // addData.add(d);
+
+                                            // print(addData);
+                                            // print("2222");
+
+                                            // String destination = eticketCon
+                                            //     .uniqueDestinationsMonth
+                                            //     .toString();
                                             Color randomColor =
                                                 getRandomColor(index);
                                             return Padding(
@@ -601,17 +977,17 @@ class _HistoryTicketByMonthsState extends State<HistoryTicketByMonths> {
                                                                 left: 6.0),
                                                         child: Text(
                                                           eticketCon
-                                                              .uniqueNameDestinations
+                                                              .uniqueNameDestinationsMonth
                                                               .toList()[index],
                                                           style: GoogleFonts
                                                               .notoSansDisplay(
                                                                   fontSize: 11,
                                                                   color: const Color
-                                                                      .fromARGB(
-                                                                          255,
-                                                                          64,
-                                                                          64,
-                                                                          64),
+                                                                          .fromARGB(
+                                                                      255,
+                                                                      64,
+                                                                      64,
+                                                                      64),
                                                                   fontWeight:
                                                                       FontWeight
                                                                           .w600),
@@ -624,12 +1000,9 @@ class _HistoryTicketByMonthsState extends State<HistoryTicketByMonths> {
                                                         const EdgeInsets.only(
                                                             left: 10.0),
                                                     child: Text(
-                                                      // ignore: unnecessary_null_comparison
-                                                      eticketCon.listTicketSoldIdDestinasi[
-                                                                  index] ==
-                                                              null
-                                                          ? "-"
-                                                          : "${eticketCon.listTicketSoldIdDestinasi[index].toString()} Tiket",
+                                                      eticketCon.addcountMonthDataLength
+                                                          .toList()[index]
+                                                          .toString(),
                                                       style: GoogleFonts
                                                           .notoSansDisplay(
                                                               fontSize: 11,
@@ -676,14 +1049,14 @@ class _HistoryTicketByMonthsState extends State<HistoryTicketByMonths> {
                           ),
                           selectedYear == null
                               ? Text(
-                                  "Tahun Terakhir",
+                                  "Bulan Terakhir",
                                   style: GoogleFonts.notoSansDisplay(
                                       fontSize: 10,
                                       color: captColor,
                                       fontWeight: FontWeight.w500),
                                 )
                               : Text(
-                                  "Tahun $selectedYear",
+                                  "Bulan $selectedMonth, tahun $selectedYear",
                                   style: GoogleFonts.notoSansDisplay(
                                       fontSize: 10,
                                       color: captColor,
@@ -695,7 +1068,7 @@ class _HistoryTicketByMonthsState extends State<HistoryTicketByMonths> {
                     const SizedBox(
                       height: 12,
                     ),
-                    eticketCon.eticketDataOwnerByYear != null
+                    eticketCon.eticketDataOwnerByMonth != null
                         ? SizedBox(
                             // width: MediaQuery.of(context),
                             child: ListView.builder(
@@ -704,7 +1077,7 @@ class _HistoryTicketByMonthsState extends State<HistoryTicketByMonths> {
                               controller: _scrollController,
                               scrollDirection: Axis.vertical,
                               itemCount:
-                                  eticketCon.eticketDataOwnerByYear!.length,
+                                  eticketCon.eticketDataOwnerByMonth!.length,
                               itemBuilder: (context, index) {
                                 return Padding(
                                   padding: const EdgeInsets.only(
@@ -760,7 +1133,7 @@ class _HistoryTicketByMonthsState extends State<HistoryTicketByMonths> {
                                                 children: [
                                                   Text(
                                                     eticketCon
-                                                        .eticketDataOwnerByYear![
+                                                        .eticketDataOwnerByMonth![
                                                             index]
                                                         .destinasi!
                                                         .nameDestinasi
@@ -781,7 +1154,7 @@ class _HistoryTicketByMonthsState extends State<HistoryTicketByMonths> {
                                                   ),
                                                   Text(
                                                     eticketCon
-                                                        .eticketDataOwnerByYear![
+                                                        .eticketDataOwnerByMonth![
                                                             index]
                                                         .dateVisit
                                                         .toString(),
@@ -826,7 +1199,7 @@ class _HistoryTicketByMonthsState extends State<HistoryTicketByMonths> {
                                                               .end,
                                                       children: [
                                                         Text(
-                                                          "+ Rp${eticketCon.eticketDataOwnerByYear![index].price.toString()}",
+                                                          "+ Rp${eticketCon.eticketDataOwnerByMonth![index].price.toString()}",
                                                           maxLines: 2,
                                                           style: GoogleFonts
                                                               .notoSansDisplay(
@@ -843,7 +1216,7 @@ class _HistoryTicketByMonthsState extends State<HistoryTicketByMonths> {
                                                         ),
                                                         Text(
                                                           eticketCon
-                                                              .eticketDataOwnerByYear![
+                                                              .eticketDataOwnerByMonth![
                                                                   index]
                                                               .dateBook
                                                               .toString(),

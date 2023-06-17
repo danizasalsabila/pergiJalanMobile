@@ -36,14 +36,17 @@ class _HistoryTicketByYearState extends State<HistoryTicketByYear> {
     isLoading = true;
     Future.delayed(const Duration(seconds: 2)).then((value) async {
       try {
+        eticketCon.isDataYear = true;
+        eticketCon.isDataMonth = false;
+        eticketCon.isDataWeek = false;
         eticketCon.uniqueDestinations.clear();
         eticketCon.uniqueNameDestinations.clear();
         eticketCon.listTicketSoldIdDestinasi.clear();
 
+        eticketCon.ticketSoldIdDestinasi = 0;
         String currentYear = currentDate.year.toString();
         await eticketCon.allEticketByOwnerInYear(
             ownerCon.idOBLogin, currentYear);
-
         await eticketCon.getHistoryByYear();
       } catch (e) {
         print(e);
@@ -604,11 +607,11 @@ class _HistoryTicketByYearState extends State<HistoryTicketByYear> {
                                                               .notoSansDisplay(
                                                                   fontSize: 11,
                                                                   color: const Color
-                                                                      .fromARGB(
-                                                                          255,
-                                                                          64,
-                                                                          64,
-                                                                          64),
+                                                                          .fromARGB(
+                                                                      255,
+                                                                      64,
+                                                                      64,
+                                                                      64),
                                                                   fontWeight:
                                                                       FontWeight
                                                                           .w600),
