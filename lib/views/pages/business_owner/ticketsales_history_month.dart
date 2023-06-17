@@ -131,13 +131,16 @@ class _HistoryTicketByMonthsState extends State<HistoryTicketByMonths> {
       try {
         eticketCon.uniqueDestinationsMonth.clear();
         eticketCon.uniqueNameDestinationsMonth.clear();
-        eticketCon.addcountMonthDataLength.clear();
+        eticketCon.listTicketSoldIdDestinasiMonth.clear();
+
         String currentYear = currentDate.year.toString();
         String currentMonth = currentDate.month.toString();
-        eticketCon.ticketSoldIdDestinasi = 0;
+        eticketCon.ticketSoldIdDestinasiMonth = 0;
 
         await eticketCon.allEticketByOwnerInMonth(
             ownerCon.idOBLogin, currentYear, currentMonth);
+
+        await eticketCon.getHistoryByMonth(currentYear, currentMonth);
       } catch (e) {
         print(e);
       }
@@ -156,11 +159,13 @@ class _HistoryTicketByMonthsState extends State<HistoryTicketByMonths> {
     try {
       eticketCon.uniqueDestinationsMonth.clear();
       eticketCon.uniqueNameDestinationsMonth.clear();
-      // eticketCon.listTicketSoldIdDestinasiMonth.clear();
-      eticketCon.addcountMonthDataLength.clear();
+      eticketCon.listTicketSoldIdDestinasiMonth.clear();
+      // eticketCon.addcountMonthDataLength.clear();
 
       await eticketCon.allEticketByOwnerInMonth(
           ownerCon.idOBLogin, selectedYear, selectedMonth);
+
+      await eticketCon.getHistoryByMonth(selectedYear, selectedMonth);
     } catch (e) {
       print(e);
     } finally {
@@ -181,57 +186,10 @@ class _HistoryTicketByMonthsState extends State<HistoryTicketByMonths> {
     );
   }
 
-  // void showDatePickerDialog(BuildContext context) async {
-  //   final DateTime? pickedDate = await showDatePicker(
-  //     context: context,
-  //     initialDate:
-  //         DateTime(int.parse(selectedYear!), int.parse(selectedMonth!)),
-  //     firstDate: DateTime(DateTime.now().year - 5),
-  //     lastDate: DateTime(DateTime.now().year + 5),
-  //   );
-
-  //   if (pickedDate != null) {
-  //     setState(() {
-  //       selectedMonth = pickedDate.month.toString();
-  //       selectedYear = pickedDate.year.toString();
-  //     });
-  //   }
-  // }
-
-//   void showDatePickerDialog(BuildContext context) {
-//   showDatePicker(
-//     context: context,
-//     initialDate: DateTime.now(),
-//     firstDate: DateTime(2000),
-//     lastDate: DateTime(2100),
-//     builder: (BuildContext context, Widget? child) {
-//       return Theme(
-//         data: ThemeData.light().copyWith(
-//           colorScheme: ColorScheme.light(
-//             primary: Colors.blue, // Warna utama
-//             onPrimary: Colors.white, // Warna teks pada tampilan utama
-//           ),
-//           // Atur warna tampilan dialog picker
-//           dialogBackgroundColor: Colors.white,
-//         ),
-//         child: child!,
-//       );
-//     },
-//   ).then((selectedDate) {
-//     if (selectedDate != null) {
-//       // Format tanggal ke dalam format bulan dan tahun
-//       final formattedDate = '${selectedDate.month}/${selectedDate.year}';
-//       setState(() {
-//         _dateController.text = formattedDate;
-//       });
-//     }
-//   });
-// }
-
   @override
   Widget build(BuildContext context) {
-    // final ownerCon =
-    //     Provider.of<OwnerBusinessController>(context, listen: false);
+    final ownerCon =
+        Provider.of<OwnerBusinessController>(context, listen: false);
     return Scaffold(
       backgroundColor: backgroundColor,
       body: isLoading
@@ -541,7 +499,7 @@ class _HistoryTicketByMonthsState extends State<HistoryTicketByMonths> {
                                                                 null) {
                                                           Fluttertoast.showToast(
                                                               msg:
-                                                                  "Bulan atau waktu tidak boleh kosong",
+                                                                  "Bulan atau tahun tidak boleh kosong",
                                                               toastLength: Toast
                                                                   .LENGTH_SHORT,
                                                               gravity:
@@ -810,7 +768,9 @@ class _HistoryTicketByMonthsState extends State<HistoryTicketByMonths> {
                                               sectionsSpace: 0,
                                               centerSpaceRadius: 50,
                                               sections: List.generate(
-                                                  eticketCon.addcountMonthDataLength.length, (index) {
+                                                  eticketCon
+                                                      .listTicketSoldIdDestinasiMonth
+                                                      .length, (index) {
                                                 final isTouched =
                                                     index == touchedIndex;
                                                 final fontSize =
@@ -827,10 +787,10 @@ class _HistoryTicketByMonthsState extends State<HistoryTicketByMonths> {
                                                 return PieChartSectionData(
                                                   color: randomColor,
                                                   value: double.parse(eticketCon
-                                                      .addcountMonthDataLength
-                                                      .toList()[index]
-                                                      .toString()),
-                                                  title: eticketCon.addcountMonthDataLength
+                                                          .listTicketSoldIdDestinasiMonth[
+                                                      index]),
+                                                  title: eticketCon
+                                                      .listTicketSoldIdDestinasiMonth
                                                       .toList()[index]
                                                       .toString(),
                                                   radius: radius,
@@ -921,27 +881,6 @@ class _HistoryTicketByMonthsState extends State<HistoryTicketByMonths> {
                                               .uniqueNameDestinationsMonth
                                               .length,
                                           itemBuilder: (context, index) {
-                                            // List<int> addData = [];
-
-                                            // int d = eticketCon
-                                            //     .eticketDataOwnerByMonth!
-                                            //     .where((data) => eticketCon
-                                            //         .eticketDataOwnerByMonth![
-                                            //             index]
-                                            //         .idDestinasi
-                                            //         .toString()
-                                            //         .contains(data.idDestinasi
-                                            //             .toString()))
-                                            //     .length;
-                                            // print("2222");
-                                            // addData.add(d);
-
-                                            // print(addData);
-                                            // print("2222");
-
-                                            // String destination = eticketCon
-                                            //     .uniqueDestinationsMonth
-                                            //     .toString();
                                             Color randomColor =
                                                 getRandomColor(index);
                                             return Padding(
@@ -1000,9 +939,12 @@ class _HistoryTicketByMonthsState extends State<HistoryTicketByMonths> {
                                                         const EdgeInsets.only(
                                                             left: 10.0),
                                                     child: Text(
-                                                      eticketCon.addcountMonthDataLength
-                                                          .toList()[index]
-                                                          .toString(),
+                                                      eticketCon.listTicketSoldIdDestinasiMonth[
+                                                                      index]
+                                                                  .toString() ==
+                                                              null
+                                                          ? "-"
+                                                          : "${eticketCon.listTicketSoldIdDestinasiMonth[index].toString()} Tiket",
                                                       style: GoogleFonts
                                                           .notoSansDisplay(
                                                               fontSize: 11,

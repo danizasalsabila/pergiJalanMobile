@@ -80,8 +80,13 @@ GET_TICKETSOLD_OWNER(id) => "ticketsold/owner?id_owner=$id";
 
 GET_TICKETSOLD_DESTINASI(id) => "ticketsold?id_destinasi=$id";
 
-GET_MOSTSALES_TICKET_BYOWNER(id) => "ticket/mostsales/owner?id_owner=$id";
+GET_TICKETSOLD_DESTINASI_YEAR(id) => "ticketsold/ownerinyear?id_destinasi=$id&year=";
 
+GET_TICKETSOLD_DESTINASI_MONTH(id, year, month) => "ticketsold/ownerinmonth?id_destinasi=$id&year=$year&month=$month";
+
+GET_TICKETSOLD_DESTINASI_WEEK(id, date) => "ticketsold/ownerinweek?id_destinasi=$id&date=$date";
+
+GET_MOSTSALES_TICKET_BYOWNER(id) => "ticket/mostsales/owner?id_owner=$id";
 
 //eticket
 const GET_ETICKET = "eticket";
@@ -96,11 +101,9 @@ GET_ETICKET_TICKET(id) => "eticket/byticket/$id";
 
 GET_ETICKET_BYOWNER_LASTYEAR(id) => "eticket/byowner/year/$id?year=";
 
-GET_ETICKET_BYOWNER_MONTH(id, year, month) => "eticket/byowner/month/$id?year=$year&month=$month";
+GET_ETICKET_BYOWNER_MONTH(id, year, month) =>
+    "eticket/byowner/month/$id?year=$year&month=$month";
 
 GET_ETICKET_BYOWNER_WEEK(id, date) => "eticket/byowner/week/$id?date=$date";
-
-
-
 
 const POST_ETICKET = "eticket";
