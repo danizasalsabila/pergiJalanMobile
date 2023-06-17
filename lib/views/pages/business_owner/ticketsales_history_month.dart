@@ -160,7 +160,6 @@ class _HistoryTicketByMonthsState extends State<HistoryTicketByMonths> {
       eticketCon.uniqueDestinationsMonth.clear();
       eticketCon.uniqueNameDestinationsMonth.clear();
       eticketCon.listTicketSoldIdDestinasiMonth.clear();
-      // eticketCon.addcountMonthDataLength.clear();
 
       await eticketCon.allEticketByOwnerInMonth(
           ownerCon.idOBLogin, selectedYear, selectedMonth);
@@ -176,7 +175,6 @@ class _HistoryTicketByMonthsState extends State<HistoryTicketByMonths> {
   }
 
   Color getRandomColor(int index) {
-    // isLoading = true;
     Random random = Random(index);
     return Color.fromARGB(
       255,
@@ -188,8 +186,8 @@ class _HistoryTicketByMonthsState extends State<HistoryTicketByMonths> {
 
   @override
   Widget build(BuildContext context) {
-    final ownerCon =
-        Provider.of<OwnerBusinessController>(context, listen: false);
+    // final ownerCon =
+    //     Provider.of<OwnerBusinessController>(context, listen: false);
     return Scaffold(
       backgroundColor: backgroundColor,
       body: isLoading
@@ -284,8 +282,6 @@ class _HistoryTicketByMonthsState extends State<HistoryTicketByMonths> {
                                   ),
                                   InkWell(
                                     onTap: () async {
-                                      // print(
-                                      //     "INI YAAAAAAAAAAAAAAA ${eticketCon.b.toList().toString()}");
                                       await showDialog(
                                         context: context,
                                         builder: (BuildContext context) {
@@ -302,7 +298,7 @@ class _HistoryTicketByMonthsState extends State<HistoryTicketByMonths> {
                                                         fontWeight:
                                                             FontWeight.w400),
                                               ),
-                                              content: Container(
+                                              content: SizedBox(
                                                 height: 70,
                                                 child: Column(
                                                   children: [
@@ -939,10 +935,10 @@ class _HistoryTicketByMonthsState extends State<HistoryTicketByMonths> {
                                                         const EdgeInsets.only(
                                                             left: 10.0),
                                                     child: Text(
+                                                      // ignore: unrelated_type_equality_checks
                                                       eticketCon.listTicketSoldIdDestinasiMonth[
-                                                                      index]
-                                                                  .toString() ==
-                                                              null
+                                                                      index] ==
+                                                              [0]
                                                           ? "-"
                                                           : "${eticketCon.listTicketSoldIdDestinasiMonth[index].toString()} Tiket",
                                                       style: GoogleFonts

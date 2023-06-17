@@ -283,13 +283,17 @@ class _TicketSalesHistoryState extends State<TicketSalesHistory> {
                                                                         FontWeight
                                                                             .w400),
                                                               ),
-                                                              Text(
+                                                              Text(eticketCon
+                                                                    .eticketData![
+                                                                        index]
+                                                                    .destinasi!
+                                                                    .openHour != null?
                                                                 eticketCon
                                                                     .eticketData![
                                                                         index]
                                                                     .destinasi!
                                                                     .openHour
-                                                                    .toString(),
+                                                                    .toString():"-",
                                                                 style: GoogleFonts.inter(
                                                                     fontSize:
                                                                         20,
@@ -348,7 +352,7 @@ class _TicketSalesHistoryState extends State<TicketSalesHistory> {
                                                                     .start,
                                                             children: [
                                                               Text(
-                                                                "Jam Buka",
+                                                                "Jam Tutup",
                                                                 style: GoogleFonts.inter(
                                                                     fontSize:
                                                                         10,
@@ -367,8 +371,12 @@ class _TicketSalesHistoryState extends State<TicketSalesHistory> {
                                                                     .eticketData![
                                                                         index]
                                                                     .destinasi!
-                                                                    .openHour
-                                                                    .toString(),
+                                                                    .closedHour != null ? eticketCon
+                                                                    .eticketData![
+                                                                        index]
+                                                                    .destinasi!
+                                                                    .closedHour
+                                                                    .toString():"-",
                                                                 style: GoogleFonts.inter(
                                                                     fontSize:
                                                                         20,
@@ -506,7 +514,7 @@ class _TicketSalesHistoryState extends State<TicketSalesHistory> {
                                                             .start,
                                                     children: [
                                                       Text(
-                                                        "Kontak Pengunjung",
+                                                        "Nama Tiket",
                                                         style: GoogleFonts.inter(
                                                             fontSize: 9,
                                                             color: const Color
@@ -754,7 +762,7 @@ class _TicketSalesHistoryState extends State<TicketSalesHistory> {
                                                             .start,
                                                     children: [
                                                       Text(
-                                                        "Tanggal Kunjungan",
+                                                        "Nama Akun",
                                                         style: GoogleFonts.inter(
                                                             fontSize: 9,
                                                             color: const Color

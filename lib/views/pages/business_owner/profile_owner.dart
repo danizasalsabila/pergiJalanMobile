@@ -9,6 +9,7 @@ import 'package:pergijalan_mobile/views/pages/business_owner/edit_profile_owner.
 import 'package:pergijalan_mobile/views/pages/business_owner/home.dart';
 import 'package:pergijalan_mobile/views/pages/business_owner/ticketsales_history.dart';
 import 'package:pergijalan_mobile/views/pages/business_owner/ticketsales_history_month.dart';
+import 'package:pergijalan_mobile/views/pages/business_owner/ticketsales_history_week.dart';
 import 'package:pergijalan_mobile/views/pages/business_owner/ticketsales_history_year.dart';
 import 'package:provider/provider.dart';
 
@@ -430,7 +431,7 @@ class _OwnerProfilePageState extends State<OwnerProfilePage> {
                                   child: Container(
                                     height: 100,
                                     width:
-                                        MediaQuery.of(context).size.width * 0.4,
+                                        MediaQuery.of(context).size.width * 0.26,
                                     decoration: BoxDecoration(
                                       color: Colors.white,
                                       borderRadius: BorderRadius.circular(10),
@@ -466,9 +467,9 @@ class _OwnerProfilePageState extends State<OwnerProfilePage> {
                                                       85, 36, 78, 79)),
                                               child: Padding(
                                                 padding:
-                                                    const EdgeInsets.all(7.0),
+                                                    const EdgeInsets.all(5.0),
                                                 child: Image.asset(
-                                                  "assets/servicebar/rating.png",
+                                                  "assets/servicebar/year.png",
                                                   fit: BoxFit.fill,
                                                 ),
                                               ),
@@ -502,7 +503,7 @@ class _OwnerProfilePageState extends State<OwnerProfilePage> {
                                   child: Container(
                                     height: 100,
                                     width:
-                                        MediaQuery.of(context).size.width * 0.4,
+                                        MediaQuery.of(context).size.width * 0.26,
                                     decoration: BoxDecoration(
                                       color: Colors.white,
                                       borderRadius: BorderRadius.circular(10),
@@ -533,9 +534,9 @@ class _OwnerProfilePageState extends State<OwnerProfilePage> {
                                                   0.12,
                                               child: Padding(
                                                 padding:
-                                                    const EdgeInsets.all(7.0),
+                                                    const EdgeInsets.all(5.0),
                                                 child: Image.asset(
-                                                  "assets/servicebar/ulasan.png",
+                                                  "assets/servicebar/month.png",
                                                   fit: BoxFit.fill,
                                                 ),
                                               ),
@@ -550,6 +551,77 @@ class _OwnerProfilePageState extends State<OwnerProfilePage> {
                                                   const EdgeInsets.only(top: 6.0),
                                               child: Text(
                                                 "Bulanan",
+                                                style: GoogleFonts.inter(
+                                                    fontSize: 13,
+                                                    color: thirdColor,
+                                                    fontWeight: FontWeight.w600),
+                                              ),
+                                            )
+                                          ]),
+                                    ),
+                                  ),
+                                ),
+                                InkWell(
+                                  onTap: (){
+                                    Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                            builder: (context) =>
+                                                HistoryTicketByWeek()
+                                                // BarChartSample1()
+                                                ));
+                                  },
+                                  child: Container(
+                                    height: 100,
+                                    width:
+                                        MediaQuery.of(context).size.width * 0.26,
+                                    decoration: BoxDecoration(
+                                      color: Colors.white,
+                                      borderRadius: BorderRadius.circular(10),
+                                      boxShadow: [
+                                        BoxShadow(
+                                          color:
+                                              Color.fromARGB(255, 194, 194, 194)
+                                                  .withOpacity(0.5),
+                                          spreadRadius: 2,
+                                          blurRadius: 3,
+                                          offset: const Offset(
+                                              0, 5), // changes position of shadow
+                                        ),
+                                      ],
+                                    ),
+                                    child: Center(
+                                      child: Column(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.center,
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.center,
+                                          children: [
+                                            Container(
+                                              height: 42,
+                                              width: MediaQuery.of(context)
+                                                      .size
+                                                      .width *
+                                                  0.12,
+                                              child: Padding(
+                                                padding:
+                                                    const EdgeInsets.all(5.0),
+                                                child: Image.asset(
+                                                  "assets/servicebar/date.png",
+                                                  fit: BoxFit.fill,
+                                                ),
+                                              ),
+                                              decoration: BoxDecoration(
+                                                  borderRadius:
+                                                      BorderRadius.circular(15),
+                                                  color: Color.fromARGB(
+                                                      85, 75, 150, 111)),
+                                            ),
+                                            Padding(
+                                              padding:
+                                                  const EdgeInsets.only(top: 6.0),
+                                              child: Text(
+                                                "Mingguan",
                                                 style: GoogleFonts.inter(
                                                     fontSize: 13,
                                                     color: thirdColor,

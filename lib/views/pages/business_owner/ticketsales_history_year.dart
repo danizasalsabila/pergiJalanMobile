@@ -36,18 +36,16 @@ class _HistoryTicketByYearState extends State<HistoryTicketByYear> {
     isLoading = true;
     Future.delayed(const Duration(seconds: 2)).then((value) async {
       try {
-        // eticketCon.isDataYear = true;
-        // eticketCon.isDataMonth = false;
-        // eticketCon.isDataWeek = false;
         eticketCon.uniqueDestinations.clear();
         eticketCon.uniqueNameDestinations.clear();
-        eticketCon.listTicketSoldIdDestinasi.clear();
+        eticketCon.listTicketSoldIdDestinasiYear.clear();
 
         eticketCon.ticketSoldIdDestinasi = 0;
         String currentYear = currentDate.year.toString();
         await eticketCon.allEticketByOwnerInYear(
             ownerCon.idOBLogin, currentYear);
-        await eticketCon.getHistoryByYear();
+
+        await eticketCon.getHistoryByYear(currentYear);
       } catch (e) {
         print(e);
       }
@@ -66,12 +64,12 @@ class _HistoryTicketByYearState extends State<HistoryTicketByYear> {
     try {
       eticketCon.uniqueNameDestinations.clear();
       eticketCon.uniqueDestinations.clear();
-      eticketCon.listTicketSoldIdDestinasi.clear();
+      eticketCon.listTicketSoldIdDestinasiYear.clear();
 
       await eticketCon.allEticketByOwnerInYear(
           ownerCon.idOBLogin, selectedYear);
 
-      await eticketCon.getHistoryByYear();
+      await eticketCon.getHistoryByYear(selectedYear);
     } catch (e) {
       print(e);
     } finally {
@@ -82,7 +80,6 @@ class _HistoryTicketByYearState extends State<HistoryTicketByYear> {
   }
 
   Color getRandomColor(int index) {
-    // isLoading = true;
     Random random = Random(index);
     return Color.fromARGB(
       255,
@@ -94,8 +91,6 @@ class _HistoryTicketByYearState extends State<HistoryTicketByYear> {
 
   @override
   Widget build(BuildContext context) {
-    // final ownerCon =
-    //     Provider.of<OwnerBusinessController>(context, listen: false);
     return Scaffold(
       backgroundColor: backgroundColor,
       body: isLoading
@@ -263,7 +258,7 @@ class _HistoryTicketByYearState extends State<HistoryTicketByYear> {
                                 ],
                               ),
                             ),
-                            SizedBox(
+                           const SizedBox(
                               height: 10,
                             ),
                             eticketCon.eticketDataOwnerByYear != null
@@ -455,7 +450,7 @@ class _HistoryTicketByYearState extends State<HistoryTicketByYear> {
                                               centerSpaceRadius: 50,
                                               sections: List.generate(
                                                   eticketCon
-                                                      .listTicketSoldIdDestinasi
+                                                      .listTicketSoldIdDestinasiYear
                                                       .length, (index) {
                                                 final isTouched =
                                                     index == touchedIndex;
@@ -473,10 +468,10 @@ class _HistoryTicketByYearState extends State<HistoryTicketByYear> {
                                                 return PieChartSectionData(
                                                   color: randomColor,
                                                   value: double.parse(eticketCon
-                                                          .listTicketSoldIdDestinasi[
+                                                          .listTicketSoldIdDestinasiYear[
                                                       index]),
                                                   title: eticketCon
-                                                      .listTicketSoldIdDestinasi[
+                                                      .listTicketSoldIdDestinasiYear[
                                                           index]
                                                       .toString(),
                                                   radius: radius,
@@ -625,11 +620,11 @@ class _HistoryTicketByYearState extends State<HistoryTicketByYear> {
                                                             left: 10.0),
                                                     child: Text(
                                                       // ignore: unnecessary_null_comparison
-                                                      eticketCon.listTicketSoldIdDestinasi[
+                                                      eticketCon.listTicketSoldIdDestinasiYear[
                                                                   index] ==
                                                               null
                                                           ? "-"
-                                                          : "${eticketCon.listTicketSoldIdDestinasi[index].toString()} Tiket",
+                                                          : "${eticketCon.listTicketSoldIdDestinasiYear[index].toString()} Tiket",
                                                       style: GoogleFonts
                                                           .notoSansDisplay(
                                                               fontSize: 11,

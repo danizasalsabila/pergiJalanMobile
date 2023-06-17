@@ -179,7 +179,6 @@ class ETicketController extends ChangeNotifier {
 
   int? statusCodeGetTicketByIdDestinasi;
   int? ticketSoldIdDestinasi;
-  List<String> listTicketSoldIdDestinasi = [];
   bool isDataYear = false;
   bool isDataMonth = false;
   bool isDataWeek = false;
@@ -196,7 +195,7 @@ class ETicketController extends ChangeNotifier {
         ticketSoldIdDestinasi = data["ticket_sold"];
         print("TICKET SOLD ID $id: $ticketSoldIdDestinasi");
 
-          listTicketSoldIdDestinasi.add(ticketSoldIdDestinasi.toString());
+          // listTicketSoldIdDestinasi.add(ticketSoldIdDestinasi.toString());
         // if (isDataYear == true && isDataMonth == false && isDataWeek == false) {
         //   print("ambil tahun");
         // } else if (isDataYear == false &&
@@ -255,7 +254,6 @@ class ETicketController extends ChangeNotifier {
           uniqueNameDestinations.add(
               eticketDataOwnerByYear![i].destinasi!.nameDestinasi.toString());
         }
-
         totalIncomeTicketsByYear(data2);
         seperatedIdDestinasi!.clear();
         notifyListeners();
@@ -280,12 +278,38 @@ class ETicketController extends ChangeNotifier {
     }
   }
 
-  Future<void> getHistoryByYear() async {
+  int? ticketSoldIdDestinasiYear;
+  List<String> listTicketSoldIdDestinasiYear = [];
+    Future<dynamic> getTicketSoldbyIdDestinasiByYear(id, year) async {
+    print("get ticket by id owner $id");
+    var url = Uri.parse(BASE_URL + GET_TICKETSOLD_DESTINASI_YEAR(id)+year);
+    print("URL = $url");
+
+    try {
+      var response = await http.get(url);
+      var data = json.decode(response.body);
+      if (response.statusCode == 200) {
+        ticketSoldIdDestinasiYear = data["ticket_sold"];
+        print("TICKET SOLD ID $id: $ticketSoldIdDestinasiYear");
+
+          listTicketSoldIdDestinasiYear.add(ticketSoldIdDestinasiYear.toString());
+        notifyListeners();
+
+      } else if (response.statusCode == 404) {
+        ticketSoldIdDestinasiYear = 0;
+        notifyListeners();
+      }
+    } catch (e) {
+      print("ERROR MESSAGE: $e");
+    }
+  }
+
+  Future<void> getHistoryByYear(year) async {
     seperatedIdDestinasi = uniqueDestinations.toList();
-    listTicketSoldIdDestinasi = [];
+    listTicketSoldIdDestinasiYear = [];
 
     for (String value in seperatedIdDestinasi!) {
-      await getTicketSoldbyIdDestinasi(value);
+      await getTicketSoldbyIdDestinasiByYear(value, year);
     }
   }
 
@@ -294,10 +318,6 @@ class ETicketController extends ChangeNotifier {
   Set<String> uniqueDestinationsMonth = Set<String>();
   Set<String> uniqueNameDestinationsMonth = Set<String>();
   List<String>? seperatedIdDestinasiMonth;
-  // int? listTicketSoldIdDestinasiByMonth;
-  List countByDestinasi = [];
-  int? countMonthDataLength;
-  // Set<int> addcountMonthDataLength = Set<int>();
 
 //get all data by owner in a month
   Future<dynamic> allEticketByOwnerInMonth(id, year, month) async {
@@ -315,8 +335,6 @@ class ETicketController extends ChangeNotifier {
         eticketResponse = eticketFromJson(response.body);
         eticketDataOwnerByMonth = eticketResponse?.eticket;
 
-        // months = month;
-        // years = year;
         for (int i = 0; i < eticketDataOwnerByMonth!.length; i++) {
           uniqueDestinationsMonth
               .add(eticketDataOwnerByMonth![i].idDestinasi.toString());
@@ -379,6 +397,7 @@ class ETicketController extends ChangeNotifier {
         notifyListeners();
       } else if (response.statusCode == 404) {
         ticketSoldIdDestinasiMonth = 0;
+        listTicketSoldIdDestinasiMonth = [ticketSoldIdDestinasiMonth.toString()];
         print("code: $statusCodeGetTicketByIdDestinasi");
         notifyListeners();
       }
@@ -387,14 +406,105 @@ class ETicketController extends ChangeNotifier {
     }
   }
 
-  // String? months;
-  // String? years;
   Future<void> getHistoryByMonth(year, month) async {
     seperatedIdDestinasiMonth = uniqueDestinationsMonth.toList();
     listTicketSoldIdDestinasiMonth = [];
 
     for (String value in seperatedIdDestinasiMonth!) {
       await getTicketSoldbyIdDestinasiByMonth(value, year, month);
+    }
+  }
+
+
+
+  
+  // GET SALES BY HISTORY SALES IN A WEEK
+  List<Eticket>? eticketDataOwnerByWeek;
+  Set<String> uniqueDestinationsWeek = Set<String>();
+  Set<String> uniqueNameDestinationsWeek = Set<String>();
+  List<String>? seperatedIdDestinasiWeek;
+
+//get all data by owner in a month
+  Future<dynamic> allEticketByOwnerInWeek(id, date) async {
+    print("get all eticket by $id in $date");
+    var url = Uri.parse(BASE_URL + GET_ETICKET_BYOWNER_WEEK(id, date));
+    print("URL = $url");
+    try {
+      var response = await http.get(url);
+
+      var data = json.decode(response.body);
+      if (response.statusCode == 200) {
+        print("code: ${response.statusCode}");
+
+        var data2 = data["data"];
+        eticketResponse = eticketFromJson(response.body);
+        eticketDataOwnerByWeek = eticketResponse?.eticket;
+
+        for (int i = 0; i < eticketDataOwnerByWeek!.length; i++) {
+          uniqueDestinationsWeek
+              .add(eticketDataOwnerByWeek![i].idDestinasi.toString());
+          uniqueNameDestinationsWeek.add(
+              eticketDataOwnerByWeek![i].destinasi!.nameDestinasi.toString());
+        }
+
+        totalIncomeTicketsByWeek(data2);
+        seperatedIdDestinasiWeek!.clear();
+        notifyListeners();
+      } else if (response.statusCode == 404) {
+        print("code: ${response.statusCode}");
+        eticketDataOwnerByWeek = null;
+        notifyListeners();
+      }
+    } catch (e) {
+      print("ERROR MESSAGE: $e");
+    }
+  }
+
+//count total income in a week
+  int? totalIncomeTicketByWeek;
+  void totalIncomeTicketsByWeek(List data2) {
+    int totalIncome = 0;
+
+    for (var item in data2) {
+      int price = item['price'];
+      totalIncome += price;
+      totalIncomeTicketByWeek = totalIncome;
+    }
+  }
+
+//get ticket sold by id destinasi in a WEEK
+  int? ticketSoldIdDestinasiWeek;
+  List<String> listTicketSoldIdDestinasiWeek = [];
+  Future<dynamic> getTicketSoldbyIdDestinasiByWeek(id, date) async {
+    print("get ticket by id owner $id, in $date");
+    var url =
+        Uri.parse(BASE_URL + GET_TICKETSOLD_DESTINASI_WEEK(id, date));
+    print("URL = $url");
+    try {
+      var response = await http.get(url);
+      var data = json.decode(response.body);
+      if (response.statusCode == 200) {
+        ticketSoldIdDestinasiWeek = data["ticket_sold"];
+        print("TICKET SOLD ID $id: $ticketSoldIdDestinasiWeek");
+        listTicketSoldIdDestinasiWeek
+            .add(ticketSoldIdDestinasiWeek.toString());
+        notifyListeners();
+      } else if (response.statusCode == 404) {
+        ticketSoldIdDestinasiWeek = 0;
+        listTicketSoldIdDestinasiWeek = [ticketSoldIdDestinasiWeek.toString()];
+        notifyListeners();
+      }
+    } catch (e) {
+      print("ERROR MESSAGE: $e");
+    }
+  }
+
+  Future<void> getHistoryByWeek(date) async {
+    seperatedIdDestinasiWeek = uniqueDestinationsWeek.toList();
+    listTicketSoldIdDestinasiWeek = [];
+
+    for (String value in seperatedIdDestinasiWeek!) {
+      await getTicketSoldbyIdDestinasiByWeek(value, date);
     }
   }
 }
