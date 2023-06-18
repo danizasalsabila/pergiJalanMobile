@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -280,7 +281,9 @@ class _ListTicketDestinationState extends State<ListTicketDestination> {
                                             itemCount:
                                                 ticketCon.ticketData?.length,
                                             itemBuilder: (context, index) {
-                                              return Padding(
+                                              return
+                                              ticketCon.ticketData![index].stock != 0 ?
+                                               Padding(
                                                 padding:
                                                     const EdgeInsets.fromLTRB(
                                                         20, 0, 20, 15),
@@ -351,8 +354,8 @@ class _ListTicketDestinationState extends State<ListTicketDestination> {
                                                             MainAxisAlignment
                                                                 .spaceBetween,
                                                         children: [
-                                                          Text(
-                                                            "${widget.id.openHour.toString()} - ${widget.id.closedHour.toString()}",
+                                                          Text( widget.id.openHour != null ?
+                                                            "${widget.id.openHour.toString()} - ${widget.id.closedHour.toString()}": "",
                                                             style: GoogleFonts
                                                                 .openSans(
                                                                     fontSize:
@@ -642,10 +645,419 @@ class _ListTicketDestinationState extends State<ListTicketDestination> {
                                                     ]),
                                                   ),
                                                 ),
-                                              );
+                                              ):SizedBox()
+                                              ;
                                             }),
                                       ),
-                                    )
+                                    ),
+                                    SizedBox(height: 36,),
+                                    //  Padding(
+                                    //   padding: const EdgeInsets.fromLTRB(
+                                    //       20, 10, 20, 0),
+                                    //   child: Align(
+                                    //     alignment: Alignment.topLeft,
+                                    //     child: Text(
+                                    //       "Telah Habis",
+                                    //       style: GoogleFonts.notoSansDisplay(
+                                    //           fontSize: 19,
+                                    //           color: Color.fromARGB(255, 196, 88, 86),
+                                    //           fontWeight: FontWeight.w600),
+                                    //     ),
+                                    //   ),
+                                    // ),
+                                    Padding(
+                                      padding: const EdgeInsets.fromLTRB(
+                                          20, 0, 20, 0),
+                                      child: Align(
+                                        alignment: Alignment.topLeft,
+                                        child: Text(
+                                          "Telah Habis",
+                                          style: GoogleFonts.notoSansDisplay(
+                                              fontSize: 12,
+                                              color: descColor,
+                                              fontWeight: FontWeight.w500),
+                                        ),
+                                      ),
+                                    ),
+                                    SizedBox(height: 15,),
+                                    SizedBox(
+                                      child: MediaQuery.removePadding(
+                                        removeBottom: true,
+                                        removeTop: true,
+                                        context: context,
+                                        child: ListView.builder(
+                                            shrinkWrap: true,
+                                            controller: _scrollController,
+                                            itemCount:
+                                                ticketCon.ticketData?.length,
+                                            itemBuilder: (context, index) {
+                                              return
+                                              ticketCon.ticketData![index].stock == 0 ?
+                                               Padding(
+                                                padding:
+                                                    const EdgeInsets.fromLTRB(
+                                                        20, 0, 20, 15),
+                                                child: Container(
+                                                  // height: 150,
+                                                  width: MediaQuery.of(context)
+                                                      .size
+                                                      .width,
+                                                  decoration: BoxDecoration(
+                                                      boxShadow: [
+                                                        BoxShadow(
+                                                          color: Color.fromARGB(
+                                                                  255,
+                                                                  199,
+                                                                  199,
+                                                                  199)
+                                                              .withOpacity(0.8),
+                                                          spreadRadius: 2,
+                                                          blurRadius: 4,
+                                                          offset: const Offset(
+                                                              0,
+                                                              2), // changes position of shadow
+                                                        ),
+                                                      ],
+                                                      color: Colors.white,
+                                                      borderRadius:
+                                                          BorderRadius.circular(
+                                                              10)),
+                                                  child: Padding(
+                                                    padding: const EdgeInsets
+                                                            .fromLTRB(
+                                                        15, 18.0, 15, 15),
+                                                    child: Column(children: [
+                                                      Row(
+                                                        mainAxisAlignment:
+                                                            MainAxisAlignment
+                                                                .spaceBetween,
+                                                        children: [
+                                                          Text(
+                                                            "Jenis Tiket",
+                                                            style: GoogleFonts.inter(
+                                                                fontSize: 16,
+                                                                color:
+                                                                    captColor,
+                                                                fontWeight:
+                                                                    FontWeight
+                                                                        .w600),
+                                                          ),
+                                                          Text(
+                                                            "Harga Tiket",
+                                                            style: GoogleFonts
+                                                                .openSans(
+                                                                    fontSize:
+                                                                        11,
+                                                                    color:
+                                                                        captColor,
+                                                                    fontWeight:
+                                                                        FontWeight
+                                                                            .w500),
+                                                          ),
+                                                        ],
+                                                      ),
+                                                      Row(
+                                                        crossAxisAlignment:
+                                                            CrossAxisAlignment
+                                                                .start,
+                                                        mainAxisAlignment:
+                                                            MainAxisAlignment
+                                                                .spaceBetween,
+                                                        children: [
+                                                          Text( widget.id.openHour != null ?
+                                                            "${widget.id.openHour.toString()} - ${widget.id.closedHour.toString()}": "",
+                                                            style: GoogleFonts
+                                                                .openSans(
+                                                                    fontSize:
+                                                                        10,
+                                                                    color:
+                                                                        captColor,
+                                                                    fontWeight:
+                                                                        FontWeight
+                                                                            .w500),
+                                                          ),
+                                                          Row(
+                                                            mainAxisAlignment:
+                                                                MainAxisAlignment
+                                                                    .end,
+                                                            children: [
+                                                              Text(
+                                                                "Rp ${ticketCon.ticketData![index].price.toString()}",
+                                                                style: GoogleFonts.openSans(
+                                                                    fontSize:
+                                                                        19,
+                                                                    color: Color.fromARGB(106, 255, 168, 38),
+                                                                    fontWeight:
+                                                                        FontWeight
+                                                                            .w700),
+                                                              ),
+                                                              Text(
+                                                                "/pax",
+                                                                style: GoogleFonts.openSans(
+                                                                    fontSize:
+                                                                        12,
+                                                                    color:
+                                                                        captColor,
+                                                                    fontWeight:
+                                                                        FontWeight
+                                                                            .w500),
+                                                              ),
+                                                            ],
+                                                          ),
+                                                          // DottedLine(
+                                                          //   direction: Axis.vertical,
+
+                                                          // )
+                                                          // Flex(
+                                                          //   direction: Axis.vertical,
+                                                          //   children:[
+                                                          //    const MySeparator(color: Colors.grey,)
+                                                          //   ] )
+                                                        ],
+                                                      ),
+                                                      Padding(
+                                                        padding:
+                                                            const EdgeInsets
+                                                                .only(top: 5.0),
+                                                        child: Row(
+                                                          children:
+                                                              List.generate(
+                                                                  150 ~/ 3,
+                                                                  (index) =>
+                                                                      Expanded(
+                                                                        child:
+                                                                            Container(
+                                                                          color: index % 2 == 0
+                                                                              ? Colors.grey.shade300
+                                                                              : Colors.transparent,
+                                                                          height:
+                                                                              1,
+                                                                        ),
+                                                                      )),
+                                                        ),
+                                                      ),
+                                                      Padding(
+                                                        padding:
+                                                            const EdgeInsets
+                                                                .only(top: 8.0),
+                                                        child: Row(
+                                                          mainAxisAlignment:
+                                                              MainAxisAlignment
+                                                                  .spaceBetween,
+                                                          children: [
+                                                            Container(
+                                                              decoration: BoxDecoration(
+                                                                  color: Color.fromARGB(106, 255, 168, 38),
+                                                                  borderRadius:
+                                                                      BorderRadius
+                                                                          .circular(
+                                                                              10)),
+                                                              child: Padding(
+                                                                padding:
+                                                                    const EdgeInsets
+                                                                            .fromLTRB(
+                                                                        20,
+                                                                        2.0,
+                                                                        20,
+                                                                        2),
+                                                                child: Text(
+                                                                  "Tiket ${index + 1}",
+                                                                  style: GoogleFonts.openSans(
+                                                                      fontSize:
+                                                                          12,
+                                                                      color: Colors
+                                                                          .white,
+                                                                      fontWeight:
+                                                                          FontWeight
+                                                                              .w600),
+                                                                ),
+                                                              ),
+                                                            ),
+                                                            Text(
+                                                              "${ticketCon.ticketData![index].ticketSold} Terjual",
+                                                              style: GoogleFonts.openSans(
+                                                                  fontSize: 8,
+                                                                  color:
+                                                                      captColor,
+                                                                  fontWeight:
+                                                                      FontWeight
+                                                                          .w500),
+                                                            ),
+                                                          ],
+                                                        ),
+                                                      ),
+                                                      SizedBox(
+                                                        height: 20,
+                                                      ),
+                                                      // ticketCon
+                                                      //             .ticketData![
+                                                      //                 index]
+                                                      //             .stock! <
+                                                      //         5
+                                                      //     ? Padding(
+                                                      //         padding:
+                                                      //             const EdgeInsets
+                                                      //                     .only(
+                                                      //                 right:
+                                                      //                     2.0,
+                                                      //                 bottom:
+                                                      //                     4),
+                                                      //         child: Align(
+                                                      //           alignment:
+                                                      //               Alignment
+                                                      //                   .topRight,
+                                                      //           child: Text(
+                                                      //             "${ticketCon.ticketData![index].stock} Tiket tersisa!",
+                                                      //             style: GoogleFonts.inter(
+                                                      //                 fontSize:
+                                                      //                     10,
+                                                      //                 color: Color.fromARGB(
+                                                      //                     255,
+                                                      //                     236,
+                                                      //                     85,
+                                                      //                     82),
+                                                      //                 fontWeight:
+                                                      //                     FontWeight
+                                                      //                         .w600),
+                                                      //           ),
+                                                      //         ),
+                                                      //       )
+                                                      //     : SizedBox(),
+                                                      Row(
+                                                        mainAxisAlignment:
+                                                            MainAxisAlignment
+                                                                .spaceBetween,
+                                                        children: [
+                                                          Container(
+                                                            width: MediaQuery.of(
+                                                                        context)
+                                                                    .size
+                                                                    .width *
+                                                                0.25,
+                                                            child: Column(
+                                                              mainAxisAlignment:
+                                                                  MainAxisAlignment
+                                                                      .start,
+                                                              crossAxisAlignment:
+                                                                  CrossAxisAlignment
+                                                                      .start,
+                                                              children: [
+                                                                Row(
+                                                                  children: [
+                                                                    FaIcon(
+                                                                      FontAwesomeIcons
+                                                                          .textSlash,
+                                                                      size: 10,
+                                                                      color:
+                                                                          captColor,
+                                                                    ),
+                                                                    Padding(
+                                                                      padding: const EdgeInsets
+                                                                              .only(
+                                                                          left:
+                                                                              3.0),
+                                                                      child:
+                                                                          Text(
+                                                                        "Ubah pengunjung",
+                                                                        overflow:
+                                                                            TextOverflow.ellipsis,
+                                                                        style: GoogleFonts.openSans(
+                                                                            fontSize:
+                                                                                9,
+                                                                            color:
+                                                                                captColor,
+                                                                            fontWeight:
+                                                                                FontWeight.w500),
+                                                                      ),
+                                                                    )
+                                                                  ],
+                                                                ),
+                                                                Row(
+                                                                  children: [
+                                                                    FaIcon(
+                                                                      FontAwesomeIcons
+                                                                          .cancel,
+                                                                      size: 10,
+                                                                      color:
+                                                                          captColor,
+                                                                    ),
+                                                                    Padding(
+                                                                      padding: const EdgeInsets
+                                                                              .only(
+                                                                          left:
+                                                                              5.0),
+                                                                      child:
+                                                                          Text(
+                                                                        "Dibatalkan",
+                                                                        overflow:
+                                                                            TextOverflow.ellipsis,
+                                                                        style: GoogleFonts.openSans(
+                                                                            fontSize:
+                                                                                9,
+                                                                            color:
+                                                                                captColor,
+                                                                            fontWeight:
+                                                                                FontWeight.w500),
+                                                                      ),
+                                                                    )
+                                                                  ],
+                                                                )
+                                                              ],
+                                                            ),
+                                                          ),
+                                                          GestureDetector(
+                                                            onTap: () {
+                                                                Fluttertoast.showToast(msg: "Mohon menunggu penyedia wisata menambahkan stok tiket", toastLength: Toast.LENGTH_SHORT, gravity: ToastGravity.BOTTOM, timeInSecForIosWeb: 1, backgroundColor: Colors.red[300], textColor: Colors.white, fontSize: 16.0);
+                                                        //       Navigator.push(
+                                                        //   context,
+                                                        //   MaterialPageRoute(
+                                                        //     builder: (context) =>
+                                                        //          CreateOrderDetail( 
+                                                        //           idDestinasi: widget.id,
+                                                        //           idTicket: ticketCon.ticketData![index],
+                                                        //           ),
+                                                        //   ),
+                                                        // );
+                                                            },
+                                                            child: Container(
+                                                              width: MediaQuery.of(
+                                                                          context)
+                                                                      .size
+                                                                      .width *
+                                                                  0.41,
+                                                              height: 33,
+                                                              decoration: BoxDecoration(
+                                                                  borderRadius:
+                                                                      BorderRadius
+                                                                          .circular(
+                                                                              5),
+                                                                  color:
+                                                                      captColor),
+                                                              child: Center(
+                                                                child: Text(
+                                                                  "Pesan",
+                                                                  style: GoogleFonts.inter(
+                                                                      fontSize:
+                                                                          12,
+                                                                      color: Colors
+                                                                          .white,
+                                                                      fontWeight:
+                                                                          FontWeight
+                                                                              .w600),
+                                                                ),
+                                                              ),
+                                                            ),
+                                                          )
+                                                        ],
+                                                      ),
+                                                    ]),
+                                                  ),
+                                                ),
+                                              ):SizedBox();
+                                            }),
+                                      ),
+                                    ),
+                                    SizedBox(height: 20,)
                                   ]),
                                 )
                               ],

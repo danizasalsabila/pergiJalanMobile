@@ -429,7 +429,7 @@ class _DetailDestinationState extends State<DetailDestination> {
                         height: 12,
                       ),
                       Container(
-                        height: MediaQuery.of(context).size.height * 0.8,
+                        height: MediaQuery.of(context).size.height * 0.6,
                         child: TabBarView(
                             physics: NeverScrollableScrollPhysics(),
                             children: [
@@ -911,6 +911,16 @@ class _DetailDestinationState extends State<DetailDestination> {
                                             SizedBox(
                                               height: 10,
                                             ),
+                                            Text(
+                                              "Lokasi wisata",
+                                              style: GoogleFonts.kanit(
+                                                  fontSize: 14,
+                                                  color: primaryColor,
+                                                  fontWeight: FontWeight.w500),
+                                            ),
+                                            SizedBox(
+                                              height: 7,
+                                            ),
                                             Row(
                                               crossAxisAlignment:
                                                   CrossAxisAlignment.start,
@@ -1009,67 +1019,67 @@ class _DetailDestinationState extends State<DetailDestination> {
                                             SizedBox(
                                               height: 8,
                                             ),
-                                            Padding(
-                                              padding: const EdgeInsets.only(
-                                                  top: 3.0),
-                                              child: SizedBox(
-                                                height: MediaQuery.of(context)
-                                                        .size
-                                                        .height *
-                                                    0.2,
-                                                child: ClipRRect(
-                                                  borderRadius:
-                                                      BorderRadius.circular(8),
-                                                  child: isLoading
-                                                      ? const Center(
-                                                          child:
-                                                              CircularProgressIndicator(
-                                                            color: Colors.blue,
-                                                          ),
-                                                        )
-                                                      : SizedBox(
-                                                          width: MediaQuery.of(
-                                                                  context)
-                                                              .size
-                                                              .width,
-                                                          height: 600,
-                                                          child: GoogleMap(
-                                                            mapType:
-                                                                MapType.normal,
-                                                            zoomControlsEnabled:
-                                                                false,
-                                                            initialCameraPosition:
-                                                                CameraPosition(
-                                                              target: LatLng(
-                                                                  // widget.id.latitude!.toDouble() ,
-                                                                  // widget.id.longitude!.toDouble()
-                                                                  -6.175392,
-                                                                  106.827153
-                                                                  // lat,
-                                                                  // long
-                                                                  ),
-                                                              zoom: 12,
-                                                            ),
-                                                            onMapCreated:
-                                                                (GoogleMapController
-                                                                    controller) {
-                                                              _controller
-                                                                  .complete(
-                                                                      controller);
-                                                            },
-                                                          ),
-                                                        ),
-                                                ),
-                                              ),
-                                            ),
-                                            SizedBox(height: 10)
+                                            // Padding(
+                                            //   padding: const EdgeInsets.only(
+                                            //       top: 3.0),
+                                            //   child: SizedBox(
+                                            //     height: MediaQuery.of(context)
+                                            //             .size
+                                            //             .height *
+                                            //         0.2,
+                                            //     child: ClipRRect(
+                                            //       borderRadius:
+                                            //           BorderRadius.circular(8),
+                                            //       child: isLoading
+                                            //           ? const Center(
+                                            //               child:
+                                            //                   CircularProgressIndicator(
+                                            //                 color: Colors.blue,
+                                            //               ),
+                                            //             )
+                                            //           : SizedBox(
+                                            //               width: MediaQuery.of(
+                                            //                       context)
+                                            //                   .size
+                                            //                   .width,
+                                            //               height: 600,
+                                            //               child: GoogleMap(
+                                            //                 mapType:
+                                            //                     MapType.normal,
+                                            //                 zoomControlsEnabled:
+                                            //                     false,
+                                            //                 initialCameraPosition:
+                                            //                     CameraPosition(
+                                            //                   target: LatLng(
+                                            //                       // widget.id.latitude!.toDouble() ,
+                                            //                       // widget.id.longitude!.toDouble()
+                                            //                       -6.175392,
+                                            //                       106.827153
+                                            //                       // lat,
+                                            //                       // long
+                                            //                       ),
+                                            //                   zoom: 12,
+                                            //                 ),
+                                            //                 onMapCreated:
+                                            //                     (GoogleMapController
+                                            //                         controller) {
+                                            //                   _controller
+                                            //                       .complete(
+                                            //                           controller);
+                                            //                 },
+                                            //               ),
+                                            //             ),
+                                            //     ),
+                                            //   ),
+                                            // ),
+                                            // SizedBox(height: 10)
                                           ],
                                         ),
                                       ),
                                     ),
-                                    SizedBox(
-                                      height: 10,
-                                    )
+                                    // SizedBox(
+                                    //   height: 10,
+                                    // )
                                   ],
                                 ),
                               ),
@@ -1246,6 +1256,13 @@ class _DetailDestinationState extends State<DetailDestination> {
                                                                               // ignore: use_build_context_synchronously
                                                                               Navigator.pop(context, false);
                                                                               await reviewData.reviewDestinasiId(widget.id.id);
+                                                                              await reviewData.getRatingAverageById(widget.id.id);
+                                                                              if (reviewData.statusCodeAvgRating == 200) {
+                                                                                avgRatingBool = true;
+                                                                                avgRating = reviewData.avgRating!;
+                                                                              } else {
+                                                                                avgRatingBool = false;
+                                                                              }
                                                                             }
                                                                           } catch (e) {
                                                                             print("$e");
@@ -1544,7 +1561,7 @@ class _DetailDestinationState extends State<DetailDestination> {
               ? const Center(
                   child: CircularProgressIndicator(),
                 )
-              : isUserLogin == false 
+              : isUserLogin == false
                   ? GestureDetector(
                       onTap: () async {
                         Fluttertoast.showToast(
@@ -1581,7 +1598,7 @@ class _DetailDestinationState extends State<DetailDestination> {
                         ),
                       ),
                     )
-                  : anyTicketData == true 
+                  : anyTicketData == true
                       ? GestureDetector(
                           onTap: () async {
                             Navigator.push(
