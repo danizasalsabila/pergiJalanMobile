@@ -771,7 +771,7 @@ class _DetailDestinationOwnerState extends State<DetailDestinationOwner> {
                                                 color: primaryColor,
                                                 fontWeight: FontWeight.w500),
                                           ),
-                                          widget.id.fasility!.isEmpty ||
+                                          widget.id.fasility == null ||widget.id.fasility!.isEmpty ||
                                                   widget.id.fasility == ''
                                               ? Text(
                                                   "Tidak terdapat fasilitas",

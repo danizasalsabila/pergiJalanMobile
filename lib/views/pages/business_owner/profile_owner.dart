@@ -404,7 +404,7 @@ class _OwnerProfilePageState extends State<OwnerProfilePage> {
                               Padding(
                                 padding: const EdgeInsets.only(left: 8.0),
                                 child: Text(
-                                  "Menu Laporan Penjualan",
+                                  "Menu Laporan Penjualan Tiket",
                                   style: GoogleFonts.inter(
                                       fontSize: 15,
                                       color: thirdColor,
@@ -425,13 +425,13 @@ class _OwnerProfilePageState extends State<OwnerProfilePage> {
                                         MaterialPageRoute(
                                             builder: (context) =>
                                                 HistoryTicketByYear()
-                                                // BarChartSample1()
-                                                ));
+                                            // BarChartSample1()
+                                            ));
                                   },
                                   child: Container(
                                     height: 100,
-                                    width:
-                                        MediaQuery.of(context).size.width * 0.26,
+                                    width: MediaQuery.of(context).size.width *
+                                        0.26,
                                     decoration: BoxDecoration(
                                       color: Colors.white,
                                       borderRadius: BorderRadius.circular(10),
@@ -491,19 +491,19 @@ class _OwnerProfilePageState extends State<OwnerProfilePage> {
                                   ),
                                 ),
                                 InkWell(
-                                  onTap: (){
+                                  onTap: () {
                                     Navigator.push(
                                         context,
                                         MaterialPageRoute(
                                             builder: (context) =>
                                                 HistoryTicketByMonths()
-                                                // BarChartSample1()
-                                                ));
+                                            // BarChartSample1()
+                                            ));
                                   },
                                   child: Container(
                                     height: 100,
-                                    width:
-                                        MediaQuery.of(context).size.width * 0.26,
+                                    width: MediaQuery.of(context).size.width *
+                                        0.26,
                                     decoration: BoxDecoration(
                                       color: Colors.white,
                                       borderRadius: BorderRadius.circular(10),
@@ -514,8 +514,8 @@ class _OwnerProfilePageState extends State<OwnerProfilePage> {
                                                   .withOpacity(0.5),
                                           spreadRadius: 2,
                                           blurRadius: 3,
-                                          offset: const Offset(
-                                              0, 5), // changes position of shadow
+                                          offset: const Offset(0,
+                                              5), // changes position of shadow
                                         ),
                                       ],
                                     ),
@@ -547,14 +547,15 @@ class _OwnerProfilePageState extends State<OwnerProfilePage> {
                                                       85, 75, 150, 111)),
                                             ),
                                             Padding(
-                                              padding:
-                                                  const EdgeInsets.only(top: 6.0),
+                                              padding: const EdgeInsets.only(
+                                                  top: 6.0),
                                               child: Text(
                                                 "Bulanan",
                                                 style: GoogleFonts.inter(
                                                     fontSize: 13,
                                                     color: thirdColor,
-                                                    fontWeight: FontWeight.w600),
+                                                    fontWeight:
+                                                        FontWeight.w600),
                                               ),
                                             )
                                           ]),
@@ -562,19 +563,19 @@ class _OwnerProfilePageState extends State<OwnerProfilePage> {
                                   ),
                                 ),
                                 InkWell(
-                                  onTap: (){
+                                  onTap: () {
                                     Navigator.push(
                                         context,
                                         MaterialPageRoute(
                                             builder: (context) =>
                                                 HistoryTicketByWeek()
-                                                // BarChartSample1()
-                                                ));
+                                            // BarChartSample1()
+                                            ));
                                   },
                                   child: Container(
                                     height: 100,
-                                    width:
-                                        MediaQuery.of(context).size.width * 0.26,
+                                    width: MediaQuery.of(context).size.width *
+                                        0.26,
                                     decoration: BoxDecoration(
                                       color: Colors.white,
                                       borderRadius: BorderRadius.circular(10),
@@ -585,8 +586,8 @@ class _OwnerProfilePageState extends State<OwnerProfilePage> {
                                                   .withOpacity(0.5),
                                           spreadRadius: 2,
                                           blurRadius: 3,
-                                          offset: const Offset(
-                                              0, 5), // changes position of shadow
+                                          offset: const Offset(0,
+                                              5), // changes position of shadow
                                         ),
                                       ],
                                     ),
@@ -603,29 +604,29 @@ class _OwnerProfilePageState extends State<OwnerProfilePage> {
                                                       .size
                                                       .width *
                                                   0.12,
+                                              decoration: BoxDecoration(
+                                                  borderRadius:
+                                                      BorderRadius.circular(15),
+                                                  color: Color.fromARGB(
+                                                      84, 4, 75, 41)),
                                               child: Padding(
-                                                padding:
-                                                    const EdgeInsets.all(5.0),
+                                                padding: EdgeInsets.all(5.0),
                                                 child: Image.asset(
                                                   "assets/servicebar/date.png",
                                                   fit: BoxFit.fill,
                                                 ),
                                               ),
-                                              decoration: BoxDecoration(
-                                                  borderRadius:
-                                                      BorderRadius.circular(15),
-                                                  color: Color.fromARGB(
-                                                      85, 75, 150, 111)),
                                             ),
                                             Padding(
-                                              padding:
-                                                  const EdgeInsets.only(top: 6.0),
+                                              padding: const EdgeInsets.only(
+                                                  top: 6.0),
                                               child: Text(
                                                 "Mingguan",
                                                 style: GoogleFonts.inter(
                                                     fontSize: 13,
                                                     color: thirdColor,
-                                                    fontWeight: FontWeight.w600),
+                                                    fontWeight:
+                                                        FontWeight.w600),
                                               ),
                                             )
                                           ]),
@@ -636,7 +637,32 @@ class _OwnerProfilePageState extends State<OwnerProfilePage> {
                             ),
                           ),
                           Padding(
-                            padding: const EdgeInsets.only(top: 18.0),
+                            padding: const EdgeInsets.only(top: 20),
+                            child: Row(
+                              children: [
+                                Container(
+                                  height: 7,
+                                  width: 7,
+                                  decoration: const BoxDecoration(
+                                    shape: BoxShape.circle,
+                                    color: thirdColor,
+                                  ),
+                                ),
+                                Padding(
+                                  padding: const EdgeInsets.only(left: 8.0),
+                                  child: Text(
+                                    "Ulasan dan Rating",
+                                    style: GoogleFonts.inter(
+                                        fontSize: 15,
+                                        color: thirdColor,
+                                        fontWeight: FontWeight.w600),
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.only(top: 10.0),
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
@@ -676,7 +702,7 @@ class _OwnerProfilePageState extends State<OwnerProfilePage> {
                                               padding:
                                                   const EdgeInsets.all(7.0),
                                               child: Image.asset(
-                                                "assets/servicebar/tiket.png",
+                                                "assets/servicebar/rating.png",
                                                 fit: BoxFit.fill,
                                               ),
                                             ),
@@ -690,7 +716,7 @@ class _OwnerProfilePageState extends State<OwnerProfilePage> {
                                             padding:
                                                 const EdgeInsets.only(top: 6.0),
                                             child: Text(
-                                              "Tiket",
+                                              "Rating",
                                               style: GoogleFonts.inter(
                                                   fontSize: 13,
                                                   color: thirdColor,
@@ -731,7 +757,7 @@ class _OwnerProfilePageState extends State<OwnerProfilePage> {
                                               padding:
                                                   const EdgeInsets.all(7.0),
                                               child: Image.asset(
-                                                "assets/servicebar/keuangan.png",
+                                                "assets/servicebar/ulasan.png",
                                                 fit: BoxFit.fill,
                                               ),
                                             ),
@@ -750,7 +776,7 @@ class _OwnerProfilePageState extends State<OwnerProfilePage> {
                                             padding:
                                                 const EdgeInsets.only(top: 6.0),
                                             child: Text(
-                                              "Keuangan",
+                                              "Ulasan",
                                               style: GoogleFonts.inter(
                                                   fontSize: 13,
                                                   color: thirdColor,
@@ -765,10 +791,13 @@ class _OwnerProfilePageState extends State<OwnerProfilePage> {
                           )
                         ],
                       )),
+                  const SizedBox(
+                    height: 5,
+                  ),
                   Padding(
                     padding: const EdgeInsets.fromLTRB(25, 20.0, 25, 8),
                     child: Container(
-                      height: 163,
+                      height: 105,
                       width: MediaQuery.of(context).size.width,
                       decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(10),
@@ -798,54 +827,54 @@ class _OwnerProfilePageState extends State<OwnerProfilePage> {
                                 )
                               ],
                             ),
-                            InkWell(
-                              onTap: () {},
-                              child: Padding(
-                                padding:
-                                    const EdgeInsets.fromLTRB(5, 8.0, 5, 10),
-                                child: Row(
-                                  children: [
-                                    Icon(
-                                      Icons.people_alt,
-                                      size: 20,
-                                      color: labelColor,
-                                    ),
-                                    Padding(
-                                      padding:
-                                          const EdgeInsets.only(left: 16.0),
-                                      child: Container(
-                                        width:
-                                            MediaQuery.of(context).size.width *
-                                                0.59,
-                                        child: Row(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.spaceBetween,
-                                          children: [
-                                            Text(
-                                              "Tentang PergiJalan",
-                                              style: GoogleFonts.openSans(
-                                                  fontSize: 15,
-                                                  color: titleColor,
-                                                  fontWeight: FontWeight.w600),
-                                            ),
-                                            Icon(
-                                              Icons.arrow_forward_ios,
-                                              size: 15,
-                                              color: Colors.grey.shade300,
-                                            ),
-                                          ],
-                                        ),
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              ),
-                            ),
-                            Expanded(
-                                child: Divider(
-                              thickness: 1,
-                              color: Colors.grey.shade200,
-                            )),
+                            // InkWell(
+                            //   onTap: () {},
+                            //   child: Padding(
+                            //     padding:
+                            //         const EdgeInsets.fromLTRB(5, 8.0, 5, 10),
+                            //     child: Row(
+                            //       children: [
+                            //         Icon(
+                            //           Icons.people_alt,
+                            //           size: 20,
+                            //           color: labelColor,
+                            //         ),
+                            //         Padding(
+                            //           padding:
+                            //               const EdgeInsets.only(left: 16.0),
+                            //           child: Container(
+                            //             width:
+                            //                 MediaQuery.of(context).size.width *
+                            //                     0.59,
+                            //             child: Row(
+                            //               mainAxisAlignment:
+                            //                   MainAxisAlignment.spaceBetween,
+                            //               children: [
+                            //                 Text(
+                            //                   "Tentang PergiJalan",
+                            //                   style: GoogleFonts.openSans(
+                            //                       fontSize: 15,
+                            //                       color: titleColor,
+                            //                       fontWeight: FontWeight.w600),
+                            //                 ),
+                            //                 Icon(
+                            //                   Icons.arrow_forward_ios,
+                            //                   size: 15,
+                            //                   color: Colors.grey.shade300,
+                            //                 ),
+                            //               ],
+                            //             ),
+                            //           ),
+                            //         ),
+                            //       ],
+                            //     ),
+                            //   ),
+                            // ),
+                            // Expanded(
+                            //     child: Divider(
+                            //   thickness: 1,
+                            //   color: Colors.grey.shade200,
+                            // )),
                             Padding(
                               padding: const EdgeInsets.fromLTRB(5, 8.0, 5, 10),
                               child: Row(

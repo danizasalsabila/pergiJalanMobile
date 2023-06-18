@@ -7,7 +7,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:pergijalan_mobile/config/theme_color.dart';
 import 'package:pergijalan_mobile/controllers/eticket_controller.dart';
 import 'package:pergijalan_mobile/controllers/user_controller.dart';
-import 'package:pergijalan_mobile/views/pages/e-ticket_page.dart';
+import 'package:pergijalan_mobile/views/pages/eticket_page.dart';
 import 'package:provider/provider.dart';
 
 import '../../models/destinasi.dart';
@@ -64,7 +64,7 @@ class _StatusOrderPaymentState extends State<StatusOrderPayment> {
                 color: Colors.blue,
               ),
             )
-          : Consumer<ETicketController>(builder: (context, ticketCon, child) {
+          : Consumer<ETicketController>(builder: (context, eticketCon, child) {
               return Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   crossAxisAlignment: CrossAxisAlignment.center,
@@ -72,12 +72,12 @@ class _StatusOrderPaymentState extends State<StatusOrderPayment> {
                     Center(
                         child: CircleAvatar(
                       child: InkWell(
-                        // onTap: () {
-                        //   Navigator.of(context).push(MaterialPageRoute(
-                        //       builder: (context) => ETicketPage(
-                        //             id: widget.id,
-                        //           )));
-                        // },
+                        onTap: () {
+                          Navigator.of(context).push(MaterialPageRoute(
+                              builder: (context) => ETicketPage(
+                                    id: widget.id,
+                                  )));
+                        },
                         child: Center(
                             child: CircularProgressIndicator(
                           color: primaryColor,
@@ -175,7 +175,7 @@ class _StatusOrderPaymentState extends State<StatusOrderPayment> {
                                         fontWeight: FontWeight.w500),
                                   ),
                                   Text(
-                                    ticketCon.eticketDataiD!.virtualAccount
+                                    eticketCon.eticketDataiD!.virtualAccount
                                         .toString(),
                                     textAlign: TextAlign.center,
                                     style: GoogleFonts.inter(
@@ -201,7 +201,7 @@ class _StatusOrderPaymentState extends State<StatusOrderPayment> {
                                         fontWeight: FontWeight.w500),
                                   ),
                                   Text(
-                                    "Rp ${ticketCon.eticketDataiD!.price.toString()}",
+                                    "Rp ${eticketCon.eticketDataiD!.price.toString()}",
                                     textAlign: TextAlign.center,
                                     style: GoogleFonts.inter(
                                         fontSize: 13,
@@ -216,7 +216,7 @@ class _StatusOrderPaymentState extends State<StatusOrderPayment> {
                               Align(
                                 alignment: Alignment.topRight,
                                 child: Text(
-                                  ticketCon.eticketDataiD!.dateBook.toString(),
+                                  eticketCon.eticketDataiD!.dateBook.toString(),
                                   textAlign: TextAlign.center,
                                   style: GoogleFonts.inter(
                                       fontSize: 9,

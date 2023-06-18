@@ -10,6 +10,7 @@ import 'package:pergijalan_mobile/controllers/destinasi_controller.dart';
 import 'package:pergijalan_mobile/views/pages/business_owner/home.dart';
 import 'package:provider/provider.dart';
 
+import '../../../controllers/ticket_controller.dart';
 import '../../../models/destinasi.dart';
 
 class EditDestinationOwnerPage extends StatefulWidget {
@@ -27,7 +28,7 @@ class _EditDestinationOwnerPageState extends State<EditDestinationOwnerPage> {
   bool isLoading = false;
   bool isLoading2 = false;
   bool isEdited = false;
-  bool isTicketEdited = false;
+  // bool isTicketEdited = false;
   bool isUpdating = false;
   int? stockValue;
   int? priceValue;
@@ -39,11 +40,11 @@ class _EditDestinationOwnerPageState extends State<EditDestinationOwnerPage> {
   TextEditingController? closedHourController;
   TextEditingController? minutesSpendController;
   TextEditingController? urlMapController;
-  TextEditingController? latitudeController;
-  TextEditingController? longitudeController;
+  // TextEditingController? latitudeController;
+  // TextEditingController? longitudeController;
   TextEditingController? fasilitiesController;
-  TextEditingController? ticketStockController;
-  TextEditingController? ticketPriceController;
+  // TextEditingController? ticketStockController;
+  // TextEditingController? ticketPriceController;
   // int? _isSecurityAvail;
   int? securityAvail;
   _onSelectedListSecurity(value) {
@@ -171,31 +172,12 @@ class _EditDestinationOwnerPageState extends State<EditDestinationOwnerPage> {
     print("-------------DIRECT TO EDIT DESTINATION PAGE-----------");
 
     final destCon = Provider.of<DestinasiController>(context, listen: false);
+    final ticketCon = Provider.of<TicketController>(context, listen: false);
 
     isLoading2 = true;
     Future.delayed(const Duration(seconds: 1)).then((value) async {
       try {
-        await destCon.getTicketbyIdDestination(widget.id.id);
-        if (destCon.statusCodeGetTicketById == 200) {
-          // print(destCon.statusCodeGetTicketById);
-          // tic = destCon.ticketDataDetail!.price!;
-          // ticc = destCon.ticketDataDetail!.stock!;
-          ticketStockController = TextEditingController(
-              text: destCon.ticketDataDetail!.stock.toString());
-          ticketPriceController = TextEditingController(
-              text: destCon.ticketDataDetail!.price.toString());
-          // print("$ticketPriceController &&&&&&&& $ticketStockController");
-          // print("$tic & $ticc");
-        } else {
-          ticketStockController = TextEditingController(text: '0');
-          ticketPriceController = TextEditingController(text: '0');
-          // tic = destCon.ticketDataDetail!.price!;
-          // ticc = destCon.ticketDataDetail!.stock!;
-          // print("$tic & $ticc");
-        }
-        // setState(() {
-        //   isLoading2 = false;
-        // });
+        await ticketCon.getTicketbyIdDestination(widget.id.id);
       } catch (e) {
         e;
       }
@@ -214,22 +196,22 @@ class _EditDestinationOwnerPageState extends State<EditDestinationOwnerPage> {
     minutesSpendController =
         TextEditingController(text: widget.id.minutesSpend);
     urlMapController = TextEditingController(text: widget.id.urlMap);
-    latitudeController =
-        TextEditingController(text: widget.id.latitude.toString());
-    if (latitudeController == null) {
-      latitudeController = TextEditingController(text: '');
-    } else {
-      latitudeController =
-          TextEditingController(text: widget.id.latitude.toString());
-    }
-    longitudeController =
-        TextEditingController(text: widget.id.longitude.toString());
-    if (longitudeController == null) {
-      longitudeController = TextEditingController(text: '');
-    } else {
-      longitudeController =
-          TextEditingController(text: widget.id.longitude.toString());
-    }
+    // latitudeController =
+    //     TextEditingController(text: widget.id.latitude.toString());
+    // if (latitudeController == null) {
+    //   latitudeController = TextEditingController(text: '');
+    // } else {
+    //   latitudeController =
+    //       TextEditingController(text: widget.id.latitude.toString());
+    // }
+    // longitudeController =
+    //     TextEditingController(text: widget.id.longitude.toString());
+    // if (longitudeController == null) {
+    //   longitudeController = TextEditingController(text: '');
+    // } else {
+    //   longitudeController =
+    //       TextEditingController(text: widget.id.longitude.toString());
+    // }
     fasilitiesController = TextEditingController(text: widget.id.fasility);
     finalSelectedCategory = widget.id.category;
     finalSelectedWeather = widget.id.recWeather;
@@ -252,11 +234,11 @@ class _EditDestinationOwnerPageState extends State<EditDestinationOwnerPage> {
     closedHourController!.dispose();
     minutesSpendController!.dispose();
     urlMapController!.dispose();
-    latitudeController!.dispose();
-    longitudeController!.dispose();
+    // latitudeController!.dispose();
+    // longitudeController!.dispose();
     fasilitiesController!.dispose();
-    ticketStockController!.dispose();
-    ticketPriceController!.dispose();
+    // ticketStockController!.dispose();
+    // ticketPriceController!.dispose();
     super.dispose();
   }
 
@@ -1742,133 +1724,133 @@ class _EditDestinationOwnerPageState extends State<EditDestinationOwnerPage> {
                               ),
                             ),
                           ),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Padding(
-                                    padding: const EdgeInsets.only(
-                                        top: 14.0, bottom: 6),
-                                    child: Text(
-                                      "Latitude",
-                                      style: GoogleFonts.inter(
-                                          fontSize: 14,
-                                          color: Colors.black,
-                                          fontWeight: FontWeight.w600),
-                                    ),
-                                  ),
-                                  Container(
-                                    height: 50,
-                                    decoration: BoxDecoration(
-                                        borderRadius: BorderRadius.circular(5),
-                                        border: Border.all(
-                                          width: 2,
-                                          color: Colors.grey.shade200,
-                                        )),
-                                    width:
-                                        MediaQuery.of(context).size.width * 0.4,
-                                    child: TextField(
-                                      onChanged: (text) {
-                                        if (widget.id.latitude != null) {
-                                          setState(() {
-                                            isEdited =
-                                                (text != widget.id.latitude)
-                                                    ? true
-                                                    : false;
-                                          });
-                                        } else {
-                                          isEdited = (text.trim() !=
-                                                  widget.id.latitude)
-                                              ? true
-                                              : false;
-                                        }
-                                      },
-                                      controller: latitudeController,
-                                      style: GoogleFonts.openSans(
-                                          fontSize: 14,
-                                          color: titleColor,
-                                          fontWeight: FontWeight.w600),
-                                      keyboardType: TextInputType.number,
-                                      textInputAction: TextInputAction.next,
-                                      decoration: InputDecoration(
-                                        hintText: '-6.1750',
-                                        hintStyle: GoogleFonts.openSans(
-                                            fontSize: 12,
-                                            color: descColor,
-                                            fontWeight: FontWeight.w500),
-                                        border: InputBorder.none,
-                                        contentPadding:
-                                            EdgeInsets.only(left: 6),
-                                      ),
-                                    ),
-                                  ),
-                                ],
-                              ),
-                              Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Padding(
-                                    padding: const EdgeInsets.only(
-                                        top: 14.0, bottom: 6),
-                                    child: Text(
-                                      "Longitude",
-                                      style: GoogleFonts.inter(
-                                          fontSize: 14,
-                                          color: Colors.black,
-                                          fontWeight: FontWeight.w600),
-                                    ),
-                                  ),
-                                  Container(
-                                    height: 50,
-                                    decoration: BoxDecoration(
-                                        borderRadius: BorderRadius.circular(5),
-                                        border: Border.all(
-                                          width: 2,
-                                          color: Colors.grey.shade200,
-                                        )),
-                                    width:
-                                        MediaQuery.of(context).size.width * 0.4,
-                                    child: TextField(
-                                      onChanged: (text) {
-                                        if (widget.id.longitude != null) {
-                                          setState(() {
-                                            isEdited =
-                                                (text != widget.id.longitude)
-                                                    ? true
-                                                    : false;
-                                          });
-                                        } else {
-                                          isEdited = (text.trim() !=
-                                                  widget.id.longitude)
-                                              ? true
-                                              : false;
-                                        }
-                                      },
-                                      controller: longitudeController,
-                                      style: GoogleFonts.openSans(
-                                          fontSize: 14,
-                                          color: titleColor,
-                                          fontWeight: FontWeight.w600),
-                                      keyboardType: TextInputType.number,
-                                      textInputAction: TextInputAction.next,
-                                      decoration: InputDecoration(
-                                        hintText: '106.8283',
-                                        hintStyle: GoogleFonts.openSans(
-                                            fontSize: 12,
-                                            color: descColor,
-                                            fontWeight: FontWeight.w500),
-                                        border: InputBorder.none,
-                                        contentPadding:
-                                            const EdgeInsets.only(left: 6),
-                                      ),
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            ],
-                          ),
+                          // Row(
+                          //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          //   children: [
+                          //     Column(
+                          //       crossAxisAlignment: CrossAxisAlignment.start,
+                          //       children: [
+                          //         Padding(
+                          //           padding: const EdgeInsets.only(
+                          //               top: 14.0, bottom: 6),
+                          //           child: Text(
+                          //             "Latitude",
+                          //             style: GoogleFonts.inter(
+                          //                 fontSize: 14,
+                          //                 color: Colors.black,
+                          //                 fontWeight: FontWeight.w600),
+                          //           ),
+                          //         ),
+                          //         Container(
+                          //           height: 50,
+                          //           decoration: BoxDecoration(
+                          //               borderRadius: BorderRadius.circular(5),
+                          //               border: Border.all(
+                          //                 width: 2,
+                          //                 color: Colors.grey.shade200,
+                          //               )),
+                          //           width:
+                          //               MediaQuery.of(context).size.width * 0.4,
+                          //           child: TextField(
+                          //             onChanged: (text) {
+                          //               if (widget.id.latitude != null) {
+                          //                 setState(() {
+                          //                   isEdited =
+                          //                       (text != widget.id.latitude)
+                          //                           ? true
+                          //                           : false;
+                          //                 });
+                          //               } else {
+                          //                 isEdited = (text.trim() !=
+                          //                         widget.id.latitude)
+                          //                     ? true
+                          //                     : false;
+                          //               }
+                          //             },
+                          //             controller: latitudeController,
+                          //             style: GoogleFonts.openSans(
+                          //                 fontSize: 14,
+                          //                 color: titleColor,
+                          //                 fontWeight: FontWeight.w600),
+                          //             keyboardType: TextInputType.number,
+                          //             textInputAction: TextInputAction.next,
+                          //             decoration: InputDecoration(
+                          //               hintText: '-6.1750',
+                          //               hintStyle: GoogleFonts.openSans(
+                          //                   fontSize: 12,
+                          //                   color: descColor,
+                          //                   fontWeight: FontWeight.w500),
+                          //               border: InputBorder.none,
+                          //               contentPadding:
+                          //                   EdgeInsets.only(left: 6),
+                          //             ),
+                          //           ),
+                          //         ),
+                          //       ],
+                          //     ),
+                          //     Column(
+                          //       crossAxisAlignment: CrossAxisAlignment.start,
+                          //       children: [
+                          //         Padding(
+                          //           padding: const EdgeInsets.only(
+                          //               top: 14.0, bottom: 6),
+                          //           child: Text(
+                          //             "Longitude",
+                          //             style: GoogleFonts.inter(
+                          //                 fontSize: 14,
+                          //                 color: Colors.black,
+                          //                 fontWeight: FontWeight.w600),
+                          //           ),
+                          //         ),
+                          //         Container(
+                          //           height: 50,
+                          //           decoration: BoxDecoration(
+                          //               borderRadius: BorderRadius.circular(5),
+                          //               border: Border.all(
+                          //                 width: 2,
+                          //                 color: Colors.grey.shade200,
+                          //               )),
+                          //           width:
+                          //               MediaQuery.of(context).size.width * 0.4,
+                          //           child: TextField(
+                          //             onChanged: (text) {
+                          //               if (widget.id.longitude != null) {
+                          //                 setState(() {
+                          //                   isEdited =
+                          //                       (text != widget.id.longitude)
+                          //                           ? true
+                          //                           : false;
+                          //                 });
+                          //               } else {
+                          //                 isEdited = (text.trim() !=
+                          //                         widget.id.longitude)
+                          //                     ? true
+                          //                     : false;
+                          //               }
+                          //             },
+                          //             controller: longitudeController,
+                          //             style: GoogleFonts.openSans(
+                          //                 fontSize: 14,
+                          //                 color: titleColor,
+                          //                 fontWeight: FontWeight.w600),
+                          //             keyboardType: TextInputType.number,
+                          //             textInputAction: TextInputAction.next,
+                          //             decoration: InputDecoration(
+                          //               hintText: '106.8283',
+                          //               hintStyle: GoogleFonts.openSans(
+                          //                   fontSize: 12,
+                          //                   color: descColor,
+                          //                   fontWeight: FontWeight.w500),
+                          //               border: InputBorder.none,
+                          //               contentPadding:
+                          //                   const EdgeInsets.only(left: 6),
+                          //             ),
+                          //           ),
+                          //         ),
+                          //       ],
+                          //     ),
+                          //   ],
+                          // ),
                         ],
                       ),
                     ),
@@ -2081,134 +2063,134 @@ class _EditDestinationOwnerPageState extends State<EditDestinationOwnerPage> {
                     ),
                   ),
                 ),
-                Padding(
-                  padding: EdgeInsets.fromLTRB(16, 12, 16, 0),
-                  child: Container(
-                    width: MediaQuery.of(context).size.width,
-                    decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(5),
-                        color: Colors.white),
-                    child: Padding(
-                      padding: const EdgeInsets.fromLTRB(16, 15, 16, 15),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Padding(
-                            padding: const EdgeInsets.only(top: 4.0, bottom: 4),
-                            child: Text(
-                              "Tambahkan Ketersediaan Tiket",
-                              style: GoogleFonts.inter(
-                                  fontSize: 14,
-                                  color: Colors.black,
-                                  fontWeight: FontWeight.w600),
-                            ),
-                          ),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Container(
-                                height: 45,
-                                decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(5),
-                                    border: Border.all(
-                                      width: 2,
-                                      color: Colors.grey.shade200,
-                                    )),
-                                width: MediaQuery.of(context).size.width * 0.4,
-                                child: TextField(
-                                  onChanged: (text) {
-                                    final destCon =
-                                        Provider.of<DestinasiController>(
-                                            context,
-                                            listen: false);
-                                    if (destCon.ticketDataDetail!.stock !=
-                                        null) {
-                                      setState(() {
-                                        isTicketEdited = (text !=
-                                                destCon.ticketDataDetail!.stock)
-                                            ? true
-                                            : false;
-                                      });
-                                    } else {
-                                      isTicketEdited = (text.trim() !=
-                                              destCon.ticketDataDetail!.stock)
-                                          ? true
-                                          : false;
-                                    }
-                                  },
-                                  controller: ticketStockController,
-                                  style: GoogleFonts.openSans(
-                                      fontSize: 14,
-                                      color: titleColor,
-                                      fontWeight: FontWeight.w600),
-                                  keyboardType: TextInputType.number,
-                                  textInputAction: TextInputAction.next,
-                                  decoration: InputDecoration(
-                                    hintText: 'Stok',
-                                    hintStyle:
-                                        TextStyle(color: Colors.grey.shade500),
-                                    border: InputBorder.none,
-                                    contentPadding:
-                                        EdgeInsets.only(left: 6, bottom: 6),
-                                  ),
-                                ),
-                              ),
-                              Container(
-                                height: 45,
-                                decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(5),
-                                    border: Border.all(
-                                      width: 2,
-                                      color: Colors.grey.shade200,
-                                    )),
-                                width: MediaQuery.of(context).size.width * 0.4,
-                                child: TextField(
-                                  onChanged: (text) {
-                                    final destCon =
-                                        Provider.of<DestinasiController>(
-                                            context,
-                                            listen: false);
-                                    if (destCon.ticketDataDetail!.price !=
-                                        null) {
-                                      setState(() {
-                                        isTicketEdited = (text !=
-                                                destCon.ticketDataDetail!.price)
-                                            ? true
-                                            : false;
-                                      });
-                                    } else {
-                                      isTicketEdited = (text.trim() !=
-                                              destCon.ticketDataDetail!.price)
-                                          ? true
-                                          : false;
-                                    }
-                                  },
-                                  controller: ticketPriceController,
-                                  style: GoogleFonts.openSans(
-                                      fontSize: 14,
-                                      color: titleColor,
-                                      fontWeight: FontWeight.w600),
-                                  keyboardType: TextInputType.number,
-                                  textInputAction: TextInputAction.next,
-                                  decoration: InputDecoration(
-                                    hintText: 'Harga',
-                                    hintStyle:
-                                        TextStyle(color: Colors.grey.shade500),
-                                    border: InputBorder.none,
-                                    contentPadding: const EdgeInsets.only(
-                                        left: 6, bottom: 6),
-                                  ),
-                                ),
-                              ),
-                            ],
-                          )
-                        ],
-                      ),
-                    ),
-                  ),
-                ),
+                // Padding(
+                //   padding: EdgeInsets.fromLTRB(16, 12, 16, 0),
+                //   child: Container(
+                //     width: MediaQuery.of(context).size.width,
+                //     decoration: BoxDecoration(
+                //         borderRadius: BorderRadius.circular(5),
+                //         color: Colors.white),
+                //     child: Padding(
+                //       padding: const EdgeInsets.fromLTRB(16, 15, 16, 15),
+                //       child: Column(
+                //         crossAxisAlignment: CrossAxisAlignment.start,
+                //         children: [
+                //           Padding(
+                //             padding: const EdgeInsets.only(top: 4.0, bottom: 4),
+                //             child: Text(
+                //               "Tambahkan Ketersediaan Tiket",
+                //               style: GoogleFonts.inter(
+                //                   fontSize: 14,
+                //                   color: Colors.black,
+                //                   fontWeight: FontWeight.w600),
+                //             ),
+                //           ),
+                //           // Row(
+                //           //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                //           //   children: [
+                //           //     Container(
+                //           //       height: 45,
+                //           //       decoration: BoxDecoration(
+                //           //           borderRadius: BorderRadius.circular(5),
+                //           //           border: Border.all(
+                //           //             width: 2,
+                //           //             color: Colors.grey.shade200,
+                //           //           )),
+                //           //       width: MediaQuery.of(context).size.width * 0.4,
+                //           //       child: TextField(
+                //           //         onChanged: (text) {
+                //           //           final destCon =
+                //           //               Provider.of<DestinasiController>(
+                //           //                   context,
+                //           //                   listen: false);
+                //           //           if (destCon.ticketDataDetail!.stock !=
+                //           //               null) {
+                //           //             setState(() {
+                //           //               isTicketEdited = (text !=
+                //           //                       destCon.ticketDataDetail!.stock)
+                //           //                   ? true
+                //           //                   : false;
+                //           //             });
+                //           //           } else {
+                //           //             isTicketEdited = (text.trim() !=
+                //           //                     destCon.ticketDataDetail!.stock)
+                //           //                 ? true
+                //           //                 : false;
+                //           //           }
+                //           //         },
+                //           //         controller: ticketStockController,
+                //           //         style: GoogleFonts.openSans(
+                //           //             fontSize: 14,
+                //           //             color: titleColor,
+                //           //             fontWeight: FontWeight.w600),
+                //           //         keyboardType: TextInputType.number,
+                //           //         textInputAction: TextInputAction.next,
+                //           //         decoration: InputDecoration(
+                //           //           hintText: 'Stok',
+                //           //           hintStyle:
+                //           //               TextStyle(color: Colors.grey.shade500),
+                //           //           border: InputBorder.none,
+                //           //           contentPadding:
+                //           //               EdgeInsets.only(left: 6, bottom: 6),
+                //           //         ),
+                //           //       ),
+                //           //     ),
+                //           //     Container(
+                //           //       height: 45,
+                //           //       decoration: BoxDecoration(
+                //           //           borderRadius: BorderRadius.circular(5),
+                //           //           border: Border.all(
+                //           //             width: 2,
+                //           //             color: Colors.grey.shade200,
+                //           //           )),
+                //           //       width: MediaQuery.of(context).size.width * 0.4,
+                //           //       child: TextField(
+                //           //         onChanged: (text) {
+                //           //           final destCon =
+                //           //               Provider.of<DestinasiController>(
+                //           //                   context,
+                //           //                   listen: false);
+                //           //           if (destCon.ticketDataDetail!.price !=
+                //           //               null) {
+                //           //             setState(() {
+                //           //               isTicketEdited = (text !=
+                //           //                       destCon.ticketDataDetail!.price)
+                //           //                   ? true
+                //           //                   : false;
+                //           //             });
+                //           //           } else {
+                //           //             isTicketEdited = (text.trim() !=
+                //           //                     destCon.ticketDataDetail!.price)
+                //           //                 ? true
+                //           //                 : false;
+                //           //           }
+                //           //         },
+                //           //         controller: ticketPriceController,
+                //           //         style: GoogleFonts.openSans(
+                //           //             fontSize: 14,
+                //           //             color: titleColor,
+                //           //             fontWeight: FontWeight.w600),
+                //           //         keyboardType: TextInputType.number,
+                //           //         textInputAction: TextInputAction.next,
+                //           //         decoration: InputDecoration(
+                //           //           hintText: 'Harga',
+                //           //           hintStyle:
+                //           //               TextStyle(color: Colors.grey.shade500),
+                //           //           border: InputBorder.none,
+                //           //           contentPadding: const EdgeInsets.only(
+                //           //               left: 6, bottom: 6),
+                //           //         ),
+                //           //       ),
+                //           //     ),
+                //           //   ],
+                //           // )
+                //         ],
+                //       ),
+                //     ),
+                //   ),
+                // ),
                 const SizedBox(
-                  height: 40,
+                  height: 20,
                 ),
                 Container(
                   height: 1,
@@ -2249,7 +2231,7 @@ class _EditDestinationOwnerPageState extends State<EditDestinationOwnerPage> {
                               child: Center(
                                   child: const CircularProgressIndicator()),
                             )
-                          : (isEdited || isTicketEdited)
+                          : isEdited
                               ? InkWell(
                                   onTap: () async {
                                     setState(() {
@@ -2259,33 +2241,30 @@ class _EditDestinationOwnerPageState extends State<EditDestinationOwnerPage> {
                                         Provider.of<DestinasiController>(
                                             context,
                                             listen: false);
-                                    double? latitudeValue = latitudeController!
-                                            .text.isNotEmpty
-                                        ? double.parse(latitudeController!.text)
-                                        : null;
+                                    // double? latitudeValue = latitudeController!
+                                    //         .text.isNotEmpty
+                                    //     ? double.parse(latitudeController!.text)
+                                    //     : null;
 
-                                    double? longitudeValue =
-                                        longitudeController!.text.isNotEmpty
-                                            ? double.parse(
-                                                longitudeController!.text)
-                                            : null;
+                                    // double? longitudeValue =
+                                    //     longitudeController!.text.isNotEmpty
+                                    //         ? double.parse(
+                                    //             longitudeController!.text)
+                                    //         : null;
 
-                                    priceValue =
-                                        ticketPriceController!.text.isNotEmpty
-                                            ? int.tryParse(
-                                                ticketPriceController!.text)
-                                            : null;
+                                    // priceValue =
+                                    //     ticketPriceController!.text.isNotEmpty
+                                    //         ? int.tryParse(
+                                    //             ticketPriceController!.text)
+                                    //         : null;
 
-                                    stockValue =
-                                        ticketStockController!.text.isNotEmpty
-                                            ? int.tryParse(
-                                                ticketStockController!.text)
-                                            : null;
+                                    // stockValue =
+                                    //     ticketStockController!.text.isNotEmpty
+                                    //         ? int.tryParse(
+                                    //             ticketStockController!.text)
+                                    //         : null;
                                     //a
-                                    if (isEdited == true &&
-                                        isTicketEdited == true) {
-                                      print("BOTH DATA");
-
+                                    if (isEdited == true) {
                                       await destCon.editDestinasi(
                                           id: widget.id.id,
                                           nameDestinasi: nameController?.text,
@@ -2299,8 +2278,8 @@ class _EditDestinationOwnerPageState extends State<EditDestinationOwnerPage> {
                                           hobby: finalSelectedHobby,
                                           minutesSpend:
                                               minutesSpendController?.text,
-                                          latitude: latitudeValue,
-                                          longitude: longitudeValue,
+                                          // latitude: latitudeValue,
+                                          // longitude: longitudeValue,
                                           urlMap: urlMapController?.text,
                                           recWeather: finalSelectedWeather,
                                           fasility: fasilitiesController?.text,
@@ -2311,15 +2290,15 @@ class _EditDestinationOwnerPageState extends State<EditDestinationOwnerPage> {
                                               closedHourController?.text);
                                       if (destCon.statusCodeEditDestinasi ==
                                           200) {
-                                        if (ticketPriceController != null &&
-                                            ticketStockController != null) {
-                                          await destCon.editTicketByIdDestinasi(
-                                            idDestinasi: widget.id.id,
-                                            price: priceValue,
-                                            stock: stockValue,
-                                          );
-                                          print(destCon.statusCodeAddTicket);
-                                        }
+                                        // if (ticketPriceController != null &&
+                                        //     ticketStockController != null) {
+                                        //   await destCon.editTicketByIdDestinasi(
+                                        //     idDestinasi: widget.id.id,
+                                        //     price: priceValue,
+                                        //     stock: stockValue,
+                                        //   );
+                                        //   print(destCon.statusCodeAddTicket);
+                                        // }
                                         setState(() {
                                           isUpdating = false;
                                         });
@@ -2371,102 +2350,103 @@ class _EditDestinationOwnerPageState extends State<EditDestinationOwnerPage> {
                                             fontSize: 16.0);
                                         return;
                                       }
-                                    } else if (isEdited == true) {
-                                      print("ONLY DESTINASI");
-
-                                      await destCon.editDestinasi(
-                                          id: widget.id.id,
-                                          nameDestinasi: nameController?.text,
-                                          description:
-                                              descriptionController?.text,
-                                          address: addressController?.text,
-                                          city:
-                                              finalSelectedProvince.toString(),
-                                          category: finalSelectedCategory,
-                                          contact: phoneNumberController?.text,
-                                          hobby: finalSelectedHobby,
-                                          minutesSpend:
-                                              minutesSpendController?.text,
-                                          latitude: latitudeValue,
-                                          longitude: longitudeValue,
-                                          urlMap: urlMapController?.text,
-                                          recWeather: finalSelectedWeather,
-                                          fasility: fasilitiesController?.text,
-                                          security: securityAvail,
-                                          // image:
-                                          openHour: openHourController?.text,
-                                          closedHour:
-                                              closedHourController?.text);
-                                      if (destCon.statusCodeEditDestinasi ==
-                                          200) {
-                                        // ignore: use_build_context_synchronously
-                                        Navigator.pushAndRemoveUntil(
-                                            context,
-                                            MaterialPageRoute(
-                                                builder: (context) =>
-                                                    const HomePageOwner()),
-                                            (route) => false);
-                                        Fluttertoast.showToast(
-                                            msg:
-                                                "Tempat wisatamu telah diubah!",
-                                            toastLength: Toast.LENGTH_SHORT,
-                                            gravity: ToastGravity.BOTTOM,
-                                            timeInSecForIosWeb: 1,
-                                            backgroundColor:
-                                                primaryColor.withOpacity(0.6),
-                                            textColor: Colors.white,
-                                            fontSize: 13);
-                                      } else if (destCon
-                                              .statusCodeEditDestinasi ==
-                                          404) {
-                                        setState(() {
-                                          isLoading = false;
-                                        });
-                                        Fluttertoast.showToast(
-                                            msg: destCon.messageEditDestinasi
-                                                .toString(),
-                                            toastLength: Toast.LENGTH_SHORT,
-                                            gravity: ToastGravity.BOTTOM,
-                                            timeInSecForIosWeb: 1,
-                                            backgroundColor: Colors.red[300],
-                                            textColor: Colors.white,
-                                            fontSize: 16.0);
-                                        return;
-                                      } else {
-                                        setState(() {
-                                          isLoading = false;
-                                        });
-                                        Fluttertoast.showToast(
-                                            msg:
-                                                "Terjadi Error\nSilahkan Coba Lagi Nanti",
-                                            toastLength: Toast.LENGTH_SHORT,
-                                            gravity: ToastGravity.BOTTOM,
-                                            timeInSecForIosWeb: 1,
-                                            backgroundColor: Colors.red[300],
-                                            textColor: Colors.white,
-                                            fontSize: 16.0);
-                                        return;
-                                      }
-                                    } else if (isTicketEdited == true) {
-                                      print("ONLY TICKET");
-                                      if (ticketPriceController != null &&
-                                          ticketStockController != null) {
-                                        await destCon.editTicketByIdDestinasi(
-                                          idDestinasi: widget.id.id,
-                                          price: priceValue,
-                                          stock: stockValue,
-                                        );
-                                        Navigator.pushAndRemoveUntil(
-                                            context,
-                                            MaterialPageRoute(
-                                                builder: (context) =>
-                                                    const HomePageOwner()),
-                                            (route) => false);
-                                      }
-                                      setState(() {
-                                        isUpdating = false;
-                                      });
                                     }
+                                    // else if (isEdited == true) {
+                                    //   print("ONLY DESTINASI");
+
+                                    //   await destCon.editDestinasi(
+                                    //       id: widget.id.id,
+                                    //       nameDestinasi: nameController?.text,
+                                    //       description:
+                                    //           descriptionController?.text,
+                                    //       address: addressController?.text,
+                                    //       city:
+                                    //           finalSelectedProvince.toString(),
+                                    //       category: finalSelectedCategory,
+                                    //       contact: phoneNumberController?.text,
+                                    //       hobby: finalSelectedHobby,
+                                    //       minutesSpend:
+                                    //           minutesSpendController?.text,
+                                    //       // latitude: latitudeValue,
+                                    //       // longitude: longitudeValue,
+                                    //       urlMap: urlMapController?.text,
+                                    //       recWeather: finalSelectedWeather,
+                                    //       fasility: fasilitiesController?.text,
+                                    //       security: securityAvail,
+                                    //       // image:
+                                    //       openHour: openHourController?.text,
+                                    //       closedHour:
+                                    //           closedHourController?.text);
+                                    //   if (destCon.statusCodeEditDestinasi ==
+                                    //       200) {
+                                    //     // ignore: use_build_context_synchronously
+                                    //     Navigator.pushAndRemoveUntil(
+                                    //         context,
+                                    //         MaterialPageRoute(
+                                    //             builder: (context) =>
+                                    //                 const HomePageOwner()),
+                                    //         (route) => false);
+                                    //     Fluttertoast.showToast(
+                                    //         msg:
+                                    //             "Tempat wisatamu telah diubah!",
+                                    //         toastLength: Toast.LENGTH_SHORT,
+                                    //         gravity: ToastGravity.BOTTOM,
+                                    //         timeInSecForIosWeb: 1,
+                                    //         backgroundColor:
+                                    //             primaryColor.withOpacity(0.6),
+                                    //         textColor: Colors.white,
+                                    //         fontSize: 13);
+                                    //   } else if (destCon
+                                    //           .statusCodeEditDestinasi ==
+                                    //       404) {
+                                    //     setState(() {
+                                    //       isLoading = false;
+                                    //     });
+                                    //     Fluttertoast.showToast(
+                                    //         msg: destCon.messageEditDestinasi
+                                    //             .toString(),
+                                    //         toastLength: Toast.LENGTH_SHORT,
+                                    //         gravity: ToastGravity.BOTTOM,
+                                    //         timeInSecForIosWeb: 1,
+                                    //         backgroundColor: Colors.red[300],
+                                    //         textColor: Colors.white,
+                                    //         fontSize: 16.0);
+                                    //     return;
+                                    //   } else {
+                                    //     setState(() {
+                                    //       isLoading = false;
+                                    //     });
+                                    //     Fluttertoast.showToast(
+                                    //         msg:
+                                    //             "Terjadi Error\nSilahkan Coba Lagi Nanti",
+                                    //         toastLength: Toast.LENGTH_SHORT,
+                                    //         gravity: ToastGravity.BOTTOM,
+                                    //         timeInSecForIosWeb: 1,
+                                    //         backgroundColor: Colors.red[300],
+                                    //         textColor: Colors.white,
+                                    //         fontSize: 16.0);
+                                    //     return;
+                                    //   }
+                                    // } else if (isTicketEdited == true) {
+                                    //   print("ONLY TICKET");
+                                    //   if (ticketPriceController != null &&
+                                    //       ticketStockController != null) {
+                                    //     await destCon.editTicketByIdDestinasi(
+                                    //       idDestinasi: widget.id.id,
+                                    //       price: priceValue,
+                                    //       stock: stockValue,
+                                    //     );
+                                    //     Navigator.pushAndRemoveUntil(
+                                    //         context,
+                                    //         MaterialPageRoute(
+                                    //             builder: (context) =>
+                                    //                 const HomePageOwner()),
+                                    //         (route) => false);
+                                    //   }
+                                    //   setState(() {
+                                    //     isUpdating = false;
+                                    //   });
+                                    // }
                                     //a
                                     // await destCon.editDestinasi(
                                     //     id: widget.id.id,

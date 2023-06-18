@@ -180,7 +180,7 @@ class _HistoryTicketByWeekState extends State<HistoryTicketByWeek> {
                               height: 25,
                             ),
                             SizedBox(
-                              height: 80,
+                              height: 60,
                               child: Row(
                                 mainAxisAlignment:
                                     MainAxisAlignment.spaceBetween,
@@ -216,7 +216,7 @@ class _HistoryTicketByWeekState extends State<HistoryTicketByWeek> {
                                                         .width *
                                                     0.7,
                                                 child: Text(
-                                                  "Laporan Mingguan $selectedWeek",
+                                                  "Laporan $selectedWeek",
                                                   maxLines: 2,
                                                   style: GoogleFonts.openSans(
                                                       fontSize: 16,
@@ -230,8 +230,8 @@ class _HistoryTicketByWeekState extends State<HistoryTicketByWeek> {
                                         ),
                                         Text(
                                           selectedWeek == null
-                                              ? "Tiket diurutkan berdasarkan minggu ini setelahnya"
-                                              : "Tiket diurutkan berdasarkan 7 hari setelah $selectedWeek",
+                                              ? "Tiket diurutkan berdasarkan 7 hari sebelumnya di minggu ini"
+                                              : "Tiket diurutkan berdasarkan 7 hari sebelum $selectedWeek",
                                           style: GoogleFonts.notoSansDisplay(
                                               fontSize: 12,
                                               color: captColor,
@@ -683,14 +683,14 @@ class _HistoryTicketByWeekState extends State<HistoryTicketByWeek> {
                           ),
                           selectedWeek == null
                               ? Text(
-                                  "Tahun Terakhir",
+                                  "Minggu Terakhir",
                                   style: GoogleFonts.notoSansDisplay(
                                       fontSize: 10,
                                       color: captColor,
                                       fontWeight: FontWeight.w500),
                                 )
                               : Text(
-                                  "Tahun $selectedWeek",
+                                  "Minggu $selectedWeek",
                                   style: GoogleFonts.notoSansDisplay(
                                       fontSize: 10,
                                       color: captColor,

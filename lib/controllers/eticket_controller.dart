@@ -12,7 +12,7 @@ class ETicketController extends ChangeNotifier {
   List<Eticket>? eticketData;
   List<Eticket>? eticketDataUser;
   List<String> getticketSoldByIdDestinasi = [];
-  List<Eticket> eticketDataId = [];
+  // List<Eticket> eticketDataId = [];
   // List<Eticket>? eticketDataiD;
   Eticket? eticketDataiD;
 
@@ -154,8 +154,8 @@ class ETicketController extends ChangeNotifier {
   }
 
   Future<dynamic> eticketById(id) async {
-    print("get all data eticket by $id");
-    var url = Uri.parse(BASE_URL + GET_ETICKET_OWNER(id));
+    print("INI HARUS DI CEK $id");
+    var url = Uri.parse(BASE_URL + GET_ETICKET_ID(id));
     print("URL = $url");
     try {
       var response = await http.get(url);
@@ -165,6 +165,7 @@ class ETicketController extends ChangeNotifier {
         print("code: ${response.statusCode}");
         print(data["status"]);
         var data2 = data["data"][0];
+
         eticketDataiD = Eticket.fromJson(data2);
         print("a");
         notifyListeners();

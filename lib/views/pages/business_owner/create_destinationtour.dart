@@ -10,6 +10,7 @@ import 'package:pergijalan_mobile/config/theme_color.dart';
 import 'package:pergijalan_mobile/controllers/destinasi_controller.dart';
 import 'package:pergijalan_mobile/controllers/owner_business_controller.dart';
 import 'package:pergijalan_mobile/views/pages/business_owner/home.dart';
+import 'package:pergijalan_mobile/views/pages/business_owner/ticket_create_page.dart';
 import 'package:provider/provider.dart';
 
 import '../../../controllers/user_controller.dart';
@@ -36,12 +37,12 @@ class _CreateDestinationTouristState extends State<CreateDestinationTourist> {
   TextEditingController closedHourController = TextEditingController();
   TextEditingController minutesSpendController = TextEditingController();
   TextEditingController urlMapController = TextEditingController();
-  TextEditingController latitudeController = TextEditingController();
-  TextEditingController longitudeController = TextEditingController();
+  // TextEditingController latitudeController = TextEditingController();
+  // TextEditingController longitudeController = TextEditingController();
 
   TextEditingController fasilitiesController = TextEditingController();
-  TextEditingController ticketStockController = TextEditingController();
-  TextEditingController ticketPriceController = TextEditingController();
+  // TextEditingController ticketStockController = TextEditingController();
+  // TextEditingController ticketPriceController = TextEditingController();
   List<bool> _isSecurityAvail = [true, false];
   int securityAvail = 0;
   // double latitudeValue= 0;
@@ -165,11 +166,11 @@ class _CreateDestinationTouristState extends State<CreateDestinationTourist> {
     closedHourController.dispose();
     minutesSpendController.dispose();
     urlMapController.dispose();
-    latitudeController.dispose();
-    longitudeController.dispose();
+    // latitudeController.dispose();
+    // longitudeController.dispose();
     fasilitiesController.dispose();
-    ticketStockController.dispose();
-    ticketPriceController.dispose();
+    // ticketStockController.dispose();
+    // ticketPriceController.dispose();
     super.dispose();
   }
 
@@ -1404,100 +1405,100 @@ class _CreateDestinationTouristState extends State<CreateDestinationTourist> {
                         ),
                       ),
                     ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Padding(
-                              padding:
-                                  const EdgeInsets.only(top: 14.0, bottom: 6),
-                              child: Text(
-                                "Latitude",
-                                style: GoogleFonts.inter(
-                                    fontSize: 14,
-                                    color: Colors.black,
-                                    fontWeight: FontWeight.w600),
-                              ),
-                            ),
-                            Container(
-                              height: 50,
-                              decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(5),
-                                  border: Border.all(
-                                    width: 2,
-                                    color: Colors.grey.shade200,
-                                  )),
-                              width: MediaQuery.of(context).size.width * 0.4,
-                              child: TextField(
-                                controller: latitudeController,
-                                style: GoogleFonts.openSans(
-                                    fontSize: 14,
-                                    color: titleColor,
-                                    fontWeight: FontWeight.w600),
-                                keyboardType: TextInputType.number,
-                                textInputAction: TextInputAction.next,
-                                decoration: InputDecoration(
-                                  hintText: '-6.1750',
-                                  hintStyle: GoogleFonts.openSans(
-                                      fontSize: 12,
-                                      color: descColor,
-                                      fontWeight: FontWeight.w500),
-                                  border: InputBorder.none,
-                                  contentPadding: EdgeInsets.only(left: 6),
-                                ),
-                              ),
-                            ),
-                          ],
-                        ),
-                        Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Padding(
-                              padding:
-                                  const EdgeInsets.only(top: 14.0, bottom: 6),
-                              child: Text(
-                                "Longitude",
-                                style: GoogleFonts.inter(
-                                    fontSize: 14,
-                                    color: Colors.black,
-                                    fontWeight: FontWeight.w600),
-                              ),
-                            ),
-                            Container(
-                              height: 50,
-                              decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(5),
-                                  border: Border.all(
-                                    width: 2,
-                                    color: Colors.grey.shade200,
-                                  )),
-                              width: MediaQuery.of(context).size.width * 0.4,
-                              child: TextField(
-                                controller: longitudeController,
-                                style: GoogleFonts.openSans(
-                                    fontSize: 14,
-                                    color: titleColor,
-                                    fontWeight: FontWeight.w600),
-                                keyboardType: TextInputType.number,
-                                textInputAction: TextInputAction.next,
-                                decoration: InputDecoration(
-                                  hintText: '106.8283',
-                                  hintStyle: GoogleFonts.openSans(
-                                      fontSize: 12,
-                                      color: descColor,
-                                      fontWeight: FontWeight.w500),
-                                  border: InputBorder.none,
-                                  contentPadding:
-                                      const EdgeInsets.only(left: 6),
-                                ),
-                              ),
-                            ),
-                          ],
-                        ),
-                      ],
-                    ),
+                    // Row(
+                    //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    //   children: [
+                    //     Column(
+                    //       crossAxisAlignment: CrossAxisAlignment.start,
+                    //       children: [
+                    //         Padding(
+                    //           padding:
+                    //               const EdgeInsets.only(top: 14.0, bottom: 6),
+                    //           child: Text(
+                    //             "Latitude",
+                    //             style: GoogleFonts.inter(
+                    //                 fontSize: 14,
+                    //                 color: Colors.black,
+                    //                 fontWeight: FontWeight.w600),
+                    //           ),
+                    //         ),
+                    //         Container(
+                    //           height: 50,
+                    //           decoration: BoxDecoration(
+                    //               borderRadius: BorderRadius.circular(5),
+                    //               border: Border.all(
+                    //                 width: 2,
+                    //                 color: Colors.grey.shade200,
+                    //               )),
+                    //           width: MediaQuery.of(context).size.width * 0.4,
+                    //           child: TextField(
+                    //             controller: latitudeController,
+                    //             style: GoogleFonts.openSans(
+                    //                 fontSize: 14,
+                    //                 color: titleColor,
+                    //                 fontWeight: FontWeight.w600),
+                    //             keyboardType: TextInputType.number,
+                    //             textInputAction: TextInputAction.next,
+                    //             decoration: InputDecoration(
+                    //               hintText: '-6.1750',
+                    //               hintStyle: GoogleFonts.openSans(
+                    //                   fontSize: 12,
+                    //                   color: descColor,
+                    //                   fontWeight: FontWeight.w500),
+                    //               border: InputBorder.none,
+                    //               contentPadding: EdgeInsets.only(left: 6),
+                    //             ),
+                    //           ),
+                    //         ),
+                    //       ],
+                    //     ),
+                    //     Column(
+                    //       crossAxisAlignment: CrossAxisAlignment.start,
+                    //       children: [
+                    //         Padding(
+                    //           padding:
+                    //               const EdgeInsets.only(top: 14.0, bottom: 6),
+                    //           child: Text(
+                    //             "Longitude",
+                    //             style: GoogleFonts.inter(
+                    //                 fontSize: 14,
+                    //                 color: Colors.black,
+                    //                 fontWeight: FontWeight.w600),
+                    //           ),
+                    //         ),
+                    //         Container(
+                    //           height: 50,
+                    //           decoration: BoxDecoration(
+                    //               borderRadius: BorderRadius.circular(5),
+                    //               border: Border.all(
+                    //                 width: 2,
+                    //                 color: Colors.grey.shade200,
+                    //               )),
+                    //           width: MediaQuery.of(context).size.width * 0.4,
+                    //           child: TextField(
+                    //             controller: longitudeController,
+                    //             style: GoogleFonts.openSans(
+                    //                 fontSize: 14,
+                    //                 color: titleColor,
+                    //                 fontWeight: FontWeight.w600),
+                    //             keyboardType: TextInputType.number,
+                    //             textInputAction: TextInputAction.next,
+                    //             decoration: InputDecoration(
+                    //               hintText: '106.8283',
+                    //               hintStyle: GoogleFonts.openSans(
+                    //                   fontSize: 12,
+                    //                   color: descColor,
+                    //                   fontWeight: FontWeight.w500),
+                    //               border: InputBorder.none,
+                    //               contentPadding:
+                    //                   const EdgeInsets.only(left: 6),
+                    //             ),
+                    //           ),
+                    //         ),
+                    //       ],
+                    //     ),
+                    //   ],
+                    // ),
                   ],
                 ),
               ),
@@ -1660,91 +1661,91 @@ class _CreateDestinationTouristState extends State<CreateDestinationTourist> {
               ),
             ),
           ),
-          Padding(
-            padding: EdgeInsets.fromLTRB(16, 12, 16, 0),
-            child: Container(
-              width: MediaQuery.of(context).size.width,
-              decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(5), color: Colors.white),
-              child: Padding(
-                padding: const EdgeInsets.fromLTRB(16, 15, 16, 15),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Padding(
-                      padding: const EdgeInsets.only(top: 4.0, bottom: 4),
-                      child: Text(
-                        "Tambahkan Ketersediaan Tiket",
-                        style: GoogleFonts.inter(
-                            fontSize: 14,
-                            color: Colors.black,
-                            fontWeight: FontWeight.w600),
-                      ),
-                    ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Container(
-                          height: 45,
-                          decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(5),
-                              border: Border.all(
-                                width: 2,
-                                color: Colors.grey.shade200,
-                              )),
-                          width: MediaQuery.of(context).size.width * 0.4,
-                          child: TextField(
-                            controller: ticketStockController,
-                            style: GoogleFonts.openSans(
-                                fontSize: 14,
-                                color: titleColor,
-                                fontWeight: FontWeight.w600),
-                            keyboardType: TextInputType.number,
-                            textInputAction: TextInputAction.next,
-                            decoration: InputDecoration(
-                              hintText: 'Stok',
-                              hintStyle: TextStyle(color: Colors.grey.shade500),
-                              border: InputBorder.none,
-                              contentPadding:
-                                  EdgeInsets.only(left: 6, bottom: 6),
-                            ),
-                          ),
-                        ),
-                        Container(
-                          height: 45,
-                          decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(5),
-                              border: Border.all(
-                                width: 2,
-                                color: Colors.grey.shade200,
-                              )),
-                          width: MediaQuery.of(context).size.width * 0.4,
-                          child: TextField(
-                            controller: ticketPriceController,
-                            style: GoogleFonts.openSans(
-                                fontSize: 14,
-                                color: titleColor,
-                                fontWeight: FontWeight.w600),
-                            keyboardType: TextInputType.number,
-                            textInputAction: TextInputAction.next,
-                            decoration: InputDecoration(
-                              hintText: 'Harga',
-                              hintStyle: TextStyle(color: Colors.grey.shade500),
-                              border: InputBorder.none,
-                              contentPadding:
-                                  const EdgeInsets.only(left: 6, bottom: 6),
-                            ),
-                          ),
-                        ),
-                      ],
-                    )
-                  ],
-                ),
-              ),
-            ),
-          ),
+          // Padding(
+          //   padding: EdgeInsets.fromLTRB(16, 12, 16, 0),
+          //   child: Container(
+          //     width: MediaQuery.of(context).size.width,
+          //     decoration: BoxDecoration(
+          //         borderRadius: BorderRadius.circular(5), color: Colors.white),
+          //     child: Padding(
+          //       padding: const EdgeInsets.fromLTRB(16, 15, 16, 15),
+          //       child: Column(
+          //         crossAxisAlignment: CrossAxisAlignment.start,
+          //         children: [
+          //           Padding(
+          //             padding: const EdgeInsets.only(top: 4.0, bottom: 4),
+          //             child: Text(
+          //               "Tambahkan Ketersediaan Tiket",
+          //               style: GoogleFonts.inter(
+          //                   fontSize: 14,
+          //                   color: Colors.black,
+          //                   fontWeight: FontWeight.w600),
+          //             ),
+          //           ),
+          //           Row(
+          //             mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          //             children: [
+          //               Container(
+          //                 height: 45,
+          //                 decoration: BoxDecoration(
+          //                     borderRadius: BorderRadius.circular(5),
+          //                     border: Border.all(
+          //                       width: 2,
+          //                       color: Colors.grey.shade200,
+          //                     )),
+          //                 width: MediaQuery.of(context).size.width * 0.4,
+          //                 child: TextField(
+          //                   controller: ticketStockController,
+          //                   style: GoogleFonts.openSans(
+          //                       fontSize: 14,
+          //                       color: titleColor,
+          //                       fontWeight: FontWeight.w600),
+          //                   keyboardType: TextInputType.number,
+          //                   textInputAction: TextInputAction.next,
+          //                   decoration: InputDecoration(
+          //                     hintText: 'Stok',
+          //                     hintStyle: TextStyle(color: Colors.grey.shade500),
+          //                     border: InputBorder.none,
+          //                     contentPadding:
+          //                         EdgeInsets.only(left: 6, bottom: 6),
+          //                   ),
+          //                 ),
+          //               ),
+          //               Container(
+          //                 height: 45,
+          //                 decoration: BoxDecoration(
+          //                     borderRadius: BorderRadius.circular(5),
+          //                     border: Border.all(
+          //                       width: 2,
+          //                       color: Colors.grey.shade200,
+          //                     )),
+          //                 width: MediaQuery.of(context).size.width * 0.4,
+          //                 child: TextField(
+          //                   controller: ticketPriceController,
+          //                   style: GoogleFonts.openSans(
+          //                       fontSize: 14,
+          //                       color: titleColor,
+          //                       fontWeight: FontWeight.w600),
+          //                   keyboardType: TextInputType.number,
+          //                   textInputAction: TextInputAction.next,
+          //                   decoration: InputDecoration(
+          //                     hintText: 'Harga',
+          //                     hintStyle: TextStyle(color: Colors.grey.shade500),
+          //                     border: InputBorder.none,
+          //                     contentPadding:
+          //                         const EdgeInsets.only(left: 6, bottom: 6),
+          //                   ),
+          //                 ),
+          //               ),
+          //             ],
+          //           )
+          //         ],
+          //       ),
+          //     ),
+          //   ),
+          // ),
           const SizedBox(
-            height: 40,
+            height: 20,
           ),
           Container(
             height: 1,
@@ -1782,7 +1783,8 @@ class _CreateDestinationTouristState extends State<CreateDestinationTourist> {
                   onTap: () async {
                     final destCon = Provider.of<DestinasiController>(context,
                         listen: false);
-                         final ownerCon = Provider.of<OwnerBusinessController>(context,
+                    final ownerCon = Provider.of<OwnerBusinessController>(
+                        context,
                         listen: false);
 
                     if (nameController.text.isEmpty &&
@@ -1866,25 +1868,25 @@ class _CreateDestinationTouristState extends State<CreateDestinationTourist> {
                       isLoading = true;
                     });
 
-                    double? latitudeValue = latitudeController.text.isNotEmpty
-                        ? double.parse(latitudeController.text)
-                        : null;
+                    // double? latitudeValue = latitudeController.text.isNotEmpty
+                    //     ? double.parse(latitudeController.text)
+                    //     : null;
 
-                    double? longitudeValue = longitudeController.text.isNotEmpty
-                        ? double.parse(longitudeController.text)
-                        : null;
+                    // double? longitudeValue = longitudeController.text.isNotEmpty
+                    //     ? double.parse(longitudeController.text)
+                    //     : null;
 
-                    priceValue = ticketPriceController.text.isNotEmpty
-                        ? int.tryParse(ticketPriceController.text)
-                        : null;
+                    // priceValue = ticketPriceController.text.isNotEmpty
+                    //     ? int.tryParse(ticketPriceController.text)
+                    //     : null;
 
-                    stockValue = ticketStockController.text.isNotEmpty
-                        ? int.tryParse(ticketStockController.text)
-                        : null;
+                    // stockValue = ticketStockController.text.isNotEmpty
+                    //     ? int.tryParse(ticketStockController.text)
+                    //     : null;
 
                     try {
                       await destCon.postDestinasi(
-                        idOwner: ownerCon.idOBLogin,
+                          idOwner: ownerCon.idOBLogin,
                           nameDestinasi: nameController.text,
                           description: descriptionController.text,
                           address: addressController.text,
@@ -1892,10 +1894,9 @@ class _CreateDestinationTouristState extends State<CreateDestinationTourist> {
                           category: finalSelectedCategory.toString(),
                           contact: phoneNumberController.text,
                           hobby: finalSelectedHobby,
-                          
                           minutesSpend: minutesSpendController.text,
-                          latitude: latitudeValue,
-                          longitude: longitudeValue,
+                          // latitude: latitudeValue,
+                          // longitude: longitudeValue,
                           // latitude: -6.0000,
                           // longitude: 104.2020,
                           urlMap: urlMapController.text,
@@ -1911,32 +1912,194 @@ class _CreateDestinationTouristState extends State<CreateDestinationTourist> {
                           // closedHour: closedHourController.text
                           );
                       if (destCon.statusCodeAddDestinasi == 200) {
-                        if (ticketPriceController != null &&
-                            ticketStockController != null) {
-                          await destCon.addTicketByIdDestinasi(
-                            idDestinasi: destCon.newIdDestinasi,
-                            price: priceValue,
-                            stock: stockValue,
-                          );
-                          print(destCon.statusCodeAddTicket);
-                        }
-                        setState(() {
-                          isLoading = false;
-                        });
-                        // ignore: use_build_context_synchronously
-                        Navigator.pushAndRemoveUntil(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => const HomePageOwner()),
-                            (route) => false);
-                        Fluttertoast.showToast(
-                            msg: "Tempat wisatamu telah ditambahkan!",
-                            toastLength: Toast.LENGTH_SHORT,
-                            gravity: ToastGravity.BOTTOM,
-                            timeInSecForIosWeb: 1,
-                            backgroundColor: primaryColor.withOpacity(0.6),
-                            textColor: Colors.white,
-                            fontSize: 13);
+                        // if (ticketPriceController != null &&
+                        //     ticketStockController != null) {
+                        //   await destCon.addTicketByIdDestinasi(
+                        //     idDestinasi: destCon.newIdDestinasi,
+                        //     price: priceValue,
+                        //     stock: stockValue,
+                        //   );
+                        //   print(destCon.statusCodeAddTicket);
+                        // }
+
+                        await showDialog(
+                            context: context,
+                            barrierDismissible: false,
+                            builder: (context) {
+                              return AlertDialog(
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(10),
+                                ),
+                                backgroundColor: backgroundColor,
+                                elevation: 5,
+                                content: SizedBox(
+                                  height: 250,
+                                  child: Padding(
+                                    padding: const EdgeInsets.only(
+                                        left: 18.0, right: 18),
+                                    child: Center(
+                                      child: Column(children: [
+                                        SizedBox(
+                                          height: 10,
+                                        ),
+                                        Container(
+                                          height: 70,
+                                          child: Image.asset(
+                                            "assets/servicebar/tiket.png",
+                                            fit: BoxFit.fitHeight,
+                                          ),
+                                        ),
+                                        SizedBox(
+                                          height: 18,
+                                        ),
+                                        Text(
+                                          "Apakah Anda ingin\nmenjual tiket tempat wisata",
+                                          textAlign: TextAlign.center,
+                                          style: GoogleFonts.inter(
+                                              fontSize: 11,
+                                              color: thirdColor,
+                                              fontWeight: FontWeight.w500),
+                                        ),
+                                        SizedBox(
+                                          height: 8,
+                                        ),
+                                        Text(
+                                          " Tambahkan tiket wisata sekarang dan jadikan perjalanan wisatawan menjadi luar biasa",
+                                          textAlign: TextAlign.center,
+                                          style: GoogleFonts.notoSans(
+                                              fontSize: 11,
+                                              color: captColor,
+                                              fontWeight: FontWeight.w400),
+                                        ),
+                                        SizedBox(
+                                          height: 30,
+                                        ),
+                                        Row(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.spaceBetween,
+                                          children: [
+                                            GestureDetector(
+                                              onTap: () {
+                                                // ignore: use_build_context_synchronously
+                                               Navigator.push(
+                                              context,
+                                              MaterialPageRoute(
+                                                  builder: (context) =>
+                                                      const HomePageOwner()));
+                                                    
+                                        setState(() {
+                                          isLoading = false;
+                                        });
+                                                Fluttertoast.showToast(
+                                                    msg:
+                                                        "Tempat wisatamu telah ditambahkan!",
+                                                    toastLength:
+                                                        Toast.LENGTH_SHORT,
+                                                    gravity:
+                                                        ToastGravity.BOTTOM,
+                                                    timeInSecForIosWeb: 1,
+                                                    backgroundColor:
+                                                        primaryColor
+                                                            .withOpacity(0.6),
+                                                    textColor: Colors.white,
+                                                    fontSize: 13);
+                                              },
+                                              child: Container(
+                                                width: MediaQuery.of(context)
+                                                        .size
+                                                        .width *
+                                                    0.27,
+                                                decoration: BoxDecoration(
+                                                    border: Border.all(
+                                                        color: captColor),
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                            6)),
+                                                child: Padding(
+                                                  padding:
+                                                      const EdgeInsets.only(
+                                                          top: 8.0, bottom: 8),
+                                                  child: Center(
+                                                    child: Text(
+                                                      "Tidak",
+                                                      style: GoogleFonts.inter(
+                                                          fontSize: 9,
+                                                          color: thirdColor,
+                                                          fontWeight:
+                                                              FontWeight.w600),
+                                                    ),
+                                                  ),
+                                                ),
+                                              ),
+                                            ),
+                                            GestureDetector(
+                                              onTap: () {
+                                                // print(
+                                                //     "navigasi from create destinasi to ticket create ${destCon.dataDestinasi}");
+                                                // ignore: use_build_context_synchronously
+                                                Navigator.push(
+                                              context,
+                                              MaterialPageRoute(
+                                                  builder: (context) =>
+                                                      CreateTicketPage(
+                                                              idDestinasi: destCon
+                                                                  .newIdDestinasi!,
+                                                              // destinasi: destCon
+                                                              //     .dataDestinasi!,
+                                                            )));
+                                                    
+                                                setState(() {
+                                                  isLoading = false;
+                                                });
+                                                Fluttertoast.showToast(
+                                                    msg:
+                                                        "Tempat wisatamu telah ditambahkan!",
+                                                    toastLength:
+                                                        Toast.LENGTH_SHORT,
+                                                    gravity:
+                                                        ToastGravity.BOTTOM,
+                                                    timeInSecForIosWeb: 1,
+                                                    backgroundColor:
+                                                        primaryColor
+                                                            .withOpacity(0.6),
+                                                    textColor: Colors.white,
+                                                    fontSize: 13);
+                                              },
+                                              child: Container(
+                                                width: MediaQuery.of(context)
+                                                        .size
+                                                        .width *
+                                                    0.27,
+                                                decoration: BoxDecoration(
+                                                    color: thirdColor,
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                            6)),
+                                                child: Padding(
+                                                  padding:
+                                                      const EdgeInsets.only(
+                                                          top: 8.0, bottom: 8),
+                                                  child: Center(
+                                                    child: Text(
+                                                      "Jual",
+                                                      style: GoogleFonts.inter(
+                                                          fontSize: 9,
+                                                          color: Colors.white,
+                                                          fontWeight:
+                                                              FontWeight.w600),
+                                                    ),
+                                                  ),
+                                                ),
+                                              ),
+                                            )
+                                          ],
+                                        )
+                                      ]),
+                                    ),
+                                  ),
+                                ),
+                              );
+                            });
                       } else if (destCon.statusCodeAddDestinasi == 404) {
                         setState(() {
                           isLoading = false;

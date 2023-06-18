@@ -5,7 +5,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:pergijalan_mobile/config/theme_color.dart';
 import 'package:pergijalan_mobile/controllers/destinasi_controller.dart';
 import 'package:pergijalan_mobile/views/pages/account_login_user.dart';
-import 'package:pergijalan_mobile/views/pages/e-ticket_page.dart';
+import 'package:pergijalan_mobile/views/pages/eticket_page.dart';
 import 'package:pergijalan_mobile/views/pages/splash_screen_page.dart';
 import 'package:pergijalan_mobile/views/pages/account_tipsandtrick.dart';
 import 'package:provider/provider.dart';
@@ -455,33 +455,23 @@ class _UserPageState extends State<UserPage> {
                                           )),
                                         ),
                                       ),
-                                      InkWell(
-                                        onTap: () async {
-                                          final eticketCon =
-                                              Provider.of<ETicketController>(
-                                                  context,
-                                                  listen: false);
-
-                                          await eticketCon.eticketById(7);
-                                        },
-                                        child: SizedBox(
-                                            width: MediaQuery.of(context)
-                                                    .size
-                                                    .width *
-                                                0.5,
-                                            child: Padding(
-                                              padding: const EdgeInsets.only(
-                                                  left: 8.0),
-                                              child: Text(
-                                                "Riwayat Pemesanan Tiket",
-                                                style: GoogleFonts.inter(
-                                                    fontSize: 15,
-                                                    color: thirdColor,
-                                                    fontWeight:
-                                                        FontWeight.w600),
-                                              ),
-                                            )),
-                                      ),
+                                      SizedBox(
+                                          width: MediaQuery.of(context)
+                                                  .size
+                                                  .width *
+                                              0.5,
+                                          child: Padding(
+                                            padding: const EdgeInsets.only(
+                                                left: 8.0),
+                                            child: Text(
+                                              "Riwayat Pemesanan Tiket",
+                                              style: GoogleFonts.inter(
+                                                  fontSize: 15,
+                                                  color: thirdColor,
+                                                  fontWeight:
+                                                      FontWeight.w600),
+                                            ),
+                                          )),
                                     ],
                                   ),
                                   // SizedBox(
