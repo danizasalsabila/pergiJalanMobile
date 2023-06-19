@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_swiper_plus/flutter_swiper_plus.dart';
 import 'package:fluttertoast/fluttertoast.dart';
@@ -65,13 +67,10 @@ class _HomePageOwnerState extends State<HomePageOwner> {
         await ticketData.getMostSalesTicketByOwner(ownerCon.idOBLogin);
 
         if (reviewData.statusCodeAvgRatingOwner == 200) {
-          // avgRatingBool = true;
           avgRating = reviewData.avgRatingOwner!;
-          // print("-----------");
           print(avgRating);
         } else {
           avgRating = 0;
-          // avgRatingBool = false;
         }
 
         if (ownerBusinessHomeCon.destinasiByOwnerStatusCode == 200) {
@@ -100,76 +99,42 @@ class _HomePageOwnerState extends State<HomePageOwner> {
     super.initState();
   }
 
+  Color getRandomColor(int index) {
+    Random random = Random(index);
+    return Color.fromARGB(
+      188,
+      random.nextInt(36),
+      random.nextInt(78),
+      random.nextInt(79),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     String formattedDate = DateFormat('EEEEE, d MMM yyyy').format(now);
-    // final reviewData = Provider.of<ReviewController>(context, listen: false);
     final ownerCon =
         Provider.of<OwnerBusinessController>(context, listen: false);
     final ticketData = Provider.of<TicketController>(context, listen: false);
 
     return Scaffold(
       backgroundColor: backgroundColor,
-      // appBar: AppBar(
-      //   toolbarHeight: 70,
-      //   // leading: InkWell(
-      //   //     onTap: () {
-      //   //       Navigator.push(context,
-      //   //           MaterialPageRoute(builder: (context) => const LoginUser()));
-      //   //     },
-      //   //     child: Icon(
-      //   //       Icons.settings,
-      //   //       color: Colors.grey.shade400,
-      //   //     )),
-      //   title: Padding(
-      //     padding: const EdgeInsets.only(left: 8.0),
-      //     child: Text(
-      //       'Dashboard',
-      //       style: GoogleFonts.kanit(
-      //           fontSize: 18,
-      //           color: Colors.grey.shade400,
-      //           fontWeight: FontWeight.w400),
-      //     ),
-      //   ),
-      //   actions: [
-      //     Padding(
-      //       padding: const EdgeInsets.only(right: 16.0),
-      //       child: InkWell(
-      //         onTap: () {
-      //           Navigator.push(
-      //             context,
-      //             MaterialPageRoute(
-      //               builder: (context) => const OwnerProfilePage(),
-      //             ),
-      //           );
-      //         },
-      //         child: CircleAvatar(
-      //           radius: 20,
-      //           backgroundColor: Colors.grey.shade300,
-      //         ),
-      //       ),
-      //     ),
-      //   ],
-      //   centerTitle: false,
-      //   backgroundColor: backgroundColor,
-      //   elevation: 0,
-      //   automaticallyImplyLeading: false,
-      // ),
-      floatingActionButton: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: FloatingActionButton(
-            elevation: 8,
-            onPressed: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => const CreateDestinationTourist(),
-                ),
-              );
-            },
-            backgroundColor: thirdColor,
-            child: const FaIcon(FontAwesomeIcons.plus)),
-      ),
+      floatingActionButton: isLoading
+          ? const Center(child: SizedBox())
+          : Padding(
+              padding: const EdgeInsets.all(16.0),
+              child: FloatingActionButton(
+                  elevation: 8,
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => const CreateDestinationTourist(),
+                      ),
+                    );
+                  },
+                  backgroundColor: thirdColor,
+                  child: const FaIcon(FontAwesomeIcons.plus)),
+            ),
       body: isLoading
           ? const Center(
               child: CircularProgressIndicator(
@@ -199,9 +164,9 @@ class _HomePageOwnerState extends State<HomePageOwner> {
                                 child: Text(
                                   "Dashboard",
                                   style: GoogleFonts.inter(
-                                      fontSize: 20,
-                                      color: thirdColor,
-                                      fontWeight: FontWeight.w600),
+                                      fontSize: 22,
+                                      color: Color.fromARGB(255, 49, 49, 49),
+                                      fontWeight: FontWeight.w700),
                                 ),
                               ),
                             ),
@@ -212,10 +177,10 @@ class _HomePageOwnerState extends State<HomePageOwner> {
                                 alignment: Alignment.topLeft,
                                 child: Text(
                                   "Laporan Pengelolaan ${ownerCon.nameLogin.toString()}",
-                                  style: GoogleFonts.openSans(
-                                      fontSize: 13,
-                                      color: Color.fromARGB(255, 168, 168, 168),
-                                      fontWeight: FontWeight.w600),
+                                  style: GoogleFonts.notoSansDisplay(
+                                      fontSize: 11,
+                                      color: descColor,
+                                      fontWeight: FontWeight.w500),
                                 ),
                               ),
                             ),
@@ -243,9 +208,400 @@ class _HomePageOwnerState extends State<HomePageOwner> {
                       ],
                     ),
                     const SizedBox(
-                      height: 10,
+                      height: 7,
                     ),
 
+                    // Padding(
+                    //   padding: const EdgeInsets.only(
+                    //       top: 8.0, bottom: 8, right: 20, left: 16),
+                    //   child: Align(
+                    //       alignment: Alignment.topLeft,
+                    //       child: Text(
+                    //         "Penjualan Tiket Terbanyak",
+                    //         textAlign: TextAlign.left,
+                    //         style: GoogleFonts.notoSansDisplay(
+                    //             fontSize: 13,
+                    //             color: descColor,
+                    //             fontWeight: FontWeight.w500),
+                    //       )),
+                    // ),
+                    //banner ticket sold (slicing)
+                    anyMostSales == true
+                        ? Container(
+                            height: 186,
+                            child: Consumer<TicketController>(
+                                builder: (context, ticketCon, child) {
+                              return Swiper(
+                                  autoplay: true,
+                                  itemCount:
+                                      ticketCon.ticketDataMostSales!.length,
+                                  // controller:
+                                  //     PageController(viewportFraction: 0.85),
+                                  onIndexChanged: (int index) => setState(() {
+                                        _index = index;
+                                      }),
+                                  itemBuilder: (context, index) {
+                                    Color randomColor = getRandomColor(index);
+                                    return Padding(
+                                      padding: const EdgeInsets.only(
+                                          left: 20.0, right: 20),
+                                      child: Transform.scale(
+                                        scale: index == _index ? 1 : 0.8,
+                                        child: Container(
+                                          height: 186,
+                                          width:
+                                              MediaQuery.of(context).size.width,
+                                          decoration: BoxDecoration(
+                                              gradient: LinearGradient(
+                                                end: Alignment.bottomLeft,
+                                                begin: Alignment.center,
+                                                colors: [
+                                                  randomColor,
+                                                  Color.fromARGB(
+                                                      255, 75, 150, 111),
+                                                ],
+                                              ),
+                                              borderRadius:
+                                                  BorderRadius.circular(5)),
+                                          child: Column(children: [
+                                            Padding(
+                                              padding:
+                                                  const EdgeInsets.fromLTRB(
+                                                      16, 15.0, 16, 0),
+                                              child: Row(
+                                                mainAxisAlignment:
+                                                    MainAxisAlignment
+                                                        .spaceBetween,
+                                                children: [
+                                                  Container(
+                                                    width:
+                                                        MediaQuery.of(context)
+                                                                .size
+                                                                .width *
+                                                            0.37,
+                                                    height: 25,
+                                                    decoration: BoxDecoration(
+                                                        borderRadius:
+                                                            BorderRadius
+                                                                .circular(5),
+                                                        color: Color.fromARGB(
+                                                            71, 255, 255, 255)),
+                                                    child: Padding(
+                                                      padding:
+                                                          const EdgeInsets.all(
+                                                              5.0),
+                                                      child: Center(
+                                                        child: Text(
+                                                          ticketCon
+                                                              .ticketDataMostSales![
+                                                                  index]
+                                                              .destinasi!
+                                                              .nameDestinasi
+                                                              .toString(),
+                                                          //           "sd k ckwe k dcw ekdcewk dkew dkw ekd cej cfe kfmc ke k k k kmn m",
+                                                          overflow:
+                                                              TextOverflow.fade,
+                                                          // "Penjualan Tiket Terbanyak",
+                                                          style: GoogleFonts
+                                                              .openSans(
+                                                                  fontSize: 10,
+                                                                  color: Colors
+                                                                      .white,
+                                                                  fontWeight:
+                                                                      FontWeight
+                                                                          .w500),
+                                                        ),
+                                                      ),
+                                                    ),
+                                                  ),
+                                                  Padding(
+                                                    padding:
+                                                        const EdgeInsets.only(
+                                                            right: 5.0),
+                                                    child: Text(
+                                                      "${index + 1}",
+                                                      style: GoogleFonts.kanit(
+                                                          fontSize: 18,
+                                                          color: Colors.white,
+                                                          fontWeight:
+                                                              FontWeight.w800),
+                                                    ),
+                                                  ),
+                                                ],
+                                              ),
+                                            ),
+                                            const SizedBox(
+                                              height: 17,
+                                            ),
+                                            Text(
+                                              "Hari Ini",
+                                              style: GoogleFonts.openSans(
+                                                  fontSize: 10,
+                                                  color: Colors.white,
+                                                  fontWeight: FontWeight.w500),
+                                            ),
+                                            Text(
+                                              formattedDate,
+                                              style: GoogleFonts.openSans(
+                                                  fontSize: 15,
+                                                  color: Colors.grey.shade400,
+                                                  fontWeight: FontWeight.w500),
+                                            ),
+                                            const SizedBox(
+                                              height: 15,
+                                            ),
+                                            Padding(
+                                              padding: const EdgeInsets.only(
+                                                  left: 16.0, right: 16),
+                                              child: Container(
+                                                height: 55,
+                                                decoration: BoxDecoration(
+                                                    color: Color.fromARGB(
+                                                        255, 255, 255, 255),
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                            2)),
+                                                child: Row(
+                                                    mainAxisAlignment:
+                                                        MainAxisAlignment
+                                                            .spaceEvenly,
+                                                    children: [
+                                                      Column(
+                                                        mainAxisAlignment:
+                                                            MainAxisAlignment
+                                                                .center,
+                                                        crossAxisAlignment:
+                                                            CrossAxisAlignment
+                                                                .center,
+                                                        children: [
+                                                          SizedBox(
+                                                            width: MediaQuery.of(
+                                                                        context)
+                                                                    .size
+                                                                    .width *
+                                                                0.2,
+                                                            child: Center(
+                                                              child: Text(
+                                                                "Tiket Terjual",
+                                                                style: GoogleFonts.openSans(
+                                                                    fontSize: 9,
+                                                                    color: Color
+                                                                        .fromARGB(
+                                                                            166,
+                                                                            36,
+                                                                            78,
+                                                                            79),
+                                                                    fontWeight:
+                                                                        FontWeight
+                                                                            .w600),
+                                                              ),
+                                                            ),
+                                                          ),
+                                                          SizedBox(
+                                                            width: MediaQuery.of(
+                                                                        context)
+                                                                    .size
+                                                                    .width *
+                                                                0.2,
+                                                            height: 30,
+                                                            child: Center(
+                                                              child: Text(
+                                                                "${ticketCon.ticketDataMostSales![index].ticketSold.toString()}",
+                                                                style: GoogleFonts.openSans(
+                                                                    fontSize:
+                                                                        15,
+                                                                    color:
+                                                                        thirdColor,
+                                                                    fontWeight:
+                                                                        FontWeight
+                                                                            .w700),
+                                                              ),
+                                                            ),
+                                                          ),
+                                                        ],
+                                                      ),
+                                                      Container(
+                                                        height: 35,
+                                                        width: 1,
+                                                        color: Color.fromARGB(
+                                                            92, 36, 78, 79),
+                                                      ),
+                                                      Column(
+                                                        mainAxisAlignment:
+                                                            MainAxisAlignment
+                                                                .center,
+                                                        crossAxisAlignment:
+                                                            CrossAxisAlignment
+                                                                .center,
+                                                        children: [
+                                                          SizedBox(
+                                                            width: MediaQuery.of(
+                                                                        context)
+                                                                    .size
+                                                                    .width *
+                                                                0.2,
+                                                            child: Center(
+                                                              child: Text(
+                                                                textAlign:
+                                                                    TextAlign
+                                                                        .center,
+                                                                "Tiket",
+                                                                style: GoogleFonts.openSans(
+                                                                    fontSize: 9,
+                                                                    color: Color
+                                                                        .fromARGB(
+                                                                            166,
+                                                                            36,
+                                                                            78,
+                                                                            79),
+                                                                    fontWeight:
+                                                                        FontWeight
+                                                                            .w600),
+                                                              ),
+                                                            ),
+                                                          ),
+                                                          SizedBox(
+                                                            height: 30,
+                                                            width: MediaQuery.of(
+                                                                        context)
+                                                                    .size
+                                                                    .width *
+                                                                0.2,
+                                                            child: Center(
+                                                              child: Text(
+                                                                ticketCon
+                                                                    .ticketDataMostSales![
+                                                                        index]
+                                                                    .destinasi!
+                                                                    .nameDestinasi
+                                                                    .toString(),
+                                                                textAlign:
+                                                                    TextAlign
+                                                                        .center,
+                                                                style: GoogleFonts.openSans(
+                                                                    fontSize:
+                                                                        11,
+                                                                    color:
+                                                                        thirdColor,
+                                                                    fontWeight:
+                                                                        FontWeight
+                                                                            .w700),
+                                                                overflow:
+                                                                    TextOverflow
+                                                                        .fade,
+                                                                maxLines: 2,
+                                                              ),
+                                                            ),
+                                                          ),
+                                                        ],
+                                                      ),
+                                                      Container(
+                                                        height: 35,
+                                                        width: 1,
+                                                        color: Color.fromARGB(
+                                                            92, 36, 78, 79),
+                                                      ),
+                                                      Column(
+                                                        mainAxisAlignment:
+                                                            MainAxisAlignment
+                                                                .center,
+                                                        crossAxisAlignment:
+                                                            CrossAxisAlignment
+                                                                .center,
+                                                        children: [
+                                                          SizedBox(
+                                                            width: MediaQuery.of(
+                                                                        context)
+                                                                    .size
+                                                                    .width *
+                                                                0.2,
+                                                            child: Center(
+                                                              child: Text(
+                                                                "Sisa Stok",
+                                                                style: GoogleFonts.openSans(
+                                                                    fontSize: 9,
+                                                                    color: Color
+                                                                        .fromARGB(
+                                                                            166,
+                                                                            36,
+                                                                            78,
+                                                                            79),
+                                                                    fontWeight:
+                                                                        FontWeight
+                                                                            .w600),
+                                                              ),
+                                                            ),
+                                                          ),
+                                                          SizedBox(
+                                                            height: 30,
+                                                            child: Center(
+                                                              child: Text(
+                                                                ticketCon
+                                                                    .ticketDataMostSales![
+                                                                        index]
+                                                                    .stock
+                                                                    .toString(),
+                                                                style: GoogleFonts.openSans(
+                                                                    fontSize:
+                                                                        15,
+                                                                    color:
+                                                                        thirdColor,
+                                                                    fontWeight:
+                                                                        FontWeight
+                                                                            .w700),
+                                                              ),
+                                                            ),
+                                                          ),
+                                                        ],
+                                                      ),
+                                                    ]),
+                                              ),
+                                            ),
+                                          ]),
+                                        ),
+                                      ),
+                                    );
+                                  });
+                            }),
+                          )
+                        : SizedBox(),
+
+                    // anyMostSales == true
+                    //     ? Column(
+                    //         children: [
+                    //           SizedBox(height: 8),
+                    //           Row(
+                    //             mainAxisAlignment: MainAxisAlignment.center,
+                    //             children: <Widget>[
+                    //               Row(
+                    //                 children: createDotMap<Widget>(
+                    //                   ticketData.ticketDataMostSales!,
+                    //                   // listHeaderBanner2,
+                    //                   (index, image) {
+                    //                     return Container(
+                    //                       alignment: Alignment.centerLeft,
+                    //                       height: 5,
+                    //                       width: 5,
+                    //                       margin:
+                    //                           const EdgeInsets.only(right: 3),
+                    //                       decoration: BoxDecoration(
+                    //                           shape: BoxShape.circle,
+                    //                           color: _index == index
+                    //                               ? labelColor
+                    //                               : captColor),
+                    //                     );
+                    //                   },
+                    //                 ),
+                    //               ),
+                    //             ],
+                    //           ),
+                    //         ],
+                    //       )
+                    //     : const SizedBox(),
+
+                    SizedBox(
+                      height: 15,
+                    ),
                     Padding(
                         padding: const EdgeInsets.only(left: 20.0, right: 20),
                         child: Container(
@@ -254,7 +610,7 @@ class _HomePageOwnerState extends State<HomePageOwner> {
                           decoration: BoxDecoration(
                               color: Colors.white,
                               border: Border.all(
-                                  color: Colors.grey.shade300, width: 1.5),
+                                  color: Colors.grey.shade300, width: 1),
                               borderRadius: BorderRadius.circular(10)),
                           child: Row(children: [
                             SizedBox(
@@ -302,12 +658,13 @@ class _HomePageOwnerState extends State<HomePageOwner> {
                                           child: Text(
                                             avgRating == 0
                                                 ? "-"
-                                                : avgRating!.toStringAsFixed(2),
+                                                : avgRating!.toStringAsFixed(1),
                                             textAlign: TextAlign.center,
                                             // "oke",
                                             style: GoogleFonts.kanit(
                                                 fontSize: 44,
-                                                color: thirdColor,
+                                                color: Color.fromARGB(
+                                                    255, 71, 71, 71),
                                                 fontWeight: FontWeight.w500),
                                           ),
                                         )
@@ -383,372 +740,8 @@ class _HomePageOwnerState extends State<HomePageOwner> {
                             ),
                           ]),
                         )),
-                    SizedBox(
-                      height: 10,
-                    ),
-                    //banner ticket sold (slicing)
-                    anyMostSales == true
-                        ? Container(
-                            height: 220,
-                            child: Consumer<TicketController>(
-                                builder: (context, ticketCon, child) {
-                              return Swiper(
-                                  autoplay: true,
-                                  itemCount:
-                                      ticketCon.ticketDataMostSales!.length,
-                                  // controller:
-                                  //     PageController(viewportFraction: 0.85),
-                                  onIndexChanged: (int index) => setState(() {
-                                        _index = index;
-                                      }),
-                                  itemBuilder: (context, index) {
-                                    return Padding(
-                                      padding: const EdgeInsets.only(
-                                          left: 20.0, right: 20),
-                                      child: Transform.scale(
-                                        scale: index == _index ? 1 : 0.8,
-                                        child: Container(
-                                          height: 220,
-                                          width:
-                                              MediaQuery.of(context).size.width,
-                                          decoration: BoxDecoration(
-                                              gradient: const LinearGradient(
-                                                end: Alignment.bottomLeft,
-                                                begin: Alignment.center,
-                                                colors: [
-                                                  thirdColor,
-                                                  Color.fromARGB(
-                                                      255, 75, 150, 111),
-                                                ],
-                                              ),
-                                              borderRadius:
-                                                  BorderRadius.circular(5)),
-                                          child: Column(children: [
-                                            Padding(
-                                              padding:
-                                                  const EdgeInsets.fromLTRB(
-                                                      16, 15.0, 16, 0),
-                                              child: Row(
-                                                mainAxisAlignment:
-                                                    MainAxisAlignment
-                                                        .spaceBetween,
-                                                children: [
-                                                  Container(
-                                                    width:
-                                                        MediaQuery.of(context)
-                                                                .size
-                                                                .width *
-                                                            0.37,
-                                                    decoration: BoxDecoration(
-                                                        borderRadius:
-                                                            BorderRadius
-                                                                .circular(5),
-                                                        color: Color.fromARGB(
-                                                            71, 255, 255, 255)),
-                                                    child: Padding(
-                                                      padding:
-                                                          const EdgeInsets.all(
-                                                              5.0),
-                                                      child: Center(
-                                                        child: Text(
-                                                          "Penjualan Tiket Terbanyak",
-                                                          style: GoogleFonts
-                                                              .openSans(
-                                                                  fontSize: 10,
-                                                                  color: Colors
-                                                                      .white,
-                                                                  fontWeight:
-                                                                      FontWeight
-                                                                          .w500),
-                                                        ),
-                                                      ),
-                                                    ),
-                                                  ),
-                                                  Text(
-                                                    "${index + 1}",
-                                                    style: GoogleFonts.kanit(
-                                                        fontSize: 20,
-                                                        color: Colors.white,
-                                                        fontWeight:
-                                                            FontWeight.w800),
-                                                  ),
-                                                ],
-                                              ),
-                                            ),
-                                            const SizedBox(
-                                              height: 17,
-                                            ),
-                                            Text(
-                                              "Hari Ini",
-                                              style: GoogleFonts.openSans(
-                                                  fontSize: 12,
-                                                  color: Colors.white,
-                                                  fontWeight: FontWeight.w500),
-                                            ),
-                                            Text(
-                                              formattedDate,
-                                              style: GoogleFonts.openSans(
-                                                  fontSize: 18,
-                                                  color: Colors.grey.shade400,
-                                                  fontWeight: FontWeight.w500),
-                                            ),
-                                            const SizedBox(
-                                              height: 22,
-                                            ),
-                                            Padding(
-                                              padding: const EdgeInsets.only(
-                                                  left: 16.0, right: 16),
-                                              child: Container(
-                                                height: 73,
-                                                decoration: BoxDecoration(
-                                                    color: Colors.white,
-                                                    borderRadius:
-                                                        BorderRadius.circular(
-                                                            1)),
-                                                child: Row(
-                                                    mainAxisAlignment:
-                                                        MainAxisAlignment
-                                                            .spaceEvenly,
-                                                    children: [
-                                                      Column(
-                                                        mainAxisAlignment:
-                                                            MainAxisAlignment
-                                                                .center,
-                                                        crossAxisAlignment:
-                                                            CrossAxisAlignment
-                                                                .center,
-                                                        children: [
-                                                          SizedBox(
-                                                            width: MediaQuery.of(
-                                                                        context)
-                                                                    .size
-                                                                    .width *
-                                                                0.2,
-                                                            child: Center(
-                                                              child: Text(
-                                                                "Terjual",
-                                                                style: GoogleFonts.openSans(
-                                                                    fontSize:
-                                                                        12,
-                                                                    color: Color
-                                                                        .fromARGB(
-                                                                            166,
-                                                                            36,
-                                                                            78,
-                                                                            79),
-                                                                    fontWeight:
-                                                                        FontWeight
-                                                                            .w600),
-                                                              ),
-                                                            ),
-                                                          ),
-                                                          SizedBox(
-                                                            width: MediaQuery.of(
-                                                                        context)
-                                                                    .size
-                                                                    .width *
-                                                                0.2,
-                                                            child: Center(
-                                                              child: Text(
-                                                                ticketCon
-                                                                    .ticketDataMostSales![
-                                                                        index]
-                                                                    .ticketSold
-                                                                    .toString(),
-                                                                style: GoogleFonts.kanit(
-                                                                    fontSize:
-                                                                        26,
-                                                                    color:
-                                                                        thirdColor,
-                                                                    fontWeight:
-                                                                        FontWeight
-                                                                            .w600),
-                                                              ),
-                                                            ),
-                                                          ),
-                                                        ],
-                                                      ),
-                                                      Container(
-                                                        height: 52,
-                                                        width: 1,
-                                                        color: Color.fromARGB(
-                                                            92, 36, 78, 79),
-                                                      ),
-                                                      Column(
-                                                        mainAxisAlignment:
-                                                            MainAxisAlignment
-                                                                .center,
-                                                        crossAxisAlignment:
-                                                            CrossAxisAlignment
-                                                                .center,
-                                                        children: [
-                                                          SizedBox(
-                                                            width: MediaQuery.of(
-                                                                        context)
-                                                                    .size
-                                                                    .width *
-                                                                0.2,
-                                                            child: Center(
-                                                              child: Text(
-                                                                textAlign:
-                                                                    TextAlign
-                                                                        .center,
-                                                                "Tempat Wisata",
-                                                                style: GoogleFonts.openSans(
-                                                                    fontSize:
-                                                                        10,
-                                                                    color: Color
-                                                                        .fromARGB(
-                                                                            166,
-                                                                            36,
-                                                                            78,
-                                                                            79),
-                                                                    fontWeight:
-                                                                        FontWeight
-                                                                            .w600),
-                                                              ),
-                                                            ),
-                                                          ),
-                                                          SizedBox(
-                                                            height: 39,
-                                                            width: MediaQuery.of(
-                                                                        context)
-                                                                    .size
-                                                                    .width *
-                                                                0.2,
-                                                            child: Center(
-                                                              child: Text(
-                                                                ticketCon
-                                                                    .ticketDataMostSales![
-                                                                        index]
-                                                                    .destinasi!
-                                                                    .nameDestinasi
-                                                                    .toString(),
-                                                                textAlign:
-                                                                    TextAlign
-                                                                        .center,
-                                                                style: GoogleFonts.kanit(
-                                                                    fontSize:
-                                                                        13,
-                                                                    color:
-                                                                        thirdColor,
-                                                                    fontWeight:
-                                                                        FontWeight
-                                                                            .w600),
-                                                                overflow:
-                                                                    TextOverflow
-                                                                        .fade,
-                                                                maxLines: 2,
-                                                              ),
-                                                            ),
-                                                          ),
-                                                        ],
-                                                      ),
-                                                      Container(
-                                                        height: 52,
-                                                        width: 1,
-                                                        color: Color.fromARGB(
-                                                            92, 36, 78, 79),
-                                                      ),
-                                                      Column(
-                                                        mainAxisAlignment:
-                                                            MainAxisAlignment
-                                                                .center,
-                                                        crossAxisAlignment:
-                                                            CrossAxisAlignment
-                                                                .center,
-                                                        children: [
-                                                          SizedBox(
-                                                            width: MediaQuery.of(
-                                                                        context)
-                                                                    .size
-                                                                    .width *
-                                                                0.2,
-                                                            child: Center(
-                                                              child: Text(
-                                                                "Sisa Stok",
-                                                                style: GoogleFonts.openSans(
-                                                                    fontSize:
-                                                                        12,
-                                                                    color: Color
-                                                                        .fromARGB(
-                                                                            166,
-                                                                            36,
-                                                                            78,
-                                                                            79),
-                                                                    fontWeight:
-                                                                        FontWeight
-                                                                            .w600),
-                                                              ),
-                                                            ),
-                                                          ),
-                                                          SizedBox(
-                                                            child: Center(
-                                                              child: Text(
-                                                                ticketCon
-                                                                    .ticketDataMostSales![
-                                                                        index]
-                                                                    .stock
-                                                                    .toString(),
-                                                                style: GoogleFonts.kanit(
-                                                                    fontSize:
-                                                                        26,
-                                                                    color:
-                                                                        thirdColor,
-                                                                    fontWeight:
-                                                                        FontWeight
-                                                                            .w600),
-                                                              ),
-                                                            ),
-                                                          ),
-                                                        ],
-                                                      ),
-                                                    ]),
-                                              ),
-                                            ),
-                                          ]),
-                                        ),
-                                      ),
-                                    );
-                                  });
-                            }),
-                          )
-                        : SizedBox(),
-
-                    anyMostSales == true
-                        ? Column(
-                            children: [
-                              SizedBox(height: 12),
-                              Row(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: <Widget>[
-                                  Row(
-                                    children: createDotMap<Widget>(
-                                      ticketData.ticketDataMostSales!,
-                                      // listHeaderBanner2,
-                                      (index, image) {
-                                        return Container(
-                                          alignment: Alignment.centerLeft,
-                                          height: 6,
-                                          width: 6,
-                                          margin:
-                                              const EdgeInsets.only(right: 8),
-                                          decoration: BoxDecoration(
-                                              shape: BoxShape.circle,
-                                              color: _index == index
-                                                  ? labelColor
-                                                  : captColor),
-                                        );
-                                      },
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            ],
-                          )
-                        : const SizedBox(),
                     const SizedBox(
-                      height: 30,
+                      height: 20,
                     ),
                     // const SizedBox(height: 20),
                     Padding(
@@ -759,12 +752,15 @@ class _HomePageOwnerState extends State<HomePageOwner> {
                         alignment: Alignment.bottomLeft,
                         child: Text(
                           "Upload Terbaru",
-                          style: GoogleFonts.inter(
-                              fontSize: 18,
-                              color: thirdColor,
+                          style: GoogleFonts.notoSansDisplay(
+                              fontSize: 14,
+                              color: Color.fromARGB(255, 49, 49, 49),
                               fontWeight: FontWeight.w600),
                         ),
                       ),
+                    ),
+                    SizedBox(
+                      height: 6,
                     ),
                     isLoading
                         ? const Center(
@@ -773,7 +769,19 @@ class _HomePageOwnerState extends State<HomePageOwner> {
                             ),
                           )
                         : anyData == false
-                            ? const SizedBox()
+                            ? Container(
+                                height: 100,
+                                width: MediaQuery.of(context).size.width,
+                                child: Center(
+                                    child: Text(
+                                  "Belum terdapat pendaftaran tempat wisata\nTekan tombol + untuk menambah tempat wisata",
+                                  style: GoogleFonts.openSans(
+                                      fontSize: 11,
+                                      color: captColor,
+                                      fontWeight: FontWeight.w500),
+                                  textAlign: TextAlign.center,
+                                )),
+                              )
                             : Container(
                                 padding:
                                     const EdgeInsets.only(left: 26, right: 26),
@@ -799,7 +807,7 @@ class _HomePageOwnerState extends State<HomePageOwner> {
                                           )
                                         : Padding(
                                             padding: const EdgeInsets.only(
-                                                top: 16.0),
+                                                bottom: 10.0),
                                             child: Container(
                                               decoration: BoxDecoration(
                                                   boxShadow: [
@@ -1038,7 +1046,7 @@ class _HomePageOwnerState extends State<HomePageOwner> {
                                                                                                       Navigator.push(
                                                                                                         context,
                                                                                                         MaterialPageRoute(
-                                                                                                          builder: (context) =>  const HomePageOwner(),
+                                                                                                          builder: (context) => const HomePageOwner(),
                                                                                                         ),
                                                                                                       );
 

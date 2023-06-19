@@ -4,13 +4,19 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:pergijalan_mobile/config/theme_color.dart';
 import 'package:pergijalan_mobile/controllers/ticket_controller.dart';
+import 'package:pergijalan_mobile/views/pages/business_owner/profile_owner.dart';
 import 'package:provider/provider.dart';
 
 import '../../../controllers/destinasi_controller.dart';
+import '../../../models/destinasi.dart';
+import '../../../models/ticket.dart';
 import 'home.dart';
 
 class EditTicketPage extends StatefulWidget {
-  const EditTicketPage({super.key});
+  final Ticket ticket;
+  final Destinasi destinasi;
+
+  EditTicketPage({super.key, required this.ticket, required this.destinasi});
 
   @override
   State<EditTicketPage> createState() => _EditTicketPageState();
@@ -40,7 +46,7 @@ class _EditTicketPageState extends State<EditTicketPage> {
     isLoading = true;
     Future.delayed(const Duration(seconds: 1)).then((value) async {
       try {
-        // await destCon.getTicketbyIdDestination(widget.id.id);
+        // await ticketCon.getTicketbyIdDestination(widget.id.id);
         //  nameDestinasi = widget.id.
         //  closedHourDestinasi =
         //  openHourDestinasi =
@@ -56,9 +62,11 @@ class _EditTicketPageState extends State<EditTicketPage> {
       });
     });
     super.initState();
-    // nameTicketController = TextEditingController(text: widget.id.nameTicket);
-    // stockTicketController = TextEditingController(text: widget.id.stock);
-    // priceTicketController = TextEditingController(text: widget.id.price);
+    // nameTicketController = TextEditingController(text: widget.ticket);
+    stockTicketController =
+        TextEditingController(text: widget.ticket.stock.toString());
+    priceTicketController =
+        TextEditingController(text: widget.ticket.price.toString());
   }
 
   //   @override
@@ -149,7 +157,7 @@ class _EditTicketPageState extends State<EditTicketPage> {
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
                                 Text(
-                                  "Nama Tempat Wisata",
+                                  widget.destinasi.nameDestinasi.toString(),
                                   style: GoogleFonts.inter(
                                       fontSize: 11,
                                       color: titleColor,
@@ -185,7 +193,10 @@ class _EditTicketPageState extends State<EditTicketPage> {
                                         MainAxisAlignment.spaceBetween,
                                     children: [
                                       Text(
-                                        "20:00",
+                                        widget.destinasi.closedHour != null
+                                            ? widget.destinasi.closedHour
+                                                .toString()
+                                            : "-",
                                         style: GoogleFonts.inter(
                                             fontSize: 11,
                                             color: titleColor,
@@ -220,7 +231,10 @@ class _EditTicketPageState extends State<EditTicketPage> {
                                         MainAxisAlignment.spaceBetween,
                                     children: [
                                       Text(
-                                        "20:00",
+                                        widget.destinasi.closedHour != null
+                                            ? widget.destinasi.closedHour
+                                                .toString()
+                                            : "-",
                                         style: GoogleFonts.inter(
                                             fontSize: 11,
                                             color: titleColor,
@@ -260,7 +274,7 @@ class _EditTicketPageState extends State<EditTicketPage> {
                                     width:
                                         MediaQuery.of(context).size.width * 0.6,
                                     child: Text(
-                                      "Dusun Baru Lempur, Gunung Raya, ",
+                                      widget.destinasi.address.toString(),
                                       maxLines: 3,
                                       overflow: TextOverflow.ellipsis,
                                       style: GoogleFonts.inter(
@@ -340,7 +354,7 @@ class _EditTicketPageState extends State<EditTicketPage> {
                           child: TextField(
                             controller: nameTicketController,
                             // onChanged: (text) {
-                            //       if (widget.id.nameDestinasi != null) {
+                            //       if (widget.ticket.nameDestinasi != null) {
                             //         setState(() {
                             //           isEdited =
                             //               (text != widget.id.nameDestinasi)
@@ -389,21 +403,23 @@ class _EditTicketPageState extends State<EditTicketPage> {
                         child: Center(
                           child: TextField(
                             controller: priceTicketController,
-                            // onChanged: (text) {
-                            //       if (widget.id.nameDestinasi != null) {
-                            //         setState(() {
-                            //           isEdited =
-                            //               (text != widget.id.nameDestinasi)
-                            //                   ? true
-                            //                   : false;
-                            //         });
-                            //       } else {
-                            //         isEdited =
-                            //             (text.trim() != widget.id.nameDestinasi)
-                            //                 ? true
-                            //                 : false;
-                            //       }
-                            //     },
+                            onChanged: (text) {
+                              if (widget.ticket.price != null) {
+                                setState(() {
+                                  isEdited =
+                                      // ignore: unrelated_type_equality_checks
+                                      (text != widget.ticket.price)
+                                          ? true
+                                          : false;
+                                });
+                              } else {
+                                isEdited =
+                                    // ignore: unrelated_type_equality_checks
+                                    (text.trim() != widget.ticket.price)
+                                        ? true
+                                        : false;
+                              }
+                            },
                             style: GoogleFonts.openSans(
                                 fontSize: 12,
                                 color: titleColor,
@@ -439,21 +455,23 @@ class _EditTicketPageState extends State<EditTicketPage> {
                         child: Center(
                           child: TextField(
                             controller: stockTicketController,
-                            // onChanged: (text) {
-                            //       if (widget.id.nameDestinasi != null) {
-                            //         setState(() {
-                            //           isEdited =
-                            //               (text != widget.id.nameDestinasi)
-                            //                   ? true
-                            //                   : false;
-                            //         });
-                            //       } else {
-                            //         isEdited =
-                            //             (text.trim() != widget.id.nameDestinasi)
-                            //                 ? true
-                            //                 : false;
-                            //       }
-                            //     },
+                            onChanged: (text) {
+                              if (widget.ticket.stock != null) {
+                                setState(() {
+                                  isEdited =
+                                      // ignore: unrelated_type_equality_checks
+                                      (text != widget.ticket.stock)
+                                          ? true
+                                          : false;
+                                });
+                              } else {
+                                isEdited =
+                                    // ignore: unrelated_type_equality_checks
+                                    (text.trim() != widget.ticket.stock)
+                                        ? true
+                                        : false;
+                              }
+                            },
                             style: GoogleFonts.openSans(
                                 fontSize: 12,
                                 color: titleColor,
@@ -479,34 +497,58 @@ class _EditTicketPageState extends State<EditTicketPage> {
                             )
                           : isEdited
                               ? InkWell(
-                                  onTap: () {
-                                    setState(() async {
-                                      isUpdating = false;
+                                  onTap: () async {
+                                    setState(() {
+                                      isUpdating = true;
                                     });
-                                    final destCon =
-                                        Provider.of<DestinasiController>(
-                                            context,
+                                    final ticketCon =
+                                        Provider.of<TicketController>(context,
                                             listen: false);
                                     if (isEdited == true) {
-                                      setState(() async {
-                                        isUpdating = false;
-                                      });
-                                      Navigator.pushAndRemoveUntil(
+                                      await ticketCon.editTicketByIdDestinasi(
+                                          id: widget.ticket.id,
+                                          stock: int.parse(
+                                              stockTicketController!.text),
+                                          price: int.parse(
+                                              priceTicketController!.text));
+
+                                      if (ticketCon.statusCodeEditTicket ==
+                                          200) {
+                                        setState(() {
+                                          isUpdating = false;
+                                        });
+                                        Navigator.push(
                                           context,
                                           MaterialPageRoute(
-                                              builder: (context) =>
-                                                  const HomePageOwner()),
-                                          (route) => false);
-                                      Fluttertoast.showToast(
-                                          msg:
-                                              "Tiket tempat wisatamu telah diubah!",
-                                          toastLength: Toast.LENGTH_SHORT,
-                                          gravity: ToastGravity.BOTTOM,
-                                          timeInSecForIosWeb: 1,
-                                          backgroundColor:
-                                              primaryColor.withOpacity(0.6),
-                                          textColor: Colors.white,
-                                          fontSize: 13);
+                                            builder: (context) =>
+                                                const HomePageOwner(),
+                                          ),
+                                        );
+                                        Fluttertoast.showToast(
+                                            msg:
+                                                "Tiket tempat wisatamu telah diubah!",
+                                            toastLength: Toast.LENGTH_SHORT,
+                                            gravity: ToastGravity.BOTTOM,
+                                            timeInSecForIosWeb: 1,
+                                            backgroundColor:
+                                                primaryColor.withOpacity(0.6),
+                                            textColor: Colors.white,
+                                            fontSize: 13);
+                                      } else {
+                                        setState(() {
+                                          isLoading = false;
+                                        });
+                                        Fluttertoast.showToast(
+                                            msg:
+                                                "Terjadi Error\nSilahkan Coba Lagi Nanti",
+                                            toastLength: Toast.LENGTH_SHORT,
+                                            gravity: ToastGravity.BOTTOM,
+                                            timeInSecForIosWeb: 1,
+                                            backgroundColor: Colors.red[300],
+                                            textColor: Colors.white,
+                                            fontSize: 16.0);
+                                        return;
+                                      }
                                     }
                                   },
                                   child: Container(

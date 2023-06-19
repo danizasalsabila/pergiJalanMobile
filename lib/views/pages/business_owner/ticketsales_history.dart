@@ -92,22 +92,22 @@ class _TicketSalesHistoryState extends State<TicketSalesHistory> {
                         ),
                       ),
                       const SizedBox(
-                        height: 40,
+                        height: 15,
                       ),
                       Padding(
                         padding: const EdgeInsets.only(left: 20.0, right: 20),
                         child: Align(
                             alignment: Alignment.topLeft,
                             child: Text(
-                              "Anda telah menjual 12 tiket\nYou onboard new leads and client to your account ",
+                              "Jelajahi keberhasilan promosi tempat wisata dengan riwayat penjualan tiket ini",
                               style: GoogleFonts.openSans(
                                   fontSize: 13,
-                                  color: captColor,
+                                  color: const Color.fromARGB(255, 238, 238, 238),
                                   fontWeight: FontWeight.w500),
                             )),
                       ),
                       const SizedBox(
-                        height: 30,
+                        height: 15,
                       ),
                       Container(
                         height: 700,

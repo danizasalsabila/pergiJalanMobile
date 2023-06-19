@@ -90,11 +90,11 @@ class TicketController extends ChangeNotifier {
   String? messageEditTicket;
   int? statusCodeEditTicket;
   Future<dynamic> editTicketByIdDestinasi({
-    idDestinasi,
+    id,
     int? price,
     int? stock,
   }) async {
-    var url = Uri.parse(BASE_URL + PUT_TICKET(idDestinasi));
+    var url = Uri.parse(BASE_URL + PUT_TICKET(id));
     print(url);
     final body = {
       'price': price,

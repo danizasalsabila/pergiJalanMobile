@@ -58,6 +58,8 @@ const GET_REVIEW = "review";
 
 GET_REVIEW_ID(id) => "review/$id";
 
+GET_REVIEW_IDOWNER(id) => "review/all/owner/$id";
+
 const POST_REVIEW = "review";
 
 //average rating
@@ -74,17 +76,20 @@ const POST_TICKET = "ticket";
 
 DELETE_TICKET(idDestinasi) => "ticket/destroy/$idDestinasi";
 
-PUT_TICKET(idDestinasi) => "ticket/update/$idDestinasi?";
+PUT_TICKET(id) => "ticket/update/$id?";
 
 GET_TICKETSOLD_OWNER(id) => "ticketsold/owner?id_owner=$id";
 
 GET_TICKETSOLD_DESTINASI(id) => "ticketsold?id_destinasi=$id";
 
-GET_TICKETSOLD_DESTINASI_YEAR(id) => "ticketsold/ownerinyear?id_destinasi=$id&year=";
+GET_TICKETSOLD_DESTINASI_YEAR(id) =>
+    "ticketsold/ownerinyear?id_destinasi=$id&year=";
 
-GET_TICKETSOLD_DESTINASI_MONTH(id, year, month) => "ticketsold/ownerinmonth?id_destinasi=$id&year=$year&month=$month";
+GET_TICKETSOLD_DESTINASI_MONTH(id, year, month) =>
+    "ticketsold/ownerinmonth?id_destinasi=$id&year=$year&month=$month";
 
-GET_TICKETSOLD_DESTINASI_WEEK(id, date) => "ticketsold/ownerinweek?id_destinasi=$id&date=$date";
+GET_TICKETSOLD_DESTINASI_WEEK(id, date) =>
+    "ticketsold/ownerinweek?id_destinasi=$id&date=$date";
 
 GET_MOSTSALES_TICKET_BYOWNER(id) => "ticket/mostsales/owner?id_owner=$id";
 

@@ -8,6 +8,7 @@ import 'package:pergijalan_mobile/config/theme_color.dart';
 import 'package:pergijalan_mobile/views/pages/business_owner/create_destinationtour.dart';
 import 'package:pergijalan_mobile/views/pages/business_owner/home.dart';
 import 'package:pergijalan_mobile/views/pages/business_owner/ticket_create_page.dart';
+import 'package:pergijalan_mobile/views/pages/business_owner/ticket_edit_page.dart';
 import 'package:provider/provider.dart';
 
 import '../../../controllers/ticket_controller.dart';
@@ -53,6 +54,7 @@ class _TicketListPageState extends State<TicketListPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.white,
       body: isLoading
           ? const Center(
               child: CircularProgressIndicator(
@@ -488,35 +490,48 @@ class _TicketListPageState extends State<TicketListPage> {
                                                                     MainAxisAlignment
                                                                         .start,
                                                                 children: [
-                                                                  Container(
-                                                                    width: MediaQuery.of(context)
-                                                                            .size
-                                                                            .width *
-                                                                        0.34,
-                                                                    decoration: BoxDecoration(
-                                                                        border: Border.all(
-                                                                            color: Color.fromARGB(
-                                                                                255,
-                                                                                219,
-                                                                                219,
-                                                                                219),
-                                                                            width:
-                                                                                1),
-                                                                        borderRadius:
-                                                                            BorderRadius.circular(5)),
-                                                                    height: 26,
+                                                                  InkWell(
+                                                                    onTap: () {
+                                                                      Navigator
+                                                                          .push(
+                                                                        context,
+                                                                        MaterialPageRoute(
+                                                                          builder: (context) =>
+                                                                              EditTicketPage(
+                                                                            destinasi:
+                                                                                widget.id,
+                                                                            ticket:
+                                                                                ticketCon.ticketData![index],
+                                                                          ),
+                                                                        ),
+                                                                      );
+                                                                    },
                                                                     child:
-                                                                        Center(
+                                                                        Container(
+                                                                      width: MediaQuery.of(context)
+                                                                              .size
+                                                                              .width *
+                                                                          0.34,
+                                                                      decoration: BoxDecoration(
+                                                                          border: Border.all(
+                                                                              color: Color.fromARGB(255, 219, 219,
+                                                                                  219),
+                                                                              width:
+                                                                                  1),
+                                                                          borderRadius:
+                                                                              BorderRadius.circular(5)),
+                                                                      height:
+                                                                          26,
                                                                       child:
-                                                                          Text(
-                                                                        "Ubah",
-                                                                        style: GoogleFonts.openSans(
-                                                                            fontSize:
-                                                                                8,
-                                                                            color:
-                                                                                labelColor,
-                                                                            fontWeight:
-                                                                                FontWeight.w500),
+                                                                          Center(
+                                                                        child:
+                                                                            Text(
+                                                                          "Ubah",
+                                                                          style: GoogleFonts.openSans(
+                                                                              fontSize: 8,
+                                                                              color: labelColor,
+                                                                              fontWeight: FontWeight.w500),
+                                                                        ),
                                                                       ),
                                                                     ),
                                                                   ),
@@ -529,84 +544,85 @@ class _TicketListPageState extends State<TicketListPage> {
                                                                   InkWell(
                                                                     onTap:
                                                                         () async {
-                                                                           showDialog(
-                                                                                // barrierDismissible = false,
-                                                                                  context: context,
-                                                                                  builder: (context) {
-                                                                                    return AlertDialog(
-                                                                                      shape: RoundedRectangleBorder(
-                                                                                        borderRadius: BorderRadius.circular(10),
-                                                                                      ),
-                                                                                      backgroundColor: Colors.white,
-                                                                                      elevation: 5,
-                                                                                      title: Text(
-                                                                                        "Konfirmasi Hapus Tiket Wisata",
-                                                                                        style: GoogleFonts.notoSansDisplay(fontSize: 16, color: thirdColor, fontWeight: FontWeight.w600),
-                                                                                      ),
-                                                                                      content: Text(
-                                                                                        "Harap diketahui bahwa menghapus data akan menghapus semua informasi yang terkait dengan data tersebut",
-                                                                                        style: GoogleFonts.notoSansDisplay(fontSize: 12, color: titleColor, fontWeight: FontWeight.w400),
-                                                                                      ),
-                                                                                      actions: [
-                                                                                        TextButton(
-                                                                                            onPressed: () {
+                                                                      showDialog(
+                                                                          // barrierDismissible = false,
+                                                                          context:
+                                                                              context,
+                                                                          builder:
+                                                                              (context) {
+                                                                            return AlertDialog(
+                                                                              shape: RoundedRectangleBorder(
+                                                                                borderRadius: BorderRadius.circular(10),
+                                                                              ),
+                                                                              backgroundColor: Colors.white,
+                                                                              elevation: 5,
+                                                                              title: Text(
+                                                                                "Konfirmasi Hapus Tiket Wisata",
+                                                                                style: GoogleFonts.notoSansDisplay(fontSize: 16, color: thirdColor, fontWeight: FontWeight.w600),
+                                                                              ),
+                                                                              content: Text(
+                                                                                "Harap diketahui bahwa menghapus data akan menghapus semua informasi yang terkait dengan data tersebut",
+                                                                                style: GoogleFonts.notoSansDisplay(fontSize: 12, color: titleColor, fontWeight: FontWeight.w400),
+                                                                              ),
+                                                                              actions: [
+                                                                                TextButton(
+                                                                                    onPressed: () {
+                                                                                      Navigator.pop(context);
+                                                                                    },
+                                                                                    child: Text(
+                                                                                      "Batal",
+                                                                                      style: GoogleFonts.openSans(fontSize: 12, color: descColor, fontWeight: FontWeight.w600),
+                                                                                    )),
+                                                                                // child: Text("No")),
+                                                                                Padding(
+                                                                                  padding: const EdgeInsets.only(right: 10.0),
+                                                                                  child: Container(
+                                                                                    height: 35,
+                                                                                    decoration: BoxDecoration(color: thirdColor, borderRadius: BorderRadius.circular(7)),
+                                                                                    child: TextButton(
+                                                                                        onPressed: () async {
+                                                                                          isLoading = true;
+                                                                                          final ticketCon = Provider.of<TicketController>(context, listen: false);
+
+                                                                                          try {
+                                                                                            await ticketCon.deleteTicket(ticketCon.ticketData![index].id);
+
+                                                                                            if (ticketCon.statusCodeDeleteTicket == 200) {
                                                                                               Navigator.pop(context);
-                                                                                            },
-                                                                                            child: Text(
-                                                                                              "Batal",
-                                                                                              style: GoogleFonts.openSans(fontSize: 12, color: descColor, fontWeight: FontWeight.w600),
-                                                                                            )),
-                                                                                        // child: Text("No")),
-                                                                                        Padding(
-                                                                                          padding: const EdgeInsets.only(right: 10.0),
-                                                                                          child: Container(
-                                                                                            height: 35,
-                                                                                            decoration: BoxDecoration(color: thirdColor, borderRadius: BorderRadius.circular(7)),
-                                                                                            child: TextButton(
-                                                                                                onPressed: () async {
-                                                                                                  isLoading = true;
-                                                                                                  final ticketCon = Provider.of<TicketController>(context, listen: false);
+                                                                                              setState(() {
+                                                                                                isLoading = false;
+                                                                                              });
+                                                                                              await ticketCon.getTicketbyIdDestination(widget.id.id);
 
-                                                                                                  try {
-                                                                                                    await ticketCon.deleteTicket(ticketCon.ticketData![index].id);
-
-                                                                                                    if (ticketCon.statusCodeDeleteTicket == 200) {
-                                                                                                      Navigator.pop(context);
-                                                                                                      setState(() {
-                                                                                                        isLoading = false;
-                                                                                                      });
-                                                                                                      await ticketCon.getTicketbyIdDestination(widget.id.id);
-
-
-                                                                                                      await Fluttertoast.showToast(msg: ticketCon.messageDeleteTicket.toString(), toastLength: Toast.LENGTH_SHORT, gravity: ToastGravity.BOTTOM, timeInSecForIosWeb: 1, backgroundColor: primaryColor.withOpacity(0.6), textColor: Colors.white, fontSize: 16.0);
-                                                                                                    } else if (ticketCon.statusCodeDeleteTicket == 404) {
-                                                                                                      // ignore: use_build_context_synchronously
-                                                                                                      Navigator.pop(context);
-                                                                                                      setState(() {
-                                                                                                        isLoading = false;
-                                                                                                      });
-                                                                                                      await Fluttertoast.showToast(msg: ticketCon.messageDeleteTicket.toString(), toastLength: Toast.LENGTH_SHORT, gravity: ToastGravity.BOTTOM, timeInSecForIosWeb: 1, backgroundColor: Colors.red[300], textColor: Colors.white, fontSize: 16.0);
-                                                                                                    }
-                                                                                                  } catch (e) {
-                                                                                                    setState(() {
-                                                                                                      isLoading = false;
-                                                                                                    });
-                                                                                                    // ignore: use_build_context_synchronously
-                                                                                                    Navigator.pop(context);
-                                                                                                    Fluttertoast.showToast(msg: e.toString(), toastLength: Toast.LENGTH_SHORT, gravity: ToastGravity.BOTTOM, timeInSecForIosWeb: 1, backgroundColor: Colors.red[300], textColor: Colors.white, fontSize: 16.0);
-                                                                                                  }
-                                                                                                  setState(() {});
-                                                                                                },
-                                                                                                child: Text(
-                                                                                                  "Hapus",
-                                                                                                  style: GoogleFonts.openSans(fontSize: 11, color: Colors.white, fontWeight: FontWeight.w600),
-                                                                                                )),
-                                                                                          ),
-                                                                                        )
-                                                                                      ],
-                                                                                    );
-                                                                                  });
-                                                                        },
+                                                                                              await Fluttertoast.showToast(msg: ticketCon.messageDeleteTicket.toString(), toastLength: Toast.LENGTH_SHORT, gravity: ToastGravity.BOTTOM, timeInSecForIosWeb: 1, backgroundColor: primaryColor.withOpacity(0.6), textColor: Colors.white, fontSize: 16.0);
+                                                                                            } else if (ticketCon.statusCodeDeleteTicket == 404) {
+                                                                                              // ignore: use_build_context_synchronously
+                                                                                              Navigator.pop(context);
+                                                                                              setState(() {
+                                                                                                isLoading = false;
+                                                                                              });
+                                                                                              await Fluttertoast.showToast(msg: ticketCon.messageDeleteTicket.toString(), toastLength: Toast.LENGTH_SHORT, gravity: ToastGravity.BOTTOM, timeInSecForIosWeb: 1, backgroundColor: Colors.red[300], textColor: Colors.white, fontSize: 16.0);
+                                                                                            }
+                                                                                          } catch (e) {
+                                                                                            setState(() {
+                                                                                              isLoading = false;
+                                                                                            });
+                                                                                            // ignore: use_build_context_synchronously
+                                                                                            Navigator.pop(context);
+                                                                                            Fluttertoast.showToast(msg: e.toString(), toastLength: Toast.LENGTH_SHORT, gravity: ToastGravity.BOTTOM, timeInSecForIosWeb: 1, backgroundColor: Colors.red[300], textColor: Colors.white, fontSize: 16.0);
+                                                                                          }
+                                                                                          setState(() {});
+                                                                                        },
+                                                                                        child: Text(
+                                                                                          "Hapus",
+                                                                                          style: GoogleFonts.openSans(fontSize: 11, color: Colors.white, fontWeight: FontWeight.w600),
+                                                                                        )),
+                                                                                  ),
+                                                                                )
+                                                                              ],
+                                                                            );
+                                                                          });
+                                                                    },
                                                                     child:
                                                                         Container(
                                                                       width: MediaQuery.of(context)
@@ -691,23 +707,25 @@ class _TicketListPageState extends State<TicketListPage> {
                 );
               }),
             )),
-      floatingActionButton: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: FloatingActionButton(
-            elevation: 8,
-            onPressed: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => CreateTicketPage(
-                    idDestinasi: widget.id.id!,
-                  ),
-                ),
-              );
-            },
-            backgroundColor: thirdColor,
-            child: const FaIcon(FontAwesomeIcons.plus)),
-      ),
+      floatingActionButton: isLoading
+          ? const Center(child: SizedBox())
+          : Padding(
+              padding: const EdgeInsets.all(16.0),
+              child: FloatingActionButton(
+                  elevation: 8,
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => CreateTicketPage(
+                          idDestinasi: widget.id.id!,
+                        ),
+                      ),
+                    );
+                  },
+                  backgroundColor: thirdColor,
+                  child: const FaIcon(FontAwesomeIcons.plus)),
+            ),
     );
   }
 }

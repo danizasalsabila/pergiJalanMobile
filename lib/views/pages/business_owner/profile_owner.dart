@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
@@ -7,6 +8,7 @@ import 'package:pergijalan_mobile/controllers/eticket_controller.dart';
 import 'package:pergijalan_mobile/controllers/owner_business_controller.dart';
 import 'package:pergijalan_mobile/views/pages/business_owner/edit_profile_owner.dart';
 import 'package:pergijalan_mobile/views/pages/business_owner/home.dart';
+import 'package:pergijalan_mobile/views/pages/business_owner/rating_all.dart';
 import 'package:pergijalan_mobile/views/pages/business_owner/ticketsales_history.dart';
 import 'package:pergijalan_mobile/views/pages/business_owner/ticketsales_history_month.dart';
 import 'package:pergijalan_mobile/views/pages/business_owner/ticketsales_history_week.dart';
@@ -122,7 +124,7 @@ class _OwnerProfilePageState extends State<OwnerProfilePage> {
                                   child: CircleAvatar(
                                       radius: 23,
                                       backgroundColor: Colors.grey.shade300,
-                                      child: CircleAvatar(
+                                      child: const CircleAvatar(
                                         radius: 22,
                                         backgroundColor: thirdColor,
                                         child: CircleAvatar(
@@ -353,11 +355,24 @@ class _OwnerProfilePageState extends State<OwnerProfilePage> {
                                     ),
                                     InkWell(
                                       onTap: () {
-                                        Navigator.push(
-                                            context,
-                                            MaterialPageRoute(
-                                                builder: (context) =>
-                                                    TicketSalesHistory()));
+                                        if (eticketCon.eticketData != null) {
+                                          Navigator.push(
+                                              context,
+                                              MaterialPageRoute(
+                                                  builder: (context) =>
+                                                      TicketSalesHistory()));
+                                        } else {
+                                          Fluttertoast.showToast(
+                                              msg:
+                                                  "Belum terdapat penjualan tiket",
+                                              toastLength: Toast.LENGTH_SHORT,
+                                              gravity: ToastGravity.BOTTOM,
+                                              timeInSecForIosWeb: 1,
+                                              backgroundColor:
+                                                  primaryColor.withOpacity(0.6),
+                                              textColor: Colors.white,
+                                              fontSize: 16.0);
+                                        }
                                       },
                                       child: Container(
                                         width:
@@ -420,13 +435,25 @@ class _OwnerProfilePageState extends State<OwnerProfilePage> {
                               children: [
                                 InkWell(
                                   onTap: () {
-                                    Navigator.push(
-                                        context,
-                                        MaterialPageRoute(
-                                            builder: (context) =>
-                                                HistoryTicketByYear()
-                                            // BarChartSample1()
-                                            ));
+                                    if (eticketCon.eticketData != null) {
+                                      Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                              builder: (context) =>
+                                                  HistoryTicketByYear()
+                                              // BarChartSample1()
+                                              ));
+                                    } else {
+                                      Fluttertoast.showToast(
+                                          msg: "Belum terdapat penjualan tiket",
+                                          toastLength: Toast.LENGTH_SHORT,
+                                          gravity: ToastGravity.BOTTOM,
+                                          timeInSecForIosWeb: 1,
+                                          backgroundColor:
+                                              primaryColor.withOpacity(0.6),
+                                          textColor: Colors.white,
+                                          fontSize: 16.0);
+                                    }
                                   },
                                   child: Container(
                                     height: 100,
@@ -492,13 +519,25 @@ class _OwnerProfilePageState extends State<OwnerProfilePage> {
                                 ),
                                 InkWell(
                                   onTap: () {
-                                    Navigator.push(
-                                        context,
-                                        MaterialPageRoute(
-                                            builder: (context) =>
-                                                HistoryTicketByMonths()
-                                            // BarChartSample1()
-                                            ));
+                                    if (eticketCon.eticketData != null) {
+                                      Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                              builder: (context) =>
+                                                  HistoryTicketByMonths()
+                                              // BarChartSample1()
+                                              ));
+                                    } else {
+                                      Fluttertoast.showToast(
+                                          msg: "Belum terdapat penjualan tiket",
+                                          toastLength: Toast.LENGTH_SHORT,
+                                          gravity: ToastGravity.BOTTOM,
+                                          timeInSecForIosWeb: 1,
+                                          backgroundColor:
+                                              primaryColor.withOpacity(0.6),
+                                          textColor: Colors.white,
+                                          fontSize: 16.0);
+                                    }
                                   },
                                   child: Container(
                                     height: 100,
@@ -564,13 +603,25 @@ class _OwnerProfilePageState extends State<OwnerProfilePage> {
                                 ),
                                 InkWell(
                                   onTap: () {
-                                    Navigator.push(
-                                        context,
-                                        MaterialPageRoute(
-                                            builder: (context) =>
-                                                HistoryTicketByWeek()
-                                            // BarChartSample1()
-                                            ));
+                                    if (eticketCon.eticketData != null) {
+                                      Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                              builder: (context) =>
+                                                  HistoryTicketByWeek()
+                                              // BarChartSample1()
+                                              ));
+                                    } else {
+                                      Fluttertoast.showToast(
+                                          msg: "Belum terdapat penjualan tiket",
+                                          toastLength: Toast.LENGTH_SHORT,
+                                          gravity: ToastGravity.BOTTOM,
+                                          timeInSecForIosWeb: 1,
+                                          backgroundColor:
+                                              primaryColor.withOpacity(0.6),
+                                          textColor: Colors.white,
+                                          fontSize: 16.0);
+                                    }
                                   },
                                   child: Container(
                                     height: 100,
@@ -636,159 +687,159 @@ class _OwnerProfilePageState extends State<OwnerProfilePage> {
                               ],
                             ),
                           ),
-                          Padding(
-                            padding: const EdgeInsets.only(top: 20),
-                            child: Row(
-                              children: [
-                                Container(
-                                  height: 7,
-                                  width: 7,
-                                  decoration: const BoxDecoration(
-                                    shape: BoxShape.circle,
-                                    color: thirdColor,
-                                  ),
-                                ),
-                                Padding(
-                                  padding: const EdgeInsets.only(left: 8.0),
-                                  child: Text(
-                                    "Ulasan dan Rating",
-                                    style: GoogleFonts.inter(
-                                        fontSize: 15,
-                                        color: thirdColor,
-                                        fontWeight: FontWeight.w600),
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
-                          Padding(
-                            padding: const EdgeInsets.only(top: 10.0),
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                Container(
-                                  height: 100,
-                                  width:
-                                      MediaQuery.of(context).size.width * 0.4,
-                                  decoration: BoxDecoration(
-                                    color: Colors.white,
-                                    borderRadius: BorderRadius.circular(10),
-                                    boxShadow: [
-                                      BoxShadow(
-                                        color:
-                                            Color.fromARGB(255, 194, 194, 194)
-                                                .withOpacity(0.5),
-                                        spreadRadius: 2,
-                                        blurRadius: 3,
-                                        offset: const Offset(
-                                            0, 5), // changes position of shadow
-                                      ),
-                                    ],
-                                  ),
-                                  child: Center(
-                                    child: Column(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.center,
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.center,
-                                        children: [
-                                          Container(
-                                            height: 42,
-                                            width: MediaQuery.of(context)
-                                                    .size
-                                                    .width *
-                                                0.12,
-                                            child: Padding(
-                                              padding:
-                                                  const EdgeInsets.all(7.0),
-                                              child: Image.asset(
-                                                "assets/servicebar/rating.png",
-                                                fit: BoxFit.fill,
-                                              ),
-                                            ),
-                                            decoration: BoxDecoration(
-                                                borderRadius:
-                                                    BorderRadius.circular(15),
-                                                color: Color.fromARGB(
-                                                    85, 1, 141, 159)),
-                                          ),
-                                          Padding(
-                                            padding:
-                                                const EdgeInsets.only(top: 6.0),
-                                            child: Text(
-                                              "Rating",
-                                              style: GoogleFonts.inter(
-                                                  fontSize: 13,
-                                                  color: thirdColor,
-                                                  fontWeight: FontWeight.w600),
-                                            ),
-                                          )
-                                        ]),
-                                  ),
-                                ),
-                                Container(
-                                  height: 100,
-                                  width:
-                                      MediaQuery.of(context).size.width * 0.4,
-                                  decoration: BoxDecoration(
-                                    color: Colors.white,
-                                    borderRadius: BorderRadius.circular(10),
-                                    boxShadow: [
-                                      BoxShadow(
-                                        color:
-                                            Color.fromARGB(255, 194, 194, 194)
-                                                .withOpacity(0.5),
-                                        spreadRadius: 2,
-                                        blurRadius: 3,
-                                        offset: const Offset(
-                                            0, 5), // changes position of shadow
-                                      ),
-                                    ],
-                                  ),
-                                  child: Center(
-                                    child: Column(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.center,
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.center,
-                                        children: [
-                                          Container(
-                                            child: Padding(
-                                              padding:
-                                                  const EdgeInsets.all(7.0),
-                                              child: Image.asset(
-                                                "assets/servicebar/ulasan.png",
-                                                fit: BoxFit.fill,
-                                              ),
-                                            ),
-                                            height: 42,
-                                            width: MediaQuery.of(context)
-                                                    .size
-                                                    .width *
-                                                0.12,
-                                            decoration: BoxDecoration(
-                                                borderRadius:
-                                                    BorderRadius.circular(15),
-                                                color: Color.fromARGB(
-                                                    85, 12, 69, 104)),
-                                          ),
-                                          Padding(
-                                            padding:
-                                                const EdgeInsets.only(top: 6.0),
-                                            child: Text(
-                                              "Ulasan",
-                                              style: GoogleFonts.inter(
-                                                  fontSize: 13,
-                                                  color: thirdColor,
-                                                  fontWeight: FontWeight.w600),
-                                            ),
-                                          )
-                                        ]),
-                                  ),
-                                ),
-                              ],
-                            ),
-                          )
+                          // Padding(
+                          //   padding: const EdgeInsets.only(top: 20),
+                          //   child: Row(
+                          //     children: [
+                          //       Container(
+                          //         height: 7,
+                          //         width: 7,
+                          //         decoration: const BoxDecoration(
+                          //           shape: BoxShape.circle,
+                          //           color: thirdColor,
+                          //         ),
+                          //       ),
+                          //       Padding(
+                          //         padding: const EdgeInsets.only(left: 8.0),
+                          //         child: Text(
+                          //           "Ulasan dan Rating",
+                          //           style: GoogleFonts.inter(
+                          //               fontSize: 15,
+                          //               color: thirdColor,
+                          //               fontWeight: FontWeight.w600),
+                          //         ),
+                          //       ),
+                          //     ],
+                          //   ),
+                          // ),
+                          // Padding(
+                          //   padding: const EdgeInsets.only(top: 10.0),
+                          //   child: Row(
+                          //     mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          //     children: [
+                          //       Container(
+                          //         height: 100,
+                          //         width:
+                          //             MediaQuery.of(context).size.width * 0.4,
+                          //         decoration: BoxDecoration(
+                          //           color: Colors.white,
+                          //           borderRadius: BorderRadius.circular(10),
+                          //           boxShadow: [
+                          //             BoxShadow(
+                          //               color:
+                          //                   Color.fromARGB(255, 194, 194, 194)
+                          //                       .withOpacity(0.5),
+                          //               spreadRadius: 2,
+                          //               blurRadius: 3,
+                          //               offset: const Offset(
+                          //                   0, 5), // changes position of shadow
+                          //             ),
+                          //           ],
+                          //         ),
+                          //         child: Center(
+                          //           child: Column(
+                          //               mainAxisAlignment:
+                          //                   MainAxisAlignment.center,
+                          //               crossAxisAlignment:
+                          //                   CrossAxisAlignment.center,
+                          //               children: [
+                          //                 Container(
+                          //                   height: 42,
+                          //                   width: MediaQuery.of(context)
+                          //                           .size
+                          //                           .width *
+                          //                       0.12,
+                          //                   child: Padding(
+                          //                     padding:
+                          //                         const EdgeInsets.all(7.0),
+                          //                     child: Image.asset(
+                          //                       "assets/servicebar/rating.png",
+                          //                       fit: BoxFit.fill,
+                          //                     ),
+                          //                   ),
+                          //                   decoration: BoxDecoration(
+                          //                       borderRadius:
+                          //                           BorderRadius.circular(15),
+                          //                       color: Color.fromARGB(
+                          //                           85, 1, 141, 159)),
+                          //                 ),
+                          //                 Padding(
+                          //                   padding:
+                          //                       const EdgeInsets.only(top: 6.0),
+                          //                   child: Text(
+                          //                     "Rating",
+                          //                     style: GoogleFonts.inter(
+                          //                         fontSize: 13,
+                          //                         color: thirdColor,
+                          //                         fontWeight: FontWeight.w600),
+                          //                   ),
+                          //                 )
+                          //               ]),
+                          //         ),
+                          //       ),
+                          //       Container(
+                          //         height: 100,
+                          //         width:
+                          //             MediaQuery.of(context).size.width * 0.4,
+                          //         decoration: BoxDecoration(
+                          //           color: Colors.white,
+                          //           borderRadius: BorderRadius.circular(10),
+                          //           boxShadow: [
+                          //             BoxShadow(
+                          //               color:
+                          //                   Color.fromARGB(255, 194, 194, 194)
+                          //                       .withOpacity(0.5),
+                          //               spreadRadius: 2,
+                          //               blurRadius: 3,
+                          //               offset: const Offset(
+                          //                   0, 5), // changes position of shadow
+                          //             ),
+                          //           ],
+                          //         ),
+                          //         child: Center(
+                          //           child: Column(
+                          //               mainAxisAlignment:
+                          //                   MainAxisAlignment.center,
+                          //               crossAxisAlignment:
+                          //                   CrossAxisAlignment.center,
+                          //               children: [
+                          //                 Container(
+                          //                   child: Padding(
+                          //                     padding:
+                          //                         const EdgeInsets.all(7.0),
+                          //                     child: Image.asset(
+                          //                       "assets/servicebar/ulasan.png",
+                          //                       fit: BoxFit.fill,
+                          //                     ),
+                          //                   ),
+                          //                   height: 42,
+                          //                   width: MediaQuery.of(context)
+                          //                           .size
+                          //                           .width *
+                          //                       0.12,
+                          //                   decoration: BoxDecoration(
+                          //                       borderRadius:
+                          //                           BorderRadius.circular(15),
+                          //                       color: Color.fromARGB(
+                          //                           85, 12, 69, 104)),
+                          //                 ),
+                          //                 Padding(
+                          //                   padding:
+                          //                       const EdgeInsets.only(top: 6.0),
+                          //                   child: Text(
+                          //                     "Ulasan",
+                          //                     style: GoogleFonts.inter(
+                          //                         fontSize: 13,
+                          //                         color: thirdColor,
+                          //                         fontWeight: FontWeight.w600),
+                          //                   ),
+                          //                 )
+                          //               ]),
+                          //         ),
+                          //       ),
+                          //     ],
+                          //   ),
+                          // )
                         ],
                       )),
                   const SizedBox(
@@ -797,7 +848,7 @@ class _OwnerProfilePageState extends State<OwnerProfilePage> {
                   Padding(
                     padding: const EdgeInsets.fromLTRB(25, 20.0, 25, 8),
                     child: Container(
-                      height: 105,
+                      height: 165,
                       width: MediaQuery.of(context).size.width,
                       decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(10),
@@ -818,6 +869,74 @@ class _OwnerProfilePageState extends State<OwnerProfilePage> {
                                 Padding(
                                   padding: const EdgeInsets.only(left: 10.0),
                                   child: Text(
+                                    "INFORMASI",
+                                    style: GoogleFonts.openSans(
+                                        fontSize: 12,
+                                        color: descColor,
+                                        fontWeight: FontWeight.w400),
+                                  ),
+                                )
+                              ],
+                            ),
+                            InkWell(
+                              onTap: () {
+                                Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                              builder: (context) =>
+                                                 AllRatingReviewPage() ));
+                              },
+                              child: Padding(
+                                padding:
+                                    const EdgeInsets.fromLTRB(5, 8.0, 5, 10),
+                                child: Row(
+                                  children: [
+                                    Icon(
+                                      Icons.star_border,
+                                      size: 20,
+                                      color: labelColor,
+                                    ),
+                                    Padding(
+                                      padding:
+                                          const EdgeInsets.only(left: 16.0),
+                                      child: Container(
+                                        width:
+                                            MediaQuery.of(context).size.width *
+                                                0.59,
+                                        child: Row(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.spaceBetween,
+                                          children: [
+                                            Text(
+                                              "Penilaian Akun",
+                                              style: GoogleFonts.openSans(
+                                                  fontSize: 15,
+                                                  color: titleColor,
+                                                  fontWeight: FontWeight.w600),
+                                            ),
+                                            Icon(
+                                              Icons.arrow_forward_ios,
+                                              size: 15,
+                                              color: Colors.grey.shade300,
+                                            ),
+                                          ],
+                                        ),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ),
+                            Row(
+                              children: [
+                                Expanded(
+                                    child: Divider(
+                                  thickness: 1,
+                                  color: Colors.grey.shade200,
+                                )),
+                                Padding(
+                                  padding: const EdgeInsets.only(left: 10.0),
+                                  child: Text(
                                     "PENGATURAN",
                                     style: GoogleFonts.openSans(
                                         fontSize: 12,
@@ -827,54 +946,6 @@ class _OwnerProfilePageState extends State<OwnerProfilePage> {
                                 )
                               ],
                             ),
-                            // InkWell(
-                            //   onTap: () {},
-                            //   child: Padding(
-                            //     padding:
-                            //         const EdgeInsets.fromLTRB(5, 8.0, 5, 10),
-                            //     child: Row(
-                            //       children: [
-                            //         Icon(
-                            //           Icons.people_alt,
-                            //           size: 20,
-                            //           color: labelColor,
-                            //         ),
-                            //         Padding(
-                            //           padding:
-                            //               const EdgeInsets.only(left: 16.0),
-                            //           child: Container(
-                            //             width:
-                            //                 MediaQuery.of(context).size.width *
-                            //                     0.59,
-                            //             child: Row(
-                            //               mainAxisAlignment:
-                            //                   MainAxisAlignment.spaceBetween,
-                            //               children: [
-                            //                 Text(
-                            //                   "Tentang PergiJalan",
-                            //                   style: GoogleFonts.openSans(
-                            //                       fontSize: 15,
-                            //                       color: titleColor,
-                            //                       fontWeight: FontWeight.w600),
-                            //                 ),
-                            //                 Icon(
-                            //                   Icons.arrow_forward_ios,
-                            //                   size: 15,
-                            //                   color: Colors.grey.shade300,
-                            //                 ),
-                            //               ],
-                            //             ),
-                            //           ),
-                            //         ),
-                            //       ],
-                            //     ),
-                            //   ),
-                            // ),
-                            // Expanded(
-                            //     child: Divider(
-                            //   thickness: 1,
-                            //   color: Colors.grey.shade200,
-                            // )),
                             Padding(
                               padding: const EdgeInsets.fromLTRB(5, 8.0, 5, 10),
                               child: Row(

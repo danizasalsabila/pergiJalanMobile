@@ -51,6 +51,7 @@ class Review {
   int? _rating;
   String? _createdAt;
   String? _updatedAt;
+  Destinasi? _destinasi;
 	User? _user;
 
   Review(
@@ -61,6 +62,7 @@ class Review {
       int? rating,
       String? createdAt,
       String? updatedAt,
+      Destinasi? destinasi,
       User? user
       }) {
     if (id != null) {
@@ -83,6 +85,8 @@ class Review {
     }
     if (updatedAt != null) {
       this._updatedAt = updatedAt;
+    } if (destinasi != null) {
+      this._destinasi = destinasi;
     }
     if (user != null) {
 this._user = user;
@@ -103,6 +107,8 @@ this._user = user;
   set createdAt(String? createdAt) => _createdAt = createdAt;
   String? get updatedAt => _updatedAt;
   set updatedAt(String? updatedAt) => _updatedAt = updatedAt;
+  Destinasi? get destinasi => _destinasi;
+  set destinasi(Destinasi? destinasi) => _destinasi = destinasi;
   User? get user => _user;
 	set user(User? user) => _user = user;
 
@@ -114,6 +120,9 @@ this._user = user;
     _rating = json['rating'];
     _createdAt = json['created_at'];
     _updatedAt = json['updated_at'];
+    _destinasi = json['destinasi'] != null
+        ? new Destinasi.fromJson(json['destinasi'])
+        : null;
     _user = json['user'] != null ? new User.fromJson(json['user']) : null;
   }
 
@@ -126,11 +135,53 @@ this._user = user;
 		data['rating'] = this._rating;
 		data['created_at'] = this._createdAt;
 		data['updated_at'] = this._updatedAt;
+    if (this._destinasi != null) {
+      data['destinasi'] = this._destinasi!.toJson();
+    }
 		if (this._user != null) {
       data['user'] = this._user!.toJson();
     }
 		return data;
 	}
+}
+
+class Destinasi {
+  int? _id;
+  int? _idOwner;
+  String? _nameDestinasi;
+
+  Destinasi({int? id, int? idOwner, String? nameDestinasi}) {
+    if (id != null) {
+      this._id = id;
+    }
+    if (idOwner != null) {
+      this._idOwner = idOwner;
+    }
+    if (nameDestinasi != null) {
+      this._nameDestinasi = nameDestinasi;
+    }
+  }
+
+  int? get id => _id;
+  set id(int? id) => _id = id;
+  int? get idOwner => _idOwner;
+  set idOwner(int? idOwner) => _idOwner = idOwner;
+  String? get nameDestinasi => _nameDestinasi;
+  set nameDestinasi(String? nameDestinasi) => _nameDestinasi = nameDestinasi;
+
+  Destinasi.fromJson(Map<String, dynamic> json) {
+    _id = json['id'];
+    _idOwner = json['id_owner'];
+    _nameDestinasi = json['name_destinasi'];
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['id'] = this._id;
+    data['id_owner'] = this._idOwner;
+    data['name_destinasi'] = this._nameDestinasi;
+    return data;
+  }
 }
 
 class User {

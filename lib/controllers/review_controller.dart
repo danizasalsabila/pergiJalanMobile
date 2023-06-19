@@ -11,8 +11,9 @@ import '../services/api/url.dart';
 class ReviewController extends ChangeNotifier {
   ReviewResponse? reviewResponse;
   List<Review>? reviewData;
+  List<Review>? reviewDataByOwner;
 
-int? reviewDataStatusCode;
+  int? reviewDataStatusCode;
   Future<dynamic> reviewDestinasiId(id) async {
     print("get review destinasi by id");
 
@@ -36,10 +37,61 @@ int? reviewDataStatusCode;
       } else if (response.statusCode == 404) {
         print(data["message"]);
         reviewDataStatusCode = response.statusCode;
-
-      }else {
+      } else {
         reviewDataStatusCode = response.statusCode;
+      }
+    } catch (e) {
+      print("ERROR MESSAGE: $e");
+    }
+  }
 
+int? rateone;
+int? ratetwo;
+int? ratethree;
+int? ratefour;
+int? ratefive;
+  Future<dynamic> reviewIdOwner(id) async {
+    print("get review owner by id");
+
+    var url = Uri.parse(BASE_URL + GET_REVIEW_IDOWNER(id));
+    print("URL = $url");
+    try {
+      var response = await http.get(url);
+      var data = json.decode(response.body);
+
+      if (response.statusCode == 200) {
+        print("code: ${response.statusCode}");
+        print(data["status"]);
+        // print(data["data"]);
+
+        reviewResponse = reviewResponseFromJson(response.body);
+        reviewDataByOwner = reviewResponse?.review;
+        List<Review> reviews = reviewDataByOwner!;
+        List<Review> oneStarReviews = reviews.where((review) => review.rating == 1).toList();
+        List<Review> twoStarReviews = reviews.where((review) => review.rating == 2).toList();
+        List<Review> threeStarReviews = reviews.where((review) => review.rating == 3).toList();
+        List<Review> forStarReviews = reviews.where((review) => review.rating == 4).toList();
+        List<Review> fiveStarReviews = reviews.where((review) => review.rating == 5).toList();
+
+
+        rateone = oneStarReviews.length;
+        ratetwo = twoStarReviews.length;
+        ratethree = threeStarReviews.length;
+        ratefour = forStarReviews.length;
+        ratefive = fiveStarReviews.length;
+        // print("bintang 1 : $rateone");
+        // print("bintang 2 : $ratetwo");
+        // print("bintang 3 : $ratethree");
+        // print("bintang 4 : $ratefour");
+        // print("bintang 5 : $ratefive");
+        notifyListeners();
+      } else if (response.statusCode == 404) {
+        print(data["message"]);
+        reviewDataByOwner = null;
+        notifyListeners();
+      } else {
+        reviewDataByOwner = null;
+        notifyListeners();
       }
     } catch (e) {
       print("ERROR MESSAGE: $e");
@@ -49,7 +101,10 @@ int? reviewDataStatusCode;
   int? statusCode;
   String? messageAddReview;
   Future<dynamic> addReviewId(
-      {int? id, required int? rating, required String review, required int? idUser}) async {
+      {int? id,
+      required int? rating,
+      required String review,
+      required int? idUser}) async {
     print("add review destination");
     print("ID DESTINASI : $id");
     print("ID User : $idUser");
@@ -58,7 +113,12 @@ int? reviewDataStatusCode;
 
     var url = Uri.parse(BASE_URL + POST_REVIEW);
     print("URL = $url");
-    final body = {'id_destinasi': id, 'rating': rating, 'review': review, 'id_user': idUser,};
+    final body = {
+      'id_destinasi': id,
+      'rating': rating,
+      'review': review,
+      'id_user': idUser,
+    };
     try {
       var response = await http.post(
         url,
@@ -145,7 +205,6 @@ int? reviewDataStatusCode;
       print("ERROR MESSAGE: $e");
     }
   }
-
 
   double? avgRatingOwner;
   int? avgRatingIntOwner;
