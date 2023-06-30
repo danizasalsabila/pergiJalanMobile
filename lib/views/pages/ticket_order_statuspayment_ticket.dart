@@ -41,7 +41,7 @@ class _StatusOrderPaymentState extends State<StatusOrderPayment> {
       } catch (e) {
         print(e);
       }
-       Timer(Duration(seconds: 11), () {
+       Timer(Duration(seconds: 3), () {
           Navigator.of(context)
               .push(MaterialPageRoute(builder: (context) => ETicketPage(id: widget.id, )));
         });
@@ -201,7 +201,7 @@ class _StatusOrderPaymentState extends State<StatusOrderPayment> {
                                         fontWeight: FontWeight.w500),
                                   ),
                                   Text(
-                                    "Rp ${eticketCon.eticketDataiD!.price.toString()}",
+                                    "Rp ${eticketCon.eticketDataiD!.totalPrice.toString()}",
                                     textAlign: TextAlign.center,
                                     style: GoogleFonts.inter(
                                         fontSize: 13,

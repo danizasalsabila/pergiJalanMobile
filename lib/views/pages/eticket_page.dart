@@ -18,8 +18,10 @@ class ETicketPage extends StatefulWidget {
   final int id;
   // final Destinasi idDestinasi;
 
-  const ETicketPage({super.key, required this.id, 
-  // required this.idDestinasi
+  const ETicketPage({
+    super.key,
+    required this.id,
+    // required this.idDestinasi
   });
 
   @override
@@ -67,7 +69,9 @@ class _ETicketPageState extends State<ETicketPage> {
                   Navigator.push(
                     context,
                     MaterialPageRoute(
-                      builder: (context) => MainNavigation(indexNav: 2,),
+                      builder: (context) => MainNavigation(
+                        indexNav: 2,
+                      ),
                     ),
                   );
                 },
@@ -353,7 +357,13 @@ class _ETicketPageState extends State<ETicketPage> {
                                               padding: const EdgeInsets.only(
                                                   top: 5.0),
                                               child: Text(
-                                                "Nama Tiket",
+                                                ticketCon.eticketDataiD!.ticket!
+                                                            .nameTicket ==
+                                                        null
+                                                    ? "Tiket"
+                                                    : ticketCon.eticketDataiD!
+                                                        .ticket!.nameTicket
+                                                        .toString(),
                                                 style: GoogleFonts.inter(
                                                     fontSize: 13,
                                                     color: primaryColor,
@@ -422,7 +432,9 @@ class _ETicketPageState extends State<ETicketPage> {
                                               padding: const EdgeInsets.only(
                                                   top: 5.0),
                                               child: Text(
-                                                ticketCon.eticketDataiD!.destinasi!.nameDestinasi.toString()
+                                                ticketCon.eticketDataiD!
+                                                    .destinasi!.nameDestinasi
+                                                    .toString()
                                                     .toString(),
                                                 maxLines: 4,
                                                 style: GoogleFonts.inter(
@@ -436,6 +448,7 @@ class _ETicketPageState extends State<ETicketPage> {
                                               padding: const EdgeInsets.only(
                                                   top: 2.0),
                                               child: Text(
+                                                ticketCon.eticketDataiD!.destinasi!.openHour == null ? "-":
                                                 "${ticketCon.eticketDataiD!.destinasi!.openHour.toString()} - ${ticketCon.eticketDataiD!.destinasi!.closedHour.toString()}",
                                                 style: GoogleFonts.inter(
                                                     fontSize: 10,
@@ -468,7 +481,8 @@ class _ETicketPageState extends State<ETicketPage> {
                                               padding: const EdgeInsets.only(
                                                   top: 5.0),
                                               child: Text(
-                                                ticketCon.eticketDataiD!.destinasi!.address
+                                                ticketCon.eticketDataiD!
+                                                    .destinasi!.address
                                                     .toString(),
                                                 maxLines: 5,
                                                 style: GoogleFonts.inter(

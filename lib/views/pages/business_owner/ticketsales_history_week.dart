@@ -1,3 +1,5 @@
+// ignore_for_file: unnecessary_null_comparison
+
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -41,9 +43,11 @@ class _HistoryTicketByWeekState extends State<HistoryTicketByWeek> {
         eticketCon.uniqueNameDestinationsWeek.clear();
         eticketCon.listTicketSoldIdDestinasiWeek.clear();
 
+print("-------- $currentDate");
         eticketCon.ticketSoldIdDestinasiWeek = 0;
 
         String currentWeek = DateFormat('yyyy-MM-dd').format(currentDate);
+print("A-------- $currentWeek");
 
         await eticketCon.allEticketByOwnerInWeek(
             ownerCon.idOBLogin, currentWeek);

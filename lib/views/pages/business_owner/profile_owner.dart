@@ -239,7 +239,7 @@ class _OwnerProfilePageState extends State<OwnerProfilePage> {
                           Padding(
                             padding: const EdgeInsets.fromLTRB(30, 10.0, 30, 8),
                             child: Container(
-                              height: 165,
+                              height: 175,
                               width: MediaQuery.of(context).size.width,
                               decoration: BoxDecoration(
                                 boxShadow: [
@@ -265,7 +265,7 @@ class _OwnerProfilePageState extends State<OwnerProfilePage> {
                                         child: Text(
                                           "Total Pemasukan",
                                           style: GoogleFonts.inter(
-                                              fontSize: 11,
+                                              fontSize: 12,
                                               color: Colors.black,
                                               fontWeight: FontWeight.w600),
                                         ),
@@ -276,7 +276,7 @@ class _OwnerProfilePageState extends State<OwnerProfilePage> {
                                       child: Text(
                                         "Penghasilan anda sejak ${formattedDate}",
                                         style: GoogleFonts.openSans(
-                                            fontSize: 10,
+                                            fontSize: 11,
                                             color: Colors.grey.shade400,
                                             fontWeight: FontWeight.w500),
                                       ),
@@ -332,7 +332,7 @@ class _OwnerProfilePageState extends State<OwnerProfilePage> {
                                             Text(
                                               "Pengunjung",
                                               style: GoogleFonts.openSans(
-                                                  fontSize: 8,
+                                                  fontSize: 10,
                                                   color: Colors.grey.shade400,
                                                   fontWeight: FontWeight.w500),
                                             ),
@@ -351,7 +351,7 @@ class _OwnerProfilePageState extends State<OwnerProfilePage> {
                                       ),
                                     ),
                                     const SizedBox(
-                                      height: 8,
+                                      height: 11,
                                     ),
                                     InkWell(
                                       onTap: () {
@@ -378,7 +378,7 @@ class _OwnerProfilePageState extends State<OwnerProfilePage> {
                                         width:
                                             MediaQuery.of(context).size.width *
                                                 0.6,
-                                        height: 27,
+                                        height: 30,
                                         decoration: BoxDecoration(
                                             color: thirdColor,
                                             borderRadius:
@@ -387,7 +387,7 @@ class _OwnerProfilePageState extends State<OwnerProfilePage> {
                                             child: Text(
                                           "Riwayat Penjualan",
                                           style: GoogleFonts.openSans(
-                                              fontSize: 10,
+                                              fontSize: 12,
                                               color: Colors.white,
                                               fontWeight: FontWeight.w600),
                                         )),

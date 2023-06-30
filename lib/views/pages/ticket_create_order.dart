@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/container.dart';
 import 'package:flutter/src/widgets/framework.dart';
@@ -36,7 +37,7 @@ class _CreateOrderDetailState extends State<CreateOrderDetail> {
   TextEditingController nameVisitor = TextEditingController();
   TextEditingController contactVisitor = TextEditingController();
   // TextEditingController dateVisit = TextEditingController();
-
+int? totalPrice;
   @override
   void initState() {
     print(" ");
@@ -52,6 +53,9 @@ class _CreateOrderDetailState extends State<CreateOrderDetail> {
         print("id destinasi: ${widget.idDestinasi.id}");
         print("id user: ${userCon.idUserLogin}");
         emailUser = userCon.emailLogin;
+
+        totalPrice = widget.idTicket.price! + 1500;
+        
       } catch (e) {
         print(e);
       }
@@ -236,8 +240,12 @@ class _CreateOrderDetailState extends State<CreateOrderDetail> {
                                               ),
                                               SizedBox(
                                                 child: Text(
-                                                  widget.idDestinasi.openHour
-                                                      .toString(),
+                                                  widget.idDestinasi.openHour ==
+                                                          null
+                                                      ? "-"
+                                                      : widget
+                                                          .idDestinasi.openHour
+                                                          .toString(),
                                                   style: GoogleFonts.openSans(
                                                       fontSize: 13,
                                                       color: Color.fromARGB(
@@ -273,8 +281,13 @@ class _CreateOrderDetailState extends State<CreateOrderDetail> {
                                               ),
                                               SizedBox(
                                                 child: Text(
-                                                  widget.idDestinasi.closedHour
-                                                      .toString(),
+                                                  widget.idDestinasi
+                                                              .closedHour ==
+                                                          null
+                                                      ? "-"
+                                                      : widget.idDestinasi
+                                                          .closedHour
+                                                          .toString(),
                                                   style: GoogleFonts.openSans(
                                                       fontSize: 13,
                                                       color: Color.fromARGB(
@@ -308,10 +321,30 @@ class _CreateOrderDetailState extends State<CreateOrderDetail> {
                                             child: ClipRRect(
                                               borderRadius:
                                                   BorderRadius.circular(8),
-                                              child: Image.asset(
-                                                "assets/images/slicing.jpg",
-                                                fit: BoxFit.cover,
-                                              ),
+                                              child: widget.idDestinasi
+                                                          .destinationPicture ==
+                                                      null
+                                                  ? Image.asset(
+                                                      "assets/images/no_image2.jpg",
+                                                      fit: BoxFit.cover,
+                                                    )
+                                                  : CachedNetworkImage(
+                                                      placeholder: (context,
+                                                              url) =>
+                                                          Center(
+                                                              child:
+                                                                  new CircularProgressIndicator()),
+                                                      imageUrl: widget
+                                                          .idDestinasi
+                                                          .destinationPicture!,
+                                                      fit: BoxFit.cover,
+                                                      errorWidget: (context,
+                                                              url, error) =>
+                                                          Image.asset(
+                                                        "assets/images/error_image.jpeg",
+                                                        fit: BoxFit.fitWidth,
+                                                      ),
+                                                    ),
                                             ),
                                           ),
                                           Container(
@@ -381,7 +414,9 @@ class _CreateOrderDetailState extends State<CreateOrderDetail> {
                               children: [
                                 SizedBox(
                                   child: Text(
-                                    "Jenis Tiket",
+                                    widget.idTicket.nameTicket == null
+                                        ? ""
+                                        : widget.idTicket.nameTicket.toString(),
                                     style: GoogleFonts.openSans(
                                         fontSize: 13,
                                         color: Color.fromARGB(255, 49, 49, 49),
@@ -419,7 +454,7 @@ class _CreateOrderDetailState extends State<CreateOrderDetail> {
                                             padding: const EdgeInsets.only(
                                                 left: 3.0),
                                             child: Text(
-                                              "Tidak bisa merubah datail pengunjung",
+                                              "Tidak bisa ubah data pengunjung",
                                               overflow: TextOverflow.ellipsis,
                                               style: GoogleFonts.openSans(
                                                   fontSize: 9,
@@ -465,7 +500,7 @@ class _CreateOrderDetailState extends State<CreateOrderDetail> {
                                             fontWeight: FontWeight.w500),
                                       ),
                                       Text(
-                                        "Harga termaksud pajak",
+                                        "Harga tidak termaksud pajak",
                                         overflow: TextOverflow.ellipsis,
                                         style: GoogleFonts.openSans(
                                             fontSize: 9,
@@ -564,7 +599,7 @@ class _CreateOrderDetailState extends State<CreateOrderDetail> {
                                   color: titleColor,
                                   fontWeight: FontWeight.w600),
                               controller: contactVisitor,
-                              keyboardType: TextInputType.text,
+                              keyboardType: TextInputType.number,
                               textInputAction: TextInputAction.next,
                               decoration: InputDecoration(
                                 focusedBorder: OutlineInputBorder(
@@ -629,9 +664,8 @@ class _CreateOrderDetailState extends State<CreateOrderDetail> {
                             ),
                           ),
                           Padding(
-                            padding: const EdgeInsets.only(
-                              top: 25.0,
-                            ),
+                            padding:
+                                const EdgeInsets.only(top: 25.0, bottom: 10),
                             child: Row(
                               children: [
                                 FaIcon(
@@ -731,8 +765,78 @@ class _CreateOrderDetailState extends State<CreateOrderDetail> {
                               ),
                             ),
                           ),
+                          Padding(
+                            padding:
+                                const EdgeInsets.only(top: 20.0, bottom: 10),
+                            child: Column(
+                              children: [
+                                Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    Text(
+                                      "Harga Tiket",
+                                      style: GoogleFonts.inter(
+                                          fontSize: 13,
+                                          color: descColor,
+                                          fontWeight: FontWeight.w500),
+                                    ),
+                                    Text(
+                                      "Rp ${widget.idTicket.price.toString()}",
+                                      style: GoogleFonts.inter(
+                                          fontSize: 13,
+                                          color: titleColor,
+                                          fontWeight: FontWeight.w700),
+                                    ),
+                                  ],
+                                ),
+                                SizedBox(
+                                  height: 10,
+                                ),
+                                Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    Text(
+                                      "Biaya Admin",
+                                      style: GoogleFonts.inter(
+                                          fontSize: 13,
+                                          color: descColor,
+                                          fontWeight: FontWeight.w500),
+                                    ),
+                                    Text(
+                                      "Rp 1500",
+                                      style: GoogleFonts.inter(
+                                          fontSize: 13,
+                                          color: titleColor,
+                                          fontWeight: FontWeight.w700),
+                                    ),
+                                  ],
+                                ),
+                                SizedBox(
+                                  height: 15,
+                                ),
+                                Container(
+                                  width: MediaQuery.of(context).size.width,
+                                  child: Row(
+                                    children: List.generate(
+                                        150 ~/ 3,
+                                        (index) => Expanded(
+                                              child: Container(
+                                                color: index % 2 == 0
+                                                    ? Colors.grey.shade300
+                                                    : Colors.transparent,
+                                                height: 1,
+                                              ),
+                                            )),
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+
                           SizedBox(
-                            height: 50,
+                            height: 20,
                           )
                           //  Center(
                           //    child: Padding(
@@ -817,7 +921,7 @@ class _CreateOrderDetailState extends State<CreateOrderDetail> {
                                 fontWeight: FontWeight.w500),
                           ),
                           Text(
-                            "Rp ${widget.idTicket.price.toString()}",
+                            "Rp $totalPrice",
                             style: GoogleFonts.inter(
                                 fontSize: 19,
                                 color: secondaryColor,

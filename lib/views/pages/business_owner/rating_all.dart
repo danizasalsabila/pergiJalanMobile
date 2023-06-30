@@ -64,7 +64,7 @@ class _AllRatingReviewPageState extends State<AllRatingReviewPage> {
         title: Text(
           "Penilaian Wisatawan",
           style: GoogleFonts.openSans(
-              fontSize: 14,
+              fontSize: 15,
               color: const Color.fromARGB(255, 31, 31, 31),
               fontWeight: FontWeight.w600),
         ),

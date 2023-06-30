@@ -56,6 +56,8 @@ dependencies:
   splash_screen_view: ^3.0.0
   get: ^4.6.5
   fl_chart: ^0.62.0
+  image_picker: ^0.8.9
+  cached_network_image: ^3.2.3
 
 
 dev_dependencies:

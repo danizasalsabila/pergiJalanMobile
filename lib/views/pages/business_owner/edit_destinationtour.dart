@@ -1,10 +1,13 @@
 // ignore_for_file: unrelated_type_equality_checks
 
+import 'dart:io';
+import 'package:http/http.dart' as http;
 import 'package:dotted_border/dotted_border.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:pergijalan_mobile/config/theme_color.dart';
 import 'package:pergijalan_mobile/controllers/destinasi_controller.dart';
 import 'package:pergijalan_mobile/views/pages/business_owner/home.dart';
@@ -55,6 +58,27 @@ class _EditDestinationOwnerPageState extends State<EditDestinationOwnerPage> {
       }
     });
   }
+
+  File? image;
+  final ImagePicker _picker = ImagePicker();
+  String? imagePrev;
+  Future getImage() async {
+    final pickedFile = await _picker.pickImage(
+      source: ImageSource.gallery,
+      imageQuality: 80,
+    );
+
+    if (pickedFile != null) {
+      isEdited = true;
+      image = File(pickedFile.path);
+      imagePrev = null;
+      setState(() {});
+    } else {
+      const snackbar = SnackBar(content: Text('No image selected'));
+      ScaffoldMessenger.of(context).showSnackBar(snackbar);
+    }
+  }
+
 
   final List<String> _listCategory = [
     "Cagar Alam",
@@ -120,7 +144,6 @@ class _EditDestinationOwnerPageState extends State<EditDestinationOwnerPage> {
   }
 
   String? finalSelectedHobby;
-  // String? currentHobby;
 
   List<String> listProvince = [
     "Aceh",
@@ -163,10 +186,6 @@ class _EditDestinationOwnerPageState extends State<EditDestinationOwnerPage> {
     "Papua Barat Daya",
   ];
   String? finalSelectedProvince;
-  // String? currentProvince;
-  // int tic = 0;
-  // int ticc = 0;
-  @override
   void initState() {
     print(" ");
     print("-------------DIRECT TO EDIT DESTINATION PAGE-----------");
@@ -185,7 +204,6 @@ class _EditDestinationOwnerPageState extends State<EditDestinationOwnerPage> {
         isLoading2 = false;
       });
     });
-    // _isSecurityAvail = [true, false];
     super.initState();
     nameController = TextEditingController(text: widget.id.nameDestinasi);
     phoneNumberController = TextEditingController(text: widget.id.contact);
@@ -196,31 +214,12 @@ class _EditDestinationOwnerPageState extends State<EditDestinationOwnerPage> {
     minutesSpendController =
         TextEditingController(text: widget.id.minutesSpend);
     urlMapController = TextEditingController(text: widget.id.urlMap);
-    // latitudeController =
-    //     TextEditingController(text: widget.id.latitude.toString());
-    // if (latitudeController == null) {
-    //   latitudeController = TextEditingController(text: '');
-    // } else {
-    //   latitudeController =
-    //       TextEditingController(text: widget.id.latitude.toString());
-    // }
-    // longitudeController =
-    //     TextEditingController(text: widget.id.longitude.toString());
-    // if (longitudeController == null) {
-    //   longitudeController = TextEditingController(text: '');
-    // } else {
-    //   longitudeController =
-    //       TextEditingController(text: widget.id.longitude.toString());
-    // }
+    imagePrev = widget.id.destinationPicture;
     fasilitiesController = TextEditingController(text: widget.id.fasility);
     finalSelectedCategory = widget.id.category;
     finalSelectedWeather = widget.id.recWeather;
     finalSelectedProvince = widget.id.city;
     finalSelectedHobby = widget.id.hobby;
-    // currentCategory = widget.id.category;
-    // currentHobby = widget.id.hobby ?? 'Tidak ada';
-    // currentWeather = widget.id.recWeather ?? 'Tidak ada';
-    // currentProvince = widget.id.city;
     securityAvail = widget.id.security;
   }
 
@@ -404,43 +403,70 @@ class _EditDestinationOwnerPageState extends State<EditDestinationOwnerPage> {
                                   fontWeight: FontWeight.w600),
                             ),
                           ),
-                          SizedBox(
-                            height: 90,
-                            width: MediaQuery.of(context).size.width,
-                            child: DottedBorder(
-                                borderType: BorderType.RRect,
-                                radius: const Radius.circular(5),
-                                dashPattern: const [6, 3, 6, 3],
-                                color: Colors.grey.shade200,
-                                strokeWidth: 2,
-                                child: Center(
-                                  child: RichText(
-                                    text: TextSpan(text: '', children: [
-                                      TextSpan(
-                                        text: 'Tambahkan ',
-                                        style: TextStyle(
-                                            fontSize: 14,
-                                            color: Colors.grey.shade400,
-                                            fontWeight: FontWeight.w500),
-                                      ),
-                                      TextSpan(
-                                        text: 'Foto Tempat Wisata  ',
-                                        style: TextStyle(
-                                            fontSize: 14,
-                                            color: Colors.black,
-                                            fontWeight: FontWeight.w500),
-                                      ),
-                                      TextSpan(
-                                        text: 'Anda ',
-                                        style: TextStyle(
-                                            fontSize: 14,
-                                            color: Colors.grey.shade400,
-                                            fontWeight: FontWeight.w500),
-                                      ),
-                                    ]),
+
+                          imagePrev != null
+                              ? SizedBox(
+                                  height: 90,
+                                  width: MediaQuery.of(context).size.width,
+                                  child: Image.network(
+                                    imagePrev!,
+                                    fit: BoxFit.cover,
                                   ),
-                                )),
+                                )
+                              : SizedBox(),
+                          image == null
+                              ? SizedBox()
+                              : SizedBox(
+                                  height: 90,
+                                  width: MediaQuery.of(context).size.width,
+                                  child: Image.file(
+                                    image!,
+                                    fit: BoxFit.cover,
+                                  ),
+                                ),
+                          SizedBox(
+                            height: 10,
                           ),
+                          InkWell(
+                              onTap: () async {
+                                await getImage();
+                              },
+                              child: SizedBox(
+                                  height: 40,
+                                  width: MediaQuery.of(context).size.width,
+                                  child: DottedBorder(
+                                      borderType: BorderType.RRect,
+                                      radius: const Radius.circular(5),
+                                      dashPattern: const [6, 3, 6, 3],
+                                      color: Colors.grey.shade200,
+                                      strokeWidth: 2,
+                                      child: Center(
+                                        child: RichText(
+                                          text: TextSpan(text: '', children: [
+                                            TextSpan(
+                                              text: 'Ubah ',
+                                              style: TextStyle(
+                                                  fontSize: 14,
+                                                  color: Colors.grey.shade400,
+                                                  fontWeight: FontWeight.w500),
+                                            ),
+                                            TextSpan(
+                                              text: 'Foto Tempat Wisata  ',
+                                              style: TextStyle(
+                                                  fontSize: 14,
+                                                  color: Colors.black,
+                                                  fontWeight: FontWeight.w500),
+                                            ),
+                                            TextSpan(
+                                              text: 'Anda ',
+                                              style: TextStyle(
+                                                  fontSize: 14,
+                                                  color: Colors.grey.shade400,
+                                                  fontWeight: FontWeight.w500),
+                                            ),
+                                          ]),
+                                        ),
+                                      )))),
                         ],
                       ),
                     ),
@@ -2241,6 +2267,7 @@ class _EditDestinationOwnerPageState extends State<EditDestinationOwnerPage> {
                                         Provider.of<DestinasiController>(
                                             context,
                                             listen: false);
+
                                     // double? latitudeValue = latitudeController!
                                     //         .text.isNotEmpty
                                     //     ? double.parse(latitudeController!.text)
@@ -2284,7 +2311,8 @@ class _EditDestinationOwnerPageState extends State<EditDestinationOwnerPage> {
                                           recWeather: finalSelectedWeather,
                                           fasility: fasilitiesController?.text,
                                           security: securityAvail,
-                                          // image:
+                                          image: image,
+                                          // imagePrev: imagePrev,
                                           openHour: openHourController?.text,
                                           closedHour:
                                               closedHourController?.text);

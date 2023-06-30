@@ -1,5 +1,6 @@
 // ignore_for_file: unnecessary_null_comparison
 
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:pergijalan_mobile/config/theme_color.dart';
@@ -47,6 +48,12 @@ class _SearchPageState extends State<SearchPage> {
     super.initState();
   }
 
+    @override
+  void dispose() {
+    queryController.dispose();
+    super.dispose();
+  }
+
   Widget resultData(BuildContext context) {
     return Consumer<DestinasiController>(builder: (context, searchCon, child) {
       if (searchCon.destinasiQueryData != null &&
@@ -79,156 +86,183 @@ class _SearchPageState extends State<SearchPage> {
                       padding: EdgeInsets.only(left: 10, right: 10),
                       width: MediaQuery.of(context).size.width,
                       child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          mainAxisAlignment: MainAxisAlignment.start,
                           children: [
-                            Container(
-                              height: 70,
-                              width: MediaQuery.of(context).size.width * 0.25,
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(8),
-                                color: Colors.blue,
+                            ClipRRect(
+                              borderRadius:  BorderRadius.circular(8),
+                                
+                              child: Container(
+                                height: 70,
+                                width: MediaQuery.of(context).size.width * 0.25,
+                                decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(8),
+                                ),
+                                child: searchCon.destinasiQueryData![index]
+                                            .destinationPicture ==
+                                        null
+                                    ? Image.asset(
+                                        "assets/images/no_image2.jpg",
+                                        fit: BoxFit.cover,
+                                      )
+                                    : CachedNetworkImage(
+                                        placeholder: (context, url) => Center(
+                                            child:
+                                                new CircularProgressIndicator()),
+                                        imageUrl: searchCon
+                                            .destinasiQueryData![index]
+                                            .destinationPicture!,
+                                        fit: BoxFit.cover,
+                                        errorWidget: (context, url, error) =>
+                                            Image.asset(
+                                          "assets/images/error_image.jpeg",
+                                          fit: BoxFit.fitWidth,
+                                        ),
+                                      ),
                               ),
                             ),
-                            Container(
-                              width: MediaQuery.of(context).size.width * 0.4,
-                              child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  children: [
-                                    Text(
-                                      searchCon.destinasiQueryData![index]
-                                          .nameDestinasi!,
-                                      style: GoogleFonts.notoSansDisplay(
-                                          fontSize: 13,
-                                          color: secondaryColor,
-                                          fontWeight: FontWeight.w600),
-                                      overflow: TextOverflow.ellipsis,
-                                    ),
-                                    Padding(
-                                      padding: const EdgeInsets.only(
-                                          top: 2.0, bottom: 2.0),
-                                      child: Row(
+                            Padding(
+                              padding: const EdgeInsets.only(left: 10.0),
+                              child: Container(
+                                width: MediaQuery.of(context).size.width * 0.4,
+                                child: Column(
+                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      Text(
+                                        searchCon.destinasiQueryData![index]
+                                            .nameDestinasi!,
+                                        style: GoogleFonts.notoSansDisplay(
+                                            fontSize: 13,
+                                            color: secondaryColor,
+                                            fontWeight: FontWeight.w600),
+                                        overflow: TextOverflow.ellipsis,
+                                      ),
+                                      Padding(
+                                        padding: const EdgeInsets.only(
+                                            top: 2.0, bottom: 2.0),
+                                        child: Row(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.start,
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
+                                          children: [
+                                            Icon(
+                                              Icons.location_on_outlined,
+                                              size: 15,
+                                              color: titleColor,
+                                            ),
+                                            Text(
+                                              searchCon.destinasiQueryData![index]
+                                                  .city!,
+                                              style: GoogleFonts.notoSansDisplay(
+                                                  fontSize: 11,
+                                                  color: descColor,
+                                                  fontWeight: FontWeight.w500),
+                                              overflow: TextOverflow.ellipsis,
+                                            )
+                                          ],
+                                        ),
+                                      ),
+                                      Row(
                                         mainAxisAlignment:
                                             MainAxisAlignment.start,
                                         crossAxisAlignment:
                                             CrossAxisAlignment.start,
                                         children: [
-                                          Icon(
-                                            Icons.location_on_outlined,
-                                            size: 15,
-                                            color: titleColor,
-                                          ),
-                                          Text(
-                                            searchCon.destinasiQueryData![index]
-                                                .city!,
-                                            style: GoogleFonts.notoSansDisplay(
-                                                fontSize: 11,
-                                                color: descColor,
-                                                fontWeight: FontWeight.w500),
-                                            overflow: TextOverflow.ellipsis,
-                                          )
-                                        ],
-                                      ),
-                                    ),
-                                    Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.start,
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                      children: [
-                                        Container(
-                                            height: 17,
-                                            decoration: BoxDecoration(
-                                                borderRadius:
-                                                    BorderRadius.circular(8),
-                                                color: thirdColor),
-                                            child: Center(
-                                              child: Padding(
-                                                padding: const EdgeInsets.only(
-                                                    left: 5.0, right: 5.0),
-                                                child: searchCon
-                                                            .destinasiQueryData![
-                                                                index]
-                                                            .hobby! !=
-                                                        null
-                                                    ? Text(
-                                                        searchCon
-                                                            .destinasiQueryData![
-                                                                index]
-                                                            .hobby!,
-                                                        style: GoogleFonts
-                                                            .notoSansDisplay(
-                                                                fontSize: 9,
-                                                                color: Colors
-                                                                    .white,
-                                                                fontWeight:
-                                                                    FontWeight
-                                                                        .w500),
-                                                        overflow: TextOverflow
-                                                            .ellipsis,
-                                                      )
-                                                    : SizedBox(),
-                                              ),
-                                            )),
-                                        Padding(
-                                          padding:
-                                              const EdgeInsets.only(left: 5.0),
-                                          child: Container(
+                                          Container(
                                               height: 17,
                                               decoration: BoxDecoration(
                                                   borderRadius:
                                                       BorderRadius.circular(8),
-                                                  color: labelColor),
+                                                  color: thirdColor),
                                               child: Center(
                                                 child: Padding(
-                                                  padding:
-                                                      const EdgeInsets.only(
-                                                          left: 5.0,
-                                                          right: 5.0),
-                                                  child: Text(
-                                                    searchCon
-                                                        .destinasiQueryData![
-                                                            index]
-                                                        .category!,
-                                                    style: GoogleFonts
-                                                        .notoSansDisplay(
-                                                            fontSize: 9,
-                                                            color: Colors.black,
-                                                            fontWeight:
-                                                                FontWeight
-                                                                    .w500),
-                                                    overflow:
-                                                        TextOverflow.ellipsis,
-                                                  ),
+                                                  padding: const EdgeInsets.only(
+                                                      left: 5.0, right: 5.0),
+                                                  child: searchCon
+                                                              .destinasiQueryData![
+                                                                  index]
+                                                              .hobby! !=
+                                                          null
+                                                      ? Text(
+                                                          searchCon
+                                                              .destinasiQueryData![
+                                                                  index]
+                                                              .hobby!,
+                                                          style: GoogleFonts
+                                                              .notoSansDisplay(
+                                                                  fontSize: 9,
+                                                                  color: Colors
+                                                                      .white,
+                                                                  fontWeight:
+                                                                      FontWeight
+                                                                          .w500),
+                                                          overflow: TextOverflow
+                                                              .ellipsis,
+                                                        )
+                                                      : SizedBox(),
                                                 ),
                                               )),
-                                        )
-                                      ],
-                                    )
-                                  ]),
+                                          Padding(
+                                            padding:
+                                                const EdgeInsets.only(left: 5.0),
+                                            child: Container(
+                                                height: 17,
+                                                decoration: BoxDecoration(
+                                                    borderRadius:
+                                                        BorderRadius.circular(8),
+                                                    color: labelColor),
+                                                child: Center(
+                                                  child: Padding(
+                                                    padding:
+                                                        const EdgeInsets.only(
+                                                            left: 5.0,
+                                                            right: 5.0),
+                                                    child: Text(
+                                                      searchCon
+                                                          .destinasiQueryData![
+                                                              index]
+                                                          .category!,
+                                                      style: GoogleFonts
+                                                          .notoSansDisplay(
+                                                              fontSize: 9,
+                                                              color: Colors.black,
+                                                              fontWeight:
+                                                                  FontWeight
+                                                                      .w500),
+                                                      overflow:
+                                                          TextOverflow.ellipsis,
+                                                    ),
+                                                  ),
+                                                )),
+                                          )
+                                        ],
+                                      )
+                                    ]),
+                              ),
                             ),
-                            Container(
-                              width: MediaQuery.of(context).size.width * 0.15,
-                              child: Column(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  crossAxisAlignment: CrossAxisAlignment.end,
-                                  children: [
-                                    Container(
-                                      width: MediaQuery.of(context).size.width *
-                                          0.065,
-                                      child: Icon(Icons.compare_arrows_rounded,
-                                          color: descColor, size: 19),
-                                    ),
-                                    Text(
-                                      "Jarak",
-                                      style: GoogleFonts.notoSansDisplay(
-                                          fontSize: 11,
-                                          color: descColor,
-                                          fontWeight: FontWeight.w400),
-                                      overflow: TextOverflow.ellipsis,
-                                    ),
-                                  ]),
-                            )
+                            // Container(
+                            //   width: MediaQuery.of(context).size.width * 0.15,
+                            //   child: Column(
+                            //       mainAxisAlignment: MainAxisAlignment.center,
+                            //       crossAxisAlignment: CrossAxisAlignment.end,
+                            //       children: [
+                            //         Container(
+                            //           width: MediaQuery.of(context).size.width *
+                            //               0.065,
+                            //           child: Icon(Icons.compare_arrows_rounded,
+                            //               color: descColor, size: 19),
+                            //         ),
+                            //         Text(
+                            //           "Jarak",
+                            //           style: GoogleFonts.notoSansDisplay(
+                            //               fontSize: 11,
+                            //               color: descColor,
+                            //               fontWeight: FontWeight.w400),
+                            //           overflow: TextOverflow.ellipsis,
+                            //         ),
+                            //       ]),
+                            // )
                           ]),
                     ),
                   ),
@@ -293,7 +327,8 @@ class _SearchPageState extends State<SearchPage> {
                                   child: CircularProgressIndicator(),
                                 ),
                               )
-                            : searchCon.isfirstpage == true && searchCon.statusCodeSearch ==200
+                            : searchCon.isfirstpage == true &&
+                                    searchCon.statusCodeSearch == 200
                                 ? resultData(context)
                                 : SizedBox(),
                       ),

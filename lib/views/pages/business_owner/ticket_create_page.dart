@@ -37,7 +37,7 @@ class _CreateTicketPageState extends State<CreateTicketPage> {
   @override
   void initState() {
     print(" ");
-    print("-------------DIRECT TO LIST TIKET-----------");
+    print("-------------DIRECT TO ADD TIKET-----------");
 
     final destCon = Provider.of<DestinasiController>(context, listen: false);
     isLoading = true;
@@ -382,7 +382,7 @@ class _CreateTicketPageState extends State<CreateTicketPage> {
                                     decoration: const InputDecoration(
                                       border: InputBorder.none,
                                       contentPadding:
-                                          const EdgeInsets.only(left: 6),
+                                           EdgeInsets.only(left: 6),
                                     ),
                                   ),
                                 ),
@@ -488,6 +488,7 @@ class _CreateTicketPageState extends State<CreateTicketPage> {
                                     try {
                                       await ticketCon.addTicketByIdDestinasi(
                                           idDestinasi: widget.idDestinasi,
+                                          nameTicket: nameTicketController.text,
                                           price: int.parse(
                                               priceTicketController.text),
                                           stock: int.parse(

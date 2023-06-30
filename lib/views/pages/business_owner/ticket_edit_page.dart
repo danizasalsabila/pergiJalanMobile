@@ -62,20 +62,20 @@ class _EditTicketPageState extends State<EditTicketPage> {
       });
     });
     super.initState();
-    // nameTicketController = TextEditingController(text: widget.ticket);
+    nameTicketController = TextEditingController(text: widget.ticket.nameTicket);
     stockTicketController =
         TextEditingController(text: widget.ticket.stock.toString());
     priceTicketController =
         TextEditingController(text: widget.ticket.price.toString());
   }
 
-  //   @override
-  // void dispose() {
-  //   nameTicketController!.dispose();
-  //   stockTicketController!.dispose();
-  //   priceTicketController!.dispose();
-  //   super.dispose();
-  // }
+    @override
+  void dispose() {
+    nameTicketController!.dispose();
+    stockTicketController!.dispose();
+    priceTicketController!.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -353,21 +353,21 @@ class _EditTicketPageState extends State<EditTicketPage> {
                         child: Center(
                           child: TextField(
                             controller: nameTicketController,
-                            // onChanged: (text) {
-                            //       if (widget.ticket.nameDestinasi != null) {
-                            //         setState(() {
-                            //           isEdited =
-                            //               (text != widget.id.nameDestinasi)
-                            //                   ? true
-                            //                   : false;
-                            //         });
-                            //       } else {
-                            //         isEdited =
-                            //             (text.trim() != widget.id.nameDestinasi)
-                            //                 ? true
-                            //                 : false;
-                            //       }
-                            //     },
+                            onChanged: (text) {
+                                  if (widget.ticket.nameTicket != null) {
+                                    setState(() {
+                                      isEdited =
+                                          (text != widget.ticket.nameTicket)
+                                              ? true
+                                              : false;
+                                    });
+                                  } else {
+                                    isEdited =
+                                        (text.trim() != widget.ticket.nameTicket)
+                                            ? true
+                                            : false;
+                                  }
+                                },
                             style: GoogleFonts.openSans(
                                 fontSize: 12,
                                 color: titleColor,
@@ -507,6 +507,7 @@ class _EditTicketPageState extends State<EditTicketPage> {
                                     if (isEdited == true) {
                                       await ticketCon.editTicketByIdDestinasi(
                                           id: widget.ticket.id,
+                                          nameTicket: nameTicketController!.text,
                                           stock: int.parse(
                                               stockTicketController!.text),
                                           price: int.parse(

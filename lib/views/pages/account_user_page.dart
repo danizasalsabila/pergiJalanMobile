@@ -847,7 +847,7 @@ class _UserPageState extends State<UserPage> {
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
                               const SizedBox(
-                                height: 60,
+                                height: 80,
                               ),
                               Center(
                                 child: Text(
@@ -862,7 +862,7 @@ class _UserPageState extends State<UserPage> {
                                 padding: const EdgeInsets.only(top: 15.0),
                                 child: Center(
                                   child: Text(
-                                    "Untuk mengakses fitur layanan yang tersedia dan menjalajahi PergiJalan dengan lengkap, mohon lakukan login terlebih dahulu",
+                                    "Untuk mengakses fitur layanan yang tersedia dan menjelajahi PergiJalan dengan lengkap, mohon lakukan login terlebih dahulu",
                                     style: GoogleFonts.openSans(
                                         fontSize: 13,
                                         color:

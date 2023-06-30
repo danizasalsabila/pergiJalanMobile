@@ -63,6 +63,8 @@ class Eticket {
   String? _contactVisitor;
   String? _dateVisit;
   int? _price;
+  int? _adminPrice;
+  int? _totalPrice;
   String? _virtualAccount;
   String? _dateBook;
   String? _createdAt;
@@ -81,6 +83,8 @@ class Eticket {
       String? contactVisitor,
       String? dateVisit,
       int? price,
+      int? adminPrice,
+      int? totalPrice,
       String? virtualAccount,
       String? dateBook,
       String? createdAt,
@@ -114,6 +118,12 @@ class Eticket {
     }
     if (price != null) {
       this._price = price;
+    }
+    if (adminPrice != null) {
+      this._adminPrice = adminPrice;
+    }
+    if (totalPrice != null) {
+      this._totalPrice = totalPrice;
     }
     if (virtualAccount != null) {
       this._virtualAccount = virtualAccount;
@@ -157,6 +167,10 @@ class Eticket {
   set dateVisit(String? dateVisit) => _dateVisit = dateVisit;
   int? get price => _price;
   set price(int? price) => _price = price;
+   int? get adminPrice => _adminPrice;
+  set adminPrice(int? adminPrice) => _adminPrice = adminPrice;
+  int? get totalPrice => _totalPrice;
+  set totalPrice(int? totalPrice) => _totalPrice = totalPrice;
   String? get virtualAccount => _virtualAccount;
   set virtualAccount(String? virtualAccount) =>
       _virtualAccount = virtualAccount;
@@ -183,6 +197,8 @@ class Eticket {
     _contactVisitor = json['contact_visitor'];
     _dateVisit = json['date_visit'];
     _price = json['price'];
+    _adminPrice = json['admin_price'];
+    _totalPrice = json['total_price'];
     _virtualAccount = json['virtual_account'];
     _dateBook = json['date_book'];
     _createdAt = json['created_at'];
@@ -206,6 +222,8 @@ class Eticket {
     data['contact_visitor'] = this._contactVisitor;
     data['date_visit'] = this._dateVisit;
     data['price'] = this._price;
+     data['admin_price'] = this._adminPrice;
+    data['total_price'] = this._totalPrice;
     data['virtual_account'] = this._virtualAccount;
     data['date_book'] = this._dateBook;
     data['created_at'] = this._createdAt;
@@ -226,10 +244,14 @@ class Eticket {
 class Ticket {
   int? _id;
   int? _price;
+  String? _nameTicket;
 
-  Ticket({int? id, int? price}) {
+  Ticket({int? id, int? price, String? nameTicket,}) {
     if (id != null) {
       this._id = id;
+    }
+     if (nameTicket != null) {
+      this._nameTicket = nameTicket;
     }
     if (price != null) {
       this._price = price;
@@ -238,17 +260,21 @@ class Ticket {
 
   int? get id => _id;
   set id(int? id) => _id = id;
+  String? get nameTicket => _nameTicket;
+  set nameTicket(String? nameTicket) => _nameTicket = nameTicket;
   int? get price => _price;
   set price(int? price) => _price = price;
 
   Ticket.fromJson(Map<String, dynamic> json) {
     _id = json['id'];
+     _nameTicket = json['name_ticket'];
     _price = json['price'];
   }
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
     data['id'] = this._id;
+    data['name_ticket'] = this._nameTicket;
     data['price'] = this._price;
     return data;
   }

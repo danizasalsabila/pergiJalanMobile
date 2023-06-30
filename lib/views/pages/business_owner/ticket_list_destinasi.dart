@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/container.dart';
 import 'package:flutter/src/widgets/framework.dart';
@@ -71,10 +72,21 @@ class _TicketListPageState extends State<TicketListPage> {
                         Container(
                           height: 170,
                           width: MediaQuery.of(context).size.width,
-                          child: Image.asset(
-                            "assets/images/slicing.jpg",
-                            fit: BoxFit.cover,
-                          ),
+                          child: widget.id.destinationPicture==null  ? Image.asset(
+                                  "assets/images/no_image2.jpg",
+                                  fit: BoxFit.cover,
+                                )
+                              : CachedNetworkImage(
+                                  placeholder: (context, url) => Center(
+                                      child: new CircularProgressIndicator()),
+                                  imageUrl: widget.id.destinationPicture!,
+                                  fit: BoxFit.cover,
+                                  errorWidget: (context, url, error) =>
+                                      Image.asset(
+                                    "assets/images/error_image.jpeg",
+                                    fit: BoxFit.fitWidth,
+                                  ),
+                                ),
                         ),
                         Container(
                           height: 170,
@@ -357,7 +369,7 @@ class _TicketListPageState extends State<TicketListPage> {
                                                                                 50,
                                                                             child:
                                                                                 Text(
-                                                                              "Nama Tiket",
+                                                                              ticketCon.ticketData![index].nameTicket.toString(),
                                                                               overflow: TextOverflow.fade,
                                                                               maxLines: 2,
                                                                               style: GoogleFonts.openSans(fontSize: 14, color: ticketCon.ticketData![index].stock == 0 ? Color.fromARGB(255, 190, 77, 75) : labelColor, fontWeight: FontWeight.w700),

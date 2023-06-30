@@ -532,7 +532,8 @@ class _TicketSalesHistoryState extends State<TicketSalesHistory> {
                                                             const EdgeInsets
                                                                 .only(top: 5.0),
                                                         child: Text(
-                                                          "nama tiket",
+                                                          eticketCon.eticketData![index].ticket!.nameTicket == null ? "-":
+                                                          eticketCon.eticketData![index].ticket!.nameTicket.toString(),
                                                           style:
                                                               GoogleFonts.inter(
                                                                   fontSize: 14,

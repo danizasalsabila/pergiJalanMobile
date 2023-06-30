@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:pergijalan_mobile/models/eticket.dart';
 
-import '../models/ticket.dart';
 import '../services/api/url.dart';
 
 class ETicketController extends ChangeNotifier {

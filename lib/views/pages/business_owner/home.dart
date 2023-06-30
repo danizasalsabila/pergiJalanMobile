@@ -1,5 +1,6 @@
 import 'dart:math';
 
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_swiper_plus/flutter_swiper_plus.dart';
 import 'package:fluttertoast/fluttertoast.dart';
@@ -120,20 +121,40 @@ class _HomePageOwnerState extends State<HomePageOwner> {
       backgroundColor: backgroundColor,
       floatingActionButton: isLoading
           ? const Center(child: SizedBox())
-          : Padding(
-              padding: const EdgeInsets.all(16.0),
-              child: FloatingActionButton(
-                  elevation: 8,
-                  onPressed: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => const CreateDestinationTourist(),
-                      ),
-                    );
-                  },
-                  backgroundColor: thirdColor,
-                  child: const FaIcon(FontAwesomeIcons.plus)),
+          : SizedBox(
+              height: 110.0,
+              width: 110.0,
+              child: FittedBox(
+                child: Padding(
+                  padding: const EdgeInsets.all(16.0),
+                  child: FloatingActionButton(
+                      elevation: 8,
+                      onPressed: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) =>
+                                const CreateDestinationTourist(),
+                          ),
+                        );
+                      },
+                      backgroundColor: thirdColor,
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          const FaIcon(
+                            FontAwesomeIcons.plus,
+                          ),
+                          Text(
+                            "Destinasi",
+                            style: GoogleFonts.openSans(
+                                color: Colors.white, fontSize: 7),
+                          )
+                        ],
+                      )),
+                ),
+              ),
             ),
       body: isLoading
           ? const Center(
@@ -147,7 +168,7 @@ class _HomePageOwnerState extends State<HomePageOwner> {
                 return Column(
                   children: [
                     const SizedBox(
-                      height: 75,
+                      height: 55,
                     ),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -178,7 +199,7 @@ class _HomePageOwnerState extends State<HomePageOwner> {
                                 child: Text(
                                   "Laporan Pengelolaan ${ownerCon.nameLogin.toString()}",
                                   style: GoogleFonts.notoSansDisplay(
-                                      fontSize: 11,
+                                      fontSize: 12,
                                       color: descColor,
                                       fontWeight: FontWeight.w500),
                                 ),
@@ -406,7 +427,11 @@ class _HomePageOwnerState extends State<HomePageOwner> {
                                                             height: 30,
                                                             child: Center(
                                                               child: Text(
-                                                                "${ticketCon.ticketDataMostSales![index].ticketSold.toString()}",
+                                                                ticketCon
+                                                                    .ticketDataMostSales![
+                                                                        index]
+                                                                    .ticketSold
+                                                                    .toString(),
                                                                 style: GoogleFonts.openSans(
                                                                     fontSize:
                                                                         15,
@@ -472,8 +497,7 @@ class _HomePageOwnerState extends State<HomePageOwner> {
                                                                 ticketCon
                                                                     .ticketDataMostSales![
                                                                         index]
-                                                                    .destinasi!
-                                                                    .nameDestinasi
+                                                                    .nameTicket
                                                                     .toString(),
                                                                 textAlign:
                                                                     TextAlign
@@ -719,12 +743,12 @@ class _HomePageOwnerState extends State<HomePageOwner> {
                                                 padding:
                                                     EdgeInsets.only(left: 45),
                                                 child: Text(
-                                                  ticketData.ticketSoldOwner !=
+                                                  ticketData.ticketSoldOwner ==
                                                           0
-                                                      ? ticketData
+                                                      ? "0"
+                                                      : ticketData
                                                           .ticketSoldOwner
-                                                          .toString()
-                                                      : '0',
+                                                          .toString(),
                                                   style: GoogleFonts.kanit(
                                                       fontSize: 44,
                                                       color: labelColor,
@@ -861,15 +885,37 @@ class _HomePageOwnerState extends State<HomePageOwner> {
                                                                     0.23,
                                                                 child:
                                                                     ClipRRect(
-                                                                        borderRadius:
-                                                                            BorderRadius.circular(
-                                                                                8),
-                                                                        child: Image
-                                                                            .asset(
-                                                                          "assets/images/slicing.jpg",
+                                                                  borderRadius:
+                                                                      BorderRadius
+                                                                          .circular(
+                                                                              8),
+                                                                  child: homeCon
+                                                                              .destinasiDataByOwner![
+                                                                                  index]
+                                                                              .destinationPicture ==
+                                                                          null
+                                                                      ? Image
+                                                                          .asset(
+                                                                          "assets/images/no_image2.jpg",
                                                                           fit: BoxFit
                                                                               .cover,
-                                                                        )),
+                                                                        )
+                                                                      : CachedNetworkImage(
+                                                                          placeholder: (context, url) =>
+                                                                              Center(child: new CircularProgressIndicator()),
+                                                                          imageUrl: homeCon
+                                                                              .destinasiDataByOwner![index]
+                                                                              .destinationPicture!,
+                                                                          fit: BoxFit
+                                                                              .cover,
+                                                                          errorWidget: (context, url, error) =>
+                                                                              Image.asset(
+                                                                            "assets/images/error_image.jpeg",
+                                                                            fit:
+                                                                                BoxFit.fitWidth,
+                                                                          ),
+                                                                        ),
+                                                                ),
                                                               ),
                                                               Container(
                                                                 height: 70,
@@ -885,7 +931,7 @@ class _HomePageOwnerState extends State<HomePageOwner> {
                                                                                 8),
                                                                     color: Color
                                                                         .fromARGB(
-                                                                            106,
+                                                                            45,
                                                                             75,
                                                                             150,
                                                                             111)),

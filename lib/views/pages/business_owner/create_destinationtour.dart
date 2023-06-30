@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:dotted_border/dotted_border.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/container.dart';
@@ -6,6 +8,7 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:pergijalan_mobile/config/theme_color.dart';
 import 'package:pergijalan_mobile/controllers/destinasi_controller.dart';
 import 'package:pergijalan_mobile/controllers/owner_business_controller.dart';
@@ -147,6 +150,22 @@ class _CreateDestinationTouristState extends State<CreateDestinationTourist> {
   //     _selectedListProvince = i;
   //   });
   // }
+  final _picker = ImagePicker();
+  File? image;
+
+
+    Future getImage() async {
+    final pickedFile =
+        await _picker.pickImage(source: ImageSource.gallery, imageQuality: 80);
+
+    if (pickedFile != null) {
+      image = File(pickedFile.path);
+      setState(() {});
+    } else {
+      const snackbar = SnackBar(content: Text('no image selected'));
+      ScaffoldMessenger.of(context).showSnackBar(snackbar);
+    }
+  }
 
   @override
   void initState() {
@@ -298,42 +317,48 @@ class _CreateDestinationTouristState extends State<CreateDestinationTourist> {
                             fontWeight: FontWeight.w600),
                       ),
                     ),
-                    SizedBox(
-                      height: 90,
-                      width: MediaQuery.of(context).size.width,
-                      child: DottedBorder(
-                          borderType: BorderType.RRect,
-                          radius: const Radius.circular(5),
-                          dashPattern: const [6, 3, 6, 3],
-                          color: Colors.grey.shade200,
-                          strokeWidth: 2,
-                          child: Center(
-                            child: RichText(
-                              text: TextSpan(text: '', children: [
-                                TextSpan(
-                                  text: 'Tambahkan ',
-                                  style: TextStyle(
-                                      fontSize: 14,
-                                      color: Colors.grey.shade400,
-                                      fontWeight: FontWeight.w500),
-                                ),
-                                TextSpan(
-                                  text: 'Foto Tempat Wisata  ',
-                                  style: TextStyle(
-                                      fontSize: 14,
-                                      color: Colors.black,
-                                      fontWeight: FontWeight.w500),
-                                ),
-                                TextSpan(
-                                  text: 'Anda ',
-                                  style: TextStyle(
-                                      fontSize: 14,
-                                      color: Colors.grey.shade400,
-                                      fontWeight: FontWeight.w500),
-                                ),
-                              ]),
-                            ),
-                          )),
+                    InkWell(
+                      onTap: ()async{
+                        await getImage();
+                      },
+                      child:SizedBox(
+                        height: 90,
+                        width: MediaQuery.of(context).size.width,
+                        child: image == null? DottedBorder(
+                            borderType: BorderType.RRect,
+                            radius: const Radius.circular(5),
+                            dashPattern: const [6, 3, 6, 3],
+                            color: Colors.grey.shade200,
+                            strokeWidth: 2,
+                            child: Center(
+                              child:
+                               RichText(
+                                text: TextSpan(text: '', children: [
+                                  TextSpan(
+                                    text: 'Tambahkan ',
+                                    style: TextStyle(
+                                        fontSize: 14,
+                                        color: Colors.grey.shade400,
+                                        fontWeight: FontWeight.w500),
+                                  ),
+                                  TextSpan(
+                                    text: 'Foto Tempat Wisata  ',
+                                    style: TextStyle(
+                                        fontSize: 14,
+                                        color: Colors.black,
+                                        fontWeight: FontWeight.w500),
+                                  ),
+                                  TextSpan(
+                                    text: 'Anda ',
+                                    style: TextStyle(
+                                        fontSize: 14,
+                                        color: Colors.grey.shade400,
+                                        fontWeight: FontWeight.w500),
+                                  ),
+                                ]),
+                              ),
+                            )): Image.file(image!, fit: BoxFit.cover,),
+                      ),
                     ),
                   ],
                 ),
@@ -1895,6 +1920,7 @@ class _CreateDestinationTouristState extends State<CreateDestinationTourist> {
                           contact: phoneNumberController.text,
                           hobby: finalSelectedHobby,
                           minutesSpend: minutesSpendController.text,
+
                           // latitude: latitudeValue,
                           // longitude: longitudeValue,
                           // latitude: -6.0000,
@@ -1906,8 +1932,8 @@ class _CreateDestinationTouristState extends State<CreateDestinationTourist> {
                           openHour: openHourController.text,
                           closedHour: closedHourController.text,
                           fasility: fasilitiesController.text,
-                          security: securityAvail
-                          // image:
+                          security: securityAvail,
+                          image: image
                           // openHour: openHourController.text
                           // closedHour: closedHourController.text
                           );

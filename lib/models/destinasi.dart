@@ -59,7 +59,7 @@ class Destinasi {
   String? _address;
   String? _city;
   String? _category;
-  Null? _destinationPicture;
+  String? _destinationPicture;
   String? _contact;
   String? _hobby;
   String? _minutesSpend;
@@ -82,7 +82,7 @@ class Destinasi {
     String? address,
     String? city,
     String? category,
-    Null? destinationPicture,
+    String? destinationPicture,
     String? contact,
     String? hobby,
     String? minutesSpend,
@@ -175,8 +175,8 @@ class Destinasi {
   set city(String? city) => _city = city;
   String? get category => _category;
   set category(String? category) => _category = category;
-  Null? get destinationPicture => _destinationPicture;
-  set destinationPicture(Null? destinationPicture) =>
+  String? get destinationPicture => _destinationPicture;
+  set destinationPicture(String? destinationPicture) =>
       _destinationPicture = destinationPicture;
   String? get contact => _contact;
   set contact(String? contact) => _contact = contact;

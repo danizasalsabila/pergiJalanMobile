@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:fluttertoast/fluttertoast.dart';
@@ -140,11 +141,24 @@ class _DetailDestinationState extends State<DetailDestination> {
                           height: 400,
                           width: MediaQuery.of(context).size.width,
                           child: ClipRRect(
-                              borderRadius: BorderRadius.circular(8),
-                              child: Image.asset(
-                                "assets/images/slicing.jpg",
-                                fit: BoxFit.cover,
-                              )),
+                            borderRadius: BorderRadius.circular(8),
+                            child: widget.id.destinationPicture == null
+                                ? Image.asset(
+                                    "assets/images/no_image2.jpg",
+                                    fit: BoxFit.cover,
+                                  )
+                                : CachedNetworkImage(
+                                    placeholder: (context, url) => Center(
+                                        child: new CircularProgressIndicator()),
+                                    imageUrl: widget.id.destinationPicture!,
+                                    fit: BoxFit.cover,
+                                    errorWidget: (context, url, error) =>
+                                        Image.asset(
+                                      "assets/images/error_image.jpeg",
+                                      fit: BoxFit.fitWidth,
+                                    ),
+                                  ),
+                          ),
                         ),
                         Align(
                           alignment: Alignment.bottomRight,
@@ -335,7 +349,7 @@ class _DetailDestinationState extends State<DetailDestination> {
                                                             FontWeight.w500),
                                                   ),
                                                   Text(
-                                                    " -",
+                                                    " - ",
                                                     style: GoogleFonts.openSans(
                                                         fontSize: 12,
                                                         color: descColor,
@@ -457,7 +471,7 @@ class _DetailDestinationState extends State<DetailDestination> {
                                             ),
                                             Padding(
                                               padding: const EdgeInsets.only(
-                                                  top: 2.0, bottom: 2.0),
+                                                  top: 4.0, bottom: 6.0),
                                               child: Row(
                                                 children: [
                                                   Icon(
@@ -487,6 +501,7 @@ class _DetailDestinationState extends State<DetailDestination> {
                                             ),
                                             ReadMoreText(
                                               widget.id.description!,
+                                              textAlign: TextAlign.justify,
                                               style: GoogleFonts.openSans(
                                                   fontSize: 13,
                                                   color: descColor,
@@ -501,7 +516,7 @@ class _DetailDestinationState extends State<DetailDestination> {
                                             ),
                                             Padding(
                                               padding: const EdgeInsets.only(
-                                                  top: 8.0, bottom: 12.0),
+                                                  top: 10.0, bottom: 14.0),
                                               child: Container(
                                                 height: 0.8,
                                                 width: MediaQuery.of(context)
@@ -819,7 +834,7 @@ class _DetailDestinationState extends State<DetailDestination> {
                                             Text(
                                               "Fasilitas umum yang tersedia",
                                               style: GoogleFonts.kanit(
-                                                  fontSize: 12,
+                                                  fontSize: 13,
                                                   color: primaryColor,
                                                   fontWeight: FontWeight.w500),
                                             ),
@@ -890,7 +905,7 @@ class _DetailDestinationState extends State<DetailDestination> {
                                                     ),
                                                   ),
                                             const SizedBox(
-                                              height: 10,
+                                              height: 14,
                                             )
                                           ],
                                         ),
@@ -1017,7 +1032,7 @@ class _DetailDestinationState extends State<DetailDestination> {
                                               ],
                                             ),
                                             SizedBox(
-                                              height: 8,
+                                              height: 12,
                                             ),
                                             // Padding(
                                             //   padding: const EdgeInsets.only(

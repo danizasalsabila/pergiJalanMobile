@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:pergijalan_mobile/config/theme_color.dart';
@@ -57,12 +58,12 @@ class _ListByCategoryState extends State<ListByCategory> {
         ),
         elevation: 0,
         toolbarHeight: 68,
-        centerTitle: true,
+        // centerTitle: true,
         backgroundColor: backgroundColor,
         title: Text(
-          widget.q,
-          style: GoogleFonts.kanit(
-              fontSize: 20, color: primaryColor, fontWeight: FontWeight.w600),
+          "Kategori Wisata ${widget.q}",
+          style: GoogleFonts.openSans(
+              fontSize: 14, color: primaryColor, fontWeight: FontWeight.w700),
         ),
 
         // title: widget,
@@ -121,20 +122,48 @@ class _ListByCategoryState extends State<ListByCategory> {
                                             mainAxisAlignment:
                                                 MainAxisAlignment.start,
                                             children: [
-                                              Container(
-                                                height: 70,
-                                                width: MediaQuery.of(context)
-                                                        .size
-                                                        .width *
-                                                    0.25,
-                                                decoration: BoxDecoration(
-                                                  borderRadius:
-                                                      BorderRadius.circular(8),
-                                                  color: Colors.blue,
+                                              ClipRRect(
+                                                      borderRadius:
+                                                          BorderRadius.circular(
+                                                              8),
+                                                child: Container(
+                                                  height: 70,
+                                                  width: MediaQuery.of(context)
+                                                          .size
+                                                          .width *
+                                                      0.25,
+                                                  child: homeCon
+                                                              .destinasiCategoryData![
+                                                                  index]
+                                                              .destinationPicture ==
+                                                          null
+                                                      ? Image.asset(
+                                                          "assets/images/no_image2.jpg",
+                                                          fit: BoxFit.cover,
+                                                        )
+                                                      : CachedNetworkImage(
+                                                              
+                                                          placeholder: (context,
+                                                                  url) =>
+                                                              Center(child: new CircularProgressIndicator( )),
+                                                          imageUrl:
+                                                               homeCon
+                                                              .destinasiCategoryData![
+                                                                  index]
+                                                              .destinationPicture!,
+                                                                    fit: BoxFit.cover,
+                                                          errorWidget: (context,
+                                                                  url, error) =>
+                                                              Image.asset(
+                                                          "assets/images/error_image.jpeg",
+                                                          fit: BoxFit.fitWidth,
+                                                        ),
+                                                        ),
                                                 ),
                                               ),
                                               Padding(
-                                                padding: const EdgeInsets.only(left: 10.0),
+                                                padding: const EdgeInsets.only(
+                                                    left: 10.0),
                                                 child: Container(
                                                   width: MediaQuery.of(context)
                                                           .size
@@ -182,22 +211,22 @@ class _ListByCategoryState extends State<ListByCategory> {
                                                                 Icons
                                                                     .location_on_outlined,
                                                                 size: 15,
-                                                                color: titleColor,
+                                                                color:
+                                                                    titleColor,
                                                               ),
                                                               Text(
                                                                 homeCon
                                                                     .destinasiCategoryData![
                                                                         index]
                                                                     .city!,
-                                                                style: GoogleFonts
-                                                                    .notoSansDisplay(
-                                                                        fontSize:
-                                                                            11,
-                                                                        color:
-                                                                            descColor,
-                                                                        fontWeight:
-                                                                            FontWeight
-                                                                                .w500),
+                                                                style: GoogleFonts.notoSansDisplay(
+                                                                    fontSize:
+                                                                        11,
+                                                                    color:
+                                                                        descColor,
+                                                                    fontWeight:
+                                                                        FontWeight
+                                                                            .w500),
                                                                 overflow:
                                                                     TextOverflow
                                                                         .ellipsis,
@@ -223,10 +252,12 @@ class _ListByCategoryState extends State<ListByCategory> {
                                                                     color:
                                                                         thirdColor),
                                                                 child: Center(
-                                                                  child: Padding(
+                                                                  child:
+                                                                      Padding(
                                                                     padding: const EdgeInsets
                                                                             .only(
-                                                                        left: 5.0,
+                                                                        left:
+                                                                            5.0,
                                                                         right:
                                                                             5.0),
                                                                     child: Text(
@@ -251,14 +282,14 @@ class _ListByCategoryState extends State<ListByCategory> {
                                                               padding:
                                                                   const EdgeInsets
                                                                           .only(
-                                                                      left: 5.0),
+                                                                      left:
+                                                                          5.0),
                                                               child: Container(
                                                                   height: 17,
                                                                   decoration: BoxDecoration(
                                                                       borderRadius:
-                                                                          BorderRadius
-                                                                              .circular(
-                                                                                  8),
+                                                                          BorderRadius.circular(
+                                                                              8),
                                                                       color:
                                                                           labelColor),
                                                                   child: Center(
@@ -270,21 +301,19 @@ class _ListByCategoryState extends State<ListByCategory> {
                                                                               5.0,
                                                                           right:
                                                                               5.0),
-                                                                      child: Text(
+                                                                      child:
+                                                                          Text(
                                                                         homeCon
-                                                                            .destinasiCategoryData![
-                                                                                index]
+                                                                            .destinasiCategoryData![index]
                                                                             .category!,
                                                                         style: GoogleFonts.notoSansDisplay(
                                                                             fontSize:
                                                                                 9,
-                                                                            color: Colors
-                                                                                .black,
-                                                                            fontWeight:
-                                                                                FontWeight.w500),
+                                                                            color:
+                                                                                Colors.black,
+                                                                            fontWeight: FontWeight.w500),
                                                                         overflow:
-                                                                            TextOverflow
-                                                                                .ellipsis,
+                                                                            TextOverflow.ellipsis,
                                                                       ),
                                                                     ),
                                                                   )),

@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:fluttertoast/fluttertoast.dart';
@@ -31,7 +32,6 @@ class _DetailDestinationOwnerState extends State<DetailDestinationOwner> {
   String _review = '';
   double? avgRating;
 
-
   double ratingController = 5;
   // int ratingController2 = 1;
   String text = '';
@@ -57,14 +57,12 @@ class _DetailDestinationOwnerState extends State<DetailDestinationOwner> {
         await reviewData.reviewDestinasiId(widget.id.id);
         await reviewData.getRatingAverageById(widget.id.id);
 
-        
         if (reviewData.statusCodeAvgRating == 200) {
           avgRatingBool = true;
           avgRating = reviewData.avgRating!;
         } else {
           avgRatingBool = false;
         }
-
 
         await Future.delayed(Duration.zero);
         text = widget.id.fasility.toString();
@@ -104,11 +102,24 @@ class _DetailDestinationOwnerState extends State<DetailDestinationOwner> {
                         height: 400,
                         width: MediaQuery.of(context).size.width,
                         child: ClipRRect(
-                            borderRadius: BorderRadius.circular(8),
-                            child: Image.asset(
-                              "assets/images/slicing.jpg",
-                              fit: BoxFit.cover,
-                            )),
+                          borderRadius: BorderRadius.circular(8),
+                          child: widget.id.destinationPicture == null
+                              ? Image.asset(
+                                  "assets/images/no_image2.jpg",
+                                  fit: BoxFit.cover,
+                                )
+                              : CachedNetworkImage(
+                                  placeholder: (context, url) => Center(
+                                      child: new CircularProgressIndicator()),
+                                  imageUrl: widget.id.destinationPicture!,
+                                  fit: BoxFit.cover,
+                                  errorWidget: (context, url, error) =>
+                                      Image.asset(
+                                    "assets/images/error_image.jpeg",
+                                    fit: BoxFit.fitWidth,
+                                  ),
+                                ),
+                        ),
                       ),
                       Align(
                         alignment: Alignment.bottomRight,
@@ -299,42 +310,40 @@ class _DetailDestinationOwnerState extends State<DetailDestinationOwner> {
                                   ],
                                 ),
                               ),
-                              
-                                avgRatingBool
-                                    ? Align(
-                                        alignment: Alignment.topLeft,
-                                        child: Row(
-                                          children: [
-                                            Padding(
-                                              padding: const EdgeInsets.only(
-                                                  left: 4, top: 8),
-                                              child: RatingBarIndicator(
-                                                rating: avgRating!,
-                                                itemBuilder: (context, ndex) =>
-                                                    Icon(
-                                                  Icons.star,
-                                                  color: Colors.amber,
-                                                ),
-                                                itemCount: 5,
-                                                itemSize: 17.0,
+                              avgRatingBool
+                                  ? Align(
+                                      alignment: Alignment.topLeft,
+                                      child: Row(
+                                        children: [
+                                          Padding(
+                                            padding: const EdgeInsets.only(
+                                                left: 4, top: 8),
+                                            child: RatingBarIndicator(
+                                              rating: avgRating!,
+                                              itemBuilder: (context, ndex) =>
+                                                  Icon(
+                                                Icons.star,
+                                                color: Colors.amber,
                                               ),
+                                              itemCount: 5,
+                                              itemSize: 17.0,
                                             ),
-                                            Padding(
-                                              padding: const EdgeInsets.only(
-                                                  left: 4.0, top: 8.0),
-                                              child: Text(
-                                                avgRating!.toStringAsFixed(1),
-                                                style: GoogleFonts.openSans(
-                                                    fontSize: 13,
-                                                    color: descColor,
-                                                    fontWeight:
-                                                        FontWeight.w600),
-                                              ),
-                                            )
-                                          ],
-                                        ),
-                                      )
-                                    : const SizedBox(),
+                                          ),
+                                          Padding(
+                                            padding: const EdgeInsets.only(
+                                                left: 4.0, top: 8.0),
+                                            child: Text(
+                                              avgRating!.toStringAsFixed(1),
+                                              style: GoogleFonts.openSans(
+                                                  fontSize: 13,
+                                                  color: descColor,
+                                                  fontWeight: FontWeight.w600),
+                                            ),
+                                          )
+                                        ],
+                                      ),
+                                    )
+                                  : const SizedBox(),
                             ]),
                           ),
                         )
@@ -771,7 +780,8 @@ class _DetailDestinationOwnerState extends State<DetailDestinationOwner> {
                                                 color: primaryColor,
                                                 fontWeight: FontWeight.w500),
                                           ),
-                                          widget.id.fasility == null ||widget.id.fasility!.isEmpty ||
+                                          widget.id.fasility == null ||
+                                                  widget.id.fasility!.isEmpty ||
                                                   widget.id.fasility == ''
                                               ? Text(
                                                   "Tidak terdapat fasilitas",
@@ -852,6 +862,16 @@ class _DetailDestinationOwnerState extends State<DetailDestinationOwner> {
                                         crossAxisAlignment:
                                             CrossAxisAlignment.start,
                                         children: [
+                                          SizedBox(
+                                            height: 10,
+                                          ),
+                                          Text(
+                                            "Alamat wisata",
+                                            style: GoogleFonts.kanit(
+                                                fontSize: 13,
+                                                color: primaryColor,
+                                                fontWeight: FontWeight.w500),
+                                          ),
                                           SizedBox(
                                             height: 10,
                                           ),
@@ -994,59 +1014,59 @@ class _DetailDestinationOwnerState extends State<DetailDestinationOwner> {
                                           SizedBox(
                                             height: 8,
                                           ),
-                                          Padding(
-                                            padding:
-                                                const EdgeInsets.only(top: 3.0),
-                                            child: SizedBox(
-                                              height: MediaQuery.of(context)
-                                                      .size
-                                                      .height *
-                                                  0.2,
-                                              child: ClipRRect(
-                                                borderRadius:
-                                                    BorderRadius.circular(8),
-                                                child: isLoading
-                                                    ? const Center(
-                                                        child:
-                                                            CircularProgressIndicator(
-                                                          color: Colors.blue,
-                                                        ),
-                                                      )
-                                                    : SizedBox(
-                                                        width: MediaQuery.of(
-                                                                context)
-                                                            .size
-                                                            .width,
-                                                        height: 600,
-                                                        child: GoogleMap(
-                                                          mapType:
-                                                              MapType.normal,
-                                                          zoomControlsEnabled:
-                                                              false,
-                                                          initialCameraPosition:
-                                                              CameraPosition(
-                                                            target: LatLng(
-                                                                // widget.id.latitude!.toDouble() ,
-                                                                // widget.id.longitude!.toDouble()
-                                                                -6.175392,
-                                                                106.827153
-                                                                // lat,
-                                                                // long
-                                                                ),
-                                                            zoom: 12,
-                                                          ),
-                                                          onMapCreated:
-                                                              (GoogleMapController
-                                                                  controller) {
-                                                            _controller
-                                                                .complete(
-                                                                    controller);
-                                                          },
-                                                        ),
-                                                      ),
-                                              ),
-                                            ),
-                                          ),
+                                          // Padding(
+                                          //   padding:
+                                          //       const EdgeInsets.only(top: 3.0),
+                                          //   child: SizedBox(
+                                          //     height: MediaQuery.of(context)
+                                          //             .size
+                                          //             .height *
+                                          //         0.2,
+                                          //     child: ClipRRect(
+                                          //       borderRadius:
+                                          //           BorderRadius.circular(8),
+                                          //       child: isLoading
+                                          //           ? const Center(
+                                          //               child:
+                                          //                   CircularProgressIndicator(
+                                          //                 color: Colors.blue,
+                                          //               ),
+                                          //             )
+                                          //           : SizedBox(
+                                          //               width: MediaQuery.of(
+                                          //                       context)
+                                          //                   .size
+                                          //                   .width,
+                                          //               height: 600,
+                                          //               child: GoogleMap(
+                                          //                 mapType:
+                                          //                     MapType.normal,
+                                          //                 zoomControlsEnabled:
+                                          //                     false,
+                                          //                 initialCameraPosition:
+                                          //                     CameraPosition(
+                                          //                   target: LatLng(
+                                          //                       // widget.id.latitude!.toDouble() ,
+                                          //                       // widget.id.longitude!.toDouble()
+                                          //                       -6.175392,
+                                          //                       106.827153
+                                          //                       // lat,
+                                          //                       // long
+                                          //                       ),
+                                          //                   zoom: 12,
+                                          //                 ),
+                                          //                 onMapCreated:
+                                          //                     (GoogleMapController
+                                          //                         controller) {
+                                          //                   _controller
+                                          //                       .complete(
+                                          //                           controller);
+                                          //                 },
+                                          //               ),
+                                          //             ),
+                                          //     ),
+                                          //   ),
+                                          // ),
                                           SizedBox(height: 10)
                                         ],
                                       ),
@@ -1369,9 +1389,11 @@ class _DetailDestinationOwnerState extends State<DetailDestinationOwner> {
                                                       //   ),
                                                       // ),
                                                       ListView.builder(
-                                                        physics: ClampingScrollPhysics(),
+                                                          physics:
+                                                              ClampingScrollPhysics(),
                                                           shrinkWrap: true,
-                                                          padding: EdgeInsets.zero,
+                                                          padding:
+                                                              EdgeInsets.zero,
                                                           controller:
                                                               _scrollController,
                                                           scrollDirection:
@@ -1402,7 +1424,7 @@ class _DetailDestinationOwnerState extends State<DetailDestinationOwner> {
                                                                             230,
                                                                             230),
                                                                         child:
-                                                                             FaIcon(
+                                                                            FaIcon(
                                                                           FontAwesomeIcons
                                                                               .solidUser,
                                                                           size:

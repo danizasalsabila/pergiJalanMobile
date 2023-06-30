@@ -48,7 +48,7 @@ class TicketController extends ChangeNotifier {
     int? price,
     int? stock,
     // int? ticketSold,
-    // String? visitDate
+    String? nameTicket
   }) async {
     var url = Uri.parse(BASE_URL + POST_TICKET);
     print(url);
@@ -57,6 +57,7 @@ class TicketController extends ChangeNotifier {
       'id_destinasi': idDestinasi,
       'price': price,
       'stock': stock,
+      'name_ticket': nameTicket,
       // 'ticket_sold': ticketSold,
       // 'visit_date': visitDate,
     };
@@ -93,13 +94,18 @@ class TicketController extends ChangeNotifier {
     id,
     int? price,
     int? stock,
+    String? nameTicket
+
   }) async {
     var url = Uri.parse(BASE_URL + PUT_TICKET(id));
     print(url);
     final body = {
       'price': price,
       'stock': stock,
+      'name_ticket': nameTicket,
+
     };
+    print(body);
     try {
       var response = await http.put(
         url,
@@ -217,9 +223,12 @@ class TicketController extends ChangeNotifier {
         ticketResponseMostSales = ticketFromJson(response.body);
         ticketDataMostSales = ticketResponseMostSales?.ticket;
         anySoldTicket = true;
+        print("anysold tiket $anySoldTicket");
+
         notifyListeners();
       } else if (response.statusCode == 404) {
         anySoldTicket = false;
+        print("anysold tiket $anySoldTicket");
         notifyListeners();
       } else {
         print("code: ${response.statusCode}");

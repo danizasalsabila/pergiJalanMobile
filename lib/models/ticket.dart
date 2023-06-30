@@ -50,6 +50,7 @@ class TicketResponse {
 class Ticket {
   int? _id;
   int? _idDestinasi;
+  String? _nameTicket;
   int? _price;
   int? _stock;
   int? _ticketSold;
@@ -61,6 +62,7 @@ class Ticket {
   Ticket(
       {int? id,
       int? idDestinasi,
+      String? nameTicket,
       int? price,
       int? stock,
       int? ticketSold,
@@ -73,6 +75,9 @@ class Ticket {
     }
     if (idDestinasi != null) {
       this._idDestinasi = idDestinasi;
+    }
+    if (nameTicket != null) {
+      this._nameTicket = nameTicket;
     }
     if (price != null) {
       this._price = price;
@@ -101,6 +106,8 @@ class Ticket {
   set id(int? id) => _id = id;
   int? get idDestinasi => _idDestinasi;
   set idDestinasi(int? idDestinasi) => _idDestinasi = idDestinasi;
+  String? get nameTicket => _nameTicket;
+  set nameTicket(String? nameTicket) => _nameTicket = nameTicket;
   int? get price => _price;
   set price(int? price) => _price = price;
   int? get stock => _stock;
@@ -119,6 +126,7 @@ class Ticket {
   Ticket.fromJson(Map<String, dynamic> json) {
     _id = json['id'];
     _idDestinasi = json['id_destinasi'];
+    _nameTicket = json['name_ticket'];
     _price = json['price'];
     _stock = json['stock'];
     _ticketSold = json['ticket_sold'];
@@ -134,6 +142,7 @@ class Ticket {
     final Map<String, dynamic> data = new Map<String, dynamic>();
     data['id'] = this._id;
     data['id_destinasi'] = this._idDestinasi;
+    data['name_ticket'] = this._nameTicket;
     data['price'] = this._price;
     data['stock'] = this._stock;
     data['ticket_sold'] = this._ticketSold;
