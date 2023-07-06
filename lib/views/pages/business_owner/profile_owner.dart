@@ -337,10 +337,9 @@ class _OwnerProfilePageState extends State<OwnerProfilePage> {
                                                   fontWeight: FontWeight.w500),
                                             ),
                                             Text(
-                                              ticketData.ticketSoldOwner != 0
-                                                  ? ticketData.ticketSoldOwner
-                                                      .toString()
-                                                  : "0",
+                                              ticketData.ticketSoldOwner == 0 || ticketData.ticketSoldOwner == null
+                                                  ? "0": ticketData.ticketSoldOwner
+                                                      .toString(),
                                               style: GoogleFonts.openSans(
                                                   fontSize: 12,
                                                   color: thirdColor,

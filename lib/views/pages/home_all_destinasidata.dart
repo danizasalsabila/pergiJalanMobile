@@ -142,7 +142,7 @@ class _AllDestinasiPageState extends State<AllDestinasiPage> {
                                                         width: MediaQuery.of(context)
                                                                 .size
                                                                 .width *
-                                                            0.4,
+                                                            0.55,
                                                         child: Column(
                                                             crossAxisAlignment:
                                                                 CrossAxisAlignment
@@ -221,6 +221,10 @@ class _AllDestinasiPageState extends State<AllDestinasiPage> {
                                                                         .start,
                                                                 children: [
                                                                   Container(
+                                                            //          width: MediaQuery.of(context)
+                                                            //     .size
+                                                            //     .width *
+                                                            // 0.2,
                                                                       // height: 17,
                                                                       decoration: BoxDecoration(
                                                                           borderRadius:
@@ -258,48 +262,54 @@ class _AllDestinasiPageState extends State<AllDestinasiPage> {
                                                                                       fontWeight: FontWeight.w400),),
                                                                         ),
                                                                       )),
-                                                                  Padding(
-                                                                    padding:
-                                                                        const EdgeInsets
-                                                                                .only(
-                                                                            left:
-                                                                                5.0),
-                                                                    child: Container(
-                                                                        // height: 17,
-                                                                        decoration: BoxDecoration(
-                                                                            borderRadius:
-                                                                                BorderRadius.circular(
-                                                                                    5),
-                                                                            color:
-                                                                                labelColor),
-                                                                        child: Center(
-                                                                          child:
-                                                                              Padding(
-                                                                            padding: const EdgeInsets
-                                                                                    .only(
-                                                                                left:
-                                                                                    5.0,
-                                                                                    
-                                                                              top: 2,
-                                                                              bottom: 2,
-                                                                                right:
-                                                                                    5.0),
+                                                                  Container(
+                                                            //          width: MediaQuery.of(context)
+                                                            //     .size
+                                                            //     .width *
+                                                            // 0.2,
+                                                                    child: Padding(
+                                                                      padding:
+                                                                          const EdgeInsets
+                                                                                  .only(
+                                                                              left:
+                                                                                  5.0),
+                                                                      child: Container(
+                                                                          // height: 17,
+                                                                          decoration: BoxDecoration(
+                                                                              borderRadius:
+                                                                                  BorderRadius.circular(
+                                                                                      5),
+                                                                              color:
+                                                                                  labelColor),
+                                                                          child: Center(
                                                                             child:
-                                                                                Text(
-                                                                              homeCon
-                                                                                  .destinasiData![index]
-                                                                                  .category!,
-                                                                              style: GoogleFonts.notoSansDisplay(
-                                                                                  fontSize:
-                                                                                      11,
-                                                                                  color:
-                                                                                      Colors.black,
-                                                                                  fontWeight: FontWeight.w400),
-                                                                              overflow:
-                                                                                  TextOverflow.ellipsis,
+                                                                                Padding(
+                                                                              padding: const EdgeInsets
+                                                                                      .only(
+                                                                                  left:
+                                                                                      5.0,
+                                                                                      
+                                                                                top: 2,
+                                                                                bottom: 2,
+                                                                                  right:
+                                                                                      5.0),
+                                                                              child:
+                                                                                  Text(
+                                                                                homeCon
+                                                                                    .destinasiData![index]
+                                                                                    .category!,
+                                                                                style: GoogleFonts.notoSansDisplay(
+                                                                                    fontSize:
+                                                                                        11,
+                                                                                    color:
+                                                                                        Colors.black,
+                                                                                    fontWeight: FontWeight.w400),
+                                                                                overflow:
+                                                                                    TextOverflow.ellipsis,
+                                                                              ),
                                                                             ),
-                                                                          ),
-                                                                        )),
+                                                                          )),
+                                                                    ),
                                                                   )
                                                                 ],
                                                               )

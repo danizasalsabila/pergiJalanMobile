@@ -906,7 +906,7 @@ class _EditDestinationOwnerPageState extends State<EditDestinationOwnerPage> {
                                           fontSize: 14,
                                           color: titleColor,
                                           fontWeight: FontWeight.w600),
-                                      keyboardType: TextInputType.number,
+                                      keyboardType: TextInputType.text,
                                       textInputAction: TextInputAction.next,
                                       decoration: InputDecoration(
                                         // hintText: openHourController == null ? '' : '',
@@ -965,7 +965,7 @@ class _EditDestinationOwnerPageState extends State<EditDestinationOwnerPage> {
                                           fontSize: 14,
                                           color: titleColor,
                                           fontWeight: FontWeight.w600),
-                                      keyboardType: TextInputType.number,
+                                      keyboardType: TextInputType.text,
                                       textInputAction: TextInputAction.next,
                                       decoration: InputDecoration(
                                         //   hintText: 'Nomor Handphone',

@@ -719,7 +719,7 @@ class _CreateDestinationTouristState extends State<CreateDestinationTourist> {
                                     fontSize: 14,
                                     color: titleColor,
                                     fontWeight: FontWeight.w600),
-                                keyboardType: TextInputType.number,
+                                keyboardType: TextInputType.text,
                                 textInputAction: TextInputAction.next,
                                 decoration: InputDecoration(
                                   //   hintText: 'Nomor Handphone',
@@ -761,7 +761,7 @@ class _CreateDestinationTouristState extends State<CreateDestinationTourist> {
                                     fontSize: 14,
                                     color: titleColor,
                                     fontWeight: FontWeight.w600),
-                                keyboardType: TextInputType.number,
+                                keyboardType: TextInputType.text,
                                 textInputAction: TextInputAction.next,
                                 decoration: InputDecoration(
                                   //   hintText: 'Nomor Handphone',

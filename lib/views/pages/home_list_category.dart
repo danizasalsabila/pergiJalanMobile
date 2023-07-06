@@ -264,7 +264,10 @@ class _ListByCategoryState extends State<ListByCategory> {
                                                                             2,
                                                                         right:
                                                                             5.0),
-                                                                    child: Text(
+                                                                    child: Text( homeCon
+                                                                          .destinasiCategoryData![
+                                                                              index]
+                                                                          .hobby == null ?"Lainnya":
                                                                       homeCon
                                                                           .destinasiCategoryData![
                                                                               index]
@@ -293,7 +296,7 @@ class _ListByCategoryState extends State<ListByCategory> {
                                                                   decoration: BoxDecoration(
                                                                       borderRadius:
                                                                           BorderRadius.circular(
-                                                                              8),
+                                                                              5),
                                                                       color:
                                                                           labelColor),
                                                                   child: Center(

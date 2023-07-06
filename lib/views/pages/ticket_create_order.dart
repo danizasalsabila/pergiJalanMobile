@@ -175,16 +175,23 @@ class _CreateOrderDetailState extends State<CreateOrderDetail> {
                                   mainAxisAlignment: MainAxisAlignment.start,
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
-                                    Align(
-                                      alignment: Alignment.topLeft,
-                                      child: Text(
-                                        widget.idDestinasi.nameDestinasi
-                                            .toString(),
-                                        style: GoogleFonts.openSans(
-                                            fontSize: 15,
-                                            color:
-                                                Color.fromARGB(255, 49, 49, 49),
-                                            fontWeight: FontWeight.w600),
+                                    Container(
+                                      
+                                        width:
+                                            MediaQuery.of(context).size.width *
+                                                0.4,
+                                      child: Align(
+                                        alignment: Alignment.topLeft,
+                                        child: Text(
+                                          widget.idDestinasi.nameDestinasi
+                                              .toString(),
+                                              maxLines: 4,
+                                          style: GoogleFonts.openSans(
+                                              fontSize: 15,
+                                              color:
+                                                  Color.fromARGB(255, 49, 49, 49),
+                                              fontWeight: FontWeight.w600),
+                                        ),
                                       ),
                                     ),
                                     Padding(
@@ -371,9 +378,13 @@ class _CreateOrderDetailState extends State<CreateOrderDetail> {
                                               fontWeight: FontWeight.w500),
                                         ),
                                       ),
-                                      SizedBox(
+                                      SizedBox(width: MediaQuery.of(context)
+                                                    .size
+                                                    .width *
+                                                0.27,
                                         child: Text(
                                           widget.idDestinasi.contact.toString(),
+                                          maxLines: 2,
                                           style: GoogleFonts.openSans(
                                               fontSize: 13,
                                               color: Color.fromARGB(

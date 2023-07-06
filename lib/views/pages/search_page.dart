@@ -123,7 +123,7 @@ class _SearchPageState extends State<SearchPage> {
                             Padding(
                               padding: const EdgeInsets.only(left: 10.0),
                               child: Container(
-                                width: MediaQuery.of(context).size.width * 0.4,
+                                width: MediaQuery.of(context).size.width * 0.55,
                                 child: Column(
                                     crossAxisAlignment: CrossAxisAlignment.start,
                                     mainAxisAlignment: MainAxisAlignment.center,
