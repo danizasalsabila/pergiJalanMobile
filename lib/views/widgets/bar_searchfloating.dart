@@ -53,7 +53,7 @@ class _SearchAppBarState extends State<SearchAppBar> {
                   style: GoogleFonts.openSans(
                       fontSize: 13,
                       color: descColor,
-                      fontWeight: FontWeight.w600),
+                      fontWeight: FontWeight.w400),
                 ),
               ),
               const SizedBox(

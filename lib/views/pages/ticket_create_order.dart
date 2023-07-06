@@ -37,7 +37,7 @@ class _CreateOrderDetailState extends State<CreateOrderDetail> {
   TextEditingController nameVisitor = TextEditingController();
   TextEditingController contactVisitor = TextEditingController();
   // TextEditingController dateVisit = TextEditingController();
-int? totalPrice;
+  int? totalPrice;
   @override
   void initState() {
     print(" ");
@@ -55,7 +55,6 @@ int? totalPrice;
         emailUser = userCon.emailLogin;
 
         totalPrice = widget.idTicket.price! + 1500;
-        
       } catch (e) {
         print(e);
       }
@@ -202,9 +201,9 @@ int? totalPrice;
                                     Text(
                                       "LOKASI",
                                       style: GoogleFonts.openSans(
-                                          fontSize: 9,
+                                          fontSize: 11,
                                           color: captColor,
-                                          fontWeight: FontWeight.w600),
+                                          fontWeight: FontWeight.w500),
                                     ),
                                     SizedBox(
                                       width: MediaQuery.of(context).size.width *
@@ -233,10 +232,10 @@ int? totalPrice;
                                               Text(
                                                 "JAM BUKA",
                                                 style: GoogleFonts.openSans(
-                                                    fontSize: 9,
+                                                    fontSize: 11,
                                                     color: captColor,
                                                     fontWeight:
-                                                        FontWeight.w600),
+                                                        FontWeight.w500),
                                               ),
                                               SizedBox(
                                                 child: Text(
@@ -274,10 +273,10 @@ int? totalPrice;
                                               Text(
                                                 "JAM TUTUP",
                                                 style: GoogleFonts.openSans(
-                                                    fontSize: 9,
+                                                    fontSize: 11,
                                                     color: captColor,
                                                     fontWeight:
-                                                        FontWeight.w600),
+                                                        FontWeight.w500),
                                               ),
                                               SizedBox(
                                                 child: Text(
@@ -367,9 +366,9 @@ int? totalPrice;
                                         child: Text(
                                           "KONTAK",
                                           style: GoogleFonts.openSans(
-                                              fontSize: 9,
+                                              fontSize: 11,
                                               color: captColor,
-                                              fontWeight: FontWeight.w600),
+                                              fontWeight: FontWeight.w500),
                                         ),
                                       ),
                                       SizedBox(
@@ -401,11 +400,11 @@ int? totalPrice;
                               child: Align(
                                 alignment: Alignment.topLeft,
                                 child: Text(
-                                  "DETAIL TIKET",
+                                  "JENIS TIKET",
                                   style: GoogleFonts.openSans(
-                                      fontSize: 9,
+                                      fontSize: 11,
                                       color: captColor,
-                                      fontWeight: FontWeight.w600),
+                                      fontWeight: FontWeight.w500),
                                 ),
                               ),
                             ),
@@ -432,81 +431,76 @@ int? totalPrice;
                                 ),
                               ],
                             ),
+                            SizedBox(
+                              height: 2,
+                            ),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Text(
+                                  "1 Tiket",
+                                  overflow: TextOverflow.ellipsis,
+                                  style: GoogleFonts.openSans(
+                                      fontSize: 11,
+                                      color: captColor,
+                                      fontWeight: FontWeight.w500),
+                                ),
+                                Text(
+                                  "Harga tidak termaksud pajak",
+                                  overflow: TextOverflow.ellipsis,
+                                  style: GoogleFonts.openSans(
+                                      fontSize: 11,
+                                      color: captColor,
+                                      fontWeight: FontWeight.w500),
+                                ),
+                              ],
+                            ),
                             Padding(
                               padding: const EdgeInsets.only(top: 15.0),
-                              child: Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
+                              child: Column(
+                                mainAxisAlignment: MainAxisAlignment.start,
+                                crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
-                                  Column(
-                                    mainAxisAlignment: MainAxisAlignment.start,
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
+                                  Row(
                                     children: [
-                                      Row(
-                                        children: [
-                                          FaIcon(
-                                            FontAwesomeIcons.textSlash,
-                                            size: 10,
-                                            color: captColor,
-                                          ),
-                                          Padding(
-                                            padding: const EdgeInsets.only(
-                                                left: 3.0),
-                                            child: Text(
-                                              "Tidak bisa ubah data pengunjung",
-                                              overflow: TextOverflow.ellipsis,
-                                              style: GoogleFonts.openSans(
-                                                  fontSize: 9,
-                                                  color: captColor,
-                                                  fontWeight: FontWeight.w500),
-                                            ),
-                                          )
-                                        ],
+                                      FaIcon(
+                                        FontAwesomeIcons.textSlash,
+                                        size: 10,
+                                        color: captColor,
                                       ),
-                                      Row(
-                                        children: [
-                                          FaIcon(
-                                            FontAwesomeIcons.cancel,
-                                            size: 10,
-                                            color: captColor,
-                                          ),
-                                          Padding(
-                                            padding: const EdgeInsets.only(
-                                                left: 5.0),
-                                            child: Text(
-                                              "Tidak bisa dibatalkan",
-                                              overflow: TextOverflow.ellipsis,
-                                              style: GoogleFonts.openSans(
-                                                  fontSize: 9,
-                                                  color: captColor,
-                                                  fontWeight: FontWeight.w500),
-                                            ),
-                                          )
-                                        ],
+                                      Padding(
+                                        padding:
+                                            const EdgeInsets.only(left: 3.0),
+                                        child: Text(
+                                          "Tidak bisa ubah data pengunjung",
+                                          overflow: TextOverflow.ellipsis,
+                                          style: GoogleFonts.openSans(
+                                              fontSize: 11,
+                                              color: captColor,
+                                              fontWeight: FontWeight.w500),
+                                        ),
                                       )
                                     ],
                                   ),
-                                  Column(
-                                    mainAxisAlignment: MainAxisAlignment.end,
-                                    crossAxisAlignment: CrossAxisAlignment.end,
+                                  Row(
                                     children: [
-                                      Text(
-                                        "1 Tiket",
-                                        overflow: TextOverflow.ellipsis,
-                                        style: GoogleFonts.openSans(
-                                            fontSize: 9,
-                                            color: captColor,
-                                            fontWeight: FontWeight.w500),
+                                      FaIcon(
+                                        FontAwesomeIcons.cancel,
+                                        size: 10,
+                                        color: captColor,
                                       ),
-                                      Text(
-                                        "Harga tidak termaksud pajak",
-                                        overflow: TextOverflow.ellipsis,
-                                        style: GoogleFonts.openSans(
-                                            fontSize: 9,
-                                            color: captColor,
-                                            fontWeight: FontWeight.w500),
-                                      ),
+                                      Padding(
+                                        padding:
+                                            const EdgeInsets.only(left: 5.0),
+                                        child: Text(
+                                          "Tidak bisa dibatalkan",
+                                          overflow: TextOverflow.ellipsis,
+                                          style: GoogleFonts.openSans(
+                                              fontSize: 11,
+                                              color: captColor,
+                                              fontWeight: FontWeight.w500),
+                                        ),
+                                      )
                                     ],
                                   )
                                 ],
@@ -785,7 +779,7 @@ int? totalPrice;
                                       "Rp ${widget.idTicket.price.toString()}",
                                       style: GoogleFonts.inter(
                                           fontSize: 13,
-                                          color: titleColor,
+                                          color: secondaryColor,
                                           fontWeight: FontWeight.w700),
                                     ),
                                   ],
@@ -808,7 +802,7 @@ int? totalPrice;
                                       "Rp 1500",
                                       style: GoogleFonts.inter(
                                           fontSize: 13,
-                                          color: titleColor,
+                                          color: secondaryColor,
                                           fontWeight: FontWeight.w700),
                                     ),
                                   ],
@@ -947,7 +941,7 @@ int? totalPrice;
                               contactVisitor.text.isEmpty ||
                               formattedDate.isEmpty) {
                             Fluttertoast.showToast(
-                                msg: "Data pengunjunga boleh kosong",
+                                msg: "Data pengunjung boleh kosong",
                                 toastLength: Toast.LENGTH_SHORT,
                                 gravity: ToastGravity.BOTTOM,
                                 timeInSecForIosWeb: 1,

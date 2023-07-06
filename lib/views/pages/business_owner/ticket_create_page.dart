@@ -118,7 +118,7 @@ class _CreateTicketPageState extends State<CreateTicketPage> {
                               Text(
                                 "Detail Tempat Wisata",
                                 style: GoogleFonts.inter(
-                                    fontSize: 14,
+                                    fontSize: 15,
                                     color:
                                         const Color.fromARGB(255, 41, 41, 41),
                                     fontWeight: FontWeight.w600),
@@ -129,7 +129,7 @@ class _CreateTicketPageState extends State<CreateTicketPage> {
                                 child: Text(
                                   "Berikut adalah informasi yang akan ditampilkan pada e-ticket wisatawan",
                                   style: GoogleFonts.inter(
-                                      fontSize: 12,
+                                      fontSize: 13,
                                       color: Colors.grey.shade500,
                                       fontWeight: FontWeight.w400),
                                   maxLines: 5,
@@ -331,7 +331,7 @@ class _CreateTicketPageState extends State<CreateTicketPage> {
                               Text(
                                 "Masukkan Informasi Tiket",
                                 style: GoogleFonts.inter(
-                                    fontSize: 14,
+                                    fontSize: 15,
                                     color:
                                         const Color.fromARGB(255, 41, 41, 41),
                                     fontWeight: FontWeight.w600),
@@ -343,7 +343,7 @@ class _CreateTicketPageState extends State<CreateTicketPage> {
                                 child: Text(
                                   "Pastikan untuk memberikan informasi yang akurat dan jelas agar pengunjung dapat mengetahui dengan jelas apa yang ditawarkan oleh tiket wisata",
                                   style: GoogleFonts.inter(
-                                      fontSize: 12,
+                                      fontSize: 13,
                                       color: Colors.grey.shade500,
                                       fontWeight: FontWeight.w400),
                                   maxLines: 5,
@@ -355,7 +355,7 @@ class _CreateTicketPageState extends State<CreateTicketPage> {
                                 child: Text(
                                   "Nama Tiket",
                                   style: GoogleFonts.inter(
-                                      fontSize: 12,
+                                      fontSize: 13,
                                       color:
                                           const Color.fromARGB(255, 41, 41, 41),
                                       fontWeight: FontWeight.w600),
@@ -393,7 +393,7 @@ class _CreateTicketPageState extends State<CreateTicketPage> {
                                 child: Text(
                                   "Harga Tiket",
                                   style: GoogleFonts.inter(
-                                      fontSize: 12,
+                                      fontSize: 13,
                                       color:
                                           const Color.fromARGB(255, 41, 41, 41),
                                       fontWeight: FontWeight.w600),
@@ -430,7 +430,7 @@ class _CreateTicketPageState extends State<CreateTicketPage> {
                                 child: Text(
                                   "Stok Tersedia",
                                   style: GoogleFonts.inter(
-                                      fontSize: 12,
+                                      fontSize: 13,
                                       color:
                                           const Color.fromARGB(255, 41, 41, 41),
                                       fontWeight: FontWeight.w600),
@@ -578,7 +578,7 @@ class _CreateTicketPageState extends State<CreateTicketPage> {
                           "Terima kasih atas kerjasamanya dalam memberikan informasi yang diperlukan untuk menciptakan pengalaman wisata yang luar biasa bagi para pengunjung",
                           textAlign: TextAlign.center,
                           style: GoogleFonts.inter(
-                              fontSize: 9,
+                              fontSize: 11,
                               color: Colors.grey.shade500,
                               fontWeight: FontWeight.w400),
                           maxLines: 5,

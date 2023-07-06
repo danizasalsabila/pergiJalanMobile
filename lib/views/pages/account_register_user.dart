@@ -1,6 +1,7 @@
 import 'package:email_validator/email_validator.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:pergijalan_mobile/config/theme_color.dart';
 import 'package:pergijalan_mobile/controllers/user_controller.dart';
@@ -78,7 +79,7 @@ class _RegisterUserState extends State<RegisterUser> {
                     child: Text(
                       "Daftarkan Akun Anda Sekarang",
                       style: GoogleFonts.openSans(
-                          fontSize: 20,
+                          fontSize: 22,
                           color: thirdColor,
                           fontWeight: FontWeight.w700),
                     ),
@@ -93,7 +94,7 @@ class _RegisterUserState extends State<RegisterUser> {
                   child: Text(
                     "Dan temukan kemudahan dan kenyamanan dalam berwisata",
                     style: GoogleFonts.openSans(
-                        fontSize: 14,
+                        fontSize: 15,
                         color: Colors.grey.shade500,
                         fontWeight: FontWeight.w500),
                   ),
@@ -166,12 +167,16 @@ class _RegisterUserState extends State<RegisterUser> {
                             });
                           },
                           child: Padding(
-                            padding: const EdgeInsets.symmetric(horizontal: 12),
+                            padding: const EdgeInsets.symmetric(vertical: 14),
                             child: isObscureText
-                                ? const Icon(Icons.remove_red_eye,
-                                    size: 21, color: descColor)
-                                : const Icon(Icons.close,
-                                    size: 21, color: descColor),
+                                ? FaIcon(FontAwesomeIcons.solidEye,
+                                    textDirection: TextDirection.rtl,
+                                    size: 18,
+                                    color: descColor)
+                                : const FaIcon(FontAwesomeIcons.solidEyeSlash,
+                                    textDirection: TextDirection.rtl,
+                                    size: 18,
+                                    color: descColor),
                           ),
                         ),
                         border: InputBorder.none,
@@ -214,13 +219,17 @@ class _RegisterUserState extends State<RegisterUser> {
                               toggleShow();
                             });
                           },
-                          child: Padding(
-                            padding: const EdgeInsets.symmetric(horizontal: 12),
+                          child:Padding(
+                            padding: const EdgeInsets.symmetric(vertical: 14),
                             child: isObscureText
-                                ? const Icon(Icons.remove_red_eye,
-                                    size: 21, color: descColor)
-                                : const Icon(Icons.close,
-                                    size: 21, color: descColor),
+                                ? FaIcon(FontAwesomeIcons.solidEye,
+                                    textDirection: TextDirection.rtl,
+                                    size: 18,
+                                    color: descColor)
+                                : const FaIcon(FontAwesomeIcons.solidEyeSlash,
+                                    textDirection: TextDirection.rtl,
+                                    size: 18,
+                                    color: descColor),
                           ),
                         ),
                         border: InputBorder.none,
@@ -511,33 +520,31 @@ class _RegisterUserState extends State<RegisterUser> {
                           InkWell(
                             onTap: () {
                               Navigator.push(
-                                      context,
-                                      PageRouteBuilder(
-                                        pageBuilder: (context, animation,
-                                                secondaryAnimation) =>
-                                            const LoginUser(),
-                                        transitionsBuilder: (context, animation,
-                                            secondaryAnimation, child) {
-                                          var begin = const Offset(
-                                              -1.0, 0.0); // Mulai dari kanan
-                                          var end = Offset.zero;
-                                          var curve =
-                                              Curves.ease; // Kurva animasi
+                                  context,
+                                  PageRouteBuilder(
+                                    pageBuilder: (context, animation,
+                                            secondaryAnimation) =>
+                                        const LoginUser(),
+                                    transitionsBuilder: (context, animation,
+                                        secondaryAnimation, child) {
+                                      var begin = const Offset(
+                                          -1.0, 0.0); // Mulai dari kanan
+                                      var end = Offset.zero;
+                                      var curve = Curves.ease; // Kurva animasi
 
-                                          var tween =
-                                              Tween(begin: begin, end: end);
-                                          var curvedAnimation = CurvedAnimation(
-                                            parent: animation,
-                                            curve: curve,
-                                          );
+                                      var tween = Tween(begin: begin, end: end);
+                                      var curvedAnimation = CurvedAnimation(
+                                        parent: animation,
+                                        curve: curve,
+                                      );
 
-                                          return SlideTransition(
-                                            position:
-                                                tween.animate(curvedAnimation),
-                                            child: child,
-                                          );
-                                        },
-                                      ));
+                                      return SlideTransition(
+                                        position:
+                                            tween.animate(curvedAnimation),
+                                        child: child,
+                                      );
+                                    },
+                                  ));
                             },
                             child: Text(
                               "Masuk disini",

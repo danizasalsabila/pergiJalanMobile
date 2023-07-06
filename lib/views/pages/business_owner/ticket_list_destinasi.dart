@@ -123,7 +123,7 @@ class _TicketListPageState extends State<TicketListPage> {
                                 Text(
                                   "List Tiket",
                                   style: GoogleFonts.openSans(
-                                      fontSize: 15,
+                                      fontSize: 16,
                                       color: Colors.white,
                                       fontWeight: FontWeight.w600),
                                 ),
@@ -360,9 +360,9 @@ class _TicketListPageState extends State<TicketListPage> {
                                                                           Text(
                                                                             "Jenis Tiket",
                                                                             style: GoogleFonts.openSans(
-                                                                                fontSize: 8,
+                                                                                fontSize: 12,
                                                                                 color: captColor,
-                                                                                fontWeight: FontWeight.w500),
+                                                                                fontWeight: FontWeight.w400),
                                                                           ),
                                                                           SizedBox(
                                                                             height:
@@ -372,7 +372,7 @@ class _TicketListPageState extends State<TicketListPage> {
                                                                               ticketCon.ticketData![index].nameTicket.toString(),
                                                                               overflow: TextOverflow.fade,
                                                                               maxLines: 2,
-                                                                              style: GoogleFonts.openSans(fontSize: 14, color: ticketCon.ticketData![index].stock == 0 ? Color.fromARGB(255, 190, 77, 75) : labelColor, fontWeight: FontWeight.w700),
+                                                                              style: GoogleFonts.openSans(fontSize: 15, color: ticketCon.ticketData![index].stock == 0 ? Color.fromARGB(255, 190, 77, 75) : labelColor, fontWeight: FontWeight.w700),
                                                                             ),
                                                                           ),
                                                                           Container(
@@ -387,23 +387,23 @@ class _TicketListPageState extends State<TicketListPage> {
                                                                               children: [
                                                                                 FaIcon(
                                                                                   FontAwesomeIcons.boxesStacked,
-                                                                                  size: 9,
+                                                                                  size: 10,
                                                                                   color: captColor,
                                                                                 ),
                                                                                 Padding(
                                                                                   padding: const EdgeInsets.only(left: 4.0),
                                                                                   child: Text(
                                                                                     "Stok: ",
-                                                                                    style: GoogleFonts.openSans(fontSize: 9, color: captColor, fontWeight: FontWeight.w500),
+                                                                                    style: GoogleFonts.openSans(fontSize: 12, color: captColor, fontWeight: FontWeight.w500),
                                                                                   ),
                                                                                 ),
                                                                                 Container(
-                                                                                  width: MediaQuery.of(context).size.width * 0.25,
+                                                                                  width: MediaQuery.of(context).size.width * 0.21,
                                                                                   child: Text(
                                                                                     ticketCon.ticketData![index].stock.toString(),
                                                                                     maxLines: 1,
                                                                                     overflow: TextOverflow.fade,
-                                                                                    style: GoogleFonts.openSans(fontSize: 9, color: titleColor, fontWeight: FontWeight.w500),
+                                                                                    style: GoogleFonts.openSans(fontSize: 12, color: titleColor, fontWeight: FontWeight.w500),
                                                                                   ),
                                                                                 ),
                                                                               ],
@@ -430,7 +430,7 @@ class _TicketListPageState extends State<TicketListPage> {
                                                                             child:
                                                                                 Text(
                                                                               "Harga Tiket",
-                                                                              style: GoogleFonts.openSans(fontSize: 8, color: captColor, fontWeight: FontWeight.w500),
+                                                                              style: GoogleFonts.openSans(fontSize: 12, color: captColor, fontWeight: FontWeight.w400),
                                                                             ),
                                                                           ),
                                                                           SizedBox(
@@ -445,7 +445,7 @@ class _TicketListPageState extends State<TicketListPage> {
                                                                                 children: [
                                                                                   Text(
                                                                                     "Rp ${ticketCon.ticketData![index].price.toString()}",
-                                                                                    style: GoogleFonts.openSans(fontSize: 14, color: Colors.orange, fontWeight: FontWeight.w700),
+                                                                                    style: GoogleFonts.openSans(fontSize: 15, color: Colors.orange, fontWeight: FontWeight.w700),
                                                                                   ),
                                                                                   Text(
                                                                                     "/pax",
@@ -467,14 +467,14 @@ class _TicketListPageState extends State<TicketListPage> {
                                                                               children: [
                                                                                 const FaIcon(
                                                                                   FontAwesomeIcons.checkToSlot,
-                                                                                  size: 9,
+                                                                                  size: 10,
                                                                                   color: captColor,
                                                                                 ),
                                                                                 Padding(
                                                                                   padding: const EdgeInsets.only(left: 4.0),
                                                                                   child: Text(
                                                                                     "Terjual: ",
-                                                                                    style: GoogleFonts.openSans(fontSize: 9, color: captColor, fontWeight: FontWeight.w500),
+                                                                                    style: GoogleFonts.openSans(fontSize: 12, color: captColor, fontWeight: FontWeight.w500),
                                                                                   ),
                                                                                 ),
                                                                                 Container(
@@ -483,7 +483,7 @@ class _TicketListPageState extends State<TicketListPage> {
                                                                                     ticketCon.ticketData![index].ticketSold != null ? ticketCon.ticketData![index].ticketSold.toString() : "0",
                                                                                     maxLines: 1,
                                                                                     overflow: TextOverflow.fade,
-                                                                                    style: GoogleFonts.openSans(fontSize: 9, color: titleColor, fontWeight: FontWeight.w500),
+                                                                                    style: GoogleFonts.openSans(fontSize: 12, color: titleColor, fontWeight: FontWeight.w500),
                                                                                   ),
                                                                                 ),
                                                                               ],
@@ -540,7 +540,7 @@ class _TicketListPageState extends State<TicketListPage> {
                                                                             Text(
                                                                           "Ubah",
                                                                           style: GoogleFonts.openSans(
-                                                                              fontSize: 8,
+                                                                              fontSize: 12,
                                                                               color: labelColor,
                                                                               fontWeight: FontWeight.w500),
                                                                         ),
@@ -657,7 +657,7 @@ class _TicketListPageState extends State<TicketListPage> {
                                                                             Text(
                                                                           "Hapus",
                                                                           style: GoogleFonts.openSans(
-                                                                              fontSize: 8,
+                                                                              fontSize: 12,
                                                                               color: labelColor,
                                                                               fontWeight: FontWeight.w500),
                                                                         ),

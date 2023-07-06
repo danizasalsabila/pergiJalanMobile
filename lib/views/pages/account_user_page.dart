@@ -25,7 +25,8 @@ class UserPage extends StatefulWidget {
 class _UserPageState extends State<UserPage> {
   final _colors = [
     Color.fromARGB(255, 143, 200, 208),
-    Color.fromARGB(255, 174, 204, 188)
+    Color.fromARGB(255, 174, 204, 188),
+    Color.fromARGB(255, 200, 207, 167)
   ];
 
   bool isLoading = false;
@@ -97,559 +98,721 @@ class _UserPageState extends State<UserPage> {
         body: isLoading
             ? const Center(child: CircularProgressIndicator())
             : isUserLogin == true
-                ? Consumer<UserController>(
-                    builder: (context, profileCon, child) {
-                    return Column(children: [
-                      Stack(
-                        children: [
-                          Column(
-                            children: [
-                              Container(
-                                height: 250,
-                                width: MediaQuery.of(context).size.width,
-                                decoration: const BoxDecoration(
-                                  // color: primaFryColor,
-                                  gradient: LinearGradient(
-                                    begin: Alignment.bottomCenter,
-                                    end: Alignment.topRight,
-                                    colors: [
-                                      secondaryColor,
-                                      // Color.fromARGB(255, 28, 114, 125),
-                                      Color.fromARGB(255, 12, 69, 104),
-                                    ],
+                ? SingleChildScrollView(
+                  child: Consumer<UserController>(
+                      builder: (context, profileCon, child) {
+                      return Column(children: [
+                        Stack(
+                          children: [
+                            Column(
+                              children: [
+                                Container(
+                                  height: 250,
+                                  width: MediaQuery.of(context).size.width,
+                                  decoration: const BoxDecoration(
+                                    // color: primaFryColor,
+                                    gradient: LinearGradient(
+                                      begin: Alignment.bottomCenter,
+                                      end: Alignment.topRight,
+                                      colors: [
+                                        secondaryColor,
+                                        // Color.fromARGB(255, 28, 114, 125),
+                                        Color.fromARGB(255, 12, 69, 104),
+                                      ],
+                                    ),
                                   ),
                                 ),
-                              ),
-                              SizedBox(
-                                height: 60,
-                                width: MediaQuery.of(context).size.width,
-                              )
-                            ],
-                          ),
-                          Column(
-                            children: [
-                              const SizedBox(
-                                height: 120,
-                              ),
-                              SizedBox(
-                                height: 70,
-                                child: Padding(
-                                  padding: const EdgeInsets.only(
-                                      left: 25.0, right: 25),
-                                  child: Row(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceBetween,
-                                    children: [
-                                      Row(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.start,
-                                        children: [
-                                          CircleAvatar(
-                                            radius: 32,
-                                            backgroundColor: Color.fromARGB(
-                                                255, 230, 230, 230),
-                                          ),
-                                          Padding(
-                                            padding: const EdgeInsets.only(
-                                                left: 10.0),
-                                            child: Column(
-                                              crossAxisAlignment:
-                                                  CrossAxisAlignment.start,
-                                              children: [
-                                                Text(
-                                                  "Selamat Datang",
-                                                  style: GoogleFonts.openSans(
-                                                      fontSize: 10,
-                                                      color:
-                                                          Colors.grey.shade400,
-                                                      fontWeight:
-                                                          FontWeight.w500),
-                                                ),
-                                                Text(
-                                                  profileCon
-                                                      .userDataDetail!.name
-                                                      .toString(),
-                                                  style: GoogleFonts.kanit(
-                                                      fontSize: 22,
-                                                      color: Colors.white,
-                                                      fontWeight:
-                                                          FontWeight.w600),
-                                                ),
-                                                Text(
-                                                  profileCon.userDataDetail!
-                                                      .phoneNumber
-                                                      .toString(),
-                                                  style: GoogleFonts.openSans(
-                                                      fontSize: 13,
-                                                      color:
-                                                          Colors.grey.shade200,
-                                                      fontWeight:
-                                                          FontWeight.w500),
-                                                )
-                                              ],
+                                SizedBox(
+                                  height: 60,
+                                  width: MediaQuery.of(context).size.width,
+                                )
+                              ],
+                            ),
+                            Column(
+                              children: [
+                                const SizedBox(
+                                  height: 120,
+                                ),
+                                SizedBox(
+                                  height: 70,
+                                  child: Padding(
+                                    padding: const EdgeInsets.only(
+                                        left: 25.0, right: 25),
+                                    child: Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceBetween,
+                                      children: [
+                                        Row(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.start,
+                                          children: [
+                                            CircleAvatar(
+                                              radius: 32,
+                                              backgroundColor: Color.fromARGB(
+                                                  255, 230, 230, 230),
                                             ),
-                                          ),
-                                        ],
-                                      ),
-                                      InkWell(
-                                        onTap: () {
-                                          final userCon =
-                                              Provider.of<UserController>(
-                                                  context,
-                                                  listen: false);
-                                          Navigator.push(
-                                              context,
-                                              MaterialPageRoute(
-                                                  builder: (context) =>
-                                                      EditProfilePage(
-                                                        id: userCon
-                                                            .userDataDetail!,
-                                                      )));
-                                        },
-                                        child: Align(
-                                          alignment: Alignment.topRight,
-                                          child: Container(
-                                            // height: 20,
-                                            decoration: BoxDecoration(
-                                                color: Colors.white,
-                                                borderRadius:
-                                                    BorderRadius.circular(5)),
-                                            child: Padding(
+                                            Padding(
                                               padding: const EdgeInsets.only(
-                                                  left: 5.0,
-                                                  right: 5.0,
-                                                  top: 2,
-                                                  bottom: 2),
-                                              child: Row(
+                                                  left: 10.0),
+                                              child: Column(
+                                                crossAxisAlignment:
+                                                    CrossAxisAlignment.start,
                                                 children: [
                                                   Text(
-                                                    "Ubah Profil",
+                                                    "Selamat Datang",
                                                     style: GoogleFonts.openSans(
-                                                        fontSize: 9,
-                                                        color: thirdColor,
+                                                        fontSize: 11,
+                                                        color:
+                                                            Colors.grey.shade400,
                                                         fontWeight:
                                                             FontWeight.w500),
                                                   ),
-                                                  const Padding(
-                                                    padding: EdgeInsets.only(
-                                                        left: 4.0),
-                                                    child: FaIcon(
-                                                      FontAwesomeIcons.pencil,
-                                                      size: 11,
-                                                    ),
+                                                  Text(
+                                                    profileCon
+                                                        .userDataDetail!.name
+                                                        .toString(),
+                                                    style: GoogleFonts.kanit(
+                                                        fontSize: 22,
+                                                        color: Colors.white,
+                                                        fontWeight:
+                                                            FontWeight.w600),
+                                                  ),
+                                                  Text(
+                                                    profileCon.userDataDetail!
+                                                        .phoneNumber
+                                                        .toString(),
+                                                    style: GoogleFonts.openSans(
+                                                        fontSize: 14,
+                                                        color:
+                                                            Colors.grey.shade200,
+                                                        fontWeight:
+                                                            FontWeight.w500),
                                                   )
                                                 ],
                                               ),
                                             ),
+                                          ],
+                                        ),
+                                        InkWell(
+                                          onTap: () {
+                                            final userCon =
+                                                Provider.of<UserController>(
+                                                    context,
+                                                    listen: false);
+                                            Navigator.push(
+                                                context,
+                                                MaterialPageRoute(
+                                                    builder: (context) =>
+                                                        EditProfilePage(
+                                                          id: userCon
+                                                              .userDataDetail!,
+                                                        )));
+                                          },
+                                          child: Align(
+                                            alignment: Alignment.topRight,
+                                            child: Container(
+                                              // height: 20,
+                                              decoration: BoxDecoration(
+                                                  color: Colors.white,
+                                                  borderRadius:
+                                                      BorderRadius.circular(5)),
+                                              child: Padding(
+                                                padding: const EdgeInsets.only(
+                                                    left: 10.0,
+                                                    right: 10.0,
+                                                    top: 4,
+                                                    bottom: 4),
+                                                child: Row(
+                                                  children: [
+                                                    Text(
+                                                      "Ubah Profil",
+                                                      style: GoogleFonts.openSans(
+                                                          fontSize: 12,
+                                                          color: thirdColor,
+                                                          fontWeight:
+                                                              FontWeight.w600),
+                                                    ),
+                                                    const Padding(
+                                                      padding: EdgeInsets.only(
+                                                          left: 4.0),
+                                                      child: FaIcon(
+                                                        FontAwesomeIcons.pencil,
+                                                        size: 11,
+                                                      ),
+                                                    )
+                                                  ],
+                                                ),
+                                              ),
+                                            ),
                                           ),
-                                        ),
-                                      )
-                                    ],
-                                  ),
-                                ),
-                              ),
-                              Padding(
-                                padding:
-                                    const EdgeInsets.fromLTRB(25, 20.0, 25, 8),
-                                child: Container(
-                                  height: 90,
-                                  width: MediaQuery.of(context).size.width,
-                                  decoration: BoxDecoration(
-                                      borderRadius: BorderRadius.circular(10),
-                                      color: Colors.white,
-                                      border: Border.all(
-                                          color: descColor, width: 2)),
-                                  child: Padding(
-                                    padding: const EdgeInsets.all(10),
-                                    child: Column(
-                                      children: [
-                                        Row(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.spaceBetween,
-                                          children: [
-                                            Text(
-                                              "Email",
-                                              style: GoogleFonts.kanit(
-                                                  fontSize: 16,
-                                                  color: secondaryColor,
-                                                  fontWeight: FontWeight.w500),
-                                            ),
-                                            Text(
-                                              profileCon.userDataDetail!.email
-                                                  .toString(),
-                                              style: GoogleFonts.openSans(
-                                                  fontSize: 11,
-                                                  color: Colors.grey.shade400,
-                                                  fontWeight: FontWeight.w500),
-                                            ),
-                                          ],
-                                        ),
-                                        const SizedBox(
-                                          height: 8,
-                                        ),
-                                        Row(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.spaceBetween,
-                                          children: [
-                                            Text(
-                                              "Nomor Identitas",
-                                              style: GoogleFonts.kanit(
-                                                  fontSize: 16,
-                                                  color: secondaryColor,
-                                                  fontWeight: FontWeight.w500),
-                                            ),
-                                            Text(
-                                              profileCon
-                                                  .userDataDetail!.idCardNumber
-                                                  .toString(),
-                                              style: GoogleFonts.openSans(
-                                                  fontSize: 11,
-                                                  color: Colors.grey.shade400,
-                                                  fontWeight: FontWeight.w500),
-                                            ),
-                                          ],
                                         )
                                       ],
                                     ),
                                   ),
                                 ),
-                              )
-                            ],
-                          )
-                        ],
-                      ),
-
-                      // Padding(
-                      //   padding: const EdgeInsets.fromLTRB(25, 0, 25, 0),
-                      //   child: Container(
-                      //     height: 170,
-                      //     width: MediaQuery.of(context).size.width,
-                      //     decoration: BoxDecoration(
-                      //         borderRadius: BorderRadius.circular(10),
-                      //         color: Colors.white,
-                      //         border: Border.all(color: descColor, width: 2)),
-                      //     child: Padding(
-                      //         padding: const EdgeInsets.all(16),
-                      //         child: Column(
-                      //           children: [
-                      //             Align(
-                      //               alignment: Alignment.topRight,
-                      //               child: Text(
-                      //                 "Saldo Anda",
-                      //                 style: GoogleFonts.openSans(
-                      //                     fontSize: 12,
-                      //                     color: Colors.grey.shade400,
-                      //                     fontWeight: FontWeight.w500),
-                      //               ),
-                      //             ),
-                      //             Align(
-                      //               alignment: Alignment.topRight,
-                      //               child: Row(
-                      //                 mainAxisAlignment: MainAxisAlignment.end,
-                      //                 children: [
-                      //                   Text(
-                      //                     "Rp   ",
-                      //                     style: GoogleFonts.openSans(
-                      //                         fontSize: 14,
-                      //                         color: Colors.grey.shade400,
-                      //                         fontWeight: FontWeight.w400),
-                      //                   ),
-                      //                   Text(
-                      //                     "2.000.000",
-                      //                     style: GoogleFonts.openSans(
-                      //                         fontSize: 26,
-                      //                         color: primaryColor,
-                      //                         fontWeight: FontWeight.w800),
-                      //                   ),
-                      //                 ],
-                      //               ),
-                      //             ),
-                      //             const SizedBox(
-                      //               height: 40,
-                      //             ),
-                      //             Container(
-                      //               height: 1,
-                      //               width: MediaQuery.of(context).size.width,
-                      //               color: Colors.grey.shade200,
-                      //             ),
-                      //             Padding(
-                      //               padding: const EdgeInsets.only(top: 5.0),
-                      //               child: Align(
-                      //                 alignment: Alignment.topLeft,
-                      //                 child: Text(
-                      //                   "createdAt",
-                      //                   style: GoogleFonts.openSans(
-                      //                       fontSize: 10,
-                      //                       color: Colors.grey.shade400,
-                      //                       fontWeight: FontWeight.w400),
-                      //                 ),
-                      //               ),
-                      //             ),
-                      //             Row(
-                      //               mainAxisAlignment:
-                      //                   MainAxisAlignment.spaceBetween,
-                      //               children: [
-                      //                 Text(
-                      //                   "2022-02-02",
-                      //                   style: GoogleFonts.openSans(
-                      //                       fontSize: 14,
-                      //                       color: primaryColor,
-                      //                       fontWeight: FontWeight.w600),
-                      //                 ),
-                      //                 Row(
-                      //                   crossAxisAlignment:
-                      //                       CrossAxisAlignment.end,
-                      //                   children: [
-                      //                     const Icon(
-                      //                       Icons.wallet,
-                      //                       color: secondaryColor,
-                      //                       size: 18,
-                      //                     ),
-                      //                     Padding(
-                      //                       padding: const EdgeInsets.only(
-                      //                           left: 4.0),
-                      //                       child: Text(
-                      //                         "MidTrans",
-                      //                         style: GoogleFonts.openSans(
-                      //                             fontSize: 12,
-                      //                             color: secondaryColor,
-                      //                             fontWeight: FontWeight.w400),
-                      //                       ),
-                      //                     ),
-                      //                   ],
-                      //                 )
-                      //               ],
-                      //             )
-                      //           ],
-                      //         )),
-                      //   ),
-                      // ),
-                      isanyTicketHistory == true
-                          ? Padding(
-                              padding:
-                                  EdgeInsets.only(left: 25, right: 25, top: 2),
-                              child: Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
-                                children: [
-                                  Row(
-                                    mainAxisAlignment: MainAxisAlignment.start,
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.center,
-                                    children: [
-                                      Container(
-                                        width: 25,
-                                        height: 23,
-                                        child: Container(
-                                          decoration: BoxDecoration(
-                                              borderRadius:
-                                                  BorderRadius.circular(8),
-                                              color: Color.fromARGB(
-                                                      255, 36, 78, 79)
-                                                  .withOpacity(0.65)),
-                                          child: const Center(
-                                              child: FaIcon(
-                                            FontAwesomeIcons.clockRotateLeft,
-                                            color: Colors.white,
-                                            size: 13,
-                                          )),
-                                        ),
+                                Padding(
+                                  padding:
+                                      const EdgeInsets.fromLTRB(25, 20.0, 25, 8),
+                                  child: Container(
+                                    height: 90,
+                                    width: MediaQuery.of(context).size.width,
+                                    decoration: BoxDecoration(
+                                        borderRadius: BorderRadius.circular(10),
+                                        color: Colors.white,
+                                        border: Border.all(
+                                            color: descColor, width: 2)),
+                                    child: Padding(
+                                      padding: const EdgeInsets.all(10),
+                                      child: Column(
+                                        mainAxisAlignment: MainAxisAlignment.spaceAround,
+                                        children: [
+                                          Row(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.spaceBetween,
+                                            children: [
+                                              Text(
+                                                "Email",
+                                                style: GoogleFonts.openSans(
+                                                    fontSize: 16,
+                                                    color: secondaryColor,
+                                                    fontWeight: FontWeight.w600),
+                                              ),
+                                              Text(
+                                                profileCon.userDataDetail!.email.toString(),
+                                                style: GoogleFonts.openSans(
+                                                    fontSize: 12,
+                                                    color: Colors.grey.shade500,
+                                                    fontWeight: FontWeight.w500),
+                                                    maxLines: 1,
+                                              ),
+                                            ],
+                                          ),
+                                          const SizedBox(
+                                            height: 8,
+                                          ),
+                                          Row(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.spaceBetween,
+                                            children: [
+                                              Text(
+                                                "Nomor Identitas",
+                                                style: GoogleFonts.openSans(
+                                                    fontSize: 16,
+                                                    color: secondaryColor,
+                                                    fontWeight: FontWeight.w600),
+                                              ),
+                                              Text(
+                                                profileCon
+                                                    .userDataDetail!.idCardNumber
+                                                    .toString(),
+                                                style: GoogleFonts.openSans(
+                                                    fontSize: 12,
+                                                    color: Colors.grey.shade500,
+                                                    fontWeight: FontWeight.w500),
+                                              ),
+                                            ],
+                                          )
+                                        ],
                                       ),
-                                      SizedBox(
-                                          width: MediaQuery.of(context)
-                                                  .size
-                                                  .width *
-                                              0.5,
-                                          child: Padding(
-                                            padding: const EdgeInsets.only(
-                                                left: 8.0),
-                                            child: Text(
-                                              "Riwayat Pemesanan Tiket",
-                                              style: GoogleFonts.inter(
-                                                  fontSize: 15,
-                                                  color: thirdColor,
-                                                  fontWeight:
-                                                      FontWeight.w600),
-                                            ),
-                                          )),
-                                    ],
+                                    ),
                                   ),
-                                  // SizedBox(
-                                  //     child: Align(
-                                  //   alignment: Alignment.topRight,
-                                  //   child: Text(
-                                  //     "Lihat Semua",
-                                  //     style: GoogleFonts.inter(
-                                  //         fontSize: 9,
-                                  //         color: Colors.grey.shade500,
-                                  //         fontWeight: FontWeight.w500),
-                                  //   ),
-                                  // ))
-                                ],
-                              ),
+                                )
+                              ],
                             )
-                          : SizedBox(),
-                      isanyTicketHistory == true
-                          ? Container(
-                              width: MediaQuery.of(context).size.width,
-                              height: 120,
-                              child: Padding(
+                          ],
+                        ),
+                        SizedBox(height: 10,),
+
+                        // Padding(
+                        //   padding: const EdgeInsets.fromLTRB(25, 0, 25, 0),
+                        //   child: Container(
+                        //     height: 170,
+                        //     width: MediaQuery.of(context).size.width,
+                        //     decoration: BoxDecoration(
+                        //         borderRadius: BorderRadius.circular(10),
+                        //         color: Colors.white,
+                        //         border: Border.all(color: descColor, width: 2)),
+                        //     child: Padding(
+                        //         padding: const EdgeInsets.all(16),
+                        //         child: Column(
+                        //           children: [
+                        //             Align(
+                        //               alignment: Alignment.topRight,
+                        //               child: Text(
+                        //                 "Saldo Anda",
+                        //                 style: GoogleFonts.openSans(
+                        //                     fontSize: 12,
+                        //                     color: Colors.grey.shade400,
+                        //                     fontWeight: FontWeight.w500),
+                        //               ),
+                        //             ),
+                        //             Align(
+                        //               alignment: Alignment.topRight,
+                        //               child: Row(
+                        //                 mainAxisAlignment: MainAxisAlignment.end,
+                        //                 children: [
+                        //                   Text(
+                        //                     "Rp   ",
+                        //                     style: GoogleFonts.openSans(
+                        //                         fontSize: 14,
+                        //                         color: Colors.grey.shade400,
+                        //                         fontWeight: FontWeight.w400),
+                        //                   ),
+                        //                   Text(
+                        //                     "2.000.000",
+                        //                     style: GoogleFonts.openSans(
+                        //                         fontSize: 26,
+                        //                         color: primaryColor,
+                        //                         fontWeight: FontWeight.w800),
+                        //                   ),
+                        //                 ],
+                        //               ),
+                        //             ),
+                        //             const SizedBox(
+                        //               height: 40,
+                        //             ),
+                        //             Container(
+                        //               height: 1,
+                        //               width: MediaQuery.of(context).size.width,
+                        //               color: Colors.grey.shade200,
+                        //             ),
+                        //             Padding(
+                        //               padding: const EdgeInsets.only(top: 5.0),
+                        //               child: Align(
+                        //                 alignment: Alignment.topLeft,
+                        //                 child: Text(
+                        //                   "createdAt",
+                        //                   style: GoogleFonts.openSans(
+                        //                       fontSize: 10,
+                        //                       color: Colors.grey.shade400,
+                        //                       fontWeight: FontWeight.w400),
+                        //                 ),
+                        //               ),
+                        //             ),
+                        //             Row(
+                        //               mainAxisAlignment:
+                        //                   MainAxisAlignment.spaceBetween,
+                        //               children: [
+                        //                 Text(
+                        //                   "2022-02-02",
+                        //                   style: GoogleFonts.openSans(
+                        //                       fontSize: 14,
+                        //                       color: primaryColor,
+                        //                       fontWeight: FontWeight.w600),
+                        //                 ),
+                        //                 Row(
+                        //                   crossAxisAlignment:
+                        //                       CrossAxisAlignment.end,
+                        //                   children: [
+                        //                     const Icon(
+                        //                       Icons.wallet,
+                        //                       color: secondaryColor,
+                        //                       size: 18,
+                        //                     ),
+                        //                     Padding(
+                        //                       padding: const EdgeInsets.only(
+                        //                           left: 4.0),
+                        //                       child: Text(
+                        //                         "MidTrans",
+                        //                         style: GoogleFonts.openSans(
+                        //                             fontSize: 12,
+                        //                             color: secondaryColor,
+                        //                             fontWeight: FontWeight.w400),
+                        //                       ),
+                        //                     ),
+                        //                   ],
+                        //                 )
+                        //               ],
+                        //             )
+                        //           ],
+                        //         )),
+                        //   ),
+                        // ),
+                        isanyTicketHistory == true
+                            ? Padding(
                                 padding:
-                                    const EdgeInsets.only(left: 25.0, top: 10),
-                                child: Consumer<ETicketController>(
-                                    builder: (context, ticketCon, child) {
-                                  return ListView.builder(
-                                    scrollDirection: Axis.horizontal,
-                                    itemCount:
-                                        ticketCon.eticketDataUser!.length,
-                                    controller:
-                                        PageController(viewportFraction: 0.3),
-                                    itemBuilder: (context, index) {
-                                      return InkWell(
-                                        onTap: () {
-                                          Navigator.push(
-                                              context,
-                                              MaterialPageRoute(
-                                                  builder: (context) =>
-                                                      ETicketPage(
-                                                        id: ticketCon
-                                                            .eticketDataUser![
-                                                                index]
-                                                            .id!
-                                                            .toInt(),
-                                                      )));
-                                        },
-                                        child: Padding(
-                                          padding:
-                                              const EdgeInsets.only(right: 4.0),
-                                          child: Card(
-                                            color:
-                                                _colors[index % _colors.length],
-                                            elevation: 3,
-                                            shape: RoundedRectangleBorder(
+                                    EdgeInsets.only(left: 25, right: 25, top: 2),
+                                child: Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    Row(
+                                      mainAxisAlignment: MainAxisAlignment.start,
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.center,
+                                      children: [
+                                        Container(
+                                          width: 25,
+                                          height: 23,
+                                          child: Container(
+                                            decoration: BoxDecoration(
                                                 borderRadius:
-                                                    BorderRadius.circular(10)),
-                                            child: SizedBox(
-                                              height: 135,
-                                              width: 95,
-                                              child: Padding(
-                                                padding: const EdgeInsets.only(
-                                                    left: 7.0,
-                                                    bottom: 8.0,
-                                                    right: 7),
-                                                child: Column(
-                                                    mainAxisAlignment:
-                                                        MainAxisAlignment.end,
-                                                    crossAxisAlignment:
-                                                        CrossAxisAlignment
-                                                            .start,
-                                                    children: [
-                                                      Text(
-                                                        ticketCon
-                                                            .eticketDataUser![
-                                                                index]
-                                                            .destinasi!
-                                                            .nameDestinasi
-                                                            .toString(),
-                                                        style: GoogleFonts
-                                                            .notoSansDisplay(
-                                                                fontSize: 13,
-                                                                color: Colors
-                                                                    .white,
-                                                                fontWeight:
-                                                                    FontWeight
-                                                                        .w600),
-                                                        overflow: TextOverflow
-                                                            .ellipsis,
-                                                        maxLines: 1,
-                                                      ),
-                                                      Text(
-                                                        ticketCon
-                                                            .eticketDataUser![
-                                                                index]
-                                                            .dateVisit
-                                                            .toString(),
-                                                        style: GoogleFonts
-                                                            .notoSansDisplay(
-                                                                fontSize: 11,
-                                                                color:
-                                                                    thirdColor,
-                                                                fontWeight:
-                                                                    FontWeight
-                                                                        .w500),
-                                                        overflow: TextOverflow
-                                                            .ellipsis,
-                                                        maxLines: 1,
-                                                      )
-                                                    ]),
+                                                    BorderRadius.circular(8),
+                                                color: Color.fromARGB(
+                                                        255, 36, 78, 79)
+                                                    .withOpacity(0.65)),
+                                            child: const Center(
+                                                child: FaIcon(
+                                              FontAwesomeIcons.clockRotateLeft,
+                                              color: Colors.white,
+                                              size: 13,
+                                            )),
+                                          ),
+                                        ),
+                                        SizedBox(
+                                            width: MediaQuery.of(context)
+                                                    .size
+                                                    .width *
+                                                0.5,
+                                            child: Padding(
+                                              padding: const EdgeInsets.only(
+                                                  left: 8.0),
+                                              child: Text(
+                                                "Riwayat Pembelian Tiket",
+                                                style: GoogleFonts.inter(
+                                                    fontSize: 15,
+                                                    color: thirdColor,
+                                                    fontWeight:
+                                                        FontWeight.w600),
+                                              ),
+                                            )),
+                                      ],
+                                    ),
+                                    // SizedBox(
+                                    //     child: Align(
+                                    //   alignment: Alignment.topRight,
+                                    //   child: Text(
+                                    //     "Lihat Semua",
+                                    //     style: GoogleFonts.inter(
+                                    //         fontSize: 9,
+                                    //         color: Colors.grey.shade500,
+                                    //         fontWeight: FontWeight.w500),
+                                    //   ),
+                                    // ))
+                                  ],
+                                ),
+                              )
+                            : SizedBox(),
+                        isanyTicketHistory == true
+                            ? Container(
+                                width: MediaQuery.of(context).size.width,
+                                height: 120,
+                                child: Padding(
+                                  padding:
+                                      const EdgeInsets.only(left: 25.0, top: 10),
+                                  child: Consumer<ETicketController>(
+                                      builder: (context, ticketCon, child) {
+                                    return ListView.builder(
+                                      scrollDirection: Axis.horizontal,
+                                      itemCount:
+                                          ticketCon.eticketDataUser!.length,
+                                      controller:
+                                          PageController(viewportFraction: 0.3),
+                                      itemBuilder: (context, index) {
+                                        return InkWell(
+                                          onTap: () {
+                                            Navigator.push(
+                                                context,
+                                                MaterialPageRoute(
+                                                    builder: (context) =>
+                                                        ETicketPage(
+                                                          id: ticketCon
+                                                              .eticketDataUser![
+                                                                  index]
+                                                              .id!
+                                                              .toInt(),
+                                                        )));
+                                          },
+                                          child: Padding(
+                                            padding:
+                                                const EdgeInsets.only(right: 4.0),
+                                            child: Card(
+                                              color:
+                                                  _colors[index % _colors.length],
+                                              elevation: 3,
+                                              shape: RoundedRectangleBorder(
+                                                  borderRadius:
+                                                      BorderRadius.circular(10)),
+                                              child: SizedBox(
+                                                height: 135,
+                                                width: 95,
+                                                child: Padding(
+                                                  padding: const EdgeInsets.only(
+                                                      left: 7.0,
+                                                      bottom: 8.0,
+                                                      right: 7),
+                                                  child: Column(
+                                                      mainAxisAlignment:
+                                                          MainAxisAlignment.end,
+                                                      crossAxisAlignment:
+                                                          CrossAxisAlignment
+                                                              .start,
+                                                      children: [
+                                                        Text(
+                                                          ticketCon
+                                                              .eticketDataUser![
+                                                                  index]
+                                                              .destinasi!
+                                                              .nameDestinasi
+                                                              .toString(),
+                                                              
+                                                          style: GoogleFonts
+                                                              .notoSansDisplay(
+                                                                  fontSize: 13,
+                                                                  color: Colors
+                                                                      .white,
+                                                                  fontWeight:
+                                                                      FontWeight
+                                                                          .w600),
+                                                          overflow: TextOverflow
+                                                              .ellipsis,
+                                                          maxLines: 2,
+                                                        ),
+                                                        SizedBox(height: 5,),
+                                                        Text(
+                                                          ticketCon
+                                                              .eticketDataUser![
+                                                                  index]
+                                                              .dateVisit
+                                                              .toString(),
+                                                          style: GoogleFonts
+                                                              .notoSansDisplay(
+                                                                  fontSize: 12,
+                                                                  color:
+                                                                      thirdColor,
+                                                                  fontWeight:
+                                                                      FontWeight
+                                                                          .w500),
+                                                          overflow: TextOverflow
+                                                              .ellipsis,
+                                                          maxLines: 1,
+                                                        )
+                                                      ]),
+                                                ),
                                               ),
                                             ),
                                           ),
-                                        ),
-                                      );
-                                    },
-                                  );
-                                }),
-                              ),
-                            )
-                          : SizedBox(),
-                      Padding(
-                        padding: const EdgeInsets.fromLTRB(25, 25.0, 25, 8),
-                        child: Container(
-                          height: 170,
-                          width: MediaQuery.of(context).size.width,
-                          decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(10),
-                              color: Colors.white,
-                              border: Border.all(color: descColor, width: 1.5)),
-                          child: Padding(
-                            padding: const EdgeInsets.fromLTRB(22, 16, 22, 16),
-                            child: Column(
-                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                              // crossAxisAlignment: CrossAxisAlignment.center,
-                              children: [
-                                Row(
-                                  children: [
-                                    Expanded(
-                                        child: Divider(
-                                      thickness: 1,
-                                      color: Colors.grey.shade200,
-                                    )),
-                                    Padding(
-                                      padding:
-                                          const EdgeInsets.only(left: 10.0),
-                                      child: Text(
-                                        "INFORMASI",
-                                        style: GoogleFonts.openSans(
-                                            fontSize: 12,
-                                            color: descColor,
-                                            fontWeight: FontWeight.w400),
-                                      ),
-                                    )
-                                  ],
+                                        );
+                                      },
+                                    );
+                                  }),
                                 ),
-                                InkWell(
-                                  onTap: () {},
-                                  child: Padding(
-                                    padding: const EdgeInsets.fromLTRB(
-                                        5, 8.0, 5, 10),
+                              )
+                            : SizedBox(),
+                        SizedBox(height: 10,),
+
+                        Padding(
+                          padding: const EdgeInsets.fromLTRB(25, 25.0, 25, 8),
+                          child: Container(
+                            height: 170,
+                            width: MediaQuery.of(context).size.width,
+                            decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(10),
+                                color: Colors.white,
+                                border: Border.all(color: descColor, width: 1.5)),
+                            child: Padding(
+                              padding: const EdgeInsets.fromLTRB(22, 16, 22, 16),
+                              child: Column(
+                                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                                // crossAxisAlignment: CrossAxisAlignment.center,
+                                children: [
+                                  Row(
+                                    children: [
+                                      Expanded(
+                                          child: Divider(
+                                        thickness: 1,
+                                        color: Colors.grey.shade200,
+                                      )),
+                                      Padding(
+                                        padding:
+                                            const EdgeInsets.only(left: 10.0),
+                                        child: Text(
+                                          "INFORMASI",
+                                          style: GoogleFonts.openSans(
+                                              fontSize: 13,
+                                              color: descColor,
+                                              fontWeight: FontWeight.w400),
+                                        ),
+                                      )
+                                    ],
+                                  ),
+                                  InkWell(
+                                    onTap: () {},
+                                    child: Padding(
+                                      padding: const EdgeInsets.fromLTRB(
+                                          5, 8.0, 5, 10),
+                                      child: Row(
+                                        children: [
+                                          FaIcon(
+                                            FontAwesomeIcons.lightbulb,
+                                            size: 20,
+                                            color: Colors.amber,
+                                          ),
+                                          Padding(
+                                            padding:
+                                                const EdgeInsets.only(left: 16.0),
+                                            child: InkWell(
+                                              onTap: () {
+                                                Navigator.push(
+                                                    context,
+                                                    MaterialPageRoute(
+                                                        builder: (context) =>
+                                                            TipsAndTrick()));
+                                              },
+                                              child: Container(
+                                                width: MediaQuery.of(context)
+                                                        .size
+                                                        .width *
+                                                    0.59,
+                                                child: Row(
+                                                  mainAxisAlignment:
+                                                      MainAxisAlignment
+                                                          .spaceBetween,
+                                                  children: [
+                                                    Text(
+                                                      "Tips dan Trik",
+                                                      style: GoogleFonts.openSans(
+                                                          fontSize: 15,
+                                                          color: titleColor,
+                                                          fontWeight:
+                                                              FontWeight.w600),
+                                                    ),
+                                                    Icon(
+                                                      Icons.arrow_forward_ios,
+                                                      size: 15,
+                                                      color: Colors.grey.shade300,
+                                                    ),
+                                                  ],
+                                                ),
+                                              ),
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                  ),
+                                  // Expanded(
+                                  //     child: Divider(
+                                  //   thickness: 1,
+                                  //   color: Colors.grey.shade200,
+                                  // )),
+                                  // InkWell(
+                                  //   onTap: () {},
+                                  //   child: Padding(
+                                  //     padding: const EdgeInsets.fromLTRB(
+                                  //         5, 8.0, 5, 10),
+                                  //     child: Row(
+                                  //       children: [
+                                  //         Icon(
+                                  //           Icons.people_alt,
+                                  //           size: 20,
+                                  //           color: labelColor,
+                                  //         ),
+                                  //         Padding(
+                                  //           padding:
+                                  //               const EdgeInsets.only(left: 16.0),
+                                  //           child: InkWell(
+                                  //             onTap: () {
+                                  //               Navigator.push(
+                                  //                   context,
+                                  //                   MaterialPageRoute(
+                                  //                       builder: (context) =>
+                                  //                           AboutPergiJalan()));
+                                  //             },
+                                  //             child: Container(
+                                  //               width: MediaQuery.of(context)
+                                  //                       .size
+                                  //                       .width *
+                                  //                   0.59,
+                                  //               child: Row(
+                                  //                 mainAxisAlignment:
+                                  //                     MainAxisAlignment
+                                  //                         .spaceBetween,
+                                  //                 children: [
+                                  //                   Text(
+                                  //                     "Tentang PergiJalan",
+                                  //                     style: GoogleFonts.openSans(
+                                  //                         fontSize: 15,
+                                  //                         color: titleColor,
+                                  //                         fontWeight:
+                                  //                             FontWeight.w600),
+                                  //                   ),
+                                  //                   Icon(
+                                  //                     Icons.arrow_forward_ios,
+                                  //                     size: 15,
+                                  //                     color: Colors.grey.shade300,
+                                  //                   ),
+                                  //                 ],
+                                  //               ),
+                                  //             ),
+                                  //           ),
+                                  //         ),
+                                  //       ],
+                                  //     ),
+                                  //   ),
+                                  // ),
+                                  Row(
+                                    children: [
+                                      Expanded(
+                                          child: Divider(
+                                        thickness: 1,
+                                        color: Colors.grey.shade200,
+                                      )),
+                                      Padding(
+                                        padding:
+                                            const EdgeInsets.only(left: 10.0),
+                                        child: Text(
+                                          "PENGATURAN",
+                                          style: GoogleFonts.openSans(
+                                              fontSize: 13,
+                                              color: descColor,
+                                              fontWeight: FontWeight.w400),
+                                        ),
+                                      )
+                                    ],
+                                  ),
+                                  Padding(
+                                    padding:
+                                        const EdgeInsets.fromLTRB(5, 8.0, 5, 10),
                                     child: Row(
                                       children: [
-                                        Icon(
-                                          Icons.people_alt,
+                                        const Icon(
+                                          Icons.logout_rounded,
                                           size: 20,
-                                          color: labelColor,
+                                          color: labelColorBack,
                                         ),
                                         Padding(
                                           padding:
                                               const EdgeInsets.only(left: 16.0),
                                           child: InkWell(
-                                            onTap: () {
-                                              Navigator.push(
-                                                  context,
-                                                  MaterialPageRoute(
-                                                      builder: (context) =>
-                                                          TipsAndTrick()));
+                                            onTap: () async {
+                                              final userCon =
+                                                  Provider.of<UserController>(
+                                                      context,
+                                                      listen: false);
+
+                                              try {
+                                                await userCon.logoutUser();
+                                                
+                                              } catch (e) {
+                                                print(e);
+                                              }
+                                            Fluttertoast.showToast(
+                                                msg:
+                                                    "Anda berhasil keluar dari akun anda",
+                                                toastLength: Toast.LENGTH_SHORT,
+                                                gravity: ToastGravity.BOTTOM,
+                                                timeInSecForIosWeb: 1,
+                                                backgroundColor:
+                                                    Color.fromARGB(255, 54, 158, 244).withOpacity(0.6),
+                                                textColor: Colors.white,
+                                                fontSize: 16.0);
+                                              Navigator.of(context)
+                                                  .pushAndRemoveUntil(
+                                                      MaterialPageRoute(
+                                                          builder: (context) =>
+                                                              Splashscreen()),
+                                                      (route) => false);
                                             },
                                             child: Container(
                                               width: MediaQuery.of(context)
@@ -662,7 +825,7 @@ class _UserPageState extends State<UserPage> {
                                                         .spaceBetween,
                                                 children: [
                                                   Text(
-                                                    "Tips dan Trik",
+                                                    "Keluar",
                                                     style: GoogleFonts.openSans(
                                                         fontSize: 15,
                                                         color: titleColor,
@@ -682,163 +845,19 @@ class _UserPageState extends State<UserPage> {
                                       ],
                                     ),
                                   ),
-                                ),
-                                // Expanded(
-                                //     child: Divider(
-                                //   thickness: 1,
-                                //   color: Colors.grey.shade200,
-                                // )),
-                                // InkWell(
-                                //   onTap: () {},
-                                //   child: Padding(
-                                //     padding: const EdgeInsets.fromLTRB(
-                                //         5, 8.0, 5, 10),
-                                //     child: Row(
-                                //       children: [
-                                //         Icon(
-                                //           Icons.people_alt,
-                                //           size: 20,
-                                //           color: labelColor,
-                                //         ),
-                                //         Padding(
-                                //           padding:
-                                //               const EdgeInsets.only(left: 16.0),
-                                //           child: InkWell(
-                                //             onTap: () {
-                                //               Navigator.push(
-                                //                   context,
-                                //                   MaterialPageRoute(
-                                //                       builder: (context) =>
-                                //                           AboutPergiJalan()));
-                                //             },
-                                //             child: Container(
-                                //               width: MediaQuery.of(context)
-                                //                       .size
-                                //                       .width *
-                                //                   0.59,
-                                //               child: Row(
-                                //                 mainAxisAlignment:
-                                //                     MainAxisAlignment
-                                //                         .spaceBetween,
-                                //                 children: [
-                                //                   Text(
-                                //                     "Tentang PergiJalan",
-                                //                     style: GoogleFonts.openSans(
-                                //                         fontSize: 15,
-                                //                         color: titleColor,
-                                //                         fontWeight:
-                                //                             FontWeight.w600),
-                                //                   ),
-                                //                   Icon(
-                                //                     Icons.arrow_forward_ios,
-                                //                     size: 15,
-                                //                     color: Colors.grey.shade300,
-                                //                   ),
-                                //                 ],
-                                //               ),
-                                //             ),
-                                //           ),
-                                //         ),
-                                //       ],
-                                //     ),
-                                //   ),
-                                // ),
-                                Row(
-                                  children: [
-                                    Expanded(
-                                        child: Divider(
-                                      thickness: 1,
-                                      color: Colors.grey.shade200,
-                                    )),
-                                    Padding(
-                                      padding:
-                                          const EdgeInsets.only(left: 10.0),
-                                      child: Text(
-                                        "PENGATURAN",
-                                        style: GoogleFonts.openSans(
-                                            fontSize: 12,
-                                            color: descColor,
-                                            fontWeight: FontWeight.w400),
-                                      ),
-                                    )
-                                  ],
-                                ),
-                                Padding(
-                                  padding:
-                                      const EdgeInsets.fromLTRB(5, 8.0, 5, 10),
-                                  child: Row(
-                                    children: [
-                                      const Icon(
-                                        Icons.logout_rounded,
-                                        size: 20,
-                                        color: labelColorBack,
-                                      ),
-                                      Padding(
-                                        padding:
-                                            const EdgeInsets.only(left: 16.0),
-                                        child: InkWell(
-                                          onTap: () async {
-                                            final userCon =
-                                                Provider.of<UserController>(
-                                                    context,
-                                                    listen: false);
-
-                                            try {
-                                              await userCon.logoutUser();
-                                            } catch (e) {
-                                              print(e);
-                                            }
-
-                                            Navigator.of(context)
-                                                .pushAndRemoveUntil(
-                                                    MaterialPageRoute(
-                                                        builder: (context) =>
-                                                            Splashscreen()),
-                                                    (route) => false);
-                                          },
-                                          child: Container(
-                                            width: MediaQuery.of(context)
-                                                    .size
-                                                    .width *
-                                                0.59,
-                                            child: Row(
-                                              mainAxisAlignment:
-                                                  MainAxisAlignment
-                                                      .spaceBetween,
-                                              children: [
-                                                Text(
-                                                  "Keluar",
-                                                  style: GoogleFonts.openSans(
-                                                      fontSize: 15,
-                                                      color: titleColor,
-                                                      fontWeight:
-                                                          FontWeight.w600),
-                                                ),
-                                                Icon(
-                                                  Icons.arrow_forward_ios,
-                                                  size: 15,
-                                                  color: Colors.grey.shade300,
-                                                ),
-                                              ],
-                                            ),
-                                          ),
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                                Expanded(
-                                    child: Divider(
-                                  thickness: 1,
-                                  color: Colors.grey.shade200,
-                                )),
-                              ],
+                                  Expanded(
+                                      child: Divider(
+                                    thickness: 1,
+                                    color: Colors.grey.shade200,
+                                  )),
+                                ],
+                              ),
                             ),
                           ),
-                        ),
-                      )
-                    ]);
-                  })
+                        )
+                      ]);
+                    }),
+                )
                 : SingleChildScrollView(
                     child: Padding(
                       padding: const EdgeInsets.only(left: 30.0, right: 30),
@@ -853,7 +872,7 @@ class _UserPageState extends State<UserPage> {
                                 child: Text(
                                   "Masuk Sekarang!",
                                   style: GoogleFonts.openSans(
-                                      fontSize: 20,
+                                      fontSize: 23,
                                       color: primaryColor,
                                       fontWeight: FontWeight.w700),
                                 ),
@@ -864,7 +883,7 @@ class _UserPageState extends State<UserPage> {
                                   child: Text(
                                     "Untuk mengakses fitur layanan yang tersedia dan menjelajahi PergiJalan dengan lengkap, mohon lakukan login terlebih dahulu",
                                     style: GoogleFonts.openSans(
-                                        fontSize: 13,
+                                        fontSize: 14,
                                         color:
                                             Color.fromARGB(255, 167, 167, 167),
                                         fontWeight: FontWeight.w500),
@@ -872,6 +891,7 @@ class _UserPageState extends State<UserPage> {
                                   ),
                                 ),
                               ),
+                              SizedBox(height: 5,),
                               InkWell(
                                 onTap: () {
                                   onSelectedListUser(0);
@@ -981,6 +1001,8 @@ class _UserPageState extends State<UserPage> {
                                   ),
                                 ),
                               ),
+                              SizedBox(height: 10,),
+
                               Padding(
                                 padding: const EdgeInsets.only(
                                     top: 30.0, left: 13, right: 13),

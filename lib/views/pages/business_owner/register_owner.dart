@@ -84,7 +84,7 @@ class _RegisterOwnerState extends State<RegisterOwner> {
                     child: Text(
                       "Gabunglah bersama kami dan tingkatkan bisnis \nwisata anda",
                       style: GoogleFonts.openSans(
-                          fontSize: 14,
+                          fontSize: 15,
                           color: Colors.grey.shade500,
                           fontWeight: FontWeight.w500),
                     ),
@@ -101,7 +101,7 @@ class _RegisterOwnerState extends State<RegisterOwner> {
                     child: Text(
                       "Daftarkan Akun Wisata Anda!",
                       style: GoogleFonts.openSans(
-                          fontSize: 20,
+                          fontSize: 22,
                           color: thirdColor,
                           fontWeight: FontWeight.w700),
                     ),

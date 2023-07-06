@@ -132,9 +132,9 @@ class _SearchPageState extends State<SearchPage> {
                                         searchCon.destinasiQueryData![index]
                                             .nameDestinasi!,
                                         style: GoogleFonts.notoSansDisplay(
-                                            fontSize: 13,
-                                            color: secondaryColor,
-                                            fontWeight: FontWeight.w600),
+                                            fontSize: 14,
+                                            color: primaryColor,
+                                            fontWeight: FontWeight.w500),
                                         overflow: TextOverflow.ellipsis,
                                       ),
                                       Padding(
@@ -153,11 +153,11 @@ class _SearchPageState extends State<SearchPage> {
                                             ),
                                             Text(
                                               searchCon.destinasiQueryData![index]
-                                                  .city!,
+                                                  .city!.toUpperCase(),
                                               style: GoogleFonts.notoSansDisplay(
                                                   fontSize: 11,
                                                   color: descColor,
-                                                  fontWeight: FontWeight.w500),
+                                                  fontWeight: FontWeight.w400),
                                               overflow: TextOverflow.ellipsis,
                                             )
                                           ],
@@ -173,16 +173,18 @@ class _SearchPageState extends State<SearchPage> {
                                               height: 17,
                                               decoration: BoxDecoration(
                                                   borderRadius:
-                                                      BorderRadius.circular(8),
+                                                      BorderRadius.circular(5),
                                                   color: thirdColor),
                                               child: Center(
                                                 child: Padding(
                                                   padding: const EdgeInsets.only(
-                                                      left: 5.0, right: 5.0),
+                                                      left: 5.0, right: 5.0, 
+                                                            bottom: 1,
+                                                            top: 1,),
                                                   child: searchCon
                                                               .destinasiQueryData![
                                                                   index]
-                                                              .hobby! !=
+                                                              .hobby !=
                                                           null
                                                       ? Text(
                                                           searchCon
@@ -191,12 +193,12 @@ class _SearchPageState extends State<SearchPage> {
                                                               .hobby!,
                                                           style: GoogleFonts
                                                               .notoSansDisplay(
-                                                                  fontSize: 9,
+                                                                  fontSize: 11,
                                                                   color: Colors
                                                                       .white,
                                                                   fontWeight:
                                                                       FontWeight
-                                                                          .w500),
+                                                                          .w400),
                                                           overflow: TextOverflow
                                                               .ellipsis,
                                                         )
@@ -207,16 +209,18 @@ class _SearchPageState extends State<SearchPage> {
                                             padding:
                                                 const EdgeInsets.only(left: 5.0),
                                             child: Container(
-                                                height: 17,
+                                                // height: 17,
                                                 decoration: BoxDecoration(
                                                     borderRadius:
-                                                        BorderRadius.circular(8),
+                                                        BorderRadius.circular(5),
                                                     color: labelColor),
                                                 child: Center(
                                                   child: Padding(
                                                     padding:
                                                         const EdgeInsets.only(
                                                             left: 5.0,
+                                                            bottom: 1,
+                                                            top: 1,
                                                             right: 5.0),
                                                     child: Text(
                                                       searchCon
@@ -225,11 +229,11 @@ class _SearchPageState extends State<SearchPage> {
                                                           .category!,
                                                       style: GoogleFonts
                                                           .notoSansDisplay(
-                                                              fontSize: 9,
+                                                              fontSize: 11,
                                                               color: Colors.black,
                                                               fontWeight:
                                                                   FontWeight
-                                                                      .w500),
+                                                                      .w400),
                                                       overflow:
                                                           TextOverflow.ellipsis,
                                                     ),

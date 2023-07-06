@@ -95,7 +95,7 @@ class _StatusOrderPaymentState extends State<StatusOrderPayment> {
                         "Status:\nBelum Bayar",
                         textAlign: TextAlign.center,
                         style: GoogleFonts.inter(
-                            fontSize: 15,
+                            fontSize: 16,
                             color: Color.fromARGB(255, 61, 61, 61),
                             fontWeight: FontWeight.w600),
                       ),
@@ -116,7 +116,7 @@ class _StatusOrderPaymentState extends State<StatusOrderPayment> {
                           "Lakukan Pembayaran",
                           textAlign: TextAlign.center,
                           style: GoogleFonts.inter(
-                              fontSize: 11,
+                              fontSize: 13,
                               color: Color.fromARGB(255, 61, 61, 61),
                               fontWeight: FontWeight.w600),
                         ),
@@ -145,7 +145,7 @@ class _StatusOrderPaymentState extends State<StatusOrderPayment> {
                                     "Mandiri Virtual Akun",
                                     textAlign: TextAlign.center,
                                     style: GoogleFonts.inter(
-                                        fontSize: 11,
+                                        fontSize: 13,
                                         color: captColor,
                                         fontWeight: FontWeight.w500),
                                   ),
@@ -170,7 +170,7 @@ class _StatusOrderPaymentState extends State<StatusOrderPayment> {
                                     "Nomor Virtual Akun",
                                     textAlign: TextAlign.center,
                                     style: GoogleFonts.inter(
-                                        fontSize: 11,
+                                        fontSize: 13,
                                         color: captColor,
                                         fontWeight: FontWeight.w500),
                                   ),
@@ -179,7 +179,7 @@ class _StatusOrderPaymentState extends State<StatusOrderPayment> {
                                         .toString(),
                                     textAlign: TextAlign.center,
                                     style: GoogleFonts.inter(
-                                        fontSize: 13,
+                                        fontSize: 14,
                                         color: Color.fromARGB(255, 61, 61, 61),
                                         fontWeight: FontWeight.w600),
                                   ),
@@ -196,7 +196,7 @@ class _StatusOrderPaymentState extends State<StatusOrderPayment> {
                                     "Total Pembayaran",
                                     textAlign: TextAlign.center,
                                     style: GoogleFonts.inter(
-                                        fontSize: 11,
+                                        fontSize: 13,
                                         color: captColor,
                                         fontWeight: FontWeight.w500),
                                   ),
@@ -204,7 +204,7 @@ class _StatusOrderPaymentState extends State<StatusOrderPayment> {
                                     "Rp ${eticketCon.eticketDataiD!.totalPrice.toString()}",
                                     textAlign: TextAlign.center,
                                     style: GoogleFonts.inter(
-                                        fontSize: 13,
+                                        fontSize: 14,
                                         color: Color.fromARGB(255, 61, 61, 61),
                                         fontWeight: FontWeight.w600),
                                   ),
@@ -219,7 +219,7 @@ class _StatusOrderPaymentState extends State<StatusOrderPayment> {
                                   eticketCon.eticketDataiD!.dateBook.toString(),
                                   textAlign: TextAlign.center,
                                   style: GoogleFonts.inter(
-                                      fontSize: 9,
+                                      fontSize: 11,
                                       color: captColor,
                                       fontWeight: FontWeight.w500),
                                 ),
@@ -236,7 +236,7 @@ class _StatusOrderPaymentState extends State<StatusOrderPayment> {
                         "E-tiket akan terbit setelah pembayaran\nterverifikasi",
                         textAlign: TextAlign.center,
                         style: GoogleFonts.inter(
-                            fontSize: 10,
+                            fontSize: 11,
                             color: descColor,
                             fontWeight: FontWeight.w500),
                       ),

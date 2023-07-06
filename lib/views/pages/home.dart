@@ -71,7 +71,7 @@ class _HomePageState extends State<HomePage> {
                       children: [
                         Container(
                             height: 310,
-                            color: Colors.white,
+                            // color: Colors.white,
                             child: Container(
                               decoration: const BoxDecoration(
                                 // color: primaFryColor,
@@ -88,7 +88,7 @@ class _HomePageState extends State<HomePage> {
                         Column(
                           children: [
                             SizedBox(
-                              height: 50,
+                              height: 60,
                             ),
                             Align(
                               alignment: Alignment.center,
@@ -102,7 +102,7 @@ class _HomePageState extends State<HomePage> {
                                     child: Text(
                                       "PergiJalan",
                                       style: GoogleFonts.oleoScript(
-                                          fontSize: 23,
+                                          fontSize: 24,
                                           color: primaryColor,
                                           fontWeight: FontWeight.w700),
                                     ),
@@ -110,26 +110,29 @@ class _HomePageState extends State<HomePage> {
                                 ),
                               ),
                             ),
-                            Container(
-                              height: 75,
-                              child: Align(
-                                alignment: Alignment.topLeft,
-                                child: Container(
-                                    width:
-                                        MediaQuery.of(context).size.width * 0.8,
-                                    child: Padding(
-                                      padding: const EdgeInsets.only(
-                                          left: 16.0, top: 20, bottom: 8),
-                                      child: Text(
-                                        "Jelajahi keindahan Indonesia yang kami rekomendasikan untuk kamu!",
-                                        style: GoogleFonts.notoSansDisplay(
-                                            fontSize: 16,
-                                            color: Colors.white,
-                                            fontWeight: FontWeight.w600),
-                                      ),
-                                    )),
-                              ),
+                            SizedBox(
+                              height: 20,
                             ),
+                            // Container(
+                            //   height: 75,
+                            //   child: Align(
+                            //     alignment: Alignment.topLeft,
+                            //     child: Container(
+                            //         width:
+                            //             MediaQuery.of(context).size.width * 0.8,
+                            //         child: Padding(
+                            //           padding: const EdgeInsets.only(
+                            //               left: 16.0, top: 20, bottom: 8),
+                            //           child: Text(
+                            //             "Jelajahi keindahan Indonesia yang kami rekomendasikan untuk kamu!",
+                            //             style: GoogleFonts.notoSansDisplay(
+                            //                 fontSize: 15,
+                            //                 color: Colors.white,
+                            //                 fontWeight: FontWeight.w500),
+                            //           ),
+                            //         )),
+                            //   ),
+                            // ),
                             Container(
                               height: 220,
                               child: Container(
@@ -139,17 +142,17 @@ class _HomePageState extends State<HomePage> {
                                 child: PageView.builder(
                                   itemCount: homeCon.destinasiRandom?.length,
                                   controller:
-                                      PageController(viewportFraction: 0.85),
+                                      PageController(viewportFraction: 0.9),
                                   onPageChanged: (int index) => setState(() {
                                     _index = index;
                                   }),
                                   itemBuilder: (context, index) {
                                     return Transform.scale(
-                                      scale: index == _index ? 1 : 0.92,
+                                      scale: index == _index ? 1 : 0.96,
                                       child: Card(
                                         shape: RoundedRectangleBorder(
                                             borderRadius:
-                                                BorderRadius.circular(15)),
+                                                BorderRadius.circular(10)),
                                         child: Stack(
                                           children: [
                                             Container(
@@ -159,7 +162,7 @@ class _HomePageState extends State<HomePage> {
                                                   .width,
                                               child: ClipRRect(
                                                 borderRadius:
-                                                    BorderRadius.circular(15),
+                                                    BorderRadius.circular(10),
                                                 child: homeCon
                                                             .destinasiRandom![
                                                                 index]
@@ -170,21 +173,22 @@ class _HomePageState extends State<HomePage> {
                                                         fit: BoxFit.cover,
                                                       )
                                                     : CachedNetworkImage(
-                                                        imageUrl:
-                                                             homeCon
+                                                        imageUrl: homeCon
                                                             .destinasiRandom![
                                                                 index]
                                                             .destinationPicture!,
-                                                            fit: BoxFit.cover,
+                                                        fit: BoxFit.cover,
                                                         placeholder: (context,
                                                                 url) =>
-                                                            Center(child: new CircularProgressIndicator( )),
+                                                            Center(
+                                                                child:
+                                                                    new CircularProgressIndicator()),
                                                         errorWidget: (context,
                                                                 url, error) =>
                                                             Image.asset(
-                                                        "assets/images/error_image.jpeg",
-                                                        fit: BoxFit.fill,
-                                                      ),
+                                                          "assets/images/error_image.jpeg",
+                                                          fit: BoxFit.fill,
+                                                        ),
                                                       ),
                                               ),
                                             ),
@@ -194,9 +198,71 @@ class _HomePageState extends State<HomePage> {
                                                 decoration: BoxDecoration(
                                                     borderRadius:
                                                         BorderRadius.circular(
-                                                            15),
-                                                    color: const Color.fromARGB(
-                                                        57, 33, 149, 243))),
+                                                            10),
+                                                    color: Color.fromARGB(
+                                                        41, 33, 149, 243))),
+                                            Padding(
+                                              padding: const EdgeInsets.only(
+                                                  right: 10.0),
+                                              child: Align(
+                                                alignment: Alignment.topRight,
+                                                child: Column(
+                                                  // crossAxisAlignment:
+                                                  //     CrossAxisAlignment.end,
+                                                  //     mainAxisAlignment: MainAxisAlignment.start,
+                                                  children: [
+                                                    SizedBox(
+                                                      height: 10,
+                                                    ),
+                                                    Container(
+                                                      decoration: BoxDecoration(
+                                                          color: Color.fromARGB(
+                                                              199,
+                                                              47,
+                                                              125,
+                                                              104),
+                                                          borderRadius:
+                                                              BorderRadius
+                                                                  .circular(5)),
+                                                      child: Padding(
+                                                        padding:
+                                                            const EdgeInsets
+                                                                    .fromLTRB(
+                                                                12.0, 2, 12, 2),
+                                                        child: Text(
+                                                          // ignore: prefer_if_null_operators, unnecessary_null_comparison
+                                                          homeCon
+                                                                      .destinasiRandom![
+                                                                          index]
+                                                                      .category
+                                                                      .toString() !=
+                                                                  null
+                                                              ? homeCon
+                                                                  .destinasiRandom![
+                                                                      index]
+                                                                  .category
+                                                                  .toString()
+                                                              : "Lainnya",
+                                                          style: GoogleFonts
+                                                              .notoSansDisplay(
+                                                                  fontSize: 12,
+                                                                  color: Color
+                                                                      .fromARGB(
+                                                                          255,
+                                                                          255,
+                                                                          255,
+                                                                          255),
+                                                                  fontWeight:
+                                                                      FontWeight
+                                                                          .w500),
+                                                        ),
+                                                      ),
+                                                    ),
+                                                    
+                                                  ],
+                                                ),
+                                              ),
+                                            ),
                                             SizedBox(
                                                 height: 220,
                                                 child: Column(
@@ -208,14 +274,20 @@ class _HomePageState extends State<HomePage> {
                                                       children: [
                                                         Container(
                                                           height: 54,
-                                                          decoration:
-                                                              const BoxDecoration(
-                                                                  color: Color
-                                                                      .fromARGB(
-                                                                          151,
-                                                                          255,
-                                                                          255,
-                                                                          255)),
+                                                          decoration: BoxDecoration(
+                                                              borderRadius: BorderRadius.only(
+                                                                  bottomLeft: Radius
+                                                                      .circular(
+                                                                          10),
+                                                                  bottomRight: Radius
+                                                                      .circular(
+                                                                          10)),
+                                                              color: Color
+                                                                  .fromARGB(
+                                                                      202,
+                                                                      255,
+                                                                      255,
+                                                                      255)),
                                                         ),
                                                         Column(
                                                           mainAxisAlignment:
@@ -230,7 +302,7 @@ class _HomePageState extends State<HomePage> {
                                                                           context)
                                                                       .size
                                                                       .width *
-                                                                  0.5,
+                                                                  0.75,
                                                               child: Padding(
                                                                 padding:
                                                                     const EdgeInsets
@@ -247,12 +319,12 @@ class _HomePageState extends State<HomePage> {
                                                                       .toString(),
                                                                   style: GoogleFonts.notoSansDisplay(
                                                                       fontSize:
-                                                                          15,
+                                                                          16,
                                                                       color:
                                                                           primaryColor,
                                                                       fontWeight:
                                                                           FontWeight
-                                                                              .w600),
+                                                                              .w500),
                                                                   overflow:
                                                                       TextOverflow
                                                                           .ellipsis,
@@ -282,9 +354,9 @@ class _HomePageState extends State<HomePage> {
                                                                         Icons
                                                                             .location_on_outlined,
                                                                         size:
-                                                                            15,
-                                                                        color: Colors
-                                                                            .red,
+                                                                            14,
+                                                                        color:
+                                                                            descColor,
                                                                       ),
                                                                       Padding(
                                                                         padding:
@@ -296,42 +368,9 @@ class _HomePageState extends State<HomePage> {
                                                                               .city
                                                                               .toString(),
                                                                           style: GoogleFonts.notoSansDisplay(
-                                                                              fontSize: 10,
-                                                                              color: Colors.grey.shade600,
-                                                                              fontWeight: FontWeight.w400),
-                                                                        ),
-                                                                      ),
-                                                                    ],
-                                                                  ),
-                                                                  Row(
-                                                                    mainAxisAlignment:
-                                                                        MainAxisAlignment
-                                                                            .end,
-                                                                    children: [
-                                                                      Text(
-                                                                        // ignore: prefer_if_null_operators, unnecessary_null_comparison
-                                                                        homeCon.destinasiRandom![index].hobby.toString() !=
-                                                                                null
-                                                                            ? homeCon.destinasiRandom![index].hobby.toString()
-                                                                            : "Lainnya",
-                                                                        style: GoogleFonts.notoSansDisplay(
-                                                                            fontSize:
-                                                                                10,
-                                                                            color:
-                                                                                Colors.grey.shade600,
-                                                                            fontWeight: FontWeight.w400),
-                                                                      ),
-                                                                      const Padding(
-                                                                        padding:
-                                                                            EdgeInsets.only(left: 3.0),
-                                                                        child:
-                                                                            Icon(
-                                                                          Icons
-                                                                              .location_pin,
-                                                                          size:
-                                                                              15,
-                                                                          color:
-                                                                              Colors.red,
+                                                                              fontSize: 12,
+                                                                              color: descColor,
+                                                                              fontWeight: FontWeight.w500),
                                                                         ),
                                                                       ),
                                                                     ],
@@ -406,9 +445,9 @@ class _HomePageState extends State<HomePage> {
                         child: Text(
                           "Temukan tempat wisata berdasarkan kategori pilihanmu",
                           style: GoogleFonts.notoSansDisplay(
-                              fontSize: 11,
+                              fontSize: 13,
                               color: descColor,
-                              fontWeight: FontWeight.w500),
+                              fontWeight: FontWeight.w400),
                         ),
                       ),
                     ),
@@ -418,7 +457,7 @@ class _HomePageState extends State<HomePage> {
                       padding: EdgeInsets.fromLTRB(16, 5, 16, 0),
                       child: Container(
                         width: MediaQuery.of(context).size.width * 1,
-                        height: 90,
+                        height: 100,
                         decoration: BoxDecoration(
                             border: Border.all(color: Colors.grey.shade300),
                             borderRadius: BorderRadius.circular(10)),
@@ -453,10 +492,10 @@ class _HomePageState extends State<HomePage> {
                                         Container(
                                           child: Text(
                                             "Cagar\nAlam",
-                                            style: GoogleFonts.inter(
-                                                fontSize: 9,
+                                            textAlign: TextAlign.center,style: GoogleFonts.inter(
+                                                fontSize: 11,
                                                 color: descColor,
-                                                fontWeight: FontWeight.w500),
+                                                fontWeight: FontWeight.w400),
                                           ),
                                         )
                                       ]),
@@ -491,10 +530,10 @@ class _HomePageState extends State<HomePage> {
                                         Container(
                                           child: Text(
                                             "Budaya",
-                                            style: GoogleFonts.inter(
-                                                fontSize: 9,
+                                            textAlign: TextAlign.center,style: GoogleFonts.inter(
+                                                fontSize: 11,
                                                 color: descColor,
-                                                fontWeight: FontWeight.w500),
+                                                fontWeight: FontWeight.w400),
                                           ),
                                         )
                                       ]),
@@ -530,10 +569,10 @@ class _HomePageState extends State<HomePage> {
                                         Container(
                                           child: Text(
                                             "Taman\nHiburan",
-                                            style: GoogleFonts.inter(
-                                                fontSize: 9,
+                                            textAlign: TextAlign.center,style: GoogleFonts.inter(
+                                                fontSize: 11,
                                                 color: descColor,
-                                                fontWeight: FontWeight.w500),
+                                                fontWeight: FontWeight.w400),
                                           ),
                                         )
                                       ]),
@@ -568,10 +607,10 @@ class _HomePageState extends State<HomePage> {
                                         Container(
                                           child: Text(
                                             "Bahari",
-                                            style: GoogleFonts.inter(
-                                                fontSize: 9,
+                                            textAlign: TextAlign.center,style: GoogleFonts.inter(
+                                                fontSize: 11,
                                                 color: descColor,
-                                                fontWeight: FontWeight.w500),
+                                                fontWeight: FontWeight.w400),
                                           ),
                                         )
                                       ]),
@@ -607,10 +646,10 @@ class _HomePageState extends State<HomePage> {
                                         Container(
                                           child: Text(
                                             "Tempat\nIbadah",
-                                            style: GoogleFonts.inter(
-                                                fontSize: 9,
+                                            textAlign: TextAlign.center,style: GoogleFonts.inter(
+                                                fontSize: 11,
                                                 color: descColor,
-                                                fontWeight: FontWeight.w500),
+                                                fontWeight: FontWeight.w400),
                                           ),
                                         )
                                       ]),
@@ -622,7 +661,7 @@ class _HomePageState extends State<HomePage> {
                       ),
                     ),
                     const SizedBox(
-                      height: 12,
+                      height: 20,
                     ),
                     Padding(
                       padding: const EdgeInsets.only(
@@ -653,9 +692,9 @@ class _HomePageState extends State<HomePage> {
                               child: Text(
                                 "Lihat Semua",
                                 style: GoogleFonts.inter(
-                                    fontSize: 9,
-                                    color: Colors.grey.shade500,
-                                    fontWeight: FontWeight.w500),
+                                    fontSize: 11,
+                                    color: descColor,
+                                    fontWeight: FontWeight.w400),
                               ),
                             ),
                           )
@@ -663,7 +702,7 @@ class _HomePageState extends State<HomePage> {
                       ),
                     ),
                     SizedBox(
-                      height: 2,
+                      height: 8,
                     ),
                     isLoading
                         ? const Center(
@@ -721,36 +760,39 @@ class _HomePageState extends State<HomePage> {
                                                           .width *
                                                       0.25,
                                                   child: ClipRRect(
-                                                      borderRadius:
-                                                          BorderRadius.circular(
-                                                              8),
-                                                      child: homeCon
-                                                                  .destinasiDataSortIntoTen![
-                                                                      index]
-                                                                  .destinationPicture ==
-                                                              null
-                                                          ? Image.asset(
-                                                              "assets/images/no_image2.jpg",
-                                                              fit: BoxFit.cover,
-                                                            )
-                                                          : CachedNetworkImage(
-                                                            
-                                                        placeholder: (context,
-                                                                url) =>
-                                                            Center(child: new CircularProgressIndicator( )),
-                                                        imageUrl:
-                                                             homeCon
-                                                                  .destinasiDataSortIntoTen![
-                                                                      index]
-                                                                  .destinationPicture!,
-                                                                  fit: BoxFit.cover,
-                                                        errorWidget: (context,
-                                                                url, error) =>
-                                                            Image.asset(
-                                                        "assets/images/error_image.jpeg",
-                                                        fit: BoxFit.fitWidth,
-                                                      ),
-                                                      ),),
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                            8),
+                                                    child: homeCon
+                                                                .destinasiDataSortIntoTen![
+                                                                    index]
+                                                                .destinationPicture ==
+                                                            null
+                                                        ? Image.asset(
+                                                            "assets/images/no_image2.jpg",
+                                                            fit: BoxFit.cover,
+                                                          )
+                                                        : CachedNetworkImage(
+                                                            placeholder: (context,
+                                                                    url) =>
+                                                                Center(
+                                                                    child:
+                                                                        new CircularProgressIndicator()),
+                                                            imageUrl: homeCon
+                                                                .destinasiDataSortIntoTen![
+                                                                    index]
+                                                                .destinationPicture!,
+                                                            fit: BoxFit.cover,
+                                                            errorWidget:
+                                                                (context, url,
+                                                                        error) =>
+                                                                    Image.asset(
+                                                              "assets/images/error_image.jpeg",
+                                                              fit: BoxFit
+                                                                  .fitWidth,
+                                                            ),
+                                                          ),
+                                                  ),
                                                 ),
                                                 Padding(
                                                   padding:
@@ -761,7 +803,7 @@ class _HomePageState extends State<HomePage> {
                                                         MediaQuery.of(context)
                                                                 .size
                                                                 .width *
-                                                            0.4,
+                                                            0.55,
                                                     child: Column(
                                                         crossAxisAlignment:
                                                             CrossAxisAlignment
@@ -778,12 +820,12 @@ class _HomePageState extends State<HomePage> {
                                                             style: GoogleFonts
                                                                 .notoSansDisplay(
                                                                     fontSize:
-                                                                        13,
+                                                                        14,
                                                                     color:
-                                                                        secondaryColor,
+                                                                        Color.fromARGB(255, 9, 54, 82),
                                                                     fontWeight:
                                                                         FontWeight
-                                                                            .w600),
+                                                                            .w500),
                                                             overflow:
                                                                 TextOverflow
                                                                     .ellipsis,
@@ -801,35 +843,39 @@ class _HomePageState extends State<HomePage> {
                                                                       .start,
                                                               crossAxisAlignment:
                                                                   CrossAxisAlignment
-                                                                      .start,
+                                                                      .center,
                                                               children: [
                                                                 Icon(
                                                                   Icons
                                                                       .location_on_outlined,
-                                                                  size: 15,
+                                                                  size: 14,
                                                                   color:
-                                                                      titleColor,
+                                                                      descColor,
                                                                 ),
-                                                                Text(
-                                                                  homeCon
-                                                                      .destinasiDataSortIntoTen![
-                                                                          index]
-                                                                      .city!,
-                                                                  style: GoogleFonts.notoSansDisplay(
-                                                                      fontSize:
-                                                                          11,
-                                                                      color:
-                                                                          descColor,
-                                                                      fontWeight:
-                                                                          FontWeight
-                                                                              .w500),
-                                                                  overflow:
-                                                                      TextOverflow
-                                                                          .ellipsis,
+                                                                Padding(
+                                                                  padding: const EdgeInsets.only(left: 2.0),
+                                                                  child: Text(
+                                                                    homeCon
+                                                                        .destinasiDataSortIntoTen![
+                                                                            index]
+                                                                        .city!.toUpperCase(),
+                                                                    style: GoogleFonts.inter(
+                                                                        fontSize:
+                                                                            11,
+                                                                        color:
+                                                                            descColor,
+                                                                        fontWeight:
+                                                                            FontWeight
+                                                                                .w400),
+                                                                    overflow:
+                                                                        TextOverflow
+                                                                            .ellipsis,
+                                                                  ),
                                                                 )
                                                               ],
                                                             ),
                                                           ),
+                                                          SizedBox(height: 2,),
                                                           Row(
                                                             mainAxisAlignment:
                                                                 MainAxisAlignment
@@ -839,11 +885,11 @@ class _HomePageState extends State<HomePage> {
                                                                     .start,
                                                             children: [
                                                               Container(
-                                                                  height: 17,
+                                                                  // height: 17,
                                                                   decoration: BoxDecoration(
                                                                       borderRadius:
                                                                           BorderRadius.circular(
-                                                                              8),
+                                                                              5),
                                                                       color:
                                                                           thirdColor),
                                                                   child: Center(
@@ -853,18 +899,20 @@ class _HomePageState extends State<HomePage> {
                                                                               .only(
                                                                           left:
                                                                               5.0,
+                                                                              top: 2,
+                                                                              bottom: 2,
                                                                           right:
                                                                               5.0),
                                                                       child: homeCon.destinasiDataSortIntoTen![index].hobby !=
                                                                               null
                                                                           ? Text(
                                                                               homeCon.destinasiDataSortIntoTen![index].hobby!.toString(),
-                                                                              style: GoogleFonts.notoSansDisplay(fontSize: 9, color: Colors.white, fontWeight: FontWeight.w500),
+                                                                              style: GoogleFonts.notoSansDisplay(fontSize: 11, color: Colors.white, fontWeight: FontWeight.w400),
                                                                               overflow: TextOverflow.ellipsis,
                                                                             )
                                                                           : Text(
                                                                               "Lainnya",
-                                                                              style: GoogleFonts.notoSansDisplay(fontSize: 9, color: Colors.white, fontWeight: FontWeight.w500),
+                                                                              style: GoogleFonts.notoSansDisplay(fontSize: 11, color: Colors.white, fontWeight: FontWeight.w400),
                                                                             ),
                                                                     ),
                                                                   )),
@@ -876,11 +924,11 @@ class _HomePageState extends State<HomePage> {
                                                                             5.0),
                                                                 child:
                                                                     Container(
-                                                                        height:
-                                                                            17,
+                                                                        // height:
+                                                                            // 17,
                                                                         decoration: BoxDecoration(
                                                                             borderRadius: BorderRadius.circular(
-                                                                                8),
+                                                                                5),
                                                                             color:
                                                                                 labelColor),
                                                                         child:
@@ -888,11 +936,11 @@ class _HomePageState extends State<HomePage> {
                                                                           child:
                                                                               Padding(
                                                                             padding:
-                                                                                const EdgeInsets.only(left: 5.0, right: 5.0),
+                                                                                const EdgeInsets.only(left: 5.0, right: 5.0, top: 2, bottom: 2),
                                                                             child:
                                                                                 Text(
                                                                               homeCon.destinasiDataSortIntoTen![index].category!,
-                                                                              style: GoogleFonts.notoSansDisplay(fontSize: 9, color: Colors.black, fontWeight: FontWeight.w500),
+                                                                              style: GoogleFonts.notoSansDisplay(fontSize: 11, color: Colors.black, fontWeight: FontWeight.w400),
                                                                               overflow: TextOverflow.ellipsis,
                                                                             ),
                                                                           ),

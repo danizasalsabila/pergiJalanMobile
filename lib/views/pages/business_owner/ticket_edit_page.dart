@@ -107,7 +107,7 @@ class _EditTicketPageState extends State<EditTicketPage> {
             Align(
               alignment: Alignment.topLeft,
               child: Text(
-                "Tambah tiket wisata",
+                "Ubah tiket wisata",
                 style: GoogleFonts.openSans(
                     fontSize: 17,
                     color: const Color.fromARGB(255, 41, 41, 41),
@@ -130,7 +130,7 @@ class _EditTicketPageState extends State<EditTicketPage> {
                       Text(
                         "Detail Tempat Wisata",
                         style: GoogleFonts.inter(
-                            fontSize: 14,
+                            fontSize: 15,
                             color: const Color.fromARGB(255, 41, 41, 41),
                             fontWeight: FontWeight.w600),
                       ),
@@ -139,7 +139,7 @@ class _EditTicketPageState extends State<EditTicketPage> {
                         child: Text(
                           "Berikut adalah informasi yang akan ditampilkan pada e-ticket wisatawan",
                           style: GoogleFonts.inter(
-                              fontSize: 12,
+                              fontSize: 13,
                               color: Colors.grey.shade500,
                               fontWeight: FontWeight.w400),
                           maxLines: 5,
@@ -314,7 +314,7 @@ class _EditTicketPageState extends State<EditTicketPage> {
                       Text(
                         "Masukkan Informasi Tiket",
                         style: GoogleFonts.inter(
-                            fontSize: 14,
+                            fontSize: 15,
                             color: const Color.fromARGB(255, 41, 41, 41),
                             fontWeight: FontWeight.w600),
                       ),
@@ -325,7 +325,7 @@ class _EditTicketPageState extends State<EditTicketPage> {
                         child: Text(
                           "Pastikan untuk memberikan informasi yang akurat dan jelas agar pengunjung dapat mengetahui dengan jelas apa yang ditawarkan oleh tiket wisata",
                           style: GoogleFonts.inter(
-                              fontSize: 12,
+                              fontSize: 13,
                               color: Colors.grey.shade500,
                               fontWeight: FontWeight.w400),
                           maxLines: 5,
@@ -336,7 +336,7 @@ class _EditTicketPageState extends State<EditTicketPage> {
                         child: Text(
                           "Nama Tiket",
                           style: GoogleFonts.inter(
-                              fontSize: 12,
+                              fontSize: 13,
                               color: const Color.fromARGB(255, 41, 41, 41),
                               fontWeight: FontWeight.w600),
                         ),
@@ -386,7 +386,7 @@ class _EditTicketPageState extends State<EditTicketPage> {
                         child: Text(
                           "Harga Tiket",
                           style: GoogleFonts.inter(
-                              fontSize: 12,
+                              fontSize: 13,
                               color: const Color.fromARGB(255, 41, 41, 41),
                               fontWeight: FontWeight.w600),
                         ),
@@ -438,7 +438,7 @@ class _EditTicketPageState extends State<EditTicketPage> {
                         child: Text(
                           "Stok Tersedia",
                           style: GoogleFonts.inter(
-                              fontSize: 12,
+                              fontSize: 13,
                               color: const Color.fromARGB(255, 41, 41, 41),
                               fontWeight: FontWeight.w600),
                         ),
@@ -560,7 +560,7 @@ class _EditTicketPageState extends State<EditTicketPage> {
                                     width: MediaQuery.of(context).size.width,
                                     child: Center(
                                         child: Text(
-                                      "Tambah",
+                                      "Ubah",
                                       style: GoogleFonts.openSans(
                                           fontSize: 12,
                                           color: Colors.white,
@@ -576,7 +576,7 @@ class _EditTicketPageState extends State<EditTicketPage> {
                                   width: MediaQuery.of(context).size.width,
                                   child: Center(
                                       child: Text(
-                                    "Tambah",
+                                    "Ubah",
                                     style: GoogleFonts.openSans(
                                         fontSize: 12,
                                         color: Colors.white,
@@ -596,7 +596,7 @@ class _EditTicketPageState extends State<EditTicketPage> {
                   "Terima kasih atas kerjasamanya dalam memberikan informasi yang diperlukan untuk menciptakan pengalaman wisata yang luar biasa bagi para pengunjung",
                   textAlign: TextAlign.center,
                   style: GoogleFonts.inter(
-                      fontSize: 9,
+                      fontSize: 11,
                       color: Colors.grey.shade500,
                       fontWeight: FontWeight.w400),
                   maxLines: 5,

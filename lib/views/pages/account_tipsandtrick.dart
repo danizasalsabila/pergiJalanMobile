@@ -80,7 +80,7 @@ class _TipsAndTrickState extends State<TipsAndTrick> {
                                   child: Text(
                                     "Pilih tujuan wisata dengan cermat: ",
                                     style: GoogleFonts.inter(
-                                        fontSize: 13,
+                                        fontSize: 14,
                                         color: primaryColor,
                                         fontWeight: FontWeight.w600),
                                   ),
@@ -90,10 +90,10 @@ class _TipsAndTrickState extends State<TipsAndTrick> {
                                   style: GoogleFonts.inter(
                                       fontSize: 13,
                                       color: titleColor,
-                                      fontWeight: FontWeight.w500),
+                                      fontWeight: FontWeight.w400),
                                 ),
                                 SizedBox(
-                                  height: 10,
+                                  height: 15,
                                 ),
                                 InkWell(
                                   onTap: () {
@@ -106,7 +106,7 @@ class _TipsAndTrickState extends State<TipsAndTrick> {
                                   child: Text(
                                     "Cari informasi tentang tempat wisata: ",
                                     style: GoogleFonts.inter(
-                                        fontSize: 13,
+                                        fontSize: 14,
                                         color: primaryColor,
                                         fontWeight: FontWeight.w600),
                                   ),
@@ -118,17 +118,17 @@ class _TipsAndTrickState extends State<TipsAndTrick> {
                                   style: GoogleFonts.inter(
                                       fontSize: 13,
                                       color: titleColor,
-                                      fontWeight: FontWeight.w500),
+                                      fontWeight: FontWeight.w400),
                                 ),
                                 SizedBox(
-                                  height: 10,
+                                  height: 15,
                                 ),
                                 RichText(
                                     text: TextSpan(children: [
                                   TextSpan(
                                     text: "Rencanakan jadwal perjalanan: ",
                                     style: GoogleFonts.inter(
-                                        fontSize: 13,
+                                        fontSize: 14,
                                         color: primaryColor,
                                         fontWeight: FontWeight.w600),
                                   ),
@@ -138,11 +138,11 @@ class _TipsAndTrickState extends State<TipsAndTrick> {
                                     style: GoogleFonts.inter(
                                         fontSize: 13,
                                         color: titleColor,
-                                        fontWeight: FontWeight.w500),
+                                        fontWeight: FontWeight.w400),
                                   ),
                                 ])),
                                 SizedBox(
-                                  height: 10,
+                                  height: 15,
                                 ),
                                 RichText(
                                     text: TextSpan(children: [
@@ -150,7 +150,7 @@ class _TipsAndTrickState extends State<TipsAndTrick> {
                                     text:
                                         "Persiapkan perlengkapan perjalanan: ",
                                     style: GoogleFonts.inter(
-                                        fontSize: 13,
+                                        fontSize: 14,
                                         color: primaryColor,
                                         fontWeight: FontWeight.w600),
                                   ),
@@ -160,7 +160,7 @@ class _TipsAndTrickState extends State<TipsAndTrick> {
                                     style: GoogleFonts.inter(
                                         fontSize: 13,
                                         color: titleColor,
-                                        fontWeight: FontWeight.w500),
+                                        fontWeight: FontWeight.w400),
                                   ),
                                 ])),
                               ],
@@ -244,7 +244,7 @@ class _TipsAndTrickState extends State<TipsAndTrick> {
                                 Text(
                                   "Patuhi aturan dan peraturan: ",
                                   style: GoogleFonts.inter(
-                                      fontSize: 13,
+                                      fontSize: 14,
                                       color: primaryColor,
                                       fontWeight: FontWeight.w600),
                                 ),
@@ -253,15 +253,15 @@ class _TipsAndTrickState extends State<TipsAndTrick> {
                                   style: GoogleFonts.inter(
                                       fontSize: 13,
                                       color: titleColor,
-                                      fontWeight: FontWeight.w500),
+                                      fontWeight: FontWeight.w400),
                                 ),
                                 SizedBox(
-                                  height: 10,
+                                  height: 15,
                                 ),
                                 Text(
                                   "Perhatikan keamanan pribadi: ",
                                   style: GoogleFonts.inter(
-                                      fontSize: 13,
+                                      fontSize: 14,
                                       color: primaryColor,
                                       fontWeight: FontWeight.w600),
                                 ),
@@ -272,10 +272,10 @@ class _TipsAndTrickState extends State<TipsAndTrick> {
                                   style: GoogleFonts.inter(
                                       fontSize: 13,
                                       color: titleColor,
-                                      fontWeight: FontWeight.w500),
+                                      fontWeight: FontWeight.w400),
                                 ),
                                 SizedBox(
-                                  height: 10,
+                                  height: 15,
                                 ),
                                 RichText(
                                     text: TextSpan(children: [
@@ -283,7 +283,7 @@ class _TipsAndTrickState extends State<TipsAndTrick> {
                                     text:
                                         "Berkomunikasi dengan penduduk lokal: ",
                                     style: GoogleFonts.inter(
-                                        fontSize: 13,
+                                        fontSize: 14,
                                         color: primaryColor,
                                         fontWeight: FontWeight.w600),
                                   ),
@@ -293,18 +293,18 @@ class _TipsAndTrickState extends State<TipsAndTrick> {
                                     style: GoogleFonts.inter(
                                         fontSize: 13,
                                         color: titleColor,
-                                        fontWeight: FontWeight.w500),
+                                        fontWeight: FontWeight.w400),
                                   ),
                                 ])),
                                 SizedBox(
-                                  height: 10,
+                                  height: 15,
                                 ),
                                 RichText(
                                     text: TextSpan(children: [
                                   TextSpan(
                                     text: "Jaga kebersihan dan lingkungan: ",
                                     style: GoogleFonts.inter(
-                                        fontSize: 13,
+                                        fontSize: 14,
                                         color: primaryColor,
                                         fontWeight: FontWeight.w600),
                                   ),
@@ -314,7 +314,7 @@ class _TipsAndTrickState extends State<TipsAndTrick> {
                                     style: GoogleFonts.inter(
                                         fontSize: 13,
                                         color: titleColor,
-                                        fontWeight: FontWeight.w500),
+                                        fontWeight: FontWeight.w400),
                                   ),
                                 ])),
                               ],

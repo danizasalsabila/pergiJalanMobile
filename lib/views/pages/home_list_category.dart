@@ -123,9 +123,8 @@ class _ListByCategoryState extends State<ListByCategory> {
                                                 MainAxisAlignment.start,
                                             children: [
                                               ClipRRect(
-                                                      borderRadius:
-                                                          BorderRadius.circular(
-                                                              8),
+                                                borderRadius:
+                                                    BorderRadius.circular(8),
                                                 child: Container(
                                                   height: 70,
                                                   width: MediaQuery.of(context)
@@ -142,22 +141,23 @@ class _ListByCategoryState extends State<ListByCategory> {
                                                           fit: BoxFit.cover,
                                                         )
                                                       : CachedNetworkImage(
-                                                              
                                                           placeholder: (context,
                                                                   url) =>
-                                                              Center(child: new CircularProgressIndicator( )),
-                                                          imageUrl:
-                                                               homeCon
+                                                              Center(
+                                                                  child:
+                                                                      new CircularProgressIndicator()),
+                                                          imageUrl: homeCon
                                                               .destinasiCategoryData![
                                                                   index]
                                                               .destinationPicture!,
-                                                                    fit: BoxFit.cover,
+                                                          fit: BoxFit.cover,
                                                           errorWidget: (context,
                                                                   url, error) =>
                                                               Image.asset(
-                                                          "assets/images/error_image.jpeg",
-                                                          fit: BoxFit.fitWidth,
-                                                        ),
+                                                            "assets/images/error_image.jpeg",
+                                                            fit:
+                                                                BoxFit.fitWidth,
+                                                          ),
                                                         ),
                                                 ),
                                               ),
@@ -168,7 +168,7 @@ class _ListByCategoryState extends State<ListByCategory> {
                                                   width: MediaQuery.of(context)
                                                           .size
                                                           .width *
-                                                      0.4,
+                                                      0.55,
                                                   child: Column(
                                                       crossAxisAlignment:
                                                           CrossAxisAlignment
@@ -184,12 +184,12 @@ class _ListByCategoryState extends State<ListByCategory> {
                                                               .nameDestinasi!,
                                                           style: GoogleFonts
                                                               .notoSansDisplay(
-                                                                  fontSize: 13,
+                                                                  fontSize: 14,
                                                                   color:
-                                                                      secondaryColor,
+                                                                      primaryColor,
                                                                   fontWeight:
                                                                       FontWeight
-                                                                          .w600),
+                                                                          .w500),
                                                           overflow: TextOverflow
                                                               .ellipsis,
                                                         ),
@@ -210,9 +210,9 @@ class _ListByCategoryState extends State<ListByCategory> {
                                                               Icon(
                                                                 Icons
                                                                     .location_on_outlined,
-                                                                size: 15,
+                                                                size: 14,
                                                                 color:
-                                                                    titleColor,
+                                                                    descColor,
                                                               ),
                                                               Text(
                                                                 homeCon
@@ -234,6 +234,7 @@ class _ListByCategoryState extends State<ListByCategory> {
                                                             ],
                                                           ),
                                                         ),
+                                                        SizedBox(height: 2,),
                                                         Row(
                                                           mainAxisAlignment:
                                                               MainAxisAlignment
@@ -243,12 +244,12 @@ class _ListByCategoryState extends State<ListByCategory> {
                                                                   .start,
                                                           children: [
                                                             Container(
-                                                                height: 17,
+                                                                // height: 17,
                                                                 decoration: BoxDecoration(
                                                                     borderRadius:
                                                                         BorderRadius
                                                                             .circular(
-                                                                                8),
+                                                                                5),
                                                                     color:
                                                                         thirdColor),
                                                                 child: Center(
@@ -258,6 +259,9 @@ class _ListByCategoryState extends State<ListByCategory> {
                                                                             .only(
                                                                         left:
                                                                             5.0,
+                                                                        top: 2,
+                                                                        bottom:
+                                                                            2,
                                                                         right:
                                                                             5.0),
                                                                     child: Text(
@@ -267,11 +271,11 @@ class _ListByCategoryState extends State<ListByCategory> {
                                                                           .hobby!,
                                                                       style: GoogleFonts.notoSansDisplay(
                                                                           fontSize:
-                                                                              9,
+                                                                              11,
                                                                           color: Colors
                                                                               .white,
                                                                           fontWeight:
-                                                                              FontWeight.w500),
+                                                                              FontWeight.w400),
                                                                       overflow:
                                                                           TextOverflow
                                                                               .ellipsis,
@@ -285,7 +289,7 @@ class _ListByCategoryState extends State<ListByCategory> {
                                                                       left:
                                                                           5.0),
                                                               child: Container(
-                                                                  height: 17,
+                                                                  // height: 17,
                                                                   decoration: BoxDecoration(
                                                                       borderRadius:
                                                                           BorderRadius.circular(
@@ -299,6 +303,10 @@ class _ListByCategoryState extends State<ListByCategory> {
                                                                               .only(
                                                                           left:
                                                                               5.0,
+                                                                          top:
+                                                                              2,
+                                                                          bottom:
+                                                                              2,
                                                                           right:
                                                                               5.0),
                                                                       child:
@@ -308,10 +316,10 @@ class _ListByCategoryState extends State<ListByCategory> {
                                                                             .category!,
                                                                         style: GoogleFonts.notoSansDisplay(
                                                                             fontSize:
-                                                                                9,
+                                                                                11,
                                                                             color:
                                                                                 Colors.black,
-                                                                            fontWeight: FontWeight.w500),
+                                                                            fontWeight: FontWeight.w400),
                                                                         overflow:
                                                                             TextOverflow.ellipsis,
                                                                       ),

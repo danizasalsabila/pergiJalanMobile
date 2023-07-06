@@ -176,10 +176,10 @@ class _ETicketPageState extends State<ETicketPage> {
                                               fontWeight: FontWeight.w700),
                                         ),
                                         Text(
-                                          "Selamat menikmati perjalanan\ndan liburan anda",
+                                          "Selamat menikmati perjalanan\ndan liburan Anda",
                                           textAlign: TextAlign.left,
                                           style: GoogleFonts.openSans(
-                                              fontSize: 10,
+                                              fontSize: 12,
                                               color: captColor,
                                               fontWeight: FontWeight.w500),
                                         )
@@ -210,7 +210,7 @@ class _ETicketPageState extends State<ETicketPage> {
                                     "Nama Pengunjung",
                                     textAlign: TextAlign.center,
                                     style: GoogleFonts.inter(
-                                        fontSize: 13,
+                                        fontSize: 14,
                                         color: captColor,
                                         fontWeight: FontWeight.w400),
                                   ),
@@ -232,7 +232,7 @@ class _ETicketPageState extends State<ETicketPage> {
                                           "#${ticketCon.eticketDataiD!.id}"
                                               .toString(),
                                           style: GoogleFonts.inter(
-                                              fontSize: 11,
+                                              fontSize: 12,
                                               color: captColor,
                                               fontWeight: FontWeight.w400),
                                         ),
@@ -278,7 +278,7 @@ class _ETicketPageState extends State<ETicketPage> {
                                             Text(
                                               "Kontak Pengunjung",
                                               style: GoogleFonts.inter(
-                                                  fontSize: 10,
+                                                  fontSize: 12,
                                                   color: captColor,
                                                   fontWeight: FontWeight.w400),
                                             ),
@@ -310,7 +310,7 @@ class _ETicketPageState extends State<ETicketPage> {
                                             Text(
                                               "Tanggal Pengunjung",
                                               style: GoogleFonts.inter(
-                                                  fontSize: 10,
+                                                  fontSize: 12,
                                                   color: captColor,
                                                   fontWeight: FontWeight.w400),
                                             ),
@@ -349,7 +349,7 @@ class _ETicketPageState extends State<ETicketPage> {
                                             Text(
                                               "Jenis Tiket",
                                               style: GoogleFonts.inter(
-                                                  fontSize: 10,
+                                                  fontSize: 12,
                                                   color: captColor,
                                                   fontWeight: FontWeight.w400),
                                             ),
@@ -364,6 +364,8 @@ class _ETicketPageState extends State<ETicketPage> {
                                                     : ticketCon.eticketDataiD!
                                                         .ticket!.nameTicket
                                                         .toString(),
+                                                        overflow: TextOverflow.fade,
+                                                        maxLines: 3,
                                                 style: GoogleFonts.inter(
                                                     fontSize: 13,
                                                     color: primaryColor,
@@ -385,7 +387,7 @@ class _ETicketPageState extends State<ETicketPage> {
                                             Text(
                                               "Harga",
                                               style: GoogleFonts.inter(
-                                                  fontSize: 10,
+                                                  fontSize: 12,
                                                   color: captColor,
                                                   fontWeight: FontWeight.w400),
                                             ),
@@ -394,6 +396,74 @@ class _ETicketPageState extends State<ETicketPage> {
                                                   top: 5.0),
                                               child: Text(
                                                 "Rp ${ticketCon.eticketDataiD!.price.toString()}",
+                                                style: GoogleFonts.inter(
+                                                    fontSize: 13,
+                                                    color: primaryColor,
+                                                    fontWeight:
+                                                        FontWeight.w600),
+                                              ),
+                                            ),
+                                          ],
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                  SizedBox(
+                                    height: 12,
+                                  ),
+                                  Row(
+                                    children: [
+                                      Container(
+                                        width:
+                                            MediaQuery.of(context).size.width *
+                                                0.38,
+                                                child: Column(
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
+                                          children: [
+                                            Text(
+                                              "Biaya Admin",
+                                              style: GoogleFonts.inter(
+                                                  fontSize: 12,
+                                                  color: captColor,
+                                                  fontWeight: FontWeight.w400),
+                                            ),
+                                            Padding(
+                                              padding: const EdgeInsets.only(
+                                                  top: 5.0),
+                                              child: Text(
+                                                "Rp ${ticketCon.eticketDataiD!.adminPrice.toString()}",
+                                                style: GoogleFonts.inter(
+                                                    fontSize: 11,
+                                                    color: primaryColor,
+                                                    fontWeight:
+                                                        FontWeight.w600),
+                                              ),
+                                            ),
+                                          ],
+                                        ),
+                                        
+                                      ),
+                                      Container(
+                                        width:
+                                            MediaQuery.of(context).size.width *
+                                                0.38,
+                                        child: Column(
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
+                                          children: [
+                                            Text(
+                                              "Total Pembayaran",
+                                              style: GoogleFonts.inter(
+                                                  fontSize: 12,
+                                                  color: captColor,
+                                                  fontWeight: FontWeight.w400),
+                                            ),
+                                            Padding(
+                                              padding: const EdgeInsets.only(
+                                                  top: 5.0),
+                                              child: Text(
+                                                "Rp ${ticketCon.eticketDataiD!.totalPrice.toString()}",
                                                 style: GoogleFonts.inter(
                                                     fontSize: 13,
                                                     color: primaryColor,
@@ -424,7 +494,7 @@ class _ETicketPageState extends State<ETicketPage> {
                                             Text(
                                               "Tempat Wisata",
                                               style: GoogleFonts.inter(
-                                                  fontSize: 8,
+                                                  fontSize: 12,
                                                   color: captColor,
                                                   fontWeight: FontWeight.w400),
                                             ),
@@ -438,7 +508,7 @@ class _ETicketPageState extends State<ETicketPage> {
                                                     .toString(),
                                                 maxLines: 4,
                                                 style: GoogleFonts.inter(
-                                                    fontSize: 10,
+                                                    fontSize: 12,
                                                     color: primaryColor,
                                                     fontWeight:
                                                         FontWeight.w600),
@@ -451,7 +521,7 @@ class _ETicketPageState extends State<ETicketPage> {
                                                 ticketCon.eticketDataiD!.destinasi!.openHour == null ? "-":
                                                 "${ticketCon.eticketDataiD!.destinasi!.openHour.toString()} - ${ticketCon.eticketDataiD!.destinasi!.closedHour.toString()}",
                                                 style: GoogleFonts.inter(
-                                                    fontSize: 10,
+                                                    fontSize: 11,
                                                     color: primaryColor,
                                                     fontWeight:
                                                         FontWeight.w500),
@@ -473,7 +543,7 @@ class _ETicketPageState extends State<ETicketPage> {
                                             Text(
                                               "Lokasi",
                                               style: GoogleFonts.inter(
-                                                  fontSize: 8,
+                                                  fontSize: 12,
                                                   color: captColor,
                                                   fontWeight: FontWeight.w400),
                                             ),
@@ -486,7 +556,7 @@ class _ETicketPageState extends State<ETicketPage> {
                                                     .toString(),
                                                 maxLines: 5,
                                                 style: GoogleFonts.inter(
-                                                    fontSize: 10,
+                                                    fontSize: 12,
                                                     color: primaryColor,
                                                     fontWeight:
                                                         FontWeight.w600),
@@ -639,8 +709,8 @@ class _ETicketPageState extends State<ETicketPage> {
                                                 child: Text(
                                                   "Pembatalan dan Pengembalian Uang",
                                                   style: GoogleFonts.inter(
-                                                      fontSize: 11,
-                                                      color: captColor,
+                                                      fontSize: 13,
+                                                      color: descColor,
                                                       fontWeight:
                                                           FontWeight.w500),
                                                 ),
@@ -651,10 +721,10 @@ class _ETicketPageState extends State<ETicketPage> {
                                                 child: Text(
                                                   "Tiket tidak dapat dibatalkan atau dikembalikan setelah dibeli, kecuali dalam keadaan tertentu yang ditetapkan oleh tempat wisata.",
                                                   style: GoogleFonts.inter(
-                                                      fontSize: 9,
+                                                      fontSize: 12,
                                                       color: captColor,
                                                       fontWeight:
-                                                          FontWeight.w500),
+                                                          FontWeight.w400),
                                                 ),
                                               ),
                                             ],
@@ -664,7 +734,7 @@ class _ETicketPageState extends State<ETicketPage> {
                                     ],
                                   ),
                                   SizedBox(
-                                    height: 6,
+                                    height: 12,
                                   ),
                                   Row(
                                     mainAxisAlignment: MainAxisAlignment.start,
@@ -673,7 +743,7 @@ class _ETicketPageState extends State<ETicketPage> {
                                     children: [
                                       Padding(
                                         padding:
-                                            const EdgeInsets.only(top: 2.0),
+                                            const EdgeInsets.only(top: 5.0),
                                         child: FaIcon(
                                           FontAwesomeIcons.solidCircle,
                                           size: 4,
@@ -699,8 +769,8 @@ class _ETicketPageState extends State<ETicketPage> {
                                                 child: Text(
                                                   "Penukaran Tiket",
                                                   style: GoogleFonts.inter(
-                                                      fontSize: 11,
-                                                      color: captColor,
+                                                      fontSize: 13,
+                                                      color: descColor,
                                                       fontWeight:
                                                           FontWeight.w500),
                                                 ),
@@ -711,10 +781,10 @@ class _ETicketPageState extends State<ETicketPage> {
                                                 child: Text(
                                                   "Pengguna harus menukarkan tiket elektronik dengan tiket fisik yang sah di pintu masuk tempat wisata. Pengguna harus menunjukkan identitas yang valid sesuai dengan ketentuan yang berlaku.",
                                                   style: GoogleFonts.inter(
-                                                      fontSize: 9,
+                                                      fontSize: 12,
                                                       color: captColor,
                                                       fontWeight:
-                                                          FontWeight.w500),
+                                                          FontWeight.w400),
                                                 ),
                                               ),
                                             ],
@@ -777,7 +847,7 @@ class _ETicketPageState extends State<ETicketPage> {
                                   //   ],
                                   // ),
                                   SizedBox(
-                                    height: 20,
+                                    height: 25,
                                   ),
                                 ],
                               ),

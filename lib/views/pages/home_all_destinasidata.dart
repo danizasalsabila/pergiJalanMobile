@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/container.dart';
 import 'package:flutter/src/widgets/framework.dart';
@@ -100,20 +101,40 @@ class _AllDestinasiPageState extends State<AllDestinasiPage> {
                                                   //     MainAxisAlignment
                                                   //         .spaceBetween,
                                                   children: [
-                                                    Container(
-                                                      height: 70,
-                                                      width: MediaQuery.of(context)
-                                                              .size
-                                                              .width *
-                                                          0.25,
-                                                      child: ClipRRect(
-                                                          borderRadius:
-                                                              BorderRadius.circular(
-                                                                  8),
-                                                          child: Image.asset(
-                                                            "assets/images/slicing.jpg",
+                                                    ClipRRect(
+                                                      borderRadius: BorderRadius.circular(8),
+                                                      child: Container(
+                                                        height: 70,
+                                                        width: MediaQuery.of(context)
+                                                                .size
+                                                                .width *
+                                                            0.25,
+                                                        child: homeCon.destinasiData![
+                                                                    index]
+                                                                .destinationPicture ==
+                                                            null
+                                                        ? Image.asset(
+                                                            "assets/images/no_image2.jpg",
                                                             fit: BoxFit.cover,
-                                                          )),
+                                                          )
+                                                        : CachedNetworkImage(
+                                                                
+                                                            placeholder: (context,
+                                                                    url) =>
+                                                                Center(child: new CircularProgressIndicator( )),
+                                                            imageUrl:
+                                                                 homeCon.destinasiData![
+                                                                    index]
+                                                                .destinationPicture!,
+                                                                      fit: BoxFit.cover,
+                                                            errorWidget: (context,
+                                                                    url, error) =>
+                                                                Image.asset(
+                                                            "assets/images/error_image.jpeg",
+                                                            fit: BoxFit.fitWidth,
+                                                          ),
+                                                          ),
+                                                      ),
                                                     ),
                                                     Padding(
                                                       padding: const EdgeInsets.only(left: 12.0),
@@ -137,9 +158,9 @@ class _AllDestinasiPageState extends State<AllDestinasiPage> {
                                                                     .nameDestinasi!,
                                                                 style: GoogleFonts
                                                                     .notoSansDisplay(
-                                                                        fontSize: 13,
+                                                                        fontSize: 14,
                                                                         color:
-                                                                            secondaryColor,
+                                                                            primaryColor,
                                                                         fontWeight:
                                                                             FontWeight
                                                                                 .w600),
@@ -163,30 +184,34 @@ class _AllDestinasiPageState extends State<AllDestinasiPage> {
                                                                     Icon(
                                                                       Icons
                                                                           .location_on_outlined,
-                                                                      size: 15,
+                                                                      size: 14,
                                                                       color:
-                                                                          titleColor,
+                                                                          descColor,
                                                                     ),
-                                                                    Text(
-                                                                      homeCon
-                                                                          .destinasiData![
-                                                                              index]
-                                                                          .city!,
-                                                                      style: GoogleFonts.notoSansDisplay(
-                                                                          fontSize:
-                                                                              11,
-                                                                          color:
-                                                                              descColor,
-                                                                          fontWeight:
-                                                                              FontWeight
-                                                                                  .w500),
-                                                                      overflow:
-                                                                          TextOverflow
-                                                                              .ellipsis,
+                                                                    Padding(
+                                                                      padding: const EdgeInsets.only(left: 2.0),
+                                                                      child: Text(
+                                                                        homeCon
+                                                                            .destinasiData![
+                                                                                index]
+                                                                            .city!.toUpperCase(),
+                                                                        style: GoogleFonts.notoSansDisplay(
+                                                                            fontSize:
+                                                                                11,
+                                                                            color:
+                                                                                descColor,
+                                                                            fontWeight:
+                                                                                FontWeight
+                                                                                    .w400),
+                                                                        overflow:
+                                                                            TextOverflow
+                                                                                .ellipsis,
+                                                                      ),
                                                                     )
                                                                   ],
                                                                 ),
                                                               ),
+                                                              SizedBox(height: 2,),
                                                               Row(
                                                                 mainAxisAlignment:
                                                                     MainAxisAlignment
@@ -196,12 +221,12 @@ class _AllDestinasiPageState extends State<AllDestinasiPage> {
                                                                         .start,
                                                                 children: [
                                                                   Container(
-                                                                      height: 17,
+                                                                      // height: 17,
                                                                       decoration: BoxDecoration(
                                                                           borderRadius:
                                                                               BorderRadius
                                                                                   .circular(
-                                                                                      8),
+                                                                                      5),
                                                                           color:
                                                                               thirdColor),
                                                                       child: Center(
@@ -212,23 +237,25 @@ class _AllDestinasiPageState extends State<AllDestinasiPage> {
                                                                               left:
                                                                                   5.0,
                                                                               right:
-                                                                                  5.0),
+                                                                                  5.0, 
+                                                                              top: 2,
+                                                                              bottom: 2,),
                                                                           child: homeCon.destinasiData![index].hobby !=
                                                                                   null
                                                                               ? Text(
                                                                                   homeCon.destinasiData![index].hobby!.toString(),
                                                                                   style: GoogleFonts.notoSansDisplay(
-                                                                                      fontSize: 9,
+                                                                                      fontSize: 11,
                                                                                       color: Colors.white,
-                                                                                      fontWeight: FontWeight.w500),
+                                                                                      fontWeight: FontWeight.w400),
                                                                                   overflow:
                                                                                       TextOverflow.ellipsis,
                                                                                 )
                                                                               :  Text(
                                                                                   "Lainnya",  style: GoogleFonts.notoSansDisplay(
-                                                                                      fontSize: 9,
+                                                                                      fontSize: 11,
                                                                                       color: Colors.white,
-                                                                                      fontWeight: FontWeight.w500),),
+                                                                                      fontWeight: FontWeight.w400),),
                                                                         ),
                                                                       )),
                                                                   Padding(
@@ -238,11 +265,11 @@ class _AllDestinasiPageState extends State<AllDestinasiPage> {
                                                                             left:
                                                                                 5.0),
                                                                     child: Container(
-                                                                        height: 17,
+                                                                        // height: 17,
                                                                         decoration: BoxDecoration(
                                                                             borderRadius:
                                                                                 BorderRadius.circular(
-                                                                                    8),
+                                                                                    5),
                                                                             color:
                                                                                 labelColor),
                                                                         child: Center(
@@ -252,6 +279,9 @@ class _AllDestinasiPageState extends State<AllDestinasiPage> {
                                                                                     .only(
                                                                                 left:
                                                                                     5.0,
+                                                                                    
+                                                                              top: 2,
+                                                                              bottom: 2,
                                                                                 right:
                                                                                     5.0),
                                                                             child:
@@ -261,10 +291,10 @@ class _AllDestinasiPageState extends State<AllDestinasiPage> {
                                                                                   .category!,
                                                                               style: GoogleFonts.notoSansDisplay(
                                                                                   fontSize:
-                                                                                      9,
+                                                                                      11,
                                                                                   color:
                                                                                       Colors.black,
-                                                                                  fontWeight: FontWeight.w500),
+                                                                                  fontWeight: FontWeight.w400),
                                                                               overflow:
                                                                                   TextOverflow.ellipsis,
                                                                             ),

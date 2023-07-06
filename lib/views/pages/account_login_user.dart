@@ -1,6 +1,7 @@
 import 'package:email_validator/email_validator.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
 import 'package:get/get_navigation/src/routes/default_transitions.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -151,7 +152,7 @@ class _LoginUserState extends State<LoginUser> {
                       child: Text(
                         "Temukan kemudahan akses untuk menemukan tempat wisata kesukaanmu",
                         style: GoogleFonts.openSans(
-                            fontSize: 14,
+                            fontSize: 15,
                             color: Colors.grey.shade500,
                             fontWeight: FontWeight.w600),
                       ),
@@ -164,7 +165,7 @@ class _LoginUserState extends State<LoginUser> {
                         child: Text(
                           "Yuk, Masuk ke Akunmu Sekarang",
                           style: GoogleFonts.openSans(
-                              fontSize: 20,
+                              fontSize: 22,
                               color: primaryColor,
                               fontWeight: FontWeight.w700),
                         ),
@@ -262,12 +263,14 @@ class _LoginUserState extends State<LoginUser> {
                               },
                               child: Padding(
                                 padding:
-                                    const EdgeInsets.symmetric(horizontal: 12),
+                                    const EdgeInsets.symmetric(vertical: 14),
                                 child: isObscureText
-                                    ? const Icon(Icons.remove_red_eye,
-                                        size: 21, color: descColor)
-                                    : const Icon(Icons.close,
-                                        size: 21, color: descColor),
+                                    ? const FaIcon(FontAwesomeIcons.solidEye,
+                                        size: 18, color: descColor)
+                                    : const FaIcon(
+                                        FontAwesomeIcons.solidEyeSlash,
+                                        size: 18,
+                                        color: descColor),
                               ),
                             ),
                             border: InputBorder.none,
@@ -347,8 +350,7 @@ class _LoginUserState extends State<LoginUser> {
                               Navigator.pushAndRemoveUntil(
                                   context,
                                   MaterialPageRoute(
-                                      builder: (context) =>
-                                           MainNavigation()),
+                                      builder: (context) => MainNavigation()),
                                   (route) => false);
                             } else if (userCon.statusCodeLogin == 422) {
                               print("login failed");

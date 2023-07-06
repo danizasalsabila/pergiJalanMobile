@@ -78,7 +78,7 @@ class _LoginOwnerState extends State<LoginOwner> {
                       child: Text(
                         "Akses Mudah ke Akun Bisnis \nWisata Anda",
                         style: GoogleFonts.openSans(
-                            fontSize: 20,
+                            fontSize: 22,
                             color: thirdColor,
                             fontWeight: FontWeight.w700),
                       ),
@@ -92,7 +92,7 @@ class _LoginOwnerState extends State<LoginOwner> {
                       child: Text(
                         "Masuk dan kelola bisnis anda dengan lebih efisien",
                         style: GoogleFonts.openSans(
-                            fontSize: 14,
+                            fontSize: 15,
                             color: Colors.grey.shade500,
                             fontWeight: FontWeight.w500),
                       ),

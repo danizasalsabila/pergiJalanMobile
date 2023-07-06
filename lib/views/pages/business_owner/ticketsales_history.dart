@@ -92,14 +92,14 @@ class _TicketSalesHistoryState extends State<TicketSalesHistory> {
                         ),
                       ),
                       const SizedBox(
-                        height: 15,
+                        height: 30,
                       ),
                       Padding(
                         padding: const EdgeInsets.only(left: 20.0, right: 20),
                         child: Align(
                             alignment: Alignment.topLeft,
                             child: Text(
-                              "Jelajahi keberhasilan promosi tempat wisata dengan riwayat penjualan tiket ini",
+                              "Jelajahi keberhasilan promosi tempat wisata Anda dengan riwayat penjualan tiket ini",
                               style: GoogleFonts.openSans(
                                   fontSize: 13,
                                   color: const Color.fromARGB(255, 238, 238, 238),
@@ -174,7 +174,7 @@ class _TicketSalesHistoryState extends State<TicketSalesHistory> {
                                                     child: Text(
                                                       "Riwayat $reversedIndex",
                                                       style: GoogleFonts.inter(
-                                                          fontSize: 9,
+                                                          fontSize: 11,
                                                           color: thirdColor,
                                                           fontWeight:
                                                               FontWeight.w600),
@@ -192,7 +192,7 @@ class _TicketSalesHistoryState extends State<TicketSalesHistory> {
                                                 child: Text(
                                                   "Tempat Wisata",
                                                   style: GoogleFonts.inter(
-                                                      fontSize: 10,
+                                                      fontSize: 13,
                                                       color: Color.fromARGB(
                                                           255, 124, 149, 149),
                                                       fontWeight:
@@ -272,7 +272,7 @@ class _TicketSalesHistoryState extends State<TicketSalesHistory> {
                                                                 "Jam Buka",
                                                                 style: GoogleFonts.inter(
                                                                     fontSize:
-                                                                        10,
+                                                                        12,
                                                                     color: Color
                                                                         .fromARGB(
                                                                             255,
@@ -355,7 +355,7 @@ class _TicketSalesHistoryState extends State<TicketSalesHistory> {
                                                                 "Jam Tutup",
                                                                 style: GoogleFonts.inter(
                                                                     fontSize:
-                                                                        10,
+                                                                        12,
                                                                     color: Color
                                                                         .fromARGB(
                                                                             255,
@@ -462,7 +462,7 @@ class _TicketSalesHistoryState extends State<TicketSalesHistory> {
                                                     Text(
                                                       "Nama Pengunjung",
                                                       style: GoogleFonts.inter(
-                                                          fontSize: 10,
+                                                          fontSize: 12,
                                                           color: const Color
                                                                   .fromARGB(255,
                                                               124, 149, 149),
@@ -516,7 +516,7 @@ class _TicketSalesHistoryState extends State<TicketSalesHistory> {
                                                       Text(
                                                         "Nama Tiket",
                                                         style: GoogleFonts.inter(
-                                                            fontSize: 9,
+                                                            fontSize: 12,
                                                             color: const Color
                                                                     .fromARGB(
                                                                 255,
@@ -560,7 +560,7 @@ class _TicketSalesHistoryState extends State<TicketSalesHistory> {
                                                       Text(
                                                         "Tanggal Kunjungan",
                                                         style: GoogleFonts.inter(
-                                                            fontSize: 9,
+                                                            fontSize: 12,
                                                             color: const Color
                                                                     .fromARGB(
                                                                 255,
@@ -617,7 +617,7 @@ class _TicketSalesHistoryState extends State<TicketSalesHistory> {
                                                       Text(
                                                         "Metode Pembayaran",
                                                         style: GoogleFonts.inter(
-                                                            fontSize: 9,
+                                                            fontSize: 12,
                                                             color: const Color
                                                                     .fromARGB(
                                                                 255,
@@ -660,7 +660,7 @@ class _TicketSalesHistoryState extends State<TicketSalesHistory> {
                                                       Text(
                                                         "Harga Tiket",
                                                         style: GoogleFonts.inter(
-                                                            fontSize: 9,
+                                                            fontSize: 12,
                                                             color: const Color
                                                                     .fromARGB(
                                                                 255,
@@ -717,7 +717,7 @@ class _TicketSalesHistoryState extends State<TicketSalesHistory> {
                                                       Text(
                                                         "Email Pemesan",
                                                         style: GoogleFonts.inter(
-                                                            fontSize: 9,
+                                                            fontSize: 12,
                                                             color: const Color
                                                                     .fromARGB(
                                                                 255,
@@ -765,7 +765,7 @@ class _TicketSalesHistoryState extends State<TicketSalesHistory> {
                                                       Text(
                                                         "Nama Akun",
                                                         style: GoogleFonts.inter(
-                                                            fontSize: 9,
+                                                            fontSize: 12,
                                                             color: const Color
                                                                     .fromARGB(
                                                                 255,
@@ -891,9 +891,9 @@ class _TicketSalesHistoryState extends State<TicketSalesHistory> {
                                                             .start,
                                                     children: [
                                                       Text(
-                                                        "Tanggal Pembayaran",
+                                                        "Tanggal\nPembayaran",
                                                         style: GoogleFonts.inter(
-                                                            fontSize: 8,
+                                                            fontSize: 10,
                                                             color: const Color
                                                                     .fromARGB(
                                                                 255,
@@ -902,7 +902,7 @@ class _TicketSalesHistoryState extends State<TicketSalesHistory> {
                                                                 149),
                                                             fontWeight:
                                                                 FontWeight
-                                                                    .w400),
+                                                                    .w500),
                                                       ),
                                                       Padding(
                                                         padding:
@@ -912,7 +912,7 @@ class _TicketSalesHistoryState extends State<TicketSalesHistory> {
                                                           formattedDate,
                                                           style:
                                                               GoogleFonts.inter(
-                                                                  fontSize: 10,
+                                                                  fontSize: 12,
                                                                   color:
                                                                       thirdColor,
                                                                   fontWeight:
@@ -935,9 +935,9 @@ class _TicketSalesHistoryState extends State<TicketSalesHistory> {
                                                                   .start,
                                                           children: [
                                                             Text(
-                                                              "Waktu Pembayaran",
+                                                              "Waktu\nPembayaran",
                                                               style: GoogleFonts.inter(
-                                                                  fontSize: 8,
+                                                                  fontSize: 10,
                                                                   color: const Color
                                                                           .fromARGB(
                                                                       255,
@@ -946,7 +946,7 @@ class _TicketSalesHistoryState extends State<TicketSalesHistory> {
                                                                       149),
                                                                   fontWeight:
                                                                       FontWeight
-                                                                          .w400),
+                                                                          .w500),
                                                             ),
                                                             Padding(
                                                               padding:
@@ -957,7 +957,7 @@ class _TicketSalesHistoryState extends State<TicketSalesHistory> {
                                                                 formattedTime,
                                                                 style: GoogleFonts.inter(
                                                                     fontSize:
-                                                                        10,
+                                                                        12,
                                                                     color:
                                                                         thirdColor,
                                                                     fontWeight:
@@ -984,7 +984,7 @@ class _TicketSalesHistoryState extends State<TicketSalesHistory> {
                                                       Text(
                                                         "ID Eticket",
                                                         style: GoogleFonts.inter(
-                                                            fontSize: 9,
+                                                            fontSize: 12,
                                                             color: const Color
                                                                     .fromARGB(
                                                                 255,
@@ -1028,7 +1028,7 @@ class _TicketSalesHistoryState extends State<TicketSalesHistory> {
                                                             Text(
                                                               "Status",
                                                               style: GoogleFonts.inter(
-                                                                  fontSize: 9,
+                                                                  fontSize: 10,
                                                                   color: const Color
                                                                           .fromARGB(
                                                                       255,
@@ -1048,7 +1048,7 @@ class _TicketSalesHistoryState extends State<TicketSalesHistory> {
                                                                 "Terbayar",
                                                                 style: GoogleFonts.inter(
                                                                     fontSize:
-                                                                        10,
+                                                                        12,
                                                                     color:
                                                                         thirdColor,
                                                                     fontWeight:

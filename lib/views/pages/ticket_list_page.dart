@@ -121,14 +121,14 @@ class _ListTicketDestinationState extends State<ListTicketDestination> {
                                     Text(
                                       "Tiket Kunjungan",
                                       style: GoogleFonts.openSans(
-                                          fontSize: 15,
+                                          fontSize: 16,
                                           color: Colors.white,
                                           fontWeight: FontWeight.w600),
                                     ),
                                     Text(
                                       formattedDate,
                                       style: GoogleFonts.notoSans(
-                                          fontSize: 10,
+                                          fontSize: 13,
                                           color: descColor,
                                           fontWeight: FontWeight.w500),
                                     ),
@@ -167,9 +167,9 @@ class _ListTicketDestinationState extends State<ListTicketDestination> {
                                           Text(
                                             "Lokasi Anda",
                                             style: GoogleFonts.notoSansDisplay(
-                                                fontSize: 10,
+                                                fontSize: 12,
                                                 color: captColor,
-                                                fontWeight: FontWeight.w600),
+                                                fontWeight: FontWeight.w500),
                                           ),
                                         ],
                                       ),
@@ -216,9 +216,9 @@ class _ListTicketDestinationState extends State<ListTicketDestination> {
                                           Text(
                                             widget.id.city.toString(),
                                             style: GoogleFonts.notoSansDisplay(
-                                                fontSize: 10,
+                                                fontSize: 12,
                                                 color: captColor,
-                                                fontWeight: FontWeight.w600),
+                                                fontWeight: FontWeight.w500),
                                           ),
                                         ],
                                       ),
@@ -272,11 +272,11 @@ class _ListTicketDestinationState extends State<ListTicketDestination> {
                                       child: Align(
                                         alignment: Alignment.topLeft,
                                         child: Text(
-                                          "Pilih berdasarkan persyaratan",
+                                          "Pilih tiket sesuai keterangan",
                                           style: GoogleFonts.notoSansDisplay(
-                                              fontSize: 12,
+                                              fontSize: 13,
                                               color: captColor,
-                                              fontWeight: FontWeight.w500),
+                                              fontWeight: FontWeight.w400),
                                         ),
                                       ),
                                     ),
@@ -364,7 +364,7 @@ class _ListTicketDestinationState extends State<ListTicketDestination> {
                                                                       "Harga Tiket",
                                                                       style: GoogleFonts.openSans(
                                                                           fontSize:
-                                                                              11,
+                                                                              12,
                                                                           color:
                                                                               captColor,
                                                                           fontWeight:
@@ -372,6 +372,7 @@ class _ListTicketDestinationState extends State<ListTicketDestination> {
                                                                     ),
                                                                   ],
                                                                 ),
+                                                                SizedBox(height: 2,),
                                                                 Row(
                                                                   crossAxisAlignment:
                                                                       CrossAxisAlignment
@@ -387,7 +388,7 @@ class _ListTicketDestinationState extends State<ListTicketDestination> {
                                                                           : "",
                                                                       style: GoogleFonts.openSans(
                                                                           fontSize:
-                                                                              10,
+                                                                              13,
                                                                           color:
                                                                               captColor,
                                                                           fontWeight:
@@ -475,7 +476,7 @@ class _ListTicketDestinationState extends State<ListTicketDestination> {
                                                                         "${ticketCon.ticketData![index].ticketSold} Terjual",
                                                                         style: GoogleFonts.openSans(
                                                                             fontSize:
-                                                                                8,
+                                                                                13,
                                                                             color:
                                                                                 captColor,
                                                                             fontWeight:
@@ -504,7 +505,7 @@ class _ListTicketDestinationState extends State<ListTicketDestination> {
                                                                               Text(
                                                                             "${ticketCon.ticketData![index].stock} Tiket tersisa!",
                                                                             style: GoogleFonts.inter(
-                                                                                fontSize: 10,
+                                                                                fontSize: 11,
                                                                                 color: Color.fromARGB(255, 236, 85, 82),
                                                                                 fontWeight: FontWeight.w600),
                                                                           ),
@@ -520,7 +521,7 @@ class _ListTicketDestinationState extends State<ListTicketDestination> {
                                                                       width: MediaQuery.of(context)
                                                                               .size
                                                                               .width *
-                                                                          0.25,
+                                                                          0.35,
                                                                       child:
                                                                           Column(
                                                                         mainAxisAlignment:
@@ -540,7 +541,7 @@ class _ListTicketDestinationState extends State<ListTicketDestination> {
                                                                                 child: Text(
                                                                                   "Ubah pengunjung",
                                                                                   overflow: TextOverflow.ellipsis,
-                                                                                  style: GoogleFonts.openSans(fontSize: 9, color: captColor, fontWeight: FontWeight.w500),
+                                                                                  style: GoogleFonts.openSans(fontSize: 12, color: captColor, fontWeight: FontWeight.w500),
                                                                                 ),
                                                                               )
                                                                             ],
@@ -557,7 +558,7 @@ class _ListTicketDestinationState extends State<ListTicketDestination> {
                                                                                 child: Text(
                                                                                   "Dibatalkan",
                                                                                   overflow: TextOverflow.ellipsis,
-                                                                                  style: GoogleFonts.openSans(fontSize: 9, color: captColor, fontWeight: FontWeight.w500),
+                                                                                  style: GoogleFonts.openSans(fontSize: 12, color: captColor, fontWeight: FontWeight.w500),
                                                                                 ),
                                                                               )
                                                                             ],
@@ -583,7 +584,7 @@ class _ListTicketDestinationState extends State<ListTicketDestination> {
                                                                       child:
                                                                           Container(
                                                                         width: MediaQuery.of(context).size.width *
-                                                                            0.41,
+                                                                            0.35,
                                                                         height:
                                                                             33,
                                                                         decoration: BoxDecoration(
@@ -988,7 +989,7 @@ class _ListTicketDestinationState extends State<ListTicketDestination> {
                                                                       child:
                                                                           Container(
                                                                         width: MediaQuery.of(context).size.width *
-                                                                            0.41,
+                                                                            0.35,
                                                                         height:
                                                                             33,
                                                                         decoration: BoxDecoration(

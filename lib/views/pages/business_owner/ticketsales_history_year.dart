@@ -258,7 +258,7 @@ class _HistoryTicketByYearState extends State<HistoryTicketByYear> {
                                 ],
                               ),
                             ),
-                           const SizedBox(
+                            const SizedBox(
                               height: 10,
                             ),
                             eticketCon.eticketDataOwnerByYear != null
@@ -303,7 +303,7 @@ class _HistoryTicketByYearState extends State<HistoryTicketByYear> {
                                                       "Total Pendapatan",
                                                       style: GoogleFonts
                                                           .notoSansDisplay(
-                                                              fontSize: 11,
+                                                              fontSize: 12,
                                                               color: captColor,
                                                               fontWeight:
                                                                   FontWeight
@@ -366,7 +366,7 @@ class _HistoryTicketByYearState extends State<HistoryTicketByYear> {
                                                         "Total Penjualan",
                                                         style: GoogleFonts
                                                             .notoSansDisplay(
-                                                                fontSize: 11,
+                                                                fontSize: 12,
                                                                 color:
                                                                     captColor,
                                                                 fontWeight:
@@ -510,14 +510,14 @@ class _HistoryTicketByYearState extends State<HistoryTicketByYear> {
                                           Text(
                                             "Tempat Wisata",
                                             style: GoogleFonts.notoSansDisplay(
-                                                fontSize: 10,
+                                                fontSize: 11,
                                                 color: captColor,
                                                 fontWeight: FontWeight.w500),
                                           ),
                                           Text(
                                             "Terjual",
                                             style: GoogleFonts.notoSansDisplay(
-                                                fontSize: 10,
+                                                fontSize: 11,
                                                 color: captColor,
                                                 fontWeight: FontWeight.w500),
                                           ),
@@ -586,30 +586,42 @@ class _HistoryTicketByYearState extends State<HistoryTicketByYear> {
                                                                   .circular(5),
                                                           color: randomColor,
                                                         ),
-                                                        height: 15,
-                                                        width: 25,
+                                                        height: 20,
+                                                        width: MediaQuery.of(
+                                                                    context)
+                                                                .size
+                                                                .width *
+                                                            0.06,
                                                       ),
-                                                      Padding(
-                                                        padding:
-                                                            const EdgeInsets
-                                                                    .only(
-                                                                left: 6.0),
-                                                        child: Text(
-                                                          eticketCon
-                                                              .uniqueNameDestinations
-                                                              .toList()[index],
-                                                          style: GoogleFonts
-                                                              .notoSansDisplay(
-                                                                  fontSize: 11,
-                                                                  color: const Color
-                                                                          .fromARGB(
-                                                                      255,
-                                                                      64,
-                                                                      64,
-                                                                      64),
-                                                                  fontWeight:
-                                                                      FontWeight
-                                                                          .w600),
+                                                      Container(
+                                                        width: MediaQuery.of(
+                                                                    context)
+                                                                .size
+                                                                .width *
+                                                            0.55,
+                                                        child: Padding(
+                                                          padding:
+                                                              const EdgeInsets
+                                                                      .only(
+                                                                  left: 6.0),
+                                                          child: Text(
+                                                            eticketCon
+                                                                .uniqueNameDestinations
+                                                                .toList()[index],
+                                                            style: GoogleFonts
+                                                                .notoSansDisplay(
+                                                                    fontSize:
+                                                                        12,
+                                                                    color: const Color
+                                                                            .fromARGB(
+                                                                        255,
+                                                                        64,
+                                                                        64,
+                                                                        64),
+                                                                    fontWeight:
+                                                                        FontWeight
+                                                                            .w600),
+                                                          ),
                                                         ),
                                                       ),
                                                     ],
@@ -627,7 +639,7 @@ class _HistoryTicketByYearState extends State<HistoryTicketByYear> {
                                                           : "${eticketCon.listTicketSoldIdDestinasiYear[index].toString()} Tiket",
                                                       style: GoogleFonts
                                                           .notoSansDisplay(
-                                                              fontSize: 11,
+                                                              fontSize: 12,
                                                               color: const Color
                                                                       .fromARGB(
                                                                   255,

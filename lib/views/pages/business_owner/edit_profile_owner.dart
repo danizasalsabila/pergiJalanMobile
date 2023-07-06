@@ -92,7 +92,7 @@ class _EditProfileOwnerPageState extends State<EditProfileOwnerPage> {
               Text(
                 "Informasi Pribadi",
                 style: GoogleFonts.inter(
-                    fontSize: 14,
+                    fontSize: 16,
                     color: Color.fromARGB(160, 12, 69, 104),
                     fontWeight: FontWeight.w500),
               ),
@@ -102,8 +102,8 @@ class _EditProfileOwnerPageState extends State<EditProfileOwnerPage> {
                   "Nama Lengkap",
                   style: GoogleFonts.inter(
                       color: descColor,
-                      fontSize: 12,
-                      fontWeight: FontWeight.w600),
+                      fontSize: 13,
+                      fontWeight: FontWeight.w500),
                 ),
               ),
               Container(
@@ -151,8 +151,8 @@ class _EditProfileOwnerPageState extends State<EditProfileOwnerPage> {
                   "Nomor Telepon",
                   style: GoogleFonts.inter(
                       color: descColor,
-                      fontSize: 12,
-                      fontWeight: FontWeight.w600),
+                      fontSize: 13,
+                      fontWeight: FontWeight.w500),
                 ),
               ),
               Container(
@@ -202,8 +202,8 @@ class _EditProfileOwnerPageState extends State<EditProfileOwnerPage> {
                   "Nomor Kartu Identitas",
                   style: GoogleFonts.inter(
                       color: descColor,
-                      fontSize: 12,
-                      fontWeight: FontWeight.w600),
+                      fontSize: 13,
+                      fontWeight: FontWeight.w500),
                 ),
               ),
               Container(
@@ -253,8 +253,8 @@ class _EditProfileOwnerPageState extends State<EditProfileOwnerPage> {
                   "Alamat",
                   style: GoogleFonts.inter(
                       color: descColor,
-                      fontSize: 12,
-                      fontWeight: FontWeight.w600),
+                      fontSize: 13,
+                      fontWeight: FontWeight.w500),
                 ),
               ),
               Container(
@@ -369,8 +369,8 @@ class _EditProfileOwnerPageState extends State<EditProfileOwnerPage> {
                         email.toString(),
                         style: GoogleFonts.inter(
                             color: Color.fromARGB(160, 12, 69, 104),
-                            fontSize: 12,
-                            fontWeight: FontWeight.w600),
+                            fontSize: 13,
+                            fontWeight: FontWeight.w500),
                       ),
                     ),
                   ),

@@ -199,7 +199,7 @@ class _HomePageOwnerState extends State<HomePageOwner> {
                                 child: Text(
                                   "Laporan Pengelolaan ${ownerCon.nameLogin.toString()}",
                                   style: GoogleFonts.notoSansDisplay(
-                                      fontSize: 12,
+                                      fontSize: 13,
                                       color: descColor,
                                       fontWeight: FontWeight.w500),
                                 ),
@@ -229,7 +229,7 @@ class _HomePageOwnerState extends State<HomePageOwner> {
                       ],
                     ),
                     const SizedBox(
-                      height: 7,
+                      height: 17,
                     ),
 
                     // Padding(
@@ -319,13 +319,13 @@ class _HomePageOwnerState extends State<HomePageOwner> {
                                                               .destinasi!
                                                               .nameDestinasi
                                                               .toString(),
-                                                          //           "sd k ckwe k dcw ekdcewk dkew dkw ekd cej cfe kfmc ke k k k kmn m",
-                                                          overflow:
-                                                              TextOverflow.fade,
+                                                                    // "sd k ckwe k dcw ekdcewk dkew dkw ekd cej cfe kfmc ke k k k kmn m",
+                                                          // overflow:
+                                                          //     TextOverflow.fade,
                                                           // "Penjualan Tiket Terbanyak",
                                                           style: GoogleFonts
                                                               .openSans(
-                                                                  fontSize: 10,
+                                                                  fontSize: 12,
                                                                   color: Colors
                                                                       .white,
                                                                   fontWeight:
@@ -357,14 +357,14 @@ class _HomePageOwnerState extends State<HomePageOwner> {
                                             Text(
                                               "Hari Ini",
                                               style: GoogleFonts.openSans(
-                                                  fontSize: 10,
+                                                  fontSize: 13,
                                                   color: Colors.white,
                                                   fontWeight: FontWeight.w500),
                                             ),
                                             Text(
                                               formattedDate,
                                               style: GoogleFonts.openSans(
-                                                  fontSize: 15,
+                                                  fontSize: 16,
                                                   color: Colors.grey.shade400,
                                                   fontWeight: FontWeight.w500),
                                             ),
@@ -405,7 +405,7 @@ class _HomePageOwnerState extends State<HomePageOwner> {
                                                               child: Text(
                                                                 "Tiket Terjual",
                                                                 style: GoogleFonts.openSans(
-                                                                    fontSize: 9,
+                                                                    fontSize: 12,
                                                                     color: Color
                                                                         .fromARGB(
                                                                             166,
@@ -472,7 +472,7 @@ class _HomePageOwnerState extends State<HomePageOwner> {
                                                                         .center,
                                                                 "Tiket",
                                                                 style: GoogleFonts.openSans(
-                                                                    fontSize: 9,
+                                                                    fontSize: 12,
                                                                     color: Color
                                                                         .fromARGB(
                                                                             166,
@@ -543,7 +543,7 @@ class _HomePageOwnerState extends State<HomePageOwner> {
                                                               child: Text(
                                                                 "Sisa Stok",
                                                                 style: GoogleFonts.openSans(
-                                                                    fontSize: 9,
+                                                                    fontSize: 12,
                                                                     color: Color
                                                                         .fromARGB(
                                                                             166,
@@ -624,7 +624,7 @@ class _HomePageOwnerState extends State<HomePageOwner> {
                     //     : const SizedBox(),
 
                     SizedBox(
-                      height: 15,
+                      height:25,
                     ),
                     Padding(
                         padding: const EdgeInsets.only(left: 20.0, right: 20),
@@ -656,7 +656,7 @@ class _HomePageOwnerState extends State<HomePageOwner> {
                                       child: Text(
                                         "Total Rating",
                                         style: GoogleFonts.openSans(
-                                            fontSize: 10,
+                                            fontSize: 12,
                                             color: descColor,
                                             fontWeight: FontWeight.w600),
                                       )),
@@ -717,7 +717,7 @@ class _HomePageOwnerState extends State<HomePageOwner> {
                                       child: Text(
                                         "Tiket Terjual",
                                         style: GoogleFonts.openSans(
-                                            fontSize: 10,
+                                            fontSize: 12,
                                             color: descColor,
                                             fontWeight: FontWeight.w600),
                                       )),
@@ -744,7 +744,10 @@ class _HomePageOwnerState extends State<HomePageOwner> {
                                                     EdgeInsets.only(left: 45),
                                                 child: Text(
                                                   ticketData.ticketSoldOwner ==
-                                                          0
+                                                              0 ||
+                                                          ticketData
+                                                                  .ticketSoldOwner ==
+                                                              null
                                                       ? "0"
                                                       : ticketData
                                                           .ticketSoldOwner
@@ -765,7 +768,7 @@ class _HomePageOwnerState extends State<HomePageOwner> {
                           ]),
                         )),
                     const SizedBox(
-                      height: 20,
+                      height: 25,
                     ),
                     // const SizedBox(height: 20),
                     Padding(
@@ -777,7 +780,7 @@ class _HomePageOwnerState extends State<HomePageOwner> {
                         child: Text(
                           "Upload Terbaru",
                           style: GoogleFonts.notoSansDisplay(
-                              fontSize: 14,
+                              fontSize: 16,
                               color: Color.fromARGB(255, 49, 49, 49),
                               fontWeight: FontWeight.w600),
                         ),
@@ -945,12 +948,12 @@ class _HomePageOwnerState extends State<HomePageOwner> {
                                                                     left: 4.0,
                                                                     right: 8.0),
                                                             child: SizedBox(
-                                                              height: 70,
-                                                              width: MediaQuery.of(
-                                                                          context)
-                                                                      .size
-                                                                      .width *
-                                                                  0.44,
+                                                              // height: 70,
+                                                              // width: MediaQuery.of(
+                                                              //             context)
+                                                              //         .size
+                                                              //         .width *
+                                                              //     0.44,
                                                               child: Padding(
                                                                 padding:
                                                                     const EdgeInsets
@@ -965,47 +968,97 @@ class _HomePageOwnerState extends State<HomePageOwner> {
                                                                         CrossAxisAlignment
                                                                             .start,
                                                                     children: [
-                                                                      Text(
-                                                                        homeCon
-                                                                            .destinasiDataByOwner![index]
-                                                                            .nameDestinasi
-                                                                            .toString(),
-                                                                        overflow:
-                                                                            TextOverflow.ellipsis,
-                                                                        maxLines:
-                                                                            1,
-                                                                        style: GoogleFonts.notoSansDisplay(
-                                                                            fontSize:
-                                                                                15,
-                                                                            color:
-                                                                                thirdColor,
-                                                                            fontWeight:
-                                                                                FontWeight.w600),
-                                                                      ),
                                                                       Row(
+                                                                        mainAxisAlignment:
+                                                                            MainAxisAlignment.spaceBetween,
+                                                                            crossAxisAlignment: CrossAxisAlignment.center,
                                                                         children: [
-                                                                          FaIcon(
-                                                                            FontAwesomeIcons.locationDot,
-                                                                            size:
-                                                                                13,
-                                                                            color:
-                                                                                descColor,
+                                                                          Container(
+                                                                            width:
+                                                                                MediaQuery.of(context).size.width * 0.46,
+                                                                            child:
+                                                                                Column(
+                                                                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                                                              children: [
+                                                                                Text(
+                                                                                  homeCon.destinasiDataByOwner![index].nameDestinasi.toString(),
+                                                                                  overflow: TextOverflow.ellipsis,
+                                                                                  maxLines: 1,
+                                                                                  style: GoogleFonts.notoSansDisplay(fontSize: 14, color: thirdColor, fontWeight: FontWeight.w600),
+                                                                                ),
+                                                                                SizedBox(
+                                                                                  height: 2,
+                                                                                ),
+                                                                                Row(
+                                                                                  children: [
+                                                                                    FaIcon(
+                                                                                      FontAwesomeIcons.locationDot,
+                                                                                      size: 13,
+                                                                                      color: descColor,
+                                                                                    ),
+                                                                                    Padding(
+                                                                                      padding: const EdgeInsets.only(left: 3.0),
+                                                                                      child: Text(
+                                                                                        homeCon.destinasiDataByOwner![index].city.toString().toUpperCase(),
+                                                                                        maxLines: 1,
+                                                                                        overflow: TextOverflow.ellipsis,
+                                                                                        style: GoogleFonts.inter(fontSize: 11, color: descColor, fontWeight: FontWeight.w400),
+                                                                                      ),
+                                                                                    )
+                                                                                  ],
+                                                                                ),
+                                                                              ],
+                                                                            ),
                                                                           ),
                                                                           Padding(
                                                                             padding:
-                                                                                const EdgeInsets.only(left: 3.0),
+                                                                                const EdgeInsets.only(right: 8.0),
                                                                             child:
-                                                                                Text(
-                                                                              homeCon.destinasiDataByOwner![index].city.toString(),
-                                                                              maxLines: 1,
-                                                                              overflow: TextOverflow.ellipsis,
-                                                                              style: GoogleFonts.notoSans(fontSize: 10, color: Colors.grey.shade600, fontWeight: FontWeight.w500),
+                                                                                InkWell(
+                                                                              onTap: () {
+                                                                                Navigator.push(
+                                                                                  context,
+                                                                                  MaterialPageRoute(
+                                                                                    builder: (context) => TicketListPage(
+                                                                                      id: homeCon.destinasiDataByOwner![index],
+                                                                                    ),
+                                                                                  ),
+                                                                                );
+                                                                              },
+                                                                              child: Container(
+                                                                                height: 25,
+                                                                                width: MediaQuery.of(context).size.width * 0.072,
+                                                                                decoration: BoxDecoration(
+                                                                                  // border: Border.all(color: thirdColor),
+                                                                                  color: Color.fromARGB(183, 36, 78, 79),
+                                                                                  borderRadius: BorderRadius.circular(5),
+                                                                                  boxShadow: [
+                                                                                    BoxShadow(
+                                                                                      color: Color.fromARGB(255, 211, 211, 211).withOpacity(0.7),
+                                                                                      spreadRadius: 1,
+                                                                                      blurRadius: 4,
+                                                                                      offset: const Offset(2, 2), // changes position of shadow
+                                                                                    ),
+                                                                                  ],
+                                                                                ),
+                                                                                child: const Center(
+                                                                                  child: FaIcon(
+                                                                                    FontAwesomeIcons.ticket,
+                                                                                    color: Colors.white,
+                                                                                    size: 11,
+                                                                                  ),
+                                                                                ),
+                                                                              ),
                                                                             ),
                                                                           )
                                                                         ],
                                                                       ),
+                                                                      SizedBox(
+                                                                        height:
+                                                                            2,
+                                                                      ),
                                                                       Row(
-                                                                        // mainAxisAlignment: MainAxisAlignment.spaceAround,
+                                                                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                                                         children: [
                                                                           InkWell(
                                                                             onTap:
@@ -1022,19 +1075,19 @@ class _HomePageOwnerState extends State<HomePageOwner> {
                                                                               padding: const EdgeInsets.only(left: 2.0, top: 4),
                                                                               child: Container(
                                                                                 decoration: BoxDecoration(border: Border.all(color: captColor), borderRadius: BorderRadius.circular(3)),
-                                                                                height: 19,
-                                                                                width: MediaQuery.of(context).size.width * 0.17,
+                                                                                height: 25,
+                                                                                width: MediaQuery.of(context).size.width * 0.25,
                                                                                 child: Center(
                                                                                     child: Text(
                                                                                   "Ubah",
-                                                                                  style: GoogleFonts.openSans(fontSize: 9, color: thirdColor, fontWeight: FontWeight.w500),
+                                                                                  style: GoogleFonts.openSans(fontSize: 11, color: thirdColor, fontWeight: FontWeight.w500),
                                                                                 )),
                                                                               ),
                                                                             ),
                                                                           ),
                                                                           SizedBox(
                                                                             width:
-                                                                                MediaQuery.of(context).size.width * 0.007,
+                                                                                MediaQuery.of(context).size.width * 0.02,
                                                                           ),
                                                                           InkWell(
                                                                             onTap:
@@ -1130,12 +1183,12 @@ class _HomePageOwnerState extends State<HomePageOwner> {
                                                                               padding: const EdgeInsets.only(top: 4),
                                                                               child: Container(
                                                                                 decoration: BoxDecoration(borderRadius: BorderRadius.circular(3), border: Border.all(color: captColor)),
-                                                                                height: 19,
-                                                                                width: MediaQuery.of(context).size.width * 0.17,
+                                                                                height: 25,
+                                                                                width: MediaQuery.of(context).size.width * 0.25,
                                                                                 child: Center(
                                                                                     child: Text(
                                                                                   "Hapus",
-                                                                                  style: GoogleFonts.openSans(fontSize: 9, color: thirdColor, fontWeight: FontWeight.w500),
+                                                                                  style: GoogleFonts.openSans(fontSize: 11, color: thirdColor, fontWeight: FontWeight.w500),
                                                                                 )),
                                                                               ),
                                                                             ),
@@ -1146,173 +1199,6 @@ class _HomePageOwnerState extends State<HomePageOwner> {
                                                               ),
                                                             ),
                                                           ),
-                                                          Padding(
-                                                            padding:
-                                                                const EdgeInsets
-                                                                        .only(
-                                                                    right: 8.0),
-                                                            child: InkWell(
-                                                              onTap: () {
-                                                                Navigator.push(
-                                                                  context,
-                                                                  MaterialPageRoute(
-                                                                    builder:
-                                                                        (context) =>
-                                                                            TicketListPage(
-                                                                      id: homeCon
-                                                                              .destinasiDataByOwner![
-                                                                          index],
-                                                                    ),
-                                                                  ),
-                                                                );
-                                                              },
-                                                              // onTap: () async {
-                                                              //   showDialog(
-                                                              //       context:
-                                                              //           context,
-                                                              //       builder:
-                                                              //           (context) {
-                                                              //         return AlertDialog(
-                                                              //           shape:
-                                                              //               RoundedRectangleBorder(
-                                                              //             borderRadius:
-                                                              //                 BorderRadius.circular(10),
-                                                              //           ),
-                                                              //           backgroundColor:
-                                                              //               Colors.white,
-                                                              //           elevation:
-                                                              //               5,
-                                                              //           title:
-                                                              //               Text(
-                                                              //             "Konfirmasi Hapus ${homeCon.destinasiDataByOwner![index].nameDestinasi.toString()}",
-                                                              //             style: GoogleFonts.notoSansDisplay(
-                                                              //                 fontSize: 17,
-                                                              //                 color: thirdColor,
-                                                              //                 fontWeight: FontWeight.w600),
-                                                              //           ),
-                                                              //           content:
-                                                              //               Text(
-                                                              //             "Harap diketahui bahwa menghapus data akan menghapus semua informasi terkait dengan data tersebut",
-                                                              //             style: GoogleFonts.notoSansDisplay(
-                                                              //                 fontSize: 13,
-                                                              //                 color: titleColor,
-                                                              //                 fontWeight: FontWeight.w400),
-                                                              //           ),
-                                                              //           actions: [
-                                                              //             TextButton(
-                                                              //                 onPressed: () {
-                                                              //                   Navigator.pop(context);
-                                                              //                 },
-                                                              //                 child: Text(
-                                                              //                   "Batal",
-                                                              //                   style: GoogleFonts.openSans(fontSize: 14, color: descColor, fontWeight: FontWeight.w600),
-                                                              //                 )),
-                                                              //             // child: Text("No")),
-                                                              //             Padding(
-                                                              //               padding:
-                                                              //                   const EdgeInsets.only(right: 10.0),
-                                                              //               child:
-                                                              //                   Container(
-                                                              //                 height: 35,
-                                                              //                 decoration: BoxDecoration(color: thirdColor, borderRadius: BorderRadius.circular(7)),
-                                                              //                 child: TextButton(
-                                                              //                     onPressed: () async {
-                                                              //                       isLoading = true;
-                                                              //                       final ownerBusinessHomeCon = Provider.of<DestinasiController>(context, listen: false);
-                                                              //                       final ownerCon = Provider.of<OwnerBusinessController>(context, listen: false);
-                                                              //                       try {
-                                                              //                         await ownerBusinessHomeCon.deleteDestinasi(homeCon.destinasiDataByOwner![index].id);
-
-                                                              //                         if (ownerBusinessHomeCon.statusCodeDeleteDestinasi == 200) {
-                                                              //                           // ignore: use_build_context_synchronously
-                                                              //                           Navigator.pop(context);
-                                                              //                           // ignore: use_build_context_synchronously
-                                                              //                           setState(() {
-                                                              //                             isLoading = false;
-                                                              //                           });
-                                                              //                           await ownerBusinessHomeCon.destinasiByIdOwner(ownerCon.idOBLogin);
-
-                                                              //                           await Fluttertoast.showToast(msg: ownerBusinessHomeCon.messageDeleteDestinasi.toString(), toastLength: Toast.LENGTH_SHORT, gravity: ToastGravity.BOTTOM, timeInSecForIosWeb: 1, backgroundColor: primaryColor.withOpacity(0.6), textColor: Colors.white, fontSize: 16.0);
-                                                              //                         } else if (ownerBusinessHomeCon.statusCodeDeleteDestinasi == 404) {
-                                                              //                           // ignore: use_build_context_synchronously
-                                                              //                           Navigator.pop(context);
-                                                              //                           setState(() {
-                                                              //                             isLoading = false;
-                                                              //                           });
-                                                              //                           await Fluttertoast.showToast(msg: ownerBusinessHomeCon.messageDeleteDestinasi.toString(), toastLength: Toast.LENGTH_SHORT, gravity: ToastGravity.BOTTOM, timeInSecForIosWeb: 1, backgroundColor: Colors.red[300], textColor: Colors.white, fontSize: 16.0);
-                                                              //                         }
-                                                              //                       } catch (e) {
-                                                              //                         setState(() {
-                                                              //                           isLoading = false;
-                                                              //                         });
-                                                              //                         // ignore: use_build_context_synchronously
-                                                              //                         Navigator.pop(context);
-                                                              //                         Fluttertoast.showToast(msg: e.toString(), toastLength: Toast.LENGTH_SHORT, gravity: ToastGravity.BOTTOM, timeInSecForIosWeb: 1, backgroundColor: Colors.red[300], textColor: Colors.white, fontSize: 16.0);
-                                                              //                       }
-                                                              //                       setState(() {});
-                                                              //                     },
-                                                              //                     child: Text(
-                                                              //                       "Hapus",
-                                                              //                       style: GoogleFonts.openSans(fontSize: 12, color: Colors.white, fontWeight: FontWeight.w600),
-                                                              //                     )),
-                                                              //               ),
-                                                              //             )
-                                                              //           ],
-                                                              //         );
-                                                              //       });
-                                                              // },
-                                                              child: Container(
-                                                                height: 22,
-                                                                width: MediaQuery.of(
-                                                                            context)
-                                                                        .size
-                                                                        .width *
-                                                                    0.072,
-                                                                decoration:
-                                                                    BoxDecoration(
-                                                                  // border: Border.all(color: thirdColor),
-                                                                  color: Color
-                                                                      .fromARGB(
-                                                                          183,
-                                                                          36,
-                                                                          78,
-                                                                          79),
-                                                                  borderRadius:
-                                                                      BorderRadius
-                                                                          .circular(
-                                                                              5),
-                                                                  boxShadow: [
-                                                                    BoxShadow(
-                                                                      color: Color.fromARGB(
-                                                                              255,
-                                                                              211,
-                                                                              211,
-                                                                              211)
-                                                                          .withOpacity(
-                                                                              0.7),
-                                                                      spreadRadius:
-                                                                          1,
-                                                                      blurRadius:
-                                                                          4,
-                                                                      offset: const Offset(
-                                                                          2,
-                                                                          2), // changes position of shadow
-                                                                    ),
-                                                                  ],
-                                                                ),
-                                                                child:
-                                                                    const Center(
-                                                                  child: FaIcon(
-                                                                    FontAwesomeIcons
-                                                                        .ticket,
-                                                                    color: Colors
-                                                                        .white,
-                                                                    size: 11,
-                                                                  ),
-                                                                ),
-                                                              ),
-                                                            ),
-                                                          )
                                                         ],
                                                       ),
                                                       Padding(

@@ -43,11 +43,11 @@ class _HistoryTicketByWeekState extends State<HistoryTicketByWeek> {
         eticketCon.uniqueNameDestinationsWeek.clear();
         eticketCon.listTicketSoldIdDestinasiWeek.clear();
 
-print("-------- $currentDate");
+        print("-------- $currentDate");
         eticketCon.ticketSoldIdDestinasiWeek = 0;
 
         String currentWeek = DateFormat('yyyy-MM-dd').format(currentDate);
-print("A-------- $currentWeek");
+        print("A-------- $currentWeek");
 
         await eticketCon.allEticketByOwnerInWeek(
             ownerCon.idOBLogin, currentWeek);
@@ -318,7 +318,7 @@ print("A-------- $currentWeek");
                                                       "Total Pendapatan",
                                                       style: GoogleFonts
                                                           .notoSansDisplay(
-                                                              fontSize: 11,
+                                                              fontSize: 12,
                                                               color: captColor,
                                                               fontWeight:
                                                                   FontWeight
@@ -381,7 +381,7 @@ print("A-------- $currentWeek");
                                                         "Total Penjualan",
                                                         style: GoogleFonts
                                                             .notoSansDisplay(
-                                                                fontSize: 11,
+                                                                fontSize: 12,
                                                                 color:
                                                                     captColor,
                                                                 fontWeight:
@@ -525,14 +525,14 @@ print("A-------- $currentWeek");
                                           Text(
                                             "Tempat Wisata",
                                             style: GoogleFonts.notoSansDisplay(
-                                                fontSize: 10,
+                                                fontSize: 11,
                                                 color: captColor,
                                                 fontWeight: FontWeight.w500),
                                           ),
                                           Text(
                                             "Terjual",
                                             style: GoogleFonts.notoSansDisplay(
-                                                fontSize: 10,
+                                                fontSize: 11,
                                                 color: captColor,
                                                 fontWeight: FontWeight.w500),
                                           ),
@@ -602,30 +602,43 @@ print("A-------- $currentWeek");
                                                                   .circular(5),
                                                           color: randomColor,
                                                         ),
-                                                        height: 15,
-                                                        width: 25,
+                                                        height: 20,
+                                                        width: MediaQuery.of(
+                                                                    context)
+                                                                .size
+                                                                .width *
+                                                            0.06,
                                                       ),
-                                                      Padding(
-                                                        padding:
-                                                            const EdgeInsets
-                                                                    .only(
-                                                                left: 6.0),
-                                                        child: Text(
-                                                          eticketCon
-                                                              .uniqueNameDestinationsWeek
-                                                              .toList()[index],
-                                                          style: GoogleFonts
-                                                              .notoSansDisplay(
-                                                                  fontSize: 11,
-                                                                  color: const Color
-                                                                          .fromARGB(
-                                                                      255,
-                                                                      64,
-                                                                      64,
-                                                                      64),
-                                                                  fontWeight:
-                                                                      FontWeight
-                                                                          .w600),
+                                                      Container(
+                                                        width: MediaQuery.of(
+                                                                    context)
+                                                                .size
+                                                                .width *
+                                                            0.55,
+                                                        child: Padding(
+                                                          padding:
+                                                              const EdgeInsets
+                                                                      .only(
+                                                                  left: 6.0),
+                                                          child: Text(
+                                                            eticketCon
+                                                                .uniqueNameDestinationsWeek
+                                                                .toList()[index],
+                                                            style: GoogleFonts
+                                                                .notoSansDisplay(
+                                                                    fontSize:
+                                                                        12,
+                                                                    color: const Color
+                                                                            .fromARGB(
+                                                                        255,
+                                                                        64,
+                                                                        64,
+                                                                        64),
+                                                                    fontWeight:
+                                                                        FontWeight
+                                                                            .w600),
+                                                            maxLines: 3,
+                                                          ),
                                                         ),
                                                       ),
                                                     ],
@@ -643,7 +656,7 @@ print("A-------- $currentWeek");
                                                           : "${eticketCon.listTicketSoldIdDestinasiWeek[index].toString()} Tiket",
                                                       style: GoogleFonts
                                                           .notoSansDisplay(
-                                                              fontSize: 11,
+                                                              fontSize: 12,
                                                               color: const Color
                                                                       .fromARGB(
                                                                   255,

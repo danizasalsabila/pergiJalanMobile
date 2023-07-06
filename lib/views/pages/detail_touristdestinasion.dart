@@ -174,8 +174,7 @@ class _DetailDestinationState extends State<DetailDestination> {
                                 child: Container(
                                     decoration: BoxDecoration(
                                         color: thirdColor,
-                                        borderRadius:
-                                            BorderRadius.circular(15)),
+                                        borderRadius: BorderRadius.circular(5)),
                                     child: Padding(
                                       padding: const EdgeInsets.only(
                                           left: 13.0,
@@ -185,7 +184,7 @@ class _DetailDestinationState extends State<DetailDestination> {
                                       child: Text(
                                         widget.id.category.toString(),
                                         style: GoogleFonts.openSans(
-                                            fontSize: 11,
+                                            fontSize: 12,
                                             color: backgroundColor,
                                             fontWeight: FontWeight.w500),
                                       ),
@@ -260,7 +259,7 @@ class _DetailDestinationState extends State<DetailDestination> {
                                                 decoration: BoxDecoration(
                                                     borderRadius:
                                                         BorderRadius.circular(
-                                                            8),
+                                                            5),
                                                     color: Color.fromARGB(
                                                         132, 27, 177, 197)),
                                                 child: Center(
@@ -275,7 +274,7 @@ class _DetailDestinationState extends State<DetailDestination> {
                                                           "Keamanan",
                                                           style: GoogleFonts
                                                               .openSans(
-                                                                  fontSize: 9,
+                                                                  fontSize: 11,
                                                                   color:
                                                                       secondaryColor,
                                                                   fontWeight:
@@ -310,12 +309,12 @@ class _DetailDestinationState extends State<DetailDestination> {
                                       Icon(
                                         Icons.location_on_outlined,
                                         size: 17,
-                                        color: titleColor,
+                                        color: descColor,
                                       ),
                                       Text(
                                         widget.id.city!,
                                         style: GoogleFonts.openSans(
-                                            fontSize: 12,
+                                            fontSize: 13,
                                             color: descColor,
                                             fontWeight: FontWeight.w500),
                                       ),
@@ -330,7 +329,7 @@ class _DetailDestinationState extends State<DetailDestination> {
                                       Icon(
                                         Icons.access_time,
                                         size: 15,
-                                        color: titleColor,
+                                        color: descColor,
                                       ),
                                       Padding(
                                         padding:
@@ -343,7 +342,7 @@ class _DetailDestinationState extends State<DetailDestination> {
                                                     widget.id.openHour
                                                         .toString(),
                                                     style: GoogleFonts.openSans(
-                                                        fontSize: 12,
+                                                        fontSize: 13,
                                                         color: descColor,
                                                         fontWeight:
                                                             FontWeight.w500),
@@ -351,7 +350,7 @@ class _DetailDestinationState extends State<DetailDestination> {
                                                   Text(
                                                     " - ",
                                                     style: GoogleFonts.openSans(
-                                                        fontSize: 12,
+                                                        fontSize: 13,
                                                         color: descColor,
                                                         fontWeight:
                                                             FontWeight.w500),
@@ -360,7 +359,7 @@ class _DetailDestinationState extends State<DetailDestination> {
                                                     widget.id.closedHour
                                                         .toString(),
                                                     style: GoogleFonts.openSans(
-                                                        fontSize: 12,
+                                                        fontSize: 13,
                                                         color: descColor,
                                                         fontWeight:
                                                             FontWeight.w500),
@@ -368,7 +367,7 @@ class _DetailDestinationState extends State<DetailDestination> {
                                                 ],
                                               )
                                             : Text(
-                                                " -",
+                                                "-",
                                                 style: GoogleFonts.openSans(
                                                     fontSize: 12,
                                                     color: descColor,
@@ -489,11 +488,11 @@ class _DetailDestinationState extends State<DetailDestination> {
                                                           : "-",
                                                       style:
                                                           GoogleFonts.openSans(
-                                                              fontSize: 12,
+                                                              fontSize: 13,
                                                               color: descColor,
                                                               fontWeight:
                                                                   FontWeight
-                                                                      .w600),
+                                                                      .w500),
                                                     ),
                                                   ),
                                                 ],
@@ -638,11 +637,11 @@ class _DetailDestinationState extends State<DetailDestination> {
                                                                                     widget.id.minutesSpend.toString(),
                                                                                     overflow: TextOverflow.clip,
                                                                                     maxLines: 3,
-                                                                                    style: GoogleFonts.openSans(fontSize: 12, color: titleColor, fontWeight: FontWeight.w600),
+                                                                                    style: GoogleFonts.openSans(fontSize: 12, color: titleColor, fontWeight: FontWeight.w500),
                                                                                   )
                                                                                 : Text(
                                                                                     "-",
-                                                                                    style: GoogleFonts.openSans(fontSize: 12, color: titleColor, fontWeight: FontWeight.w400),
+                                                                                    style: GoogleFonts.openSans(fontSize: 12, color: titleColor, fontWeight: FontWeight.w500),
                                                                                   ),
                                                                           ),
                                                                         ),
@@ -726,12 +725,12 @@ class _DetailDestinationState extends State<DetailDestination> {
                                                                               null
                                                                           ? Text(
                                                                               widget.id.recWeather.toString(),
-                                                                              style: GoogleFonts.openSans(fontSize: 12, color: titleColor, fontWeight: FontWeight.w600),
+                                                                              style: GoogleFonts.openSans(fontSize: 12, color: titleColor, fontWeight: FontWeight.w500),
                                                                             )
                                                                           : Text(
                                                                               "-",
                                                                               maxLines: 4,
-                                                                              style: GoogleFonts.openSans(fontSize: 12, color: titleColor, fontWeight: FontWeight.w400),
+                                                                              style: GoogleFonts.openSans(fontSize: 12, color: titleColor, fontWeight: FontWeight.w500),
                                                                             )
                                                                     ],
                                                                   ),
@@ -812,12 +811,12 @@ class _DetailDestinationState extends State<DetailDestination> {
                                                                           child: widget.id.hobby != null
                                                                               ? Text(
                                                                                   widget.id.hobby.toString(),
-                                                                                  style: GoogleFonts.openSans(fontSize: 12, color: titleColor, fontWeight: FontWeight.w400),
+                                                                                  style: GoogleFonts.openSans(fontSize: 12, color: titleColor, fontWeight: FontWeight.w500),
                                                                                 )
                                                                               : Text(
                                                                                   "-",
                                                                                   maxLines: 1,
-                                                                                  style: GoogleFonts.openSans(fontSize: 12, color: titleColor, fontWeight: FontWeight.w400),
+                                                                                  style: GoogleFonts.openSans(fontSize: 12, color: titleColor, fontWeight: FontWeight.w500),
                                                                                 ))
                                                                     ],
                                                                   ),
@@ -834,7 +833,7 @@ class _DetailDestinationState extends State<DetailDestination> {
                                             Text(
                                               "Fasilitas umum yang tersedia",
                                               style: GoogleFonts.kanit(
-                                                  fontSize: 13,
+                                                  fontSize: 14,
                                                   color: primaryColor,
                                                   fontWeight: FontWeight.w500),
                                             ),
@@ -891,7 +890,7 @@ class _DetailDestinationState extends State<DetailDestination> {
                                                                       data[i],
                                                                       style: GoogleFonts.openSans(
                                                                           fontSize:
-                                                                              13,
+                                                                              14,
                                                                           color:
                                                                               primaryColor,
                                                                           fontWeight:
@@ -929,7 +928,7 @@ class _DetailDestinationState extends State<DetailDestination> {
                                             Text(
                                               "Lokasi wisata",
                                               style: GoogleFonts.kanit(
-                                                  fontSize: 14,
+                                                  fontSize: 15,
                                                   color: primaryColor,
                                                   fontWeight: FontWeight.w500),
                                             ),
@@ -961,7 +960,7 @@ class _DetailDestinationState extends State<DetailDestination> {
                                                           : "-",
                                                       style:
                                                           GoogleFonts.openSans(
-                                                              fontSize: 12,
+                                                              fontSize: 13,
                                                               color: descColor,
                                                               fontWeight:
                                                                   FontWeight
@@ -1142,7 +1141,7 @@ class _DetailDestinationState extends State<DetailDestination> {
                                                                         "Berapa penilaian anda tentang tempat wisata ini?",
                                                                         style: GoogleFonts.openSans(
                                                                             fontSize:
-                                                                                13,
+                                                                                14,
                                                                             color:
                                                                                 Colors.black,
                                                                             fontWeight: FontWeight.w600),
@@ -1190,7 +1189,7 @@ class _DetailDestinationState extends State<DetailDestination> {
                                                                         "Tulis ulasan anda",
                                                                         style: GoogleFonts.openSans(
                                                                             fontSize:
-                                                                                13,
+                                                                                14,
                                                                             color:
                                                                                 Colors.black,
                                                                             fontWeight: FontWeight.w600),
@@ -1201,12 +1200,17 @@ class _DetailDestinationState extends State<DetailDestination> {
                                                                         child:
                                                                             Container(
                                                                           height:
-                                                                              50,
+                                                                              100,
                                                                           decoration: BoxDecoration(
                                                                               borderRadius: BorderRadius.circular(8),
                                                                               border: Border.all(color: descColor)),
                                                                           child:
                                                                               TextField(
+                                                                                maxLines: 3,
+                                                                            decoration:
+                                                                                InputDecoration(
+                                                                              border: InputBorder.none,
+                                                                            ),
                                                                             controller:
                                                                                 reviewController,
                                                                             keyboardType:
@@ -1338,7 +1342,7 @@ class _DetailDestinationState extends State<DetailDestination> {
                                                                 "Tulis tinjauan disini",
                                                                 style: GoogleFonts.openSans(
                                                                     fontSize:
-                                                                        11,
+                                                                        12,
                                                                     color:
                                                                         descColor,
                                                                     fontWeight:
@@ -1414,7 +1418,7 @@ class _DetailDestinationState extends State<DetailDestination> {
                                                                 "Tulis tinjauan disini",
                                                                 style: GoogleFonts.openSans(
                                                                     fontSize:
-                                                                        11,
+                                                                        12,
                                                                     color:
                                                                         descColor,
                                                                     fontWeight:
@@ -1463,20 +1467,28 @@ class _DetailDestinationState extends State<DetailDestination> {
                                                                   left: 6),
                                                           child: Row(
                                                             children: [
-                                                              const CircleAvatar(
-                                                                radius: 20,
-                                                                backgroundColor:
-                                                                    Color.fromARGB(
-                                                                        255,
-                                                                        230,
-                                                                        230,
-                                                                        230),
-                                                                child: FaIcon(
-                                                                  FontAwesomeIcons
-                                                                      .solidUser,
-                                                                  size: 15,
-                                                                  color:
-                                                                      secondaryColor,
+                                                              SizedBox(
+                                                                width: MediaQuery.of(
+                                                                            context)
+                                                                        .size
+                                                                        .width *
+                                                                    0.1,
+                                                                child:
+                                                                    const CircleAvatar(
+                                                                  radius: 20,
+                                                                  backgroundColor:
+                                                                      Color.fromARGB(
+                                                                          255,
+                                                                          230,
+                                                                          230,
+                                                                          230),
+                                                                  child: FaIcon(
+                                                                    FontAwesomeIcons
+                                                                        .solidUser,
+                                                                    size: 15,
+                                                                    color:
+                                                                        secondaryColor,
+                                                                  ),
                                                                 ),
                                                               ),
                                                               Padding(
@@ -1484,7 +1496,7 @@ class _DetailDestinationState extends State<DetailDestination> {
                                                                     const EdgeInsets
                                                                             .only(
                                                                         left:
-                                                                            10.0),
+                                                                            12.0),
                                                                 child: SizedBox(
                                                                   child: Column(
                                                                     mainAxisAlignment:
@@ -1494,40 +1506,51 @@ class _DetailDestinationState extends State<DetailDestination> {
                                                                         CrossAxisAlignment
                                                                             .start,
                                                                     children: [
-                                                                      Row(
-                                                                          mainAxisAlignment:
-                                                                              MainAxisAlignment.center,
-                                                                          children: [
-                                                                            Text(
-                                                                              reviewData.reviewData![index].user!.name!.toString() != null ? reviewData.reviewData![index].user!.name! : '-',
-                                                                              style: GoogleFonts.openSans(fontSize: 11, color: titleColor, fontWeight: FontWeight.w500),
-                                                                            ),
-                                                                            const Padding(
-                                                                              padding: EdgeInsets.only(left: 8.0, right: 8.0),
-                                                                              child: CircleAvatar(
-                                                                                radius: 2,
-                                                                                backgroundColor: Colors.black,
+                                                                      Container(
+                                                                        width: MediaQuery.of(context).size.width *
+                                                                            0.7,
+                                                                        child: Row(
+                                                                            mainAxisAlignment:
+                                                                                MainAxisAlignment.start,
+                                                                            children: [
+                                                                              Text(
+                                                                                reviewData.reviewData![index].user!.name!.toString() != null ? reviewData.reviewData![index].user!.name! : '-',
+                                                                                style: GoogleFonts.openSans(fontSize: 13, color: titleColor, fontWeight: FontWeight.w500),
                                                                               ),
-                                                                            ),
-                                                                            Text(
-                                                                              reviewData.reviewData![index].rating.toString(),
-                                                                              style: GoogleFonts.openSans(fontSize: 11, color: titleColor, fontWeight: FontWeight.w500),
-                                                                            ),
-                                                                            const Padding(
-                                                                              padding: EdgeInsets.only(left: 4.0),
-                                                                              child: Icon(
-                                                                                Icons.star,
-                                                                                size: 15,
-                                                                                color: Colors.amber,
+                                                                              const Padding(
+                                                                                padding: EdgeInsets.only(left: 8.0, right: 8.0),
+                                                                                child: CircleAvatar(
+                                                                                  radius: 2,
+                                                                                  backgroundColor: Colors.black,
+                                                                                ),
                                                                               ),
-                                                                            ),
-                                                                          ]),
+                                                                              Text(
+                                                                                reviewData.reviewData![index].rating.toString(),
+                                                                                style: GoogleFonts.openSans(fontSize: 13, color: titleColor, fontWeight: FontWeight.w500),
+                                                                              ),
+                                                                              const Padding(
+                                                                                padding: EdgeInsets.only(left: 4.0),
+                                                                                child: Icon(
+                                                                                  Icons.star,
+                                                                                  size: 15,
+                                                                                  color: Colors.amber,
+                                                                                ),
+                                                                              ),
+                                                                            ]),
+                                                                      ),
                                                                       Padding(
                                                                         padding:
-                                                                            const EdgeInsets.only(top: 3.0),
-                                                                        child: Text(
-                                                                            reviewData.reviewData![index].review!,
-                                                                            style: GoogleFonts.openSans(fontSize: 13, color: descColor, fontWeight: FontWeight.w500)),
+                                                                            const EdgeInsets.only(top: 5.0),
+                                                                        child:
+                                                                            Container(
+                                                                          width:
+                                                                              MediaQuery.of(context).size.width * 0.7,
+                                                                          // height: 80,
+                                                                          child: Text(
+                                                                              reviewData.reviewData![index].review!,
+                                                                              // maxLines: 10,
+                                                                              style: GoogleFonts.openSans(fontSize: 13, color: descColor, fontWeight: FontWeight.w500)),
+                                                                        ),
                                                                       )
                                                                     ],
                                                                   ),
@@ -1605,7 +1628,7 @@ class _DetailDestinationState extends State<DetailDestination> {
                             color: secondaryColor,
                           ),
                           child: const Center(
-                              child: Text("Pesan Tiket",
+                              child: Text("Pilih Tiket",
                                   style: TextStyle(
                                       color: Colors.white,
                                       fontSize: 12,
@@ -1636,7 +1659,7 @@ class _DetailDestinationState extends State<DetailDestination> {
                                 color: secondaryColor,
                               ),
                               child: const Center(
-                                  child: Text("Pesan Tiket",
+                                  child: Text("Pilih Tiket",
                                       style: TextStyle(
                                           color: Colors.white,
                                           fontSize: 12,

@@ -169,7 +169,7 @@ class DestinasiController extends ChangeNotifier {
       var data = json.decode(response.body);
       if (response.statusCode == 200) {
         isfirstpage = true;
-        print(response.statusCode);
+        // print(response.statusCode);
         statusCodeSearch = response.statusCode;
         destinasiResponse = destinasiFromJson(response.body);
         destinasiQueryData = destinasiResponse?.destinasi;

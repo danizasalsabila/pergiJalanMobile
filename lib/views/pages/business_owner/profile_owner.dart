@@ -176,7 +176,7 @@ class _OwnerProfilePageState extends State<OwnerProfilePage> {
                                               .contactNumber
                                               .toString(),
                                           style: GoogleFonts.notoSansDisplay(
-                                              fontSize: 10,
+                                              fontSize: 12,
                                               color: Colors.grey.shade300,
                                               fontWeight: FontWeight.w500),
                                         ),
@@ -206,18 +206,18 @@ class _OwnerProfilePageState extends State<OwnerProfilePage> {
                                               BorderRadius.circular(5)),
                                       child: Padding(
                                         padding: const EdgeInsets.only(
-                                            left: 5.0,
-                                            right: 5.0,
-                                            top: 2,
-                                            bottom: 2),
+                                            left: 12.0,
+                                            right: 12.0,
+                                            top: 5,
+                                            bottom: 5),
                                         child: Row(
                                           children: [
                                             Text(
-                                              "Ubah Profile",
+                                              "Ubah Profil",
                                               style: GoogleFonts.openSans(
-                                                  fontSize: 9,
+                                                  fontSize: 11,
                                                   color: thirdColor,
-                                                  fontWeight: FontWeight.w500),
+                                                  fontWeight: FontWeight.w600),
                                             ),
                                             const Padding(
                                               padding:
@@ -239,7 +239,7 @@ class _OwnerProfilePageState extends State<OwnerProfilePage> {
                           Padding(
                             padding: const EdgeInsets.fromLTRB(30, 10.0, 30, 8),
                             child: Container(
-                              height: 175,
+                              // height: 175,
                               width: MediaQuery.of(context).size.width,
                               decoration: BoxDecoration(
                                 boxShadow: [
@@ -265,7 +265,7 @@ class _OwnerProfilePageState extends State<OwnerProfilePage> {
                                         child: Text(
                                           "Total Pemasukan",
                                           style: GoogleFonts.inter(
-                                              fontSize: 12,
+                                              fontSize: 14,
                                               color: Colors.black,
                                               fontWeight: FontWeight.w600),
                                         ),
@@ -276,7 +276,7 @@ class _OwnerProfilePageState extends State<OwnerProfilePage> {
                                       child: Text(
                                         "Penghasilan anda sejak ${formattedDate}",
                                         style: GoogleFonts.openSans(
-                                            fontSize: 11,
+                                            fontSize: 12,
                                             color: Colors.grey.shade400,
                                             fontWeight: FontWeight.w500),
                                       ),
@@ -332,7 +332,7 @@ class _OwnerProfilePageState extends State<OwnerProfilePage> {
                                             Text(
                                               "Pengunjung",
                                               style: GoogleFonts.openSans(
-                                                  fontSize: 10,
+                                                  fontSize: 11,
                                                   color: Colors.grey.shade400,
                                                   fontWeight: FontWeight.w500),
                                             ),
@@ -342,7 +342,7 @@ class _OwnerProfilePageState extends State<OwnerProfilePage> {
                                                       .toString()
                                                   : "0",
                                               style: GoogleFonts.openSans(
-                                                  fontSize: 11,
+                                                  fontSize: 12,
                                                   color: thirdColor,
                                                   fontWeight: FontWeight.w600),
                                             ),
@@ -351,7 +351,7 @@ class _OwnerProfilePageState extends State<OwnerProfilePage> {
                                       ),
                                     ),
                                     const SizedBox(
-                                      height: 11,
+                                      height: 16,
                                     ),
                                     InkWell(
                                       onTap: () {
@@ -378,7 +378,7 @@ class _OwnerProfilePageState extends State<OwnerProfilePage> {
                                         width:
                                             MediaQuery.of(context).size.width *
                                                 0.6,
-                                        height: 30,
+                                        height: 32,
                                         decoration: BoxDecoration(
                                             color: thirdColor,
                                             borderRadius:
@@ -392,7 +392,8 @@ class _OwnerProfilePageState extends State<OwnerProfilePage> {
                                               fontWeight: FontWeight.w600),
                                         )),
                                       ),
-                                    )
+                                    ),
+                                    SizedBox(height: 10,)
                                   ],
                                 ),
                               ),
@@ -860,6 +861,7 @@ class _OwnerProfilePageState extends State<OwnerProfilePage> {
                         child: Column(
                           children: [
                             Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceAround,
                               children: [
                                 Expanded(
                                     child: Divider(
@@ -871,7 +873,7 @@ class _OwnerProfilePageState extends State<OwnerProfilePage> {
                                   child: Text(
                                     "INFORMASI",
                                     style: GoogleFonts.openSans(
-                                        fontSize: 12,
+                                        fontSize: 13,
                                         color: descColor,
                                         fontWeight: FontWeight.w400),
                                   ),
@@ -894,7 +896,7 @@ class _OwnerProfilePageState extends State<OwnerProfilePage> {
                                     Icon(
                                       Icons.star_border,
                                       size: 20,
-                                      color: labelColor,
+                                      color: Colors.amber,
                                     ),
                                     Padding(
                                       padding:
@@ -939,7 +941,7 @@ class _OwnerProfilePageState extends State<OwnerProfilePage> {
                                   child: Text(
                                     "PENGATURAN",
                                     style: GoogleFonts.openSans(
-                                        fontSize: 12,
+                                        fontSize: 13,
                                         color: descColor,
                                         fontWeight: FontWeight.w400),
                                   ),
@@ -969,6 +971,16 @@ class _OwnerProfilePageState extends State<OwnerProfilePage> {
                                         } catch (e) {
                                           print(e);
                                         }
+                                         Fluttertoast.showToast(
+                                              msg:
+                                                  "Anda berhasil keluar dari akun anda",
+                                              toastLength: Toast.LENGTH_SHORT,
+                                              gravity: ToastGravity.BOTTOM,
+                                              timeInSecForIosWeb: 1,
+                                              backgroundColor:
+                                                  Color.fromARGB(255, 54, 158, 244).withOpacity(0.6),
+                                              textColor: Colors.white,
+                                              fontSize: 16.0);
 
                                         Navigator.of(context)
                                             .pushAndRemoveUntil(

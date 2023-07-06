@@ -34,7 +34,7 @@ class _DetailDestinationOwnerState extends State<DetailDestinationOwner> {
 
   double ratingController = 5;
   // int ratingController2 = 1;
-  String text = '';
+  String? text;
   bool avgRatingBool = false;
 
   List<String> data = [];
@@ -66,10 +66,11 @@ class _DetailDestinationOwnerState extends State<DetailDestinationOwner> {
 
         await Future.delayed(Duration.zero);
         text = widget.id.fasility.toString();
-        if (text.contains(',')) {
-          data = text.split(',');
+        if (text!.contains(',')) {
+          data = text!.split(',');
         } else {
           print('Teks fasilitas tidak mengandung koma');
+          data = [text!];
         }
       } catch (e) {
         e;
@@ -135,7 +136,7 @@ class _DetailDestinationOwnerState extends State<DetailDestinationOwner> {
                               child: Container(
                                   decoration: BoxDecoration(
                                       color: thirdColor,
-                                      borderRadius: BorderRadius.circular(15)),
+                                      borderRadius: BorderRadius.circular(5)),
                                   child: Padding(
                                     padding: const EdgeInsets.only(
                                         left: 13.0,
@@ -145,7 +146,7 @@ class _DetailDestinationOwnerState extends State<DetailDestinationOwner> {
                                     child: Text(
                                       widget.id.category.toString(),
                                       style: GoogleFonts.openSans(
-                                          fontSize: 11,
+                                          fontSize: 12,
                                           color: backgroundColor,
                                           fontWeight: FontWeight.w500),
                                     ),
@@ -265,12 +266,12 @@ class _DetailDestinationOwnerState extends State<DetailDestinationOwner> {
                                     Icon(
                                       Icons.location_on_outlined,
                                       size: 17,
-                                      color: titleColor,
+                                      color: descColor,
                                     ),
                                     Text(
                                       widget.id.city!,
                                       style: GoogleFonts.openSans(
-                                          fontSize: 12,
+                                          fontSize: 13,
                                           color: descColor,
                                           fontWeight: FontWeight.w500),
                                     ),
@@ -285,7 +286,7 @@ class _DetailDestinationOwnerState extends State<DetailDestinationOwner> {
                                     Icon(
                                       Icons.access_time,
                                       size: 15,
-                                      color: titleColor,
+                                      color: descColor,
                                     ),
                                     widget.id.openHour == null &&
                                             widget.id.closedHour == null
@@ -302,7 +303,7 @@ class _DetailDestinationOwnerState extends State<DetailDestinationOwner> {
                                             child: Text(
                                               "${widget.id.openHour} - ${widget.id.closedHour} WIB",
                                               style: GoogleFonts.openSans(
-                                                  fontSize: 12,
+                                                  fontSize: 13,
                                                   color: descColor,
                                                   fontWeight: FontWeight.w500),
                                             ),
@@ -420,12 +421,12 @@ class _DetailDestinationOwnerState extends State<DetailDestinationOwner> {
                                                               .toString(),
                                                           style: GoogleFonts
                                                               .openSans(
-                                                                  fontSize: 12,
+                                                                  fontSize: 13,
                                                                   color:
                                                                       descColor,
                                                                   fontWeight:
                                                                       FontWeight
-                                                                          .w600),
+                                                                          .w500),
                                                         )
                                                       : Text(
                                                           "Anda belum memasukkan kontak tempat wisata",
@@ -666,7 +667,7 @@ class _DetailDestinationOwnerState extends State<DetailDestinationOwner> {
                                                                             style: GoogleFonts.openSans(
                                                                                 fontSize: 12,
                                                                                 color: titleColor,
-                                                                                fontWeight: FontWeight.w600),
+                                                                                fontWeight: FontWeight.w500),
                                                                           )
                                                                         : Text(
                                                                             "Anda belum memasukkan rekomendasi cuaca",
@@ -756,7 +757,7 @@ class _DetailDestinationOwnerState extends State<DetailDestinationOwner> {
                                                                                 null
                                                                             ? Text(
                                                                                 widget.id.hobby.toString(),
-                                                                                style: GoogleFonts.openSans(fontSize: 12, color: titleColor, fontWeight: FontWeight.w400),
+                                                                                style: GoogleFonts.openSans(fontSize: 12, color: titleColor, fontWeight: FontWeight.w500),
                                                                               )
                                                                             : Text("Anda belum memasukkan rekomendasi minat",
                                                                                 maxLines: 4,
@@ -776,12 +777,11 @@ class _DetailDestinationOwnerState extends State<DetailDestinationOwner> {
                                           Text(
                                             "Fasilitas umum yang tersedia",
                                             style: GoogleFonts.kanit(
-                                                fontSize: 12,
+                                                fontSize: 14,
                                                 color: primaryColor,
                                                 fontWeight: FontWeight.w500),
                                           ),
                                           widget.id.fasility == null ||
-                                                  widget.id.fasility!.isEmpty ||
                                                   widget.id.fasility == ''
                                               ? Text(
                                                   "Tidak terdapat fasilitas",
@@ -868,7 +868,7 @@ class _DetailDestinationOwnerState extends State<DetailDestinationOwner> {
                                           Text(
                                             "Alamat wisata",
                                             style: GoogleFonts.kanit(
-                                                fontSize: 13,
+                                                fontSize: 14,
                                                 color: primaryColor,
                                                 fontWeight: FontWeight.w500),
                                           ),
@@ -898,7 +898,7 @@ class _DetailDestinationOwnerState extends State<DetailDestinationOwner> {
                                                         ? widget.id.address!
                                                         : "-",
                                                     style: GoogleFonts.openSans(
-                                                        fontSize: 12,
+                                                        fontSize: 13,
                                                         color: descColor,
                                                         fontWeight:
                                                             FontWeight.w400),
@@ -1403,103 +1403,117 @@ class _DetailDestinationOwnerState extends State<DetailDestinationOwner> {
                                                               .length,
                                                           itemBuilder:
                                                               (context, index) {
-                                                            return Column(
-                                                              children: [
-                                                                Padding(
-                                                                  padding: const EdgeInsets
-                                                                          .only(
-                                                                      bottom:
-                                                                          8.0,
-                                                                      top: 20.0,
-                                                                      right: 8,
-                                                                      left: 6),
-                                                                  child: Row(
-                                                                    children: [
-                                                                      const CircleAvatar(
-                                                                        radius:
-                                                                            20,
-                                                                        backgroundColor: Color.fromARGB(
-                                                                            255,
-                                                                            230,
-                                                                            230,
-                                                                            230),
-                                                                        child:
-                                                                            FaIcon(
-                                                                          FontAwesomeIcons
-                                                                              .solidUser,
-                                                                          size:
-                                                                              15,
-                                                                          color:
-                                                                              secondaryColor,
-                                                                        ),
-                                                                      ),
-                                                                      Padding(
-                                                                        padding:
-                                                                            const EdgeInsets.only(left: 10.0),
-                                                                        child:
-                                                                            Container(
+                                                            return SizedBox(
+                                                              width:
+                                                                  MediaQuery.of(
+                                                                          context)
+                                                                      .size
+                                                                      .width,
+                                                              child: Column(
+                                                                children: [
+                                                                  Padding(
+                                                                    padding: const EdgeInsets
+                                                                            .only(
+                                                                        bottom:
+                                                                            8.0,
+                                                                        top:
+                                                                            20.0,
+                                                                        right:
+                                                                            8,
+                                                                        left:
+                                                                            6),
+                                                                    child: Row(
+                                                                      children: [
+                                                                        Container(
+                                                                          width:
+                                                                              MediaQuery.of(context).size.width * 0.1,
                                                                           child:
-                                                                              Column(
-                                                                            mainAxisAlignment:
-                                                                                MainAxisAlignment.center,
-                                                                            crossAxisAlignment:
-                                                                                CrossAxisAlignment.start,
-                                                                            children: [
-                                                                              Row(mainAxisAlignment: MainAxisAlignment.center, children: [
-                                                                                Text(
-                                                                                  reviewData.reviewData![index].user!.name!.toString() != null ? reviewData.reviewData![index].user!.name! : '-',
-                                                                                  style: GoogleFonts.openSans(fontSize: 11, color: titleColor, fontWeight: FontWeight.w500),
-                                                                                ),
-                                                                                const Padding(
-                                                                                  padding: EdgeInsets.only(left: 8.0, right: 8.0),
-                                                                                  child: CircleAvatar(
-                                                                                    radius: 2,
-                                                                                    backgroundColor: Colors.black,
-                                                                                  ),
-                                                                                ),
-                                                                                Text(
-                                                                                  reviewData.reviewData![index].rating.toString(),
-                                                                                  style: GoogleFonts.openSans(fontSize: 11, color: titleColor, fontWeight: FontWeight.w500),
-                                                                                ),
-                                                                                const Padding(
-                                                                                  padding: EdgeInsets.only(left: 4.0),
-                                                                                  child: Icon(
-                                                                                    Icons.star,
-                                                                                    size: 15,
-                                                                                    color: Colors.amber,
-                                                                                  ),
-                                                                                ),
-                                                                              ]),
-                                                                              Padding(
-                                                                                padding: const EdgeInsets.only(top: 3.0),
-                                                                                child: Text(reviewData.reviewData![index].review!, style: GoogleFonts.openSans(fontSize: 13, color: descColor, fontWeight: FontWeight.w500)),
-                                                                              )
-                                                                            ],
+                                                                              const CircleAvatar(
+                                                                            radius:
+                                                                                20,
+                                                                            backgroundColor: Color.fromARGB(
+                                                                                255,
+                                                                                230,
+                                                                                230,
+                                                                                230),
+                                                                            child:
+                                                                                FaIcon(
+                                                                              FontAwesomeIcons.solidUser,
+                                                                              size: 15,
+                                                                              color: secondaryColor,
+                                                                            ),
                                                                           ),
                                                                         ),
-                                                                      ),
-                                                                    ],
+                                                                        Padding(
+                                                                          padding:
+                                                                              const EdgeInsets.only(left: 10.0),
+                                                                          child:
+                                                                              Container(
+                                                                            child:
+                                                                                Column(
+                                                                              mainAxisAlignment: MainAxisAlignment.center,
+                                                                              crossAxisAlignment: CrossAxisAlignment.start,
+                                                                              children: [
+                                                                                Row(mainAxisAlignment: MainAxisAlignment.center, children: [
+                                                                                  Text(
+                                                                                    reviewData.reviewData![index].user!.name!.toString() != null ? reviewData.reviewData![index].user!.name! : '-',
+                                                                                    style: GoogleFonts.openSans(fontSize: 11, color: titleColor, fontWeight: FontWeight.w500),
+                                                                                  ),
+                                                                                  const Padding(
+                                                                                    padding: EdgeInsets.only(left: 8.0, right: 8.0),
+                                                                                    child: CircleAvatar(
+                                                                                      radius: 2,
+                                                                                      backgroundColor: Colors.black,
+                                                                                    ),
+                                                                                  ),
+                                                                                  Text(
+                                                                                    reviewData.reviewData![index].rating.toString(),
+                                                                                    style: GoogleFonts.openSans(fontSize: 11, color: titleColor, fontWeight: FontWeight.w500),
+                                                                                  ),
+                                                                                  const Padding(
+                                                                                    padding: EdgeInsets.only(left: 4.0),
+                                                                                    child: Icon(
+                                                                                      Icons.star,
+                                                                                      size: 15,
+                                                                                      color: Colors.amber,
+                                                                                    ),
+                                                                                  ),
+                                                                                ]),
+                                                                                Padding(
+                                                                                  padding: const EdgeInsets.only(top: 3.0),
+                                                                                  child: SizedBox(
+                                                                                    width: MediaQuery.of(context).size.width * 0.7,
+                                                                                    child: Text(reviewData.reviewData![index].review!, maxLines: 10, overflow: TextOverflow.ellipsis, style: GoogleFonts.openSans(fontSize: 13, color: descColor, fontWeight: FontWeight.w500)),
+                                                                                  ),
+                                                                                )
+                                                                              ],
+                                                                            ),
+                                                                          ),
+                                                                        ),
+                                                                      ],
+                                                                    ),
                                                                   ),
-                                                                ),
-                                                                Padding(
-                                                                  padding: const EdgeInsets
-                                                                          .only(
-                                                                      left: 8.0,
-                                                                      right:
-                                                                          8.0),
-                                                                  child:
-                                                                      Container(
-                                                                    height: 1,
-                                                                    width: MediaQuery.of(
-                                                                            context)
-                                                                        .size
-                                                                        .width,
-                                                                    color: Colors
-                                                                        .grey
-                                                                        .shade300,
-                                                                  ),
-                                                                )
-                                                              ],
+                                                                  Padding(
+                                                                    padding: const EdgeInsets
+                                                                            .only(
+                                                                        left:
+                                                                            8.0,
+                                                                        right:
+                                                                            8.0),
+                                                                    child:
+                                                                        Container(
+                                                                      height: 1,
+                                                                      width: MediaQuery.of(
+                                                                              context)
+                                                                          .size
+                                                                          .width,
+                                                                      color: Colors
+                                                                          .grey
+                                                                          .shade300,
+                                                                    ),
+                                                                  )
+                                                                ],
+                                                              ),
                                                             );
                                                           }),
                                                       const SizedBox(
