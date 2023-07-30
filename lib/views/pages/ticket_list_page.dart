@@ -75,21 +75,22 @@ class _ListTicketDestinationState extends State<ListTicketDestination> {
                               height: 170,
                               width: MediaQuery.of(context).size.width,
                               child: widget.id.destinationPicture == null
-                                ? Image.asset(
-                                    "assets/images/no_image2.jpg",
-                                    fit: BoxFit.cover,
-                                  )
-                                : CachedNetworkImage(
-                                    placeholder: (context, url) => Center(
-                                        child: new CircularProgressIndicator()),
-                                    imageUrl: widget.id.destinationPicture!,
-                                    fit: BoxFit.cover,
-                                    errorWidget: (context, url, error) =>
-                                        Image.asset(
-                                      "assets/images/error_image.jpeg",
-                                      fit: BoxFit.fitWidth,
+                                  ? Image.asset(
+                                      "assets/images/no_image2.jpg",
+                                      fit: BoxFit.cover,
+                                    )
+                                  : CachedNetworkImage(
+                                      placeholder: (context, url) => Center(
+                                          child:
+                                              new CircularProgressIndicator()),
+                                      imageUrl: widget.id.destinationPicture!,
+                                      fit: BoxFit.cover,
+                                      errorWidget: (context, url, error) =>
+                                          Image.asset(
+                                        "assets/images/error_image.jpeg",
+                                        fit: BoxFit.fitWidth,
+                                      ),
                                     ),
-                                  ),
                             ),
                             Container(
                               height: 170,
@@ -372,7 +373,9 @@ class _ListTicketDestinationState extends State<ListTicketDestination> {
                                                                     ),
                                                                   ],
                                                                 ),
-                                                                SizedBox(height: 2,),
+                                                                SizedBox(
+                                                                  height: 2,
+                                                                ),
                                                                 Row(
                                                                   crossAxisAlignment:
                                                                       CrossAxisAlignment
@@ -562,6 +565,23 @@ class _ListTicketDestinationState extends State<ListTicketDestination> {
                                                                                 ),
                                                                               )
                                                                             ],
+                                                                          ),
+                                                                          Row(
+                                                                            children: [
+                                                                              FaIcon(
+                                                                                FontAwesomeIcons.check,
+                                                                                size: 10,
+                                                                                color: captColor,
+                                                                              ),
+                                                                              Padding(
+                                                                                padding: const EdgeInsets.only(left: 5.0),
+                                                                                child: Text(
+                                                                                  "Transfer Mandiri",
+                                                                                  overflow: TextOverflow.ellipsis,
+                                                                                  style: GoogleFonts.openSans(fontSize: 12, color: captColor, fontWeight: FontWeight.w500),
+                                                                                ),
+                                                                              )
+                                                                            ],
                                                                           )
                                                                         ],
                                                                       ),
@@ -580,6 +600,19 @@ class _ListTicketDestinationState extends State<ListTicketDestination> {
                                                                             ),
                                                                           ),
                                                                         );
+                                                                        Fluttertoast.showToast(
+                                                                            msg:
+                                                                                "Pembayaran hanya melalui Transfer Bank Mandiri",
+                                                                            toastLength: Toast
+                                                                                .LENGTH_SHORT,
+                                                                            gravity: ToastGravity
+                                                                                .BOTTOM,
+                                                                            timeInSecForIosWeb:
+                                                                                1,
+                                                                            backgroundColor:
+                                                                                primaryColor.withOpacity(0.5),
+                                                                            textColor: Colors.white,
+                                                                            fontSize: 16.0);
                                                                       },
                                                                       child:
                                                                           Container(

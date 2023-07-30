@@ -11,6 +11,7 @@ import 'package:pergijalan_mobile/controllers/eticket_controller.dart';
 import 'package:pergijalan_mobile/models/ticket.dart';
 import 'package:pergijalan_mobile/views/pages/ticket_order_statuspayment_ticket.dart';
 import 'package:provider/provider.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 import '../../controllers/ticket_controller.dart';
 import '../../controllers/user_controller.dart';
@@ -94,7 +95,7 @@ class _CreateOrderDetailState extends State<CreateOrderDetail> {
           );
         },
         initialDate: selectedDate,
-        firstDate: DateTime(2022, 8),
+        firstDate: DateTime.now().subtract(Duration(days: 0)),
         lastDate: DateTime(2101));
 
     if (picked != null && picked != selectedDate) {
@@ -176,20 +177,18 @@ class _CreateOrderDetailState extends State<CreateOrderDetail> {
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
                                     Container(
-                                      
-                                        width:
-                                            MediaQuery.of(context).size.width *
-                                                0.4,
+                                      width: MediaQuery.of(context).size.width *
+                                          0.4,
                                       child: Align(
                                         alignment: Alignment.topLeft,
                                         child: Text(
                                           widget.idDestinasi.nameDestinasi
                                               .toString(),
-                                              maxLines: 4,
+                                          maxLines: 4,
                                           style: GoogleFonts.openSans(
                                               fontSize: 15,
-                                              color:
-                                                  Color.fromARGB(255, 49, 49, 49),
+                                              color: Color.fromARGB(
+                                                  255, 49, 49, 49),
                                               fontWeight: FontWeight.w600),
                                         ),
                                       ),
@@ -378,9 +377,9 @@ class _CreateOrderDetailState extends State<CreateOrderDetail> {
                                               fontWeight: FontWeight.w500),
                                         ),
                                       ),
-                                      SizedBox(width: MediaQuery.of(context)
-                                                    .size
-                                                    .width *
+                                      SizedBox(
+                                        width:
+                                            MediaQuery.of(context).size.width *
                                                 0.27,
                                         child: Text(
                                           widget.idDestinasi.contact.toString(),
@@ -693,7 +692,7 @@ class _CreateOrderDetailState extends State<CreateOrderDetail> {
                           ),
                           Padding(
                             padding:
-                                const EdgeInsets.only(top: 17.0, bottom: 17),
+                                const EdgeInsets.only(top: 17.0, bottom: 7),
                             child: Container(
                               decoration: BoxDecoration(
                                   borderRadius: BorderRadius.circular(10),
@@ -770,9 +769,179 @@ class _CreateOrderDetailState extends State<CreateOrderDetail> {
                               ),
                             ),
                           ),
+                          Container(
+                            // width: MediaQuery.of(context).size.width*1,
+                            // height: 60,
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                SizedBox(
+                                  width:
+                                      MediaQuery.of(context).size.width * 0.7,
+                                  child: Text(
+                                    "Pembayaran hanya dapat dilakukan melalui transfer Bank Mandiri",
+                                    // maxLines: 4,
+                                    textAlign: TextAlign.justify,
+                                    style: GoogleFonts.inter(
+                                        fontSize: 12,
+                                        color: descColor,
+                                        fontWeight: FontWeight.w500),
+                                  ),
+                                ),
+                                InkWell(
+                                  onTap: () {
+                                    showDialog(
+                                        context: context,
+                                        builder: (context) {
+                                          return AlertDialog(
+                                            backgroundColor: backgroundColor,
+                                            content: SingleChildScrollView(
+                                              child: Column(
+                                                mainAxisAlignment:
+                                                    MainAxisAlignment.start,
+                                                crossAxisAlignment:
+                                                    CrossAxisAlignment.start,
+                                                children: [
+                                                  SizedBox(
+                                                    height: 15,
+                                                  ),
+                                                  Center(
+                                                    child: Text(
+                                                      "Metode Pembayaran",
+                                                      textAlign:
+                                                          TextAlign.center,
+                                                      style: GoogleFonts.inter(
+                                                          fontSize: 18,
+                                                          color: primaryColor,
+                                                          fontWeight:
+                                                              FontWeight.w600),
+                                                    ),
+                                                  ),
+                                                  SizedBox(
+                                                    height: 20,
+                                                  ),
+                                                  Text(
+                                                    "Kami hanya mendukung metode pembayaran melalui transfer BANK MANDIRI untuk memudahkan Anda dalam bertransaksi. Silakan pastikan untuk memiliki rekening Bank Mandiri sebelum melakukan pembayaran.",
+                                                    textAlign: TextAlign.center,
+                                                    style: GoogleFonts.inter(
+                                                        fontSize: 14,
+                                                        color: titleColor,
+                                                        fontWeight:
+                                                            FontWeight.w400),
+                                                  ),
+                                                  SizedBox(
+                                                    height: 15,
+                                                  ),
+                                                  RichText(
+                                                      textAlign:
+                                                          TextAlign.center,
+                                                      text: TextSpan(children: [
+                                                        TextSpan(
+                                                          text:
+                                                              "Jika Anda memiliki pertanyaan atau memerlukan bantuan, jangan ragu untuk menghubungi tim ",
+                                                          style:
+                                                              GoogleFonts.inter(
+                                                                  fontSize: 14,
+                                                                  color:
+                                                                      titleColor,
+                                                                  fontWeight:
+                                                                      FontWeight
+                                                                          .w400),
+                                                        ),
+                                                      ])),
+                                                  Center(
+                                                    child: InkWell(
+                                                      onTap: () async {
+                                                        String email =
+                                                            Uri.encodeComponent(
+                                                                "danizasalsabila12@gmail.com");
+                                                        String subject =
+                                                            Uri.encodeComponent(
+                                                                "Tentang Metode Pembayaran");
+                                                        String body =
+                                                            Uri.encodeComponent(
+                                                                "Halo tim PergiJalan, saya $emailUser ingin menanyakan \n");
+                                                        print(
+                                                            subject); //output: Hello%20Flutter
+                                                        Uri mail = Uri.parse(
+                                                            "mailto:$email?subject=$subject&body=$body");
+                                                        if (await launchUrl(
+                                                            mail)) {
+                                                        } else {}
+                                                      },
+                                                      child: Text(
+                                                        "Developer kami",
+                                                        textAlign:
+                                                            TextAlign.center,
+
+                                                        // textAlign: TextAlign.justify,
+                                                        style: GoogleFonts.inter(
+                                                            fontSize: 14,
+                                                            color:
+                                                                secondaryColor,
+                                                            fontWeight:
+                                                                FontWeight
+                                                                    .w600),
+                                                      ),
+                                                    ),
+                                                  ),
+                                                  SizedBox(
+                                                    height: 15,
+                                                  ),
+                                                  Center(
+                                                    child: Text(
+                                                      "Terima kasih atas dukungan Anda",
+                                                      textAlign:
+                                                          TextAlign.center,
+                                                      style: GoogleFonts.inter(
+                                                          fontSize: 14,
+                                                          color: titleColor,
+                                                          fontWeight:
+                                                              FontWeight.w400),
+                                                    ),
+                                                  ),
+                                                  SizedBox(
+                                                    height: 15,
+                                                  ),
+                                                ],
+                                              ),
+                                            ),
+                                          );
+                                        });
+                                  },
+                                  child: SizedBox(
+                                    width: MediaQuery.of(context).size.width *
+                                        0.07,
+                                    child: FaIcon(
+                                      FontAwesomeIcons.circleQuestion,
+                                      size: 18,
+                                      color: secondaryColor,
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                          SizedBox(
+                            height: 15,
+                          ),
+                          Container(
+                            width: MediaQuery.of(context).size.width,
+                            child: Row(
+                              children: List.generate(
+                                  150 ~/ 3,
+                                  (index) => Expanded(
+                                        child: Container(
+                                          color: index % 2 == 0
+                                              ? Colors.grey.shade300
+                                              : Colors.transparent,
+                                          height: 1,
+                                        ),
+                                      )),
+                            ),
+                          ),
                           Padding(
-                            padding:
-                                const EdgeInsets.only(top: 20.0, bottom: 10),
+                            padding: const EdgeInsets.only(top: 20, bottom: 10),
                             child: Column(
                               children: [
                                 Row(

@@ -87,7 +87,7 @@ class _HomePageState extends State<HomePage> {
                             )),
                         Column(
                           children: [
-                            SizedBox(
+                            const SizedBox(
                               height: 60,
                             ),
                             Align(
@@ -110,7 +110,7 @@ class _HomePageState extends State<HomePage> {
                                 ),
                               ),
                             ),
-                            SizedBox(
+                            const SizedBox(
                               height: 20,
                             ),
                             // Container(
@@ -149,242 +149,251 @@ class _HomePageState extends State<HomePage> {
                                   itemBuilder: (context, index) {
                                     return Transform.scale(
                                       scale: index == _index ? 1 : 0.96,
-                                      child: Card(
-                                        shape: RoundedRectangleBorder(
-                                            borderRadius:
-                                                BorderRadius.circular(10)),
-                                        child: Stack(
-                                          children: [
-                                            Container(
-                                              height: 220,
-                                              width: MediaQuery.of(context)
-                                                  .size
-                                                  .width,
-                                              child: ClipRRect(
-                                                borderRadius:
-                                                    BorderRadius.circular(10),
-                                                child: homeCon
-                                                            .destinasiRandom![
-                                                                index]
-                                                            .destinationPicture ==
-                                                        null
-                                                    ? Image.asset(
-                                                        "assets/images/no_image2.jpg",
-                                                        fit: BoxFit.cover,
-                                                      )
-                                                    : CachedNetworkImage(
-                                                        imageUrl: homeCon
-                                                            .destinasiRandom![
-                                                                index]
-                                                            .destinationPicture!,
-                                                        fit: BoxFit.cover,
-                                                        placeholder: (context,
-                                                                url) =>
-                                                            Center(
-                                                                child:
-                                                                    new CircularProgressIndicator()),
-                                                        errorWidget: (context,
-                                                                url, error) =>
-                                                            Image.asset(
-                                                          "assets/images/error_image.jpeg",
-                                                          fit: BoxFit.fill,
-                                                        ),
-                                                      ),
-                                              ),
-                                            ),
-                                            //buat transparant
-                                            Container(
+                                      child: InkWell(
+                                        onTap: (() => Navigator.push(
+                                            context,
+                                            MaterialPageRoute(
+                                                builder: (context) =>
+                                                    DetailDestination(
+                                                      id: homeCon.destinasiRandom![
+                                                          index],
+                                                    )))),
+                                        child: Card(
+                                          shape: RoundedRectangleBorder(
+                                              borderRadius:
+                                                  BorderRadius.circular(10)),
+                                          child: Stack(
+                                            children: [
+                                              Container(
                                                 height: 220,
-                                                decoration: BoxDecoration(
-                                                    borderRadius:
-                                                        BorderRadius.circular(
-                                                            10),
-                                                    color: Color.fromARGB(
-                                                        41, 33, 149, 243))),
-                                            Padding(
-                                              padding: const EdgeInsets.only(
-                                                  right: 10.0),
-                                              child: Align(
-                                                alignment: Alignment.topRight,
-                                                child: Column(
-                                                  // crossAxisAlignment:
-                                                  //     CrossAxisAlignment.end,
-                                                  //     mainAxisAlignment: MainAxisAlignment.start,
-                                                  children: [
-                                                    SizedBox(
-                                                      height: 10,
-                                                    ),
-                                                    Container(
-                                                      decoration: BoxDecoration(
-                                                          color: Color.fromARGB(
-                                                              199,
-                                                              47,
-                                                              125,
-                                                              104),
-                                                          borderRadius:
-                                                              BorderRadius
-                                                                  .circular(5)),
-                                                      child: Padding(
-                                                        padding:
-                                                            const EdgeInsets
-                                                                    .fromLTRB(
-                                                                12.0, 2, 12, 2),
-                                                        child: Text(
-                                                          // ignore: prefer_if_null_operators, unnecessary_null_comparison
-                                                          homeCon
-                                                                      .destinasiRandom![
-                                                                          index]
-                                                                      .category
-                                                                      .toString() !=
-                                                                  null
-                                                              ? homeCon
-                                                                  .destinasiRandom![
-                                                                      index]
-                                                                  .category
-                                                                  .toString()
-                                                              : "Lainnya",
-                                                          style: GoogleFonts
-                                                              .notoSansDisplay(
-                                                                  fontSize: 12,
-                                                                  color: Color
-                                                                      .fromARGB(
-                                                                          255,
-                                                                          255,
-                                                                          255,
-                                                                          255),
-                                                                  fontWeight:
-                                                                      FontWeight
-                                                                          .w500),
+                                                width: MediaQuery.of(context)
+                                                    .size
+                                                    .width,
+                                                child: ClipRRect(
+                                                  borderRadius:
+                                                      BorderRadius.circular(10),
+                                                  child: homeCon
+                                                              .destinasiRandom![
+                                                                  index]
+                                                              .destinationPicture ==
+                                                          null
+                                                      ? Image.asset(
+                                                          "assets/images/no_image2.jpg",
+                                                          fit: BoxFit.cover,
+                                                        )
+                                                      : CachedNetworkImage(
+                                                          imageUrl: homeCon
+                                                              .destinasiRandom![
+                                                                  index]
+                                                              .destinationPicture!,
+                                                          fit: BoxFit.cover,
+                                                          placeholder: (context,
+                                                                  url) =>
+                                                              Center(
+                                                                  child:
+                                                                      new CircularProgressIndicator()),
+                                                          errorWidget: (context,
+                                                                  url, error) =>
+                                                              Image.asset(
+                                                            "assets/images/error_image.jpeg",
+                                                            fit: BoxFit.fill,
+                                                          ),
                                                         ),
-                                                      ),
-                                                    ),
-                                                    
-                                                  ],
                                                 ),
                                               ),
-                                            ),
-                                            SizedBox(
-                                                height: 220,
-                                                child: Column(
-                                                  children: [
-                                                    const SizedBox(
-                                                      height: 158,
-                                                    ),
-                                                    Stack(
-                                                      children: [
-                                                        Container(
-                                                          height: 54,
-                                                          decoration: BoxDecoration(
-                                                              borderRadius: BorderRadius.only(
-                                                                  bottomLeft: Radius
-                                                                      .circular(
-                                                                          10),
-                                                                  bottomRight: Radius
-                                                                      .circular(
-                                                                          10)),
-                                                              color: Color
-                                                                  .fromARGB(
-                                                                      202,
-                                                                      255,
-                                                                      255,
-                                                                      255)),
+                                              //buat transparant
+                                              Container(
+                                                  height: 220,
+                                                  decoration: BoxDecoration(
+                                                      borderRadius:
+                                                          BorderRadius.circular(
+                                                              10),
+                                                      color: Color.fromARGB(
+                                                          41, 33, 149, 243))),
+                                              Padding(
+                                                padding: const EdgeInsets.only(
+                                                    right: 10.0),
+                                                child: Align(
+                                                  alignment: Alignment.topRight,
+                                                  child: Column(
+                                                    // crossAxisAlignment:
+                                                    //     CrossAxisAlignment.end,
+                                                    //     mainAxisAlignment: MainAxisAlignment.start,
+                                                    children: [
+                                                      const SizedBox(
+                                                        height: 10,
+                                                      ),
+                                                      Container(
+                                                        decoration: BoxDecoration(
+                                                            color: const Color.fromARGB(
+                                                                199,
+                                                                47,
+                                                                125,
+                                                                104),
+                                                            borderRadius:
+                                                                BorderRadius
+                                                                    .circular(5)),
+                                                        child: Padding(
+                                                          padding:
+                                                              const EdgeInsets
+                                                                      .fromLTRB(
+                                                                  12.0, 2, 12, 2),
+                                                          child: Text(
+                                                            // ignore: prefer_if_null_operators, unnecessary_null_comparison
+                                                            homeCon
+                                                                        .destinasiRandom![
+                                                                            index]
+                                                                        .category !=
+                                                                    null
+                                                                ? homeCon
+                                                                    .destinasiRandom![
+                                                                        index]
+                                                                    .category
+                                                                    .toString()
+                                                                : "Lainnya",
+                                                            style: GoogleFonts
+                                                                .notoSansDisplay(
+                                                                    fontSize: 12,
+                                                                    color: Color
+                                                                        .fromARGB(
+                                                                            255,
+                                                                            255,
+                                                                            255,
+                                                                            255),
+                                                                    fontWeight:
+                                                                        FontWeight
+                                                                            .w500),
+                                                          ),
                                                         ),
-                                                        Column(
-                                                          mainAxisAlignment:
-                                                              MainAxisAlignment
-                                                                  .center,
-                                                          crossAxisAlignment:
-                                                              CrossAxisAlignment
-                                                                  .start,
-                                                          children: [
-                                                            SizedBox(
-                                                              width: MediaQuery.of(
-                                                                          context)
-                                                                      .size
-                                                                      .width *
-                                                                  0.75,
-                                                              child: Padding(
+                                                      ),
+                                                      
+                                                    ],
+                                                  ),
+                                                ),
+                                              ),
+                                              SizedBox(
+                                                  height: 220,
+                                                  child: Column(
+                                                    children: [
+                                                      const SizedBox(
+                                                        height: 158,
+                                                      ),
+                                                      Stack(
+                                                        children: [
+                                                          Container(
+                                                            height: 54,
+                                                            decoration: BoxDecoration(
+                                                                borderRadius: BorderRadius.only(
+                                                                    bottomLeft: Radius
+                                                                        .circular(
+                                                                            10),
+                                                                    bottomRight: Radius
+                                                                        .circular(
+                                                                            10)),
+                                                                color: Color
+                                                                    .fromARGB(
+                                                                        202,
+                                                                        255,
+                                                                        255,
+                                                                        255)),
+                                                          ),
+                                                          Column(
+                                                            mainAxisAlignment:
+                                                                MainAxisAlignment
+                                                                    .center,
+                                                            crossAxisAlignment:
+                                                                CrossAxisAlignment
+                                                                    .start,
+                                                            children: [
+                                                              SizedBox(
+                                                                width: MediaQuery.of(
+                                                                            context)
+                                                                        .size
+                                                                        .width *
+                                                                    0.75,
+                                                                child: Padding(
+                                                                  padding:
+                                                                      const EdgeInsets
+                                                                              .fromLTRB(
+                                                                          10,
+                                                                          5.0,
+                                                                          10,
+                                                                          0),
+                                                                  child: Text(
+                                                                    homeCon
+                                                                        .destinasiRandom![
+                                                                            index]
+                                                                        .nameDestinasi
+                                                                        .toString(),
+                                                                    style: GoogleFonts.notoSansDisplay(
+                                                                        fontSize:
+                                                                            16,
+                                                                        color:
+                                                                            primaryColor,
+                                                                        fontWeight:
+                                                                            FontWeight
+                                                                                .w500),
+                                                                    overflow:
+                                                                        TextOverflow
+                                                                            .ellipsis,
+                                                                    maxLines: 1,
+                                                                  ),
+                                                                ),
+                                                              ),
+                                                              Padding(
                                                                 padding:
                                                                     const EdgeInsets
                                                                             .fromLTRB(
                                                                         10,
-                                                                        5.0,
+                                                                        0,
                                                                         10,
-                                                                        0),
-                                                                child: Text(
-                                                                  homeCon
-                                                                      .destinasiRandom![
-                                                                          index]
-                                                                      .nameDestinasi
-                                                                      .toString(),
-                                                                  style: GoogleFonts.notoSansDisplay(
-                                                                      fontSize:
-                                                                          16,
-                                                                      color:
-                                                                          primaryColor,
-                                                                      fontWeight:
-                                                                          FontWeight
-                                                                              .w500),
-                                                                  overflow:
-                                                                      TextOverflow
-                                                                          .ellipsis,
-                                                                  maxLines: 1,
+                                                                        5),
+                                                                child: Row(
+                                                                  mainAxisAlignment:
+                                                                      MainAxisAlignment
+                                                                          .spaceBetween,
+                                                                  children: [
+                                                                    Row(
+                                                                      mainAxisAlignment:
+                                                                          MainAxisAlignment
+                                                                              .start,
+                                                                      children: [
+                                                                        Icon(
+                                                                          Icons
+                                                                              .location_on_outlined,
+                                                                          size:
+                                                                              14,
+                                                                          color:
+                                                                              descColor,
+                                                                        ),
+                                                                        Padding(
+                                                                          padding:
+                                                                              const EdgeInsets.only(left: 3.0),
+                                                                          child:
+                                                                              Text(
+                                                                            homeCon
+                                                                                .destinasiRandom![index]
+                                                                                .city
+                                                                                .toString(),
+                                                                            style: GoogleFonts.notoSansDisplay(
+                                                                                fontSize: 12,
+                                                                                color: descColor,
+                                                                                fontWeight: FontWeight.w500),
+                                                                          ),
+                                                                        ),
+                                                                      ],
+                                                                    ),
+                                                                  ],
                                                                 ),
                                                               ),
-                                                            ),
-                                                            Padding(
-                                                              padding:
-                                                                  const EdgeInsets
-                                                                          .fromLTRB(
-                                                                      10,
-                                                                      0,
-                                                                      10,
-                                                                      5),
-                                                              child: Row(
-                                                                mainAxisAlignment:
-                                                                    MainAxisAlignment
-                                                                        .spaceBetween,
-                                                                children: [
-                                                                  Row(
-                                                                    mainAxisAlignment:
-                                                                        MainAxisAlignment
-                                                                            .start,
-                                                                    children: [
-                                                                      Icon(
-                                                                        Icons
-                                                                            .location_on_outlined,
-                                                                        size:
-                                                                            14,
-                                                                        color:
-                                                                            descColor,
-                                                                      ),
-                                                                      Padding(
-                                                                        padding:
-                                                                            const EdgeInsets.only(left: 3.0),
-                                                                        child:
-                                                                            Text(
-                                                                          homeCon
-                                                                              .destinasiRandom![index]
-                                                                              .city
-                                                                              .toString(),
-                                                                          style: GoogleFonts.notoSansDisplay(
-                                                                              fontSize: 12,
-                                                                              color: descColor,
-                                                                              fontWeight: FontWeight.w500),
-                                                                        ),
-                                                                      ),
-                                                                    ],
-                                                                  ),
-                                                                ],
-                                                              ),
-                                                            ),
-                                                          ],
-                                                        )
-                                                      ],
-                                                    ),
-                                                  ],
-                                                ))
-                                          ],
+                                                            ],
+                                                          )
+                                                        ],
+                                                      ),
+                                                    ],
+                                                  ))
+                                            ],
+                                          ),
                                         ),
                                       ),
                                     );
@@ -392,7 +401,7 @@ class _HomePageState extends State<HomePage> {
                                 ),
                               ),
                             ),
-                            SizedBox(height: 12),
+                            const SizedBox(height: 12),
                             Row(
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: <Widget>[
@@ -421,7 +430,7 @@ class _HomePageState extends State<HomePage> {
                         ),
                       ],
                     ),
-                    SizedBox(
+                    const SizedBox(
                       height: 14,
                     ),
                     Padding(
@@ -489,7 +498,7 @@ class _HomePageState extends State<HomePage> {
                                         const SizedBox(
                                           height: 4,
                                         ),
-                                        Container(
+                                        SizedBox(
                                           child: Text(
                                             "Cagar\nAlam",
                                             textAlign: TextAlign.center,style: GoogleFonts.inter(
@@ -798,7 +807,7 @@ class _HomePageState extends State<HomePage> {
                                                   padding:
                                                       const EdgeInsets.only(
                                                           left: 12.0),
-                                                  child: Container(
+                                                  child: SizedBox(
                                                     width:
                                                         MediaQuery.of(context)
                                                                 .size
@@ -822,7 +831,7 @@ class _HomePageState extends State<HomePage> {
                                                                     fontSize:
                                                                         14,
                                                                     color:
-                                                                        Color.fromARGB(255, 9, 54, 82),
+                                                                       const Color.fromARGB(255, 9, 54, 82),
                                                                     fontWeight:
                                                                         FontWeight
                                                                             .w500),
@@ -845,7 +854,7 @@ class _HomePageState extends State<HomePage> {
                                                                   CrossAxisAlignment
                                                                       .center,
                                                               children: [
-                                                                Icon(
+                                                               const  Icon(
                                                                   Icons
                                                                       .location_on_outlined,
                                                                   size: 14,
@@ -875,7 +884,7 @@ class _HomePageState extends State<HomePage> {
                                                               ],
                                                             ),
                                                           ),
-                                                          SizedBox(height: 2,),
+                                                         const SizedBox(height: 2,),
                                                           Row(
                                                             mainAxisAlignment:
                                                                 MainAxisAlignment

@@ -398,6 +398,16 @@ class _RegisterUserState extends State<RegisterUser> {
                           setState(() {
                             isLoading = false;
                           });
+                          Fluttertoast.showToast(
+                                                msg:
+                                                    "Anda berhasil melakukan login",
+                                                toastLength: Toast.LENGTH_SHORT,
+                                                gravity: ToastGravity.BOTTOM,
+                                                timeInSecForIosWeb: 1,
+                                                backgroundColor: primaryColor
+                                                    .withOpacity(0.5),
+                                                textColor: Colors.white,
+                                                fontSize: 16.0);
                           Navigator.pushAndRemoveUntil(
                               context,
                               MaterialPageRoute(

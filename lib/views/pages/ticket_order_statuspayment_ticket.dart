@@ -41,10 +41,10 @@ class _StatusOrderPaymentState extends State<StatusOrderPayment> {
       } catch (e) {
         print(e);
       }
-       Timer(Duration(seconds: 3), () {
-          Navigator.of(context)
-              .push(MaterialPageRoute(builder: (context) => ETicketPage(id: widget.id, )));
-        });
+      //  Timer(Duration(seconds: 3), () {
+      //     Navigator.of(context)
+      //         .push(MaterialPageRoute(builder: (context) => ETicketPage(id: widget.id, )));
+      //   });
 
       setState(() {
         isLoading = false;

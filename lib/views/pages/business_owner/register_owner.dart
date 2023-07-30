@@ -438,6 +438,16 @@ class _RegisterOwnerState extends State<RegisterOwner> {
                           setState(() {
                             isLoading = false;
                           });
+                          Fluttertoast.showToast(
+                                                msg:
+                                                    "Anda berhasil melakukan registrasi",
+                                                toastLength: Toast.LENGTH_SHORT,
+                                                gravity: ToastGravity.BOTTOM,
+                                                timeInSecForIosWeb: 1,
+                                                backgroundColor: primaryColor
+                                                    .withOpacity(0.5),
+                                                textColor: Colors.white,
+                                                fontSize: 16.0);
                           Navigator.pushAndRemoveUntil(
                               context,
                               MaterialPageRoute(builder: (context) => LoginOwner()),
@@ -461,6 +471,7 @@ class _RegisterOwnerState extends State<RegisterOwner> {
                           setState(() {
                             isLoading = false;
                           });
+
                           Fluttertoast.showToast(
                               msg: ownerCon.messageRegisterOB.toString(),
                               toastLength: Toast.LENGTH_SHORT,
