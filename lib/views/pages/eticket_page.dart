@@ -111,7 +111,7 @@ class _ETicketPageState extends State<ETicketPage> {
                       borderRadius: BorderRadius.circular(5)),
                   child: Column(children: [
                     SizedBox(
-                      height: 50,
+                      height: 40,
                     ),
                     Align(
                       alignment: Alignment.center,

@@ -24,6 +24,7 @@ class _ListTicketDestinationState extends State<ListTicketDestination> {
   bool isLoading = false;
   final ScrollController _scrollController = ScrollController();
   var now = new DateTime.now();
+  int quantity = 1;
 
   @override
   void initState() {
@@ -588,8 +589,102 @@ class _ListTicketDestinationState extends State<ListTicketDestination> {
                                                                     ),
                                                                     GestureDetector(
                                                                       onTap:
-                                                                          () {
-                                                                        Navigator
+                                                                          () async {
+                                                                        showDialog(
+                                                                            context:
+                                                                                context,
+                                                                            // barrierDismissible:
+                                                                            //     false,
+                                                                            builder:
+                                                                                (context) {
+                                                                              return StatefulBuilder(builder: (context, StateSetter setState) {
+                                                                                return AlertDialog(
+                                                                                  shape: RoundedRectangleBorder(
+                                                                                    borderRadius: BorderRadius.circular(10),
+                                                                                  ),
+                                                                                  backgroundColor: backgroundColor,
+                                                                                  elevation: 5,
+                                                                                  content: SizedBox(
+                                                                                    height: 150,
+                                                                                    child: Padding(
+                                                                                      padding: const EdgeInsets.only(left: 0),
+                                                                                      child: Column(children: [
+                                                                                        SizedBox(
+                                                                                          height: 5,
+                                                                                        ),
+                                                                                        Align(
+                                                                                          alignment: Alignment.topLeft,
+                                                                                          child: Text(
+                                                                                            "Jumlah Tiket",
+                                                                                            textAlign: TextAlign.left,
+                                                                                            style: GoogleFonts.openSans(fontSize: 18, color: Color.fromARGB(255, 5, 5, 5), fontWeight: FontWeight.w700),
+                                                                                          ),
+                                                                                        ),
+                                                                                        SizedBox(
+                                                                                          height: 8,
+                                                                                        ),
+                                                                                        Align(
+                                                                                          alignment: Alignment.topLeft,
+                                                                                          child: Text(
+                                                                                            "Pax",
+                                                                                            textAlign: TextAlign.left,
+                                                                                            style: GoogleFonts.openSans(fontSize: 16, color: Color.fromARGB(255, 5, 5, 5), fontWeight: FontWeight.w600),
+                                                                                          ),
+                                                                                        ),
+                                                                                        Row(
+                                                                                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                                                                          mainAxisSize: MainAxisSize.max,
+                                                                                          children: [
+                                                                                            Align(
+                                                                                              alignment: Alignment.topLeft,
+                                                                                              child: Text(
+                                                                                                "Rp ${ticketCon.ticketData![index].price.toString()}",
+                                                                                                textAlign: TextAlign.left,
+                                                                                                style: GoogleFonts.openSans(fontSize: 14, color: Colors.orange, fontWeight: FontWeight.w700),
+                                                                                              ),
+                                                                                            ),
+                                                                                            Row(
+                                                                                              children: [
+                                                                                                IconButton(
+                                                                                                  // color: secondaryColor,
+                                                                                                  icon: const Icon(Icons.remove, color: secondaryColor, size: 18,),
+                                                                                                  onPressed: () {
+                                                                                                    setState(() {
+                                                                                                      if (quantity <= 1) {
+                                                                                                        Fluttertoast.showToast(msg: "Anda hanya dapat memesan minimal 1 pembelian tiket", toastLength: Toast.LENGTH_SHORT, gravity: ToastGravity.BOTTOM, timeInSecForIosWeb: 1, backgroundColor: primaryColor.withOpacity(0.5), textColor: Colors.white, fontSize: 16.0);
+                                                                                                      } else if (quantity <= 5) {
+                                                                                                        quantity--;
+                                                                                                      } else {
+                                                                                                        Fluttertoast.showToast(msg: "Anda hanya dapat memesan minimal 1 pembelian tiket", toastLength: Toast.LENGTH_SHORT, gravity: ToastGravity.BOTTOM, timeInSecForIosWeb: 1, backgroundColor: primaryColor.withOpacity(0.5), textColor: Colors.white, fontSize: 16.0);
+                                                                                                      }
+                                                                                                    });
+                                                                                                  },
+                                                                                                ),
+                                                                                                Text(
+                                                                                                  quantity.toString(),
+                                                                                                  style: GoogleFonts.openSans(fontSize: 14, color: Color.fromARGB(255, 5, 5, 5), fontWeight: FontWeight.w500),
+                                                                                                ),
+                                                                                                IconButton(
+                                                                                                  icon: const Icon(Icons.add,  color: secondaryColor, size: 18),
+                                                                                                  onPressed: () {
+                                                                                                    if (quantity >= 5) {
+                                                                                                      Fluttertoast.showToast(msg: "Anda hanya dapat memesan maksimal 5 pembelian tiket", toastLength: Toast.LENGTH_SHORT, gravity: ToastGravity.BOTTOM, timeInSecForIosWeb: 1, backgroundColor: primaryColor.withOpacity(0.5), textColor: Colors.white, fontSize: 16.0);
+                                                                                                    } else if (quantity <= 5) {
+                                                                                                      setState(() {
+                                                                                                        quantity++;
+                                                                                                      });
+                                                                                                    } else {
+                                                                                                      Fluttertoast.showToast(msg: "Anda hanya dapat memesan maksimal 5 pembelian tiket", toastLength: Toast.LENGTH_SHORT, gravity: ToastGravity.BOTTOM, timeInSecForIosWeb: 1, backgroundColor: primaryColor.withOpacity(0.5), textColor: Colors.white, fontSize: 16.0);
+                                                                                                    }
+                                                                                                  },
+                                                                                                ),
+                                                                                              ],
+                                                                                            ),
+                                                                                          ],
+                                                                                        ),
+                                                                                        InkWell(
+                                                                                          onTap: () async {
+                                                                                             Navigator
                                                                             .push(
                                                                           context,
                                                                           MaterialPageRoute(
@@ -597,6 +692,8 @@ class _ListTicketDestinationState extends State<ListTicketDestination> {
                                                                                 CreateOrderDetail(
                                                                               idDestinasi: widget.id,
                                                                               idTicket: ticketCon.ticketData![index],
+                                                                              quantity: quantity,
+
                                                                             ),
                                                                           ),
                                                                         );
@@ -613,6 +710,49 @@ class _ListTicketDestinationState extends State<ListTicketDestination> {
                                                                                 primaryColor.withOpacity(0.5),
                                                                             textColor: Colors.white,
                                                                             fontSize: 16.0);
+                                                                                          },
+                                                                                          child: Container(
+                                                                                            // width: MediaQuery.of(context).size.width * 0.35,
+                                                                                            height: 33,
+                                                                                            decoration: BoxDecoration(borderRadius: BorderRadius.circular(5), color: secondaryColor),
+                                                                                            child: Center(
+                                                                                              child: Text(
+                                                                                                "Pesan Tiket",
+                                                                                                style: GoogleFonts.inter(fontSize: 12, color: Colors.white, fontWeight: FontWeight.w600),
+                                                                                              ),
+                                                                                            ),
+                                                                                          ),
+                                                                                        )
+                                                                                      ]),
+                                                                                    ),
+                                                                                  ),
+                                                                                );
+                                                                              });
+                                                                            });
+                                                                        // Navigator
+                                                                        //     .push(
+                                                                        //   context,
+                                                                        //   MaterialPageRoute(
+                                                                        //     builder: (context) =>
+                                                                        //         CreateOrderDetail(
+                                                                        //       idDestinasi: widget.id,
+                                                                        //       idTicket: ticketCon.ticketData![index],
+                                                                        //     ),
+                                                                        //   ),
+                                                                        // );
+                                                                        // Fluttertoast.showToast(
+                                                                        //     msg:
+                                                                        //         "Pembayaran hanya melalui Transfer Bank Mandiri",
+                                                                        //     toastLength: Toast
+                                                                        //         .LENGTH_SHORT,
+                                                                        //     gravity: ToastGravity
+                                                                        //         .BOTTOM,
+                                                                        //     timeInSecForIosWeb:
+                                                                        //         1,
+                                                                        //     backgroundColor:
+                                                                        //         primaryColor.withOpacity(0.5),
+                                                                        //     textColor: Colors.white,
+                                                                        //     fontSize: 16.0);
                                                                       },
                                                                       child:
                                                                           Container(
@@ -628,7 +768,7 @@ class _ListTicketDestinationState extends State<ListTicketDestination> {
                                                                             Center(
                                                                           child:
                                                                               Text(
-                                                                            "Pesan",
+                                                                            "Pilih",
                                                                             style: GoogleFonts.inter(
                                                                                 fontSize: 12,
                                                                                 color: Colors.white,
