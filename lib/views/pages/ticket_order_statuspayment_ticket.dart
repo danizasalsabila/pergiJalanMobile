@@ -5,13 +5,13 @@ import 'package:flutter/src/widgets/container.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:lottie/lottie.dart';
-import 'package:pergijalan_mobile/views/widgets/bar_mainnavigation.dart';
 import 'package:provider/provider.dart';
 
 import 'package:pergijalan_mobile/config/theme_color.dart';
 import 'package:pergijalan_mobile/controllers/eticket_controller.dart';
 import 'package:pergijalan_mobile/controllers/user_controller.dart';
 import 'package:pergijalan_mobile/views/pages/eticket_page.dart';
+import 'package:pergijalan_mobile/views/widgets/bar_mainnavigation.dart';
 
 import '../../models/destinasi.dart';
 import '../../models/eticket.dart';
@@ -19,11 +19,14 @@ import '../../models/eticket.dart';
 class StatusOrderPayment extends StatefulWidget {
   final int id;
   int totalPrice;
+  int quantity;
+
   // final Destinasi idDestinasi;
   StatusOrderPayment({
     Key? key,
     required this.id,
     required this.totalPrice,
+    required this.quantity,
   }) : super(key: key);
 
   @override
@@ -46,10 +49,11 @@ class _StatusOrderPaymentState extends State<StatusOrderPayment> {
       } catch (e) {
         print(e);
       }
-      //  Timer(Duration(seconds: 3), () {
-      //     Navigator.of(context)
-      //         .push(MaterialPageRoute(builder: (context) => ETicketPage(id: widget.id, )));
-      //   });
+      Timer(Duration(seconds: 3), () {
+        _showAlert(context);
+        // Navigator.of(context)
+        //     .push(MaterialPageRoute(builder: (context) => ETicketPage(id: widget.id, )));
+      });
 
       setState(() {
         isLoading = false;
@@ -66,8 +70,7 @@ class _StatusOrderPaymentState extends State<StatusOrderPayment> {
         builder: (context) => AlertDialog(
               backgroundColor: backgroundColor,
               content: Container(
-                                  height: 350,
-
+                height: 380,
                 child: Center(
                   child: Column(
                     children: [
@@ -191,6 +194,37 @@ class _StatusOrderPaymentState extends State<StatusOrderPayment> {
                           ),
                         ],
                       ),
+                      SizedBox(
+                        height: 8,
+                      ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Text(
+                            "Jumlah Tiket",
+                            textAlign: TextAlign.center,
+                            style: GoogleFonts.inter(
+                                fontSize: 13,
+                                color: captColor,
+                                fontWeight: FontWeight.w500),
+                          ),
+                          Align(
+                            alignment: Alignment.topRight,
+                            child: Text(
+                              "${widget.quantity.toString()} Pengunjung",
+                              textAlign: TextAlign.center,
+                              overflow: TextOverflow.ellipsis,
+                              style: GoogleFonts.inter(
+                                  fontSize: 13,
+                                  color: Color.fromARGB(255, 61, 61, 61),
+                                  fontWeight: FontWeight.w600),
+                            ),
+                          ),
+                        ],
+                      ),
+                      SizedBox(
+                        height: 8,
+                      ),
                       const SizedBox(
                         height: 30,
                       ),
@@ -216,8 +250,8 @@ class _StatusOrderPaymentState extends State<StatusOrderPayment> {
                             decoration: BoxDecoration(
                                 color: secondaryColor,
                                 borderRadius: BorderRadius.circular(8))),
-                      ), SizedBox(height:
-                      8),
+                      ),
+                      SizedBox(height: 8),
                       InkWell(
                         onTap: () {
                           Navigator.of(context).push(MaterialPageRoute(

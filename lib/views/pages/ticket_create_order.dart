@@ -3864,6 +3864,7 @@ class _CreateOrderDetailState extends State<CreateOrderDetail> {
                                     MaterialPageRoute(
                                         builder: (context) =>
                                             StatusOrderPayment(
+                                              quantity: widget.quantity,
                                               id: eticketCon.idAddETicket!,
                                               totalPrice: totalPrice!,
                                               // idDestinasi: widget.idDestinasi,
@@ -3931,6 +3932,7 @@ class _CreateOrderDetailState extends State<CreateOrderDetail> {
                                                 StatusOrderPayment(
                                                   id: eticketCon.idAddETicket!,
                                                   totalPrice: totalPrice!,
+                                                  quantity: widget.quantity,
                                                   // idDestinasi: widget.idDestinasi,
                                                 )),
                                         (route) => false);
@@ -4017,6 +4019,7 @@ class _CreateOrderDetailState extends State<CreateOrderDetail> {
                                                       id: eticketCon
                                                           .idAddETicket!,
                                                       totalPrice: totalPrice!,
+                                                      quantity: widget.quantity,
                                                       // idDestinasi: widget.idDestinasi,
                                                     )),
                                             (route) => false);
@@ -4141,6 +4144,8 @@ class _CreateOrderDetailState extends State<CreateOrderDetail> {
                                                 MaterialPageRoute(
                                                     builder: (context) =>
                                                         StatusOrderPayment(
+                                                          quantity:
+                                                              widget.quantity,
                                                           id: eticketCon
                                                               .idAddETicket!,
                                                           totalPrice:
@@ -4314,12 +4319,14 @@ class _CreateOrderDetailState extends State<CreateOrderDetail> {
                                                     MaterialPageRoute(
                                                         builder: (context) =>
                                                             StatusOrderPayment(
-                                                              id: eticketCon
-                                                                  .idAddETicket!,
-                                                              totalPrice:
-                                                                  totalPrice!,
-                                                              // idDestinasi: widget.idDestinasi,
-                                                            )),
+                                                                id: eticketCon
+                                                                    .idAddETicket!,
+                                                                totalPrice:
+                                                                    totalPrice!,
+                                                                quantity: widget
+                                                                    .quantity
+                                                                // idDestinasi: widget.idDestinasi,
+                                                                )),
                                                     (route) => false);
                                               } else {
                                                 setState(() {

@@ -22,9 +22,57 @@ class ListTicketDestination extends StatefulWidget {
 
 class _ListTicketDestinationState extends State<ListTicketDestination> {
   bool isLoading = false;
+  TextEditingController addToCart = TextEditingController();
+
   final ScrollController _scrollController = ScrollController();
   var now = new DateTime.now();
+  bool addQuantity = false;
   int quantity = 1;
+
+  void _incrementQuantity() {
+    setState(() {
+      quantity++;
+      addToCart.text = quantity.toString();
+    });
+  }
+
+  void _updateInt(String value) {
+    print("update addtocart into integer quantity");
+    setState(() {
+      quantity = int.tryParse(value) ?? 1;
+      if (quantity < 1) {
+        // quantity = 1;
+        print("falseeeeeeeeeeeeeeeeeeeeee $quantity");
+        Fluttertoast.showToast(
+            msg:
+                "Anda hanya dapat memesan minimal 1 pembelian tiket dalam 1 kali transaksi",
+            toastLength: Toast.LENGTH_SHORT,
+            gravity: ToastGravity.BOTTOM,
+            timeInSecForIosWeb: 1,
+            backgroundColor: primaryColor.withOpacity(0.5),
+            textColor: Colors.white,
+            fontSize: 16.0);
+      } else if (quantity > 5) {
+        // quantity = 5;
+
+        print("falseeeeeeeeeeeeeeeeeeeeee $quantity");
+        Fluttertoast.showToast(
+            msg:
+                "Anda hanya dapat memesan maksimal 5 tiket dalam 1 kali transaksi",
+            toastLength: Toast.LENGTH_SHORT,
+            gravity: ToastGravity.BOTTOM,
+            timeInSecForIosWeb: 1,
+            backgroundColor: primaryColor.withOpacity(0.5),
+            textColor: Colors.white,
+            fontSize: 16.0);
+      } else if (quantity == null) {
+        print("TRUE masukkan angka jumlah pesan");
+      } else {
+        quantity = int.tryParse(value) ?? 1;
+        print("trueeeeeeeeeeeeee $quantity");
+      }
+    });
+  }
 
   @override
   void initState() {
@@ -39,6 +87,8 @@ class _ListTicketDestinationState extends State<ListTicketDestination> {
       try {
         print(widget.id.id);
         await ticketCon.getTicketbyIdDestination(widget.id.id);
+
+        // _updateInt();
       } catch (e) {
         print(e);
       }
@@ -48,6 +98,8 @@ class _ListTicketDestinationState extends State<ListTicketDestination> {
       });
     });
     super.initState();
+    // addToCart =
+    addToCart.text = quantity.toString();
   }
 
   @override
@@ -647,35 +699,85 @@ class _ListTicketDestinationState extends State<ListTicketDestination> {
                                                                                               children: [
                                                                                                 IconButton(
                                                                                                   // color: secondaryColor,
-                                                                                                  icon: const Icon(Icons.remove, color: secondaryColor, size: 18,),
+                                                                                                  icon: const Icon(
+                                                                                                    Icons.remove,
+                                                                                                    color: secondaryColor,
+                                                                                                    size: 18,
+                                                                                                  ),
                                                                                                   onPressed: () {
+                                                                                                    addQuantity = true;
                                                                                                     setState(() {
                                                                                                       if (quantity <= 1) {
                                                                                                         Fluttertoast.showToast(msg: "Anda hanya dapat memesan minimal 1 pembelian tiket", toastLength: Toast.LENGTH_SHORT, gravity: ToastGravity.BOTTOM, timeInSecForIosWeb: 1, backgroundColor: primaryColor.withOpacity(0.5), textColor: Colors.white, fontSize: 16.0);
                                                                                                       } else if (quantity <= 5) {
                                                                                                         quantity--;
+                                                                                                        addToCart.text = quantity.toString();
                                                                                                       } else {
                                                                                                         Fluttertoast.showToast(msg: "Anda hanya dapat memesan minimal 1 pembelian tiket", toastLength: Toast.LENGTH_SHORT, gravity: ToastGravity.BOTTOM, timeInSecForIosWeb: 1, backgroundColor: primaryColor.withOpacity(0.5), textColor: Colors.white, fontSize: 16.0);
                                                                                                       }
+                                                                                                      print(quantity);
                                                                                                     });
                                                                                                   },
                                                                                                 ),
-                                                                                                Text(
-                                                                                                  quantity.toString(),
-                                                                                                  style: GoogleFonts.openSans(fontSize: 14, color: Color.fromARGB(255, 5, 5, 5), fontWeight: FontWeight.w500),
+                                                                                                Container(
+                                                                                                  height: 45,
+                                                                                                  width: 20,
+                                                                                                  child: TextField(
+                                                                                                    controller: addToCart,
+                                                                                                    keyboardType: TextInputType.number,
+                                                                                                    textInputAction: TextInputAction.next,
+                                                                                                    onChanged: _updateInt,
+                                                                                                    // onChanged: (value) {
+                                                                                                    //   setState(() {
+                                                                                                    //     // quantity = int.parse(addToCart);
+                                                                                                    //     addQuantity = (value != quantity ? true : false);
+
+                                                                                                    //     if (quantity <= 1 || quantity >= 5) {
+                                                                                                    //       Fluttertoast.showToast(msg: "Anda hanya dapat memesan minimal 1 pembelian tiket serta maksimal 5 tiket", toastLength: Toast.LENGTH_SHORT, gravity: ToastGravity.BOTTOM, timeInSecForIosWeb: 1, backgroundColor: primaryColor.withOpacity(0.5), textColor: Colors.white, fontSize: 16.0);
+                                                                                                    //     } else if (quantity >= 1 || quantity <= 5) {
+                                                                                                    //       setState(() {
+                                                                                                    //         quantity = int.parse(value);
+                                                                                                    //         print(value);
+                                                                                                    //       });
+                                                                                                    //     } else {
+                                                                                                    //       Fluttertoast.showToast(msg: "Mohon coba lagi nanti", toastLength: Toast.LENGTH_SHORT, gravity: ToastGravity.BOTTOM, timeInSecForIosWeb: 1, backgroundColor: primaryColor.withOpacity(0.5), textColor: Colors.white, fontSize: 16.0);
+                                                                                                    //     }
+                                                                                                    //   });
+                                                                                                    //   // quantity = int.parse(addToCart.text);
+                                                                                                    //   // value = addToCart.text;
+                                                                                                    //   // quantity = int.tryParse(value) ?? 1;
+
+                                                                                                    //   // if (addToCart == null) {
+                                                                                                    //   //   print("a");
+                                                                                                    //   //   setState((){
+                                                                                                    //   //     addQuantity = (value != addToCart ? true:false);
+                                                                                                    //   //   });
+                                                                                                    //   // } else {
+                                                                                                    //   //   print("b");
+
+                                                                                                    //   //   setState(() {
+
+                                                                                                    //   //   });
+                                                                                                    //   // }
+                                                                                                    //   // print("c");
+                                                                                                    // },
+                                                                                                  ),
                                                                                                 ),
                                                                                                 IconButton(
-                                                                                                  icon: const Icon(Icons.add,  color: secondaryColor, size: 18),
+                                                                                                  icon: const Icon(Icons.add, color: secondaryColor, size: 18),
                                                                                                   onPressed: () {
+                                                                                                    addQuantity = true;
+
                                                                                                     if (quantity >= 5) {
                                                                                                       Fluttertoast.showToast(msg: "Anda hanya dapat memesan maksimal 5 pembelian tiket", toastLength: Toast.LENGTH_SHORT, gravity: ToastGravity.BOTTOM, timeInSecForIosWeb: 1, backgroundColor: primaryColor.withOpacity(0.5), textColor: Colors.white, fontSize: 16.0);
                                                                                                     } else if (quantity <= 5) {
                                                                                                       setState(() {
-                                                                                                        quantity++;
+                                                                                                        _incrementQuantity();
                                                                                                       });
                                                                                                     } else {
                                                                                                       Fluttertoast.showToast(msg: "Anda hanya dapat memesan maksimal 5 pembelian tiket", toastLength: Toast.LENGTH_SHORT, gravity: ToastGravity.BOTTOM, timeInSecForIosWeb: 1, backgroundColor: primaryColor.withOpacity(0.5), textColor: Colors.white, fontSize: 16.0);
                                                                                                     }
+                                                                                                    print(quantity);
                                                                                                   },
                                                                                                 ),
                                                                                               ],
@@ -684,32 +786,21 @@ class _ListTicketDestinationState extends State<ListTicketDestination> {
                                                                                         ),
                                                                                         InkWell(
                                                                                           onTap: () async {
-                                                                                             Navigator
-                                                                            .push(
-                                                                          context,
-                                                                          MaterialPageRoute(
-                                                                            builder: (context) =>
-                                                                                CreateOrderDetail(
-                                                                              idDestinasi: widget.id,
-                                                                              idTicket: ticketCon.ticketData![index],
-                                                                              quantity: quantity,
-
-                                                                            ),
-                                                                          ),
-                                                                        );
-                                                                        Fluttertoast.showToast(
-                                                                            msg:
-                                                                                "Pembayaran hanya melalui Transfer Bank Mandiri",
-                                                                            toastLength: Toast
-                                                                                .LENGTH_SHORT,
-                                                                            gravity: ToastGravity
-                                                                                .BOTTOM,
-                                                                            timeInSecForIosWeb:
-                                                                                1,
-                                                                            backgroundColor:
-                                                                                primaryColor.withOpacity(0.5),
-                                                                            textColor: Colors.white,
-                                                                            fontSize: 16.0);
+                                                                                            if (quantity < 1 || quantity > 5) {
+                                                                                              Fluttertoast.showToast(msg: "Masukkan jumlah tiket yang benar", toastLength: Toast.LENGTH_SHORT, gravity: ToastGravity.BOTTOM, timeInSecForIosWeb: 1, backgroundColor: primaryColor.withOpacity(0.5), textColor: Colors.white, fontSize: 16.0);
+                                                                                            } else {
+                                                                                              Navigator.push(
+                                                                                                context,
+                                                                                                MaterialPageRoute(
+                                                                                                  builder: (context) => CreateOrderDetail(
+                                                                                                    idDestinasi: widget.id,
+                                                                                                    idTicket: ticketCon.ticketData![index],
+                                                                                                    quantity: quantity,
+                                                                                                  ),
+                                                                                                ),
+                                                                                              );
+                                                                                              Fluttertoast.showToast(msg: "Pembayaran hanya melalui Transfer Bank Mandiri", toastLength: Toast.LENGTH_SHORT, gravity: ToastGravity.BOTTOM, timeInSecForIosWeb: 1, backgroundColor: primaryColor.withOpacity(0.5), textColor: Colors.white, fontSize: 16.0);
+                                                                                            }
                                                                                           },
                                                                                           child: Container(
                                                                                             // width: MediaQuery.of(context).size.width * 0.35,
